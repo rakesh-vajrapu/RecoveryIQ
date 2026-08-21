@@ -15,10 +15,10 @@ Exit: all feasible local checks pass without Docker or external credentials.
 
 ## 2. Seeded simulator
 
-- [ ] Define observed context separately from hidden environment state.
-- [ ] Generate reproducible merchants, renewals, attempts, failures, actions, and incidents.
-- [ ] Implement fixed-retry and retry-plus-reminder baselines.
-- [ ] Produce a versioned first experiment artifact without ML.
+- [x] Define observed context separately from hidden environment state.
+- [x] Generate reproducible merchants, renewals, attempts, failures, actions, and incidents.
+- [x] Implement fixed-retry and retry-plus-reminder baselines.
+- [x] Produce a versioned first experiment artifact without ML.
 
 Exit: same seed/config produces the same dataset and baseline outcomes.
 

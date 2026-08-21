@@ -8,7 +8,7 @@ The central product insight is simple: **before retrying one failed payment, det
 
 ## Current status
 
-Phase 0/1 foundation is implemented:
+Phase 0–2 foundation and deterministic simulator are implemented:
 
 - FastAPI health API with typed, secret-safe configuration;
 - portable SQLAlchemy 2 domain foundation and initial Alembic migration;
@@ -20,8 +20,12 @@ Phase 0/1 foundation is implemented:
 - Next.js App Router shell with strict TypeScript, Tailwind, shadcn/ui, and runtime API health status;
 - backend/frontend CI, linting, types, and tests;
 - PostgreSQL and Redis Docker Compose definition.
+- seeded event-driven simulation with hidden ground truth and leakage-safe observations;
+- synthetic multi-merchant payments, failure families, and issuer degradation incidents;
+- fixed-retry and reminder-plus-retry baselines with paired counterfactual draws;
+- reproducible Parquet/JSON experiment artifacts, sanity analysis, and baseline metrics.
 
-Not implemented yet: simulator, degradation detector, recovery ML, executable policy/state transitions, recovery actions, Razorpay APIs, production Gemini prompts, and financial evaluation. The UI intentionally shows no recovery metrics.
+Not implemented yet: statistical degradation detection, recovery ML, intelligent RecoverIQ action selection, executable production recovery, Razorpay APIs, production Gemini prompts, and operational dashboards. The UI intentionally shows no recovery metrics.
 
 ## Architecture
 
@@ -51,7 +55,8 @@ apps/api/       FastAPI, SQLAlchemy, Alembic, Celery, Gemini providers, tests
 apps/web/       Next.js operational shell
 docs/           Product, architecture, evaluation, safety, and delivery records
 ml/             Reserved for the later recovery-model milestone
-simulator/      Reserved for the next seeded-simulation milestone
+simulator/      Deterministic payment environment, baseline policies, CLI, and tests
+artifacts/      Ignored generated simulation experiments (with tracked placeholders)
 infra/          Reserved for deployment-specific assets
 scripts/        Reserved for reproducible developer and evaluation commands
 ```
@@ -108,6 +113,16 @@ uv run python -c "from app.celery_app import health_ping; print(health_ping.dela
 
 No worker or Redis instance is required when `CELERY_TASK_ALWAYS_EAGER=true`.
 
+### Deterministic simulator
+
+```powershell
+uv sync --project simulator --dev --locked
+uv run --project simulator python -m recoveriq_simulator.cli benchmark --seed 20260821
+uv run --project simulator python -m recoveriq_simulator.cli inspect <experiment-id>
+```
+
+The default benchmark evaluates 20,000 attempts and writes ignored artifacts below `artifacts/simulations/`. All financial outputs are synthetic. See [Simulator](docs/SIMULATOR.md) for the hidden-state boundary and assumptions.
+
 ## Full PostgreSQL and Redis environment
 
 On a supported Docker host:
@@ -140,6 +155,12 @@ npm ci
 npm run lint
 npm run typecheck
 npm run build
+
+Set-Location ../..
+uv sync --project simulator --dev --locked
+uv run --project simulator ruff check simulator
+uv run --project simulator mypy simulator/recoveriq_simulator simulator/tests
+uv run --project simulator pytest simulator/tests
 ```
 
 CI runs the same checks without Docker, Redis, PostgreSQL, Gemini, or Razorpay credentials.
@@ -155,5 +176,4 @@ CI runs the same checks without Docker, Redis, PostgreSQL, Gemini, or Razorpay c
 
 ## Current limitations
 
-The current schema proves relationships and migrations but does not yet implement repositories, transition locks, idempotent event ingestion, or attribution. SQLite is suitable for local development and tests, not production worker concurrency. PostgreSQL compatibility is represented by portable types and configuration; it still requires CI or a supported host to exercise against a real PostgreSQL service in a later milestone.
-
+The current API schema proves relationships and migrations but does not yet implement repositories, transition locks, or idempotent event ingestion. SQLite is suitable for local development and tests, not production worker concurrency. PostgreSQL compatibility still requires CI or a supported host to exercise against a real service. The simulator is hand-designed synthetic evidence, not a claim about real customers, issuers, Razorpay performance, or achievable recovery lift.

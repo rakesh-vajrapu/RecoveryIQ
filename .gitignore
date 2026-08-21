@@ -15,6 +15,9 @@ htmlcov/
 *.sqlite3
 ml/artifacts/*
 !ml/artifacts/.gitkeep
+artifacts/simulations/*
+!artifacts/simulations/.gitkeep
+artifacts/smoke/*
 
 # JavaScript
 node_modules/
@@ -40,4 +43,3 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
-

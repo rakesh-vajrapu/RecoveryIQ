@@ -9,6 +9,23 @@ permissions:
   contents: read
 
 jobs:
+  simulator:
+    name: Simulator quality
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: simulator
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - run: uv sync --dev --locked
+      - run: uv run ruff check .
+      - run: uv run mypy recoveriq_simulator tests
+      - run: uv run pytest
+
   backend:
     name: Backend quality
     runs-on: ubuntu-latest
@@ -46,4 +63,3 @@ jobs:
       - run: npm run build
         env:
           NEXT_PUBLIC_API_BASE_URL: http://127.0.0.1:8000
-

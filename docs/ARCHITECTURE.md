@@ -24,7 +24,27 @@ flowchart LR
     L -. explanation only .-> A
 ```
 
-Only foundation components are implemented in Phase 1. Dashed or future components are architectural commitments, not claims of current functionality.
+The foundation and standalone simulator/baselines are implemented through Phase 2. Detection, ML, intelligent policy, execution adapters, and operational UI remain future commitments.
+
+## Simulator/environment boundary
+
+The Phase 2 simulator is a standalone uv package. It does not import the API, frontend, Gemini provider, Razorpay code, or future ML code.
+
+```mermaid
+flowchart LR
+    Q[Seed + versioned config] --> S[Scenario event queue]
+    S --> O[Immutable observations]
+    S --> H[Hidden ground truth]
+    O --> A[Fixed Retry]
+    O --> B[Reminder + Fixed Retry]
+    A --> E[Recovery environment]
+    B --> E
+    H --> E
+    E --> R[Attributed outcomes + costs]
+    R --> X[Manifest, Parquet, JSON]
+```
+
+`PaymentObservation` contains only information already delivered by the simulation clock. Hidden customer characteristics, instrument state, true cause, incident state, and response probabilities remain behind `RecoveryEnvironment`. Policy protocols accept observations, not the combined scenario. Equivalent policy actions use paired deterministic draws, while attribution is single-use per payment.
 
 ## Domain boundaries
 
@@ -86,9 +106,8 @@ Application code depends on an `LLMProvider` protocol. `GeminiLLMProvider` conta
 
 ## Future Razorpay adapter
 
-A future adapter will operate in Razorpay Test Mode only. It will validate webhook HMAC signatures over raw request bytes, persist provider event IDs, acknowledge quickly, and dispatch idempotent background processing. Duplicate or out-of-order events must not duplicate recovery cases, links, retries, contacts, or attribution. No Razorpay API call exists in Phase 1.
+A future adapter will operate in Razorpay Test Mode only. It will validate webhook HMAC signatures over raw request bytes, persist provider event IDs, acknowledge quickly, and dispatch idempotent background processing. Duplicate or out-of-order events must not duplicate recovery cases, links, retries, contacts, or attribution. No Razorpay API call exists through Phase 2.
 
 ## Audit architecture
 
 `AuditEvent` is append-oriented and stores a correlation UUID, entity reference, actor, event type, UTC timestamp, and redacted JSON metadata. Domain services—not UI prose and not Gemini—will emit audit events at transaction boundaries. Secrets, request headers, raw payment payloads, PAN, CVV, OTP, and unnecessary PII are forbidden from metadata. A later milestone will add transactionally consistent audit creation and retention rules.
-

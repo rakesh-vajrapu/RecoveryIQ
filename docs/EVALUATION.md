@@ -2,23 +2,21 @@
 
 ## Objective
 
-RecoverIQ will be evaluated as a recovery policy, not merely as a classifier. Every strategy must run on the same held-out payment scenarios and hidden environment outcomes. Reported values will be generated artifacts from versioned code, configuration, data seed, and model artifacts. No benchmark numbers exist in Phase 1.
+RecoverIQ will be evaluated as a recovery policy, not merely as a classifier. Every strategy must run on the same held-out payment scenarios and hidden environment outcomes. Reported values are generated artifacts from versioned code, configuration, seed, and later model artifacts. Phase 2 establishes simulator and baseline numbers only; it makes no model-performance claim.
 
 ## Data split and leakage controls
 
-Simulation will generate timestamped recurring-payment histories and degradation incidents from a hidden environment. Observed features available to a decision at time `t` will be separated from the hidden probability that generates its later outcome. Training, validation, calibration, threshold selection, and test data will use temporal boundaries. Random row splits are forbidden because they leak customer history, future issuer health, and incident outcomes.
+Simulation generates timestamped recurring-payment histories and degradation incidents from a hidden environment. Observed features available to a decision at time `t` are separated from the hidden state that generates later outcomes. Event delivery order, explicit observation schemas, and leakage tests prevent future events, incident truth, true causes, latent customer state, and response probabilities from reaching policies. Future training, validation, calibration, threshold selection, and test data will use temporal boundaries. Random row splits are forbidden because they leak customer history, future issuer health, and incident outcomes.
 
 The final test interval remains untouched until the strategy and policy configuration are frozen. Seeds, scenario configuration, package lockfiles, code revision, and generated artifacts will be recorded.
 
 ## Strategies
 
-All strategies receive identical cases and outcome randomness:
+Phase 2 strategies receive identical cases and paired outcome randomness:
 
 1. **Fixed Retry:** retry after one predetermined delay.
 2. **Retry + Generic Reminder:** the same retry policy plus a basic policy-permitted contact.
-3. **RecoverIQ:** customer and payment context, degradation evidence, action-conditioned recovery prediction, calibrated probabilities, ERV scoring, deterministic policy, confidence gating, and abstention.
-
-The evaluator, not the strategy, owns hidden ground truth and outcome generation. This prevents RecoverIQ from selecting actions using the exact hidden probability it is meant to estimate.
+RecoverIQ is intentionally absent until a later milestone. The evaluator, not the strategy, owns hidden ground truth. Deterministic outcome draws omit policy identity, so equivalent actions at the same time share a draw; differing prior interventions may still change their response probability. The initial benchmark command writes one experiment containing both policies and never regenerates customer or incident state between them.
 
 ## Financial measures
 
@@ -32,11 +30,11 @@ Attribution is at most once per payment/case. Values use integer minor currency 
 
 ## Operational and safety measures
 
-The report also includes unnecessary retries, customer-contact count, actions by type, average actions per case, human-review rate, abstention rate, policy violations, decision latency, throughput, Gemini calls, and fallback rate. A strategy that increases gross recovery while violating policy or dramatically increasing contacts is not considered superior.
+The Phase 2 report includes retries, customer contacts, payment links, human reviews, actions by type, average actions per failed/recovered case, time to recovery, intervention cost, and friction cost. A strategy that increases gross recovery while dramatically increasing interventions is not automatically superior.
 
 ## Predictive quality
 
-Action-conditioned predictions will be reported with Brier score, reliability curves, expected calibration error, and discrimination metrics where useful. Calibration is fit only on validation data. SHAP may explain LightGBM feature contributions but will not be treated as causal evidence.
+No predictive metric is calculated in Phase 2 because no model exists. A future action-conditioned model will be reported with Brier score, reliability curves, expected calibration error, and discrimination metrics where useful. Calibration will be fit only on validation data.
 
 ## Degradation quality
 
@@ -48,5 +46,4 @@ Aggregate point estimates will be accompanied by uncertainty across multiple det
 
 ## Reproduction artifact
 
-The future benchmark command will write a machine-readable result containing schema version, timestamp, git revision, seed/config hash, split boundaries, strategy configuration, model artifact hashes, and every displayed metric. The UI will consume that artifact and label it **SIMULATED**. Phase 1 creates no performance artifact and makes no performance claim.
-
+The Phase 2 benchmark writes a manifest, observable and ground-truth Parquet data, baseline outcomes, and sanity analysis under `artifacts/simulations/<experiment-id>/`. It records simulator version, logical timestamp, seed, configuration/hash, scenario digest, entity counts, and artifact names. Generated artifacts and all displayed financial values must be labelled **SIMULATED**. Later model benchmarks will add code revision, temporal splits, and model hashes.
