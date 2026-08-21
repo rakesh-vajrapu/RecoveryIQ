@@ -22,6 +22,16 @@ Exit: all feasible local checks pass without Docker or external credentials.
 
 Exit: same seed/config produces the same dataset and baseline outcomes.
 
+## 2.5. Simulator robustness — complete
+
+- [x] Pre-register development, validation, and reserved final seed groups.
+- [x] Run multi-seed baselines with distribution summaries and confidence intervals.
+- [x] Add heterogeneous incident severity, duration, traffic exposure, and error shifts.
+- [x] Audit nudge causality, failure-reason triviality, counterfactual randomness, costs, artifacts, and temporal leakage.
+- [x] Run bounded configuration sensitivity and publish machine-readable/Markdown reports.
+
+Exit: development and validation findings reproduce without using final seeds.
+
 ## 3. Degradation detection
 
 - [ ] Implement rolling health aggregates, historical baselines, scope selection, and incident lifecycle.

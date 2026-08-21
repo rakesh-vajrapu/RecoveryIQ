@@ -6,6 +6,7 @@ import pytest
 
 from recoveriq_simulator.enums import (
     ActionType,
+    IncidentSeverity,
     InstrumentState,
     PaymentMethod,
     TrueFailureCause,
@@ -90,7 +91,10 @@ def test_incident_clearance_changes_retry_probability() -> None:
         end_at=NOW + timedelta(hours=8),
         payment_method=PaymentMethod.UPI,
         issuer="ISSUER_B",
+        severity_class=IncidentSeverity.CRITICAL,
         severity=0.7,
+        traffic_exposure_fraction=1.0,
+        error_shift_strength=1.0,
         baseline_health=0.95,
         degraded_health=0.285,
         dominant_failure_cause=TrueFailureCause.ISSUER_DEGRADATION,
@@ -137,6 +141,98 @@ def test_expired_instrument_differs_from_temporary_network_failure() -> None:
         prior_contacts=0,
     )
     assert network > expired * 10
+
+
+def test_method_update_is_more_useful_than_retry_for_expired_instrument() -> None:
+    model = RecoveryProbabilityModel()
+    truth = _truth(TrueFailureCause.INVALID_INSTRUMENT, InstrumentState.EXPIRED)
+    retry = model.probability(
+        truth=truth,
+        customer=_customer(),
+        action=_action(ActionType.RETRY_LATER, 6),
+        incident=None,
+        hours_since_failure=6,
+        retry_number=1,
+        prior_contacts=0,
+    )
+    update = model.probability(
+        truth=truth,
+        customer=_customer(),
+        action=_action(ActionType.REQUEST_PAYMENT_METHOD_UPDATE, 1),
+        incident=None,
+        hours_since_failure=1,
+        retry_number=0,
+        prior_contacts=0,
+    )
+    assert update > retry * 20
+
+
+def test_nudge_does_not_repair_infrastructure_failure() -> None:
+    model = RecoveryProbabilityModel()
+    for cause in (
+        TrueFailureCause.ISSUER_DEGRADATION,
+        TrueFailureCause.NETWORK_INSTABILITY,
+    ):
+        probability = model.probability(
+            truth=_truth(cause, InstrumentState.VALID),
+            customer=_customer(),
+            action=_action(ActionType.SEND_NUDGE, 0.1),
+            incident=None,
+            hours_since_failure=0.1,
+            retry_number=0,
+            prior_contacts=0,
+        )
+        assert probability < 0.01
+
+
+def test_responsive_customer_benefits_more_from_nudge() -> None:
+    model = RecoveryProbabilityModel()
+    truth = _truth(TrueFailureCause.CUSTOMER_CONFIRMATION, InstrumentState.VALID)
+    low = _customer().model_copy(update={"nudge_responsiveness": 0.05})
+    high = _customer().model_copy(update={"nudge_responsiveness": 0.95})
+    high_probability = model.probability(
+        truth=truth,
+        customer=high,
+        action=_action(ActionType.SEND_NUDGE, 0.1),
+        incident=None,
+        hours_since_failure=0.1,
+        retry_number=0,
+        prior_contacts=0,
+    )
+    low_probability = model.probability(
+        truth=truth,
+        customer=low,
+        action=_action(ActionType.SEND_NUDGE, 0.1),
+        incident=None,
+        hours_since_failure=0.1,
+        retry_number=0,
+        prior_contacts=0,
+    )
+    assert high_probability > low_probability
+
+
+def test_extremely_long_wait_is_not_always_optimal_for_network_failure() -> None:
+    model = RecoveryProbabilityModel()
+    truth = _truth(TrueFailureCause.NETWORK_INSTABILITY, InstrumentState.VALID)
+    six_hours = model.probability(
+        truth=truth,
+        customer=_customer(),
+        action=_action(ActionType.RETRY_LATER, 6),
+        incident=None,
+        hours_since_failure=6,
+        retry_number=1,
+        prior_contacts=0,
+    )
+    one_week = model.probability(
+        truth=truth,
+        customer=_customer(),
+        action=_action(ActionType.RETRY_LATER, 168),
+        incident=None,
+        hours_since_failure=168,
+        retry_number=1,
+        prior_contacts=0,
+    )
+    assert six_hours > one_week
 
 
 def test_revenue_attribution_occurs_once() -> None:

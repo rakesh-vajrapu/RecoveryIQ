@@ -8,7 +8,7 @@ The central product insight is simple: **before retrying one failed payment, det
 
 ## Current status
 
-Phase 0–2 foundation and deterministic simulator are implemented:
+Phase 0–2.5 foundation, deterministic simulator, and robustness validation are implemented:
 
 - FastAPI health API with typed, secret-safe configuration;
 - portable SQLAlchemy 2 domain foundation and initial Alembic migration;
@@ -24,6 +24,8 @@ Phase 0–2 foundation and deterministic simulator are implemented:
 - synthetic multi-merchant payments, failure families, and issuer degradation incidents;
 - fixed-retry and reminder-plus-retry baselines with paired counterfactual draws;
 - reproducible Parquet/JSON experiment artifacts, sanity analysis, and baseline metrics.
+- pre-registered development/validation/final seed groups and multi-seed confidence intervals;
+- heterogeneous incident severity/duration/volume, causal nudge audits, cost regimes, sensitivity analysis, and machine-checkable leakage boundaries.
 
 Not implemented yet: statistical degradation detection, recovery ML, intelligent RecoverIQ action selection, executable production recovery, Razorpay APIs, production Gemini prompts, and operational dashboards. The UI intentionally shows no recovery metrics.
 
@@ -118,10 +120,14 @@ No worker or Redis instance is required when `CELERY_TASK_ALWAYS_EAGER=true`.
 ```powershell
 uv sync --project simulator --dev --locked
 uv run --project simulator python -m recoveriq_simulator.cli benchmark --seed 20260821
+uv run --project simulator python -m recoveriq_simulator.cli benchmark-suite --group development
+uv run --project simulator python -m recoveriq_simulator.cli benchmark-suite --group validation
+uv run --project simulator python -m recoveriq_simulator.cli quality-report --seed 20260821
+uv run --project simulator python -m recoveriq_simulator.cli sensitivity
 uv run --project simulator python -m recoveriq_simulator.cli inspect <experiment-id>
 ```
 
-The default benchmark evaluates 20,000 attempts and writes ignored artifacts below `artifacts/simulations/`. All financial outputs are synthetic. See [Simulator](docs/SIMULATOR.md) for the hidden-state boundary and assumptions.
+The default benchmark evaluates 20,000 attempts and writes ignored artifacts below `artifacts/simulations/`. Multi-seed and sensitivity reports use adjacent ignored directories. Reserved final seeds are not run during development. All financial outputs are synthetic. See [Simulator](docs/SIMULATOR.md) and [Simulator Validation](docs/SIMULATOR_VALIDATION.md).
 
 ## Full PostgreSQL and Redis environment
 

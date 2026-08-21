@@ -4,7 +4,12 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from recoveriq_simulator.enums import InstrumentState, PaymentMethod, TrueFailureCause
+from recoveriq_simulator.enums import (
+    IncidentSeverity,
+    InstrumentState,
+    PaymentMethod,
+    TrueFailureCause,
+)
 from recoveriq_simulator.observation import PublicScenario
 
 
@@ -43,7 +48,10 @@ class DegradationIncidentGroundTruth(HiddenModel):
     end_at: datetime
     payment_method: PaymentMethod
     issuer: str
+    severity_class: IncidentSeverity
     severity: float = Field(gt=0, lt=1)
+    traffic_exposure_fraction: float = Field(gt=0, le=1)
+    error_shift_strength: float = Field(gt=0, le=2)
     baseline_health: float = Field(gt=0, le=1)
     degraded_health: float = Field(ge=0, lt=1)
     dominant_failure_cause: TrueFailureCause

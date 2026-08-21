@@ -46,6 +46,25 @@ class InstrumentState(StrEnum):
     INACTIVE = "INACTIVE"
 
 
+class IncidentSeverity(StrEnum):
+    MILD = "MILD"
+    MODERATE = "MODERATE"
+    SEVERE = "SEVERE"
+    CRITICAL = "CRITICAL"
+
+
+class IncidentSeverityProfile(StrEnum):
+    SUBTLE = "SUBTLE"
+    BALANCED = "BALANCED"
+    HARSH = "HARSH"
+
+
+class CostRegime(StrEnum):
+    LOW_FRICTION = "LOW_FRICTION"
+    BALANCED = "BALANCED"
+    HIGH_FRICTION = "HIGH_FRICTION"
+
+
 class ActionType(StrEnum):
     WAIT = "WAIT"
     RETRY_NOW = "RETRY_NOW"

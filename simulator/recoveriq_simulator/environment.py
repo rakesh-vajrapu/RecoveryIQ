@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 from collections import Counter
 from datetime import datetime
 from statistics import fmean
@@ -22,6 +21,7 @@ from recoveriq_simulator.ground_truth import (
 )
 from recoveriq_simulator.observation import PaymentObservation, RecoveryAction
 from recoveriq_simulator.policies.base import RecoveryPolicy
+from recoveriq_simulator.randomness import keyed_uniform
 from recoveriq_simulator.results import (
     BaselineMetrics,
     PaymentPolicyOutcome,
@@ -60,6 +60,9 @@ class AttributionLedger:
 class RecoveryProbabilityModel:
     """Deterministic hidden-state response surface for recovery actions."""
 
+    def __init__(self, nudge_effect_strength: float = 1.0) -> None:
+        self.nudge_effect_strength = nudge_effect_strength
+
     def probability(
         self,
         *,
@@ -84,41 +87,77 @@ class RecoveryProbabilityModel:
             probability = self._retry_probability(cause, hours_since_failure, incident)
             probability += 0.10 * (customer.retry_sensitivity - 0.5)
             probability -= 0.045 * max(0, retry_number - 1)
-            if prior_contacts:
+            if prior_contacts and cause in {
+                TrueFailureCause.LIQUIDITY_SHORTFALL,
+                TrueFailureCause.AUTHENTICATION_FRICTION,
+                TrueFailureCause.CUSTOMER_CONFIRMATION,
+                TrueFailureCause.UNKNOWN_TEMPORARY,
+            }:
                 probability += 0.06 * responsiveness
             if truth.instrument_state in {InstrumentState.EXPIRED, InstrumentState.INACTIVE}:
                 probability *= 0.14
         elif action.action_type is ActionType.SEND_NUDGE:
             probability = {
-                TrueFailureCause.LIQUIDITY_SHORTFALL: 0.08 + 0.30 * responsiveness,
-                TrueFailureCause.ISSUER_DEGRADATION: 0.03,
-                TrueFailureCause.AUTHENTICATION_FRICTION: 0.14 + 0.24 * responsiveness,
-                TrueFailureCause.INVALID_INSTRUMENT: 0.07 + 0.13 * responsiveness,
-                TrueFailureCause.INACTIVE_MANDATE: 0.12 + 0.24 * responsiveness,
-                TrueFailureCause.NETWORK_INSTABILITY: 0.04,
-                TrueFailureCause.CUSTOMER_CONFIRMATION: 0.20 + 0.52 * responsiveness,
-                TrueFailureCause.UNKNOWN_TEMPORARY: 0.10 + 0.18 * responsiveness,
-            }[cause]
+                TrueFailureCause.LIQUIDITY_SHORTFALL: 0.015
+                + 0.14 * responsiveness
+                + 0.015 * min(hours_since_failure / 24.0, 1.0),
+                TrueFailureCause.ISSUER_DEGRADATION: 0.003,
+                TrueFailureCause.AUTHENTICATION_FRICTION: 0.08 + 0.25 * responsiveness,
+                TrueFailureCause.INVALID_INSTRUMENT: 0.012 + 0.035 * responsiveness,
+                TrueFailureCause.INACTIVE_MANDATE: 0.02 + 0.06 * responsiveness,
+                TrueFailureCause.NETWORK_INSTABILITY: 0.004,
+                TrueFailureCause.CUSTOMER_CONFIRMATION: 0.10 + 0.50 * responsiveness,
+                TrueFailureCause.UNKNOWN_TEMPORARY: 0.04 + 0.12 * responsiveness,
+            }[cause] * self.nudge_effect_strength
         elif action.action_type is ActionType.CREATE_PAYMENT_LINK:
-            probability = 0.23 + 0.32 * responsiveness + 0.12 * update
+            if cause in {
+                TrueFailureCause.INVALID_INSTRUMENT,
+                TrueFailureCause.INACTIVE_MANDATE,
+                TrueFailureCause.AUTHENTICATION_FRICTION,
+                TrueFailureCause.CUSTOMER_CONFIRMATION,
+            }:
+                probability = 0.18 + 0.30 * responsiveness + 0.12 * update
+            elif cause in {
+                TrueFailureCause.ISSUER_DEGRADATION,
+                TrueFailureCause.NETWORK_INSTABILITY,
+            }:
+                probability = (
+                    0.025 + 0.04 * responsiveness if incident else 0.16 + 0.14 * responsiveness
+                )
+            else:
+                probability = 0.11 + 0.18 * responsiveness
         elif action.action_type is ActionType.REQUEST_PAYMENT_METHOD_UPDATE:
-            probability = 0.12 + 0.58 * update
             if cause in {
                 TrueFailureCause.INVALID_INSTRUMENT,
                 TrueFailureCause.INACTIVE_MANDATE,
             }:
-                probability += 0.18
+                probability = 0.30 + 0.58 * update
+            else:
+                probability = 0.025 + 0.09 * update
         elif action.action_type is ActionType.OFFER_ALTERNATE_METHOD:
-            probability = 0.30 + 0.32 * update
             if cause in {
                 TrueFailureCause.ISSUER_DEGRADATION,
                 TrueFailureCause.INVALID_INSTRUMENT,
                 TrueFailureCause.INACTIVE_MANDATE,
                 TrueFailureCause.NETWORK_INSTABILITY,
             }:
-                probability += 0.12
+                probability = 0.31 + 0.34 * update
+            elif cause is TrueFailureCause.LIQUIDITY_SHORTFALL:
+                probability = 0.06 + 0.10 * update
+            else:
+                probability = 0.17 + 0.22 * update
         else:
-            probability = 0.26 + 0.30 * responsiveness + 0.16 * update
+            if (
+                cause
+                in {
+                    TrueFailureCause.ISSUER_DEGRADATION,
+                    TrueFailureCause.NETWORK_INSTABILITY,
+                }
+                and incident
+            ):
+                probability = 0.025
+            else:
+                probability = 0.20 + 0.26 * responsiveness + 0.12 * update
 
         probability -= 0.025 * max(0, prior_contacts - 1)
         return max(0.005, min(0.95, probability))
@@ -140,7 +179,11 @@ class RecoveryProbabilityModel:
         if cause is TrueFailureCause.INACTIVE_MANDATE:
             return 0.018
         if cause is TrueFailureCause.NETWORK_INSTABILITY:
-            return 0.09 if incident else min(0.72, 0.36 + hours_since_failure / 36.0)
+            if incident:
+                return 0.07
+            improvement = min(0.34, hours_since_failure / 18.0)
+            long_wait_penalty = min(0.24, max(0.0, hours_since_failure - 24.0) / 360.0)
+            return 0.32 + improvement - long_wait_penalty
         if cause is TrueFailureCause.CUSTOMER_CONFIRMATION:
             return 0.08
         return min(0.46, 0.18 + hours_since_failure / 60.0)
@@ -150,7 +193,7 @@ class RecoveryEnvironment:
     def __init__(self, scenario: GeneratedScenario, config: SimulatorConfig) -> None:
         self.scenario = scenario
         self.config = config
-        self.probability_model = RecoveryProbabilityModel()
+        self.probability_model = RecoveryProbabilityModel(config.nudge_effect_strength)
         self._subscriptions = {
             subscription.subscription_id: subscription
             for subscription in scenario.public.subscriptions
@@ -176,7 +219,7 @@ class RecoveryEnvironment:
         ledger: AttributionLedger,
     ) -> PaymentPolicyOutcome:
         queue = EventQueue()
-        for action in policy.plan(observation, self.config.costs):
+        for action in policy.plan(observation, self.config.resolved_costs):
             queue.push(action.execute_at, EventType.RECOVERY_ACTION_EXECUTED, action)
 
         truth = self.scenario.ground_truth.payments[observation.payment_id]
@@ -230,7 +273,7 @@ class RecoveryEnvironment:
                 retry_number=retry_count,
                 prior_contacts=prior_contacts,
             )
-            if self._paired_uniform(observation.payment_id, action, retry_count) < probability:
+            if self.outcome_uniform(observation.payment_id, action, retry_count) < probability:
                 attribution = RecoveryAttribution(
                     payment_id=observation.payment_id,
                     action_id=action.action_id,
@@ -278,23 +321,28 @@ class RecoveryEnvironment:
             if incident.issuer == subscription.issuer
             and incident.payment_method is observation.payment_method
             and incident.start_at <= at < incident.end_at
+            and keyed_uniform(
+                self.config.seed,
+                "incident-exposure",
+                incident.incident_id,
+                observation.payment_id,
+            )
+            < incident.traffic_exposure_fraction
         ]
         return max(matching, key=lambda incident: incident.severity, default=None)
 
-    def _paired_uniform(self, payment_id: str, action: RecoveryAction, retry_count: int) -> float:
+    def outcome_uniform(self, payment_id: str, action: RecoveryAction, retry_count: int) -> float:
         # Policy name/action ID are intentionally absent. Identical retry actions
         # share the same counterfactual draw across paired baseline evaluations.
-        key = "|".join(
-            (
-                str(self.config.seed),
-                payment_id,
-                action.action_type.value,
-                action.execute_at.isoformat(),
-                str(retry_count),
-            )
+        return keyed_uniform(
+            self.config.seed,
+            "recovery-outcome-v1",
+            payment_id,
+            action.action_type.value,
+            action.execute_at.isoformat(),
+            retry_count,
+            EventType.RECOVERY_ACTION_EXECUTED.value,
         )
-        digest = hashlib.sha256(key.encode("utf-8")).digest()
-        return int.from_bytes(digest[:8], "big") / 2**64
 
     @staticmethod
     def _metrics(policy_name: str, outcomes: tuple[PaymentPolicyOutcome, ...]) -> BaselineMetrics:

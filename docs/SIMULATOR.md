@@ -2,7 +2,7 @@
 
 ## Purpose and boundary
 
-Phase 2 provides a seeded, in-process recurring-payment environment for honest policy comparison. It is not a CSV faker and it is not connected to Razorpay. All issuers, merchants, customers, subscriptions, failures, prices, and recovery outcomes are synthetic.
+Phase 2 provides a seeded, in-process recurring-payment environment for honest policy comparison. Phase 2.5 hardens its incident, causal-response, cost, leakage, and multi-seed methodology in simulator version `0.3.0`. It is not a CSV faker and it is not connected to Razorpay. All issuers, merchants, customers, subscriptions, failures, prices, and recovery outcomes are synthetic.
 
 The package has two deliberately separate data surfaces:
 
@@ -61,7 +61,9 @@ Hidden causes overlap with observable reasons. A configurable fraction is ambigu
 
 ## Degradation incidents
 
-Incidents affect one payment-method and synthetic-issuer scope for 12–36 hours by default. They reduce initial success probability and shift the hidden failure mix toward issuer or network causes. Policies never receive an `active_incident` flag. Incident truth is emitted separately so a future detector can be evaluated without contaminating policy inputs.
+Incidents affect one payment-method and synthetic-issuer scope. They draw from `MILD`, `MODERATE`, `SEVERE`, and `CRITICAL` classes, each with probabilistic health-loss and traffic-exposure ranges. An independent duration mixture produces short (roughly 0.5–4.5h), medium (4.5–19h), and occasional long (19–64h) incidents. Start time, method, issuer, dominant cause, error-shift strength, and affected traffic fraction vary. These are synthetic assumptions and are independent of baseline retry timing.
+
+Policies never receive an `active_incident` flag. Semantic keyed incident membership permits low-volume incidents without mutable evaluation-order effects. Incident truth is emitted separately so a future detector can be evaluated without contaminating policy inputs.
 
 ## Action semantics and outcome model
 
@@ -75,7 +77,9 @@ Recovery probability is a bounded response surface over hidden cause, customer r
 - reminders depend on hidden customer responsiveness;
 - repeated attempts and contacts accumulate friction.
 
-No action always succeeds. Outcome draws are derived from a SHA-256 key containing seed, payment, action type, execution timestamp, and retry ordinal. Policy identity and action ID are excluded, so equivalent retries share counterfactual randomness across paired baselines.
+No action always succeeds. Generic nudges are near-zero for issuer/network causes, limited for invalid instruments, and heterogeneous for customer-context causes. Infrastructure-related prior contact does not boost a later retry. Very long waits can lose value after transient network recovery.
+
+Outcome draws are derived from a SHA-256 key containing seed, payment, semantic action type, execution timestamp, retry ordinal, and event type. Policy identity, action ID, cost, logging, iteration order, and unused candidates are excluded, so equivalent retries share counterfactual randomness across paired baselines.
 
 ## Baselines
 
@@ -87,7 +91,7 @@ Both policies are evaluated over the same failure observations and hidden enviro
 
 ## Costs and attribution
 
-All monetary values use integer minor INR units. Configured retry, message, payment-link, method-update, alternate-method, human-review, contact-friction, and retry-friction values are synthetic evaluation assumptions—not Razorpay prices. Net value is exactly:
+All monetary values use integer minor INR units. `LOW_FRICTION`, `BALANCED`, and `HIGH_FRICTION` regimes configure retry, message, payment-link, method-update, alternate-method, human-review, contact-friction, retry-friction, nonlinear contact growth, and a friction cap. They are synthetic evaluation assumptions—not Razorpay prices. Custom explicit costs remain possible. Net value is exactly:
 
 `gross recovered amount - executed intervention cost - executed friction cost`
 
@@ -101,6 +105,10 @@ From the repository root:
 uv sync --project simulator --dev --locked
 uv run --project simulator python -m recoveriq_simulator.cli generate --seed 20260821
 uv run --project simulator python -m recoveriq_simulator.cli benchmark --seed 20260821
+uv run --project simulator python -m recoveriq_simulator.cli benchmark-suite --group development
+uv run --project simulator python -m recoveriq_simulator.cli benchmark-suite --group validation
+uv run --project simulator python -m recoveriq_simulator.cli quality-report --seed 20260821
+uv run --project simulator python -m recoveriq_simulator.cli sensitivity
 uv run --project simulator python -m recoveriq_simulator.cli inspect <experiment-id>
 ```
 
@@ -109,20 +117,24 @@ The same simulator version, seed, and configuration produces the same experiment
 Experiments are written to `artifacts/simulations/<experiment-id>/` with:
 
 - `manifest.json`
-- `observable_events.parquet`
-- `payments.parquet`
-- `subscriptions.parquet`
-- `incident_ground_truth.parquet`
-- `outcome_ground_truth.parquet`
+- `observable/events.parquet`
+- `observable/payments.parquet`
+- `observable/subscriptions.parquet`
+- `observable/failure_observations.parquet`
+- `ground_truth/incidents.parquet`
+- `ground_truth/outcomes.parquet`
 - `baseline_results.json`
 - `analysis.json`
+- `quality_report.md`
 
 Generated datasets are ignored by Git.
 
 ## Sanity analysis
 
-The benchmark reports amount quantiles; payment-method, issuer, and failure distributions; overall failure rate; incident duration and count; observed success during/outside incidents; policy recovery/action/contact outcomes; and named assertions. The command fails if payment values are nonpositive, successes or failures disappear, the failure fraction leaves configured bounds, incident windows are invalid, incident deterioration is absent, one reason exceeds 75%, or a baseline recovers every failure.
+The benchmark reports amount/customer-history distributions; merchant/method/issuer mixes; grouped failure rates; observable and hidden failure distributions; missingness; incident severity, duration, coverage, and success; action/nudge effects; failure-reason entropy and mutual information; and baseline outcomes. Named gates cover payment validity, plausible failure rate, incident response, failure diversity/information, and nontrivial recovery.
+
+Multi-seed suite artifacts are written below `artifacts/benchmark_suites/`; sensitivity artifacts use `artifacts/sensitivity/`. See [Simulator Validation](SIMULATOR_VALIDATION.md) for actual Phase 2.5 findings and the hidden action-semantics matrix.
 
 ## Limitations
 
-This simulator is a controlled synthetic benchmark, not evidence of real provider or customer behaviour. The probability equations are hand-designed rather than estimated from production data. Customer state is static within this first version, apart from its time-dependent effects. Billing cadence is monthly, currency is INR, issuer scope is small, and recovery has no provider execution latency. A single seed is useful for reproducibility but not statistical confidence; later final evaluation must freeze strategies and report multiple seeds or intervals. Phase 2 baseline results must always be labelled `SIMULATED`.
+This simulator is a controlled synthetic benchmark, not evidence of real provider or customer behaviour. The probability equations are hand-designed rather than estimated from production data. Customer state is mostly static, billing cadence is monthly, currency is INR, issuer scope is small, and recovery has no provider execution latency. Incident coverage is deliberately low and some incidents may have no useful sample. Multi-seed intervals describe simulator variation, not real-world confidence. Every result must remain labelled `SIMULATED`.

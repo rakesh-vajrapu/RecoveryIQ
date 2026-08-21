@@ -63,3 +63,13 @@ This file records failures actually observed while building or running RecoverIQ
 - **Fix/adaptation:** select evenly spaced candidate indexes across the complete configured horizon. The same 1,000-attempt command then covered incident windows and passed all sanity checks.
 - **Regression coverage:** simulator tests require incident-overlapping payments and lower mean initial success probability during incidents; artifact analysis must pass the deterioration assertion.
 - **Lesson:** scale controls for temporal simulations must preserve the time distribution, not only the row count.
+
+## 2026-08-22 — Simulator validation: sparse incident samples broke realized-rate gates
+
+- **Context:** first Phase 2.5 test and small multi-seed runs after adding variable traffic exposure and short incidents.
+- **Symptom:** a valid scenario failed the incident-deterioration gate when a small realized Bernoulli sample happened not to deteriorate; another tiny suite had no incident-overlapping payment and rejected a `null` inside-incident rate.
+- **Root cause:** validation conflated the configured probability response with noisy realized rates and assumed every scaled environment contained an exposed incident payment.
+- **Investigation:** hidden initial success probabilities were lower during incidents even when the small realized success fraction was not; coverage counts confirmed zero overlap in the second case.
+- **Fix/adaptation:** gate incident mechanics on the mean hidden initial probability while continuing to report realized rates, and represent unavailable coverage rates explicitly as `null` in small reports. Full 20,000-attempt suites retain populated realized-rate aggregates.
+- **Regression coverage:** tests cover severity/duration diversity, incident probability deterioration, small multi-seed execution, and optional coverage metrics.
+- **Lesson:** simulator integrity assertions should test the response mechanism; empirical realization belongs in adequately powered reports with explicit denominators.

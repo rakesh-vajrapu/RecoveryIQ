@@ -14,6 +14,8 @@ from recoveriq_simulator.enums import (
     EventType,
     FailureReason,
     FailureSource,
+    IncidentSeverity,
+    IncidentSeverityProfile,
     InstrumentState,
     PaymentMethod,
     TrueFailureCause,
@@ -37,6 +39,7 @@ from recoveriq_simulator.observation import (
     PublicScenario,
     SubscriptionRecord,
 )
+from recoveriq_simulator.randomness import keyed_uniform
 
 ISSUERS = ("ISSUER_A", "ISSUER_B", "ISSUER_C", "ISSUER_D")
 METHODS = tuple(PaymentMethod)
@@ -275,19 +278,49 @@ class ScenarioGenerator:
         return records, truth
 
     def _generate_incidents(self) -> list[DegradationIncidentGroundTruth]:
+        severity_weights = {
+            IncidentSeverityProfile.SUBTLE: [0.60, 0.30, 0.09, 0.01],
+            IncidentSeverityProfile.BALANCED: [0.42, 0.33, 0.20, 0.05],
+            IncidentSeverityProfile.HARSH: [0.16, 0.29, 0.35, 0.20],
+        }[self.config.incident_severity_profile]
+        severity_ranges = {
+            IncidentSeverity.MILD: (0.05, 0.17),
+            IncidentSeverity.MODERATE: (0.17, 0.36),
+            IncidentSeverity.SEVERE: (0.36, 0.62),
+            IncidentSeverity.CRITICAL: (0.62, 0.88),
+        }
+        exposure_ranges = {
+            IncidentSeverity.MILD: (0.22, 0.66),
+            IncidentSeverity.MODERATE: (0.38, 0.84),
+            IncidentSeverity.SEVERE: (0.54, 0.96),
+            IncidentSeverity.CRITICAL: (0.72, 1.0),
+        }
+        severity_classes = tuple(IncidentSeverity)
         incidents: list[DegradationIncidentGroundTruth] = []
         for index in range(self.config.incident_count):
             start_offset_hours = float(
-                self.rng.uniform(24, max(25, self.config.horizon_days * 24 - 48))
+                self.rng.uniform(6, max(7, self.config.horizon_days * 24 - 12))
             )
-            duration_hours = float(self.rng.uniform(12, 36))
+            duration_family = _choice(
+                self.rng,
+                ("SHORT", "MEDIUM", "LONG"),
+                [0.34, 0.51, 0.15],
+            )
+            duration_bounds = {
+                "SHORT": (0.5, 4.5),
+                "MEDIUM": (4.5, 19.0),
+                "LONG": (19.0, 64.0),
+            }[duration_family]
+            duration_hours = float(self.rng.uniform(*duration_bounds))
             start_at = self.config.start_time + timedelta(hours=start_offset_hours)
             end_at = min(
                 start_at + timedelta(hours=duration_hours),
                 self.config.start_time + timedelta(days=self.config.horizon_days),
             )
-            severity = float(self.rng.uniform(0.38, 0.72))
-            baseline = float(self.rng.uniform(0.9, 0.97))
+            severity_class = _choice(self.rng, severity_classes, severity_weights)
+            severity = float(self.rng.uniform(*severity_ranges[severity_class]))
+            exposure = float(self.rng.uniform(*exposure_ranges[severity_class]))
+            baseline = float(self.rng.uniform(0.88, 0.98))
             dominant = _choice(
                 self.rng,
                 (
@@ -302,7 +335,10 @@ class ScenarioGenerator:
                     end_at=end_at,
                     payment_method=_choice(self.rng, METHODS),
                     issuer=_choice(self.rng, ISSUERS),
+                    severity_class=severity_class,
                     severity=severity,
+                    traffic_exposure_fraction=exposure,
+                    error_shift_strength=float(self.rng.uniform(0.35, 1.35)),
                     baseline_health=baseline,
                     degraded_health=baseline * (1 - severity),
                     dominant_failure_cause=dominant,
@@ -351,7 +387,7 @@ class ScenarioGenerator:
         subscription_truth: SubscriptionGroundTruth,
         active_incidents: dict[str, DegradationIncidentGroundTruth],
     ) -> tuple[PaymentRecord, PaymentGroundTruth, ObservedPaymentEvent]:
-        incident = self._matching_incident(due.subscription, active_incidents)
+        incident = self._matching_incident(due.subscription, due.payment_id, active_incidents)
         probability = self._initial_success_probability(
             due.subscription,
             merchant_truth,
@@ -442,7 +478,7 @@ class ScenarioGenerator:
         elif state is InstrumentState.UNSTABLE:
             probability *= 0.72
         if incident is not None:
-            probability *= 1 - 0.9 * incident.severity
+            probability *= 1 - 0.82 * incident.severity
         return float(np.clip(probability, 0.015, 0.985))
 
     def _select_failure_cause(
@@ -472,8 +508,9 @@ class ScenarioGenerator:
         elif subscription_truth.instrument_state is InstrumentState.UNSTABLE:
             weights[TrueFailureCause.NETWORK_INSTABILITY] += 0.35
         if incident is not None:
-            weights[incident.dominant_failure_cause] += 1.8 * incident.severity
-            weights[TrueFailureCause.NETWORK_INSTABILITY] += 0.6 * incident.severity
+            shift = incident.error_shift_strength * (0.4 + 1.6 * incident.severity)
+            weights[incident.dominant_failure_cause] += shift
+            weights[TrueFailureCause.NETWORK_INSTABILITY] += 0.28 * shift
 
         causes = tuple(weights)
         raw = np.array([weights[cause] for cause in causes])
@@ -517,7 +554,7 @@ class ScenarioGenerator:
         }
         if self.rng.random() < self.config.unknown_failure_rate:
             return FailureReason.UNKNOWN_TRANSIENT_ERROR, FailureSource.UNKNOWN
-        if self.rng.random() < 0.18:
+        if self.rng.random() < self.config.failure_reason_ambiguity_rate:
             overlaps = {
                 TrueFailureCause.LIQUIDITY_SHORTFALL: (
                     FailureReason.CUSTOMER_ACTION_REQUIRED,
@@ -555,9 +592,10 @@ class ScenarioGenerator:
             return overlaps[cause]
         return primary[cause]
 
-    @staticmethod
     def _matching_incident(
+        self,
         subscription: SubscriptionRecord,
+        payment_id: str,
         active: dict[str, DegradationIncidentGroundTruth],
     ) -> DegradationIncidentGroundTruth | None:
         matching = [
@@ -565,6 +603,13 @@ class ScenarioGenerator:
             for incident in active.values()
             if incident.payment_method is subscription.payment_method
             and incident.issuer == subscription.issuer
+            and keyed_uniform(
+                self.config.seed,
+                "incident-exposure",
+                incident.incident_id,
+                payment_id,
+            )
+            < incident.traffic_exposure_fraction
         ]
         return max(matching, key=lambda item: item.severity, default=None)
 

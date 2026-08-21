@@ -9,20 +9,22 @@ from typing import Any
 import pandas as pd
 from pydantic import BaseModel
 
-from recoveriq_simulator.analysis import build_analysis
+from recoveriq_simulator.analysis import build_analysis, render_quality_markdown
 from recoveriq_simulator.config import SimulatorConfig
 from recoveriq_simulator.results import BenchmarkResult
 from recoveriq_simulator.scenario import GeneratedScenario, scenario_digest
 
 ARTIFACT_NAMES = (
     "manifest.json",
-    "observable_events.parquet",
-    "payments.parquet",
-    "subscriptions.parquet",
-    "incident_ground_truth.parquet",
-    "outcome_ground_truth.parquet",
+    "observable/events.parquet",
+    "observable/payments.parquet",
+    "observable/subscriptions.parquet",
+    "observable/failure_observations.parquet",
+    "ground_truth/incidents.parquet",
+    "ground_truth/outcomes.parquet",
     "baseline_results.json",
     "analysis.json",
+    "quality_report.md",
 )
 
 
@@ -38,17 +40,27 @@ def write_experiment(
     artifact_root: Path | None = None,
 ) -> Path:
     output = (artifact_root or default_artifact_root()) / config.experiment_id
-    output.mkdir(parents=True, exist_ok=True)
-    _write_parquet(output / "observable_events.parquet", scenario.public.observable_events)
-    _write_parquet(output / "payments.parquet", scenario.public.payments)
-    _write_parquet(output / "subscriptions.parquet", scenario.public.subscriptions)
-    _write_parquet(output / "incident_ground_truth.parquet", scenario.ground_truth.incidents)
+    observable = output / "observable"
+    ground_truth = output / "ground_truth"
+    observable.mkdir(parents=True, exist_ok=True)
+    ground_truth.mkdir(parents=True, exist_ok=True)
+    _write_parquet(observable / "events.parquet", scenario.public.observable_events)
+    _write_parquet(observable / "payments.parquet", scenario.public.payments)
+    _write_parquet(observable / "subscriptions.parquet", scenario.public.subscriptions)
     _write_parquet(
-        output / "outcome_ground_truth.parquet",
+        observable / "failure_observations.parquet",
+        scenario.public.failure_observations,
+    )
+    _write_parquet(ground_truth / "incidents.parquet", scenario.ground_truth.incidents)
+    _write_parquet(
+        ground_truth / "outcomes.parquet",
         tuple(scenario.ground_truth.payments.values()),
     )
     analysis = build_analysis(scenario, config, benchmark)
     _write_json(output / "analysis.json", analysis)
+    (output / "quality_report.md").write_text(
+        render_quality_markdown(analysis), encoding="utf-8", newline="\n"
+    )
     _write_json(
         output / "baseline_results.json",
         benchmark.model_dump(mode="json") if benchmark is not None else {"policies": []},
@@ -69,6 +81,11 @@ def write_experiment(
         "number_of_hidden_incidents": len(scenario.ground_truth.incidents),
         "output_artifact_names": list(ARTIFACT_NAMES),
         "configuration": config.model_dump(mode="json"),
+        "resolved_synthetic_costs": config.resolved_costs.model_dump(mode="json"),
+        "artifact_boundary": {
+            "observable": "policy-visible evidence only",
+            "ground_truth": "environment-owned; never direct model input",
+        },
     }
     _write_json(output / "manifest.json", manifest)
     return output
@@ -94,4 +111,5 @@ def _write_json(path: Path, value: Any) -> None:
     path.write_text(
         json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
         encoding="utf-8",
+        newline="\n",
     )

@@ -1,0 +1,12 @@
+{
+  "baseline_commit": "cc8fe0b09877e83758e08eef8c6e1a2d940aa439",
+  "configuration_hash": "4bf5b3384b16728e737a54712b33b9c5e36ff36f91ca577d10c1a9f9b2ac369e",
+  "experiment_id": "sim-v020-20260821-4bf5b3384b16",
+  "fixed_retry_recovered_payment_count": 936,
+  "number_of_failures": 2503,
+  "number_of_payment_attempts": 20000,
+  "reminder_then_fixed_retry_recovered_payment_count": 1356,
+  "scenario_digest": "a8c2167e8810517d7874c47fd5dad52439d74dab6b0f7db63d52fc6821f503cf",
+  "seed": 20260821,
+  "simulator_version": "0.2.0"
+}

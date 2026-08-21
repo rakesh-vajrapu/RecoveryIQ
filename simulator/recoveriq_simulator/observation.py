@@ -112,3 +112,39 @@ class PublicScenario(ObservableModel):
     payments: tuple[PaymentRecord, ...]
     observable_events: tuple[ObservedPaymentEvent, ...]
     failure_observations: tuple[PaymentObservation, ...]
+
+
+PAYMENT_OBSERVATION_FIELD_ALLOWLIST = frozenset(
+    {
+        "payment_id",
+        "subscription_id",
+        "customer_id",
+        "merchant_id",
+        "observed_at",
+        "failure_occurred_at",
+        "amount_minor",
+        "currency",
+        "payment_method",
+        "issuer",
+        "failure_reason",
+        "failure_source",
+        "attempt_number",
+        "subscription_prior_attempts",
+        "subscription_prior_successes",
+        "customer_prior_attempts",
+        "customer_prior_success_rate",
+        "recent_scope_attempts",
+        "recent_scope_success_rate",
+        "prior_events",
+    }
+)
+
+
+def assert_observation_schema_allowlisted() -> None:
+    actual = frozenset(PaymentObservation.model_fields)
+    if actual != PAYMENT_OBSERVATION_FIELD_ALLOWLIST:
+        added = sorted(actual - PAYMENT_OBSERVATION_FIELD_ALLOWLIST)
+        removed = sorted(PAYMENT_OBSERVATION_FIELD_ALLOWLIST - actual)
+        raise RuntimeError(
+            f"observation schema allowlist mismatch: added={added}, removed={removed}"
+        )

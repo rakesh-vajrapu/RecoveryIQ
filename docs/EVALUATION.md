@@ -2,7 +2,7 @@
 
 ## Objective
 
-RecoverIQ will be evaluated as a recovery policy, not merely as a classifier. Every strategy must run on the same held-out payment scenarios and hidden environment outcomes. Reported values are generated artifacts from versioned code, configuration, seed, and later model artifacts. Phase 2 establishes simulator and baseline numbers only; it makes no model-performance claim.
+RecoverIQ will be evaluated as a recovery policy, not merely as a classifier. Every strategy must run on the same held-out payment scenarios and hidden environment outcomes. Reported values are generated artifacts from versioned code, configuration, seed, and later model artifacts. Phase 2.5 validates simulator and baseline methodology only; it makes no model-performance claim.
 
 ## Data split and leakage controls
 
@@ -10,12 +10,21 @@ Simulation generates timestamped recurring-payment histories and degradation inc
 
 The final test interval remains untouched until the strategy and policy configuration are frozen. Seeds, scenario configuration, package lockfiles, code revision, and generated artifacts will be recorded.
 
+## Pre-registered seed groups
+
+- **Development:** `20260901`–`20260910`, available during implementation.
+- **Validation:** `20261001`–`20261010`, used for threshold or model selection after development choices exist.
+- **Final evaluation:** `20261101`–`20261120`, reserved for final reporting and not run during normal development.
+
+The groups are stable, explicit, and non-overlapping. The `robustness` CLI group is the development-plus-validation union (20 seeds). The `final` CLI path emits a prominent warning and requires `--acknowledge-final`. This is methodological discipline, not an access-control mechanism. Phase 2.5 executed development and validation only.
+
 ## Strategies
 
 Phase 2 strategies receive identical cases and paired outcome randomness:
 
 1. **Fixed Retry:** retry after one predetermined delay.
 2. **Retry + Generic Reminder:** the same retry policy plus a basic policy-permitted contact.
+
 RecoverIQ is intentionally absent until a later milestone. The evaluator, not the strategy, owns hidden ground truth. Deterministic outcome draws omit policy identity, so equivalent actions at the same time share a draw; differing prior interventions may still change their response probability. The initial benchmark command writes one experiment containing both policies and never regenerates customer or incident state between them.
 
 ## Financial measures
@@ -42,8 +51,8 @@ Incident evaluation uses simulator ground truth to measure precision, recall, fa
 
 ## Statistical reporting
 
-Aggregate point estimates will be accompanied by uncertainty across multiple deterministic seeds or bootstrap intervals where appropriate. Results will include scenario counts and denominators. If RecoverIQ underperforms a baseline, the result remains visible and prompts investigation rather than manual alteration.
+Aggregate point estimates include mean, median, sample standard deviation, minimum, maximum, and a normal `1.96 × sample standard error` 95% interval across deterministic seeds. No seed is manually discarded. Results include scenario counts and denominators. These intervals measure simulator-seed variation, not production uncertainty. If a future RecoverIQ strategy underperforms a baseline, the result remains visible.
 
 ## Reproduction artifact
 
-The Phase 2 benchmark writes a manifest, observable and ground-truth Parquet data, baseline outcomes, and sanity analysis under `artifacts/simulations/<experiment-id>/`. It records simulator version, logical timestamp, seed, configuration/hash, scenario digest, entity counts, and artifact names. Generated artifacts and all displayed financial values must be labelled **SIMULATED**. Later model benchmarks will add code revision, temporal splits, and model hashes.
+Single benchmarks write a manifest, separately rooted observable/ground-truth Parquet data, baseline outcomes, JSON analysis, and Markdown quality report under `artifacts/simulations/<experiment-id>/`. Multi-seed reports use `artifacts/benchmark_suites/<suite-id>/`; sensitivity reports use `artifacts/sensitivity/<report-id>/`. Generated artifacts and all displayed financial values must be labelled **SIMULATED**. Later model benchmarks will add code revision, temporal splits, and model hashes through a controlled label-join step.

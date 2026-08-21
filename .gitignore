@@ -18,6 +18,9 @@ ml/artifacts/*
 artifacts/simulations/*
 !artifacts/simulations/.gitkeep
 artifacts/smoke/*
+artifacts/smoke-v030/*
+artifacts/benchmark_suites/*
+artifacts/sensitivity/*
 
 # JavaScript
 node_modules/

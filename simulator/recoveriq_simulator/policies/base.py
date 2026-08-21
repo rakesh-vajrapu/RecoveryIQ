@@ -53,7 +53,10 @@ def build_action(
         else 0
     )
     contact_friction = (
-        round(costs.base_contact_friction_minor * costs.friction_growth ** (ordinal - 1))
+        min(
+            costs.max_contact_friction_minor,
+            round(costs.base_contact_friction_minor * costs.friction_growth ** (ordinal - 1)),
+        )
         if is_contact
         else 0
     )
