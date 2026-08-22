@@ -24,7 +24,7 @@ flowchart LR
     L -. explanation only .-> A
 ```
 
-The foundation, standalone simulator/baselines, robustness methodology, statistical degradation detector, Recovery Model V1, and first-intervention ERV Policy V1 are implemented through Phase 5. Execution adapters, Gemini enrichment, and the operational UI remain future commitments.
+The foundation, standalone simulator/baselines, robustness methodology, both detector/model generations, bounded Sequential Policy V2, and the offline-verified Razorpay Test Mode adapter are implemented through Phase 7. Gemini enrichment, broader autonomous execution, and the operational UI remain future commitments.
 
 ## Simulator/environment boundary
 
@@ -140,9 +140,15 @@ The sealed Phase 6 evaluation confirmed that later-state model quality remained 
 
 Application code depends on an `LLMProvider` protocol. `GeminiLLMProvider` contains SDK-specific behavior, `FakeLLMProvider` provides deterministic tests, and `DeterministicFallbackProvider` keeps explanations available without network access. Providers return Pydantic-validated structures. They cannot mutate payment state, authorize actions, or determine outcomes. Gemini is never called automatically during startup.
 
-## Future Razorpay adapter
+## Razorpay Test Mode execution boundary
 
-A future adapter will operate in Razorpay Test Mode only. It will validate webhook HMAC signatures over raw request bytes, persist provider event IDs, acknowledge quickly, and dispatch idempotent background processing. Duplicate or out-of-order events must not duplicate recovery cases, links, retries, contacts, or attribution. No Razorpay API call exists through Phase 3.
+Phase 7 adds an isolated `RazorpayGateway` and no Live Mode. `SIMULATION` is the default execution environment; `RAZORPAY_TEST` is explicit, `RAZORPAY_MODE` accepts only `test`, and credentials remain optional at startup. The adapter uses documented Payment Link create/fetch operations and raw-body HMAC-SHA256 webhook verification. Normal tests use a deterministic fake gateway and sanitized official-shape fixtures.
+
+The webhook request path validates the signature before JSON parsing, durably deduplicates `x-razorpay-event-id`, stores only a checksum/safe entity IDs/redacted Test Mode payload, then dispatches processing. Non-eager Celery mode preserves fast acknowledgement; eager development mode invokes the identical service inline. Per-entity provider timestamps reject stale subscription regressions, while unique database constraints protect provider events, execution keys/references/entities, and attribution.
+
+Decision, capability, side effect, and outcome are separate persisted concepts. `CREATE_PAYMENT_LINK` is the only Phase 7 `REAL_TEST_EXECUTION`; retries are internal schedules and customer-facing actions are recommendations. The provider request is preceded by a durable unique execution. Ambiguous create outcomes remain `UNKNOWN` and reconcile by documented Payment Link ID/reference lookup without issuing a replacement.
+
+A first Razorpay failure does not contain provably complete historical inputs for frozen Model V2. `RazorpayContextAdapter` therefore records explicit missing requirements and routes to `HUMAN_REVIEW / INSUFFICIENT_CONTEXT` instead of fabricating zero values. An explicit `OPERATOR_INITIATED` Test Link is a separately audited fallback. A verified link payment can attribute exactly one `RAZORPAY_TEST` recovery after link/reference/note/amount/currency/status checks, but it never claims to repair the original Subscription. See [Razorpay Integration](RAZORPAY_INTEGRATION.md).
 
 ## Audit architecture
 

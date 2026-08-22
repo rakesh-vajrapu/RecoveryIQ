@@ -84,7 +84,18 @@ Detector V2 cannot provide a degradation-aware hard block in V1 because its safe
 
 Exit achieved: Model V2 passed its frozen quality gate; all Phase 6 strategies received identical initial cohorts and 48-hour semantics; RecoverIQ passed every registered claim with zero violations; no episode exceeded three interventions; the probability-only comparator's small advantage remained visible; final seeds remain untouched.
 
-## 7. Gemini enrichment
+## 7. Razorpay Test Mode and safe execution boundary — Level A complete
+
+- [x] Validate exact raw-body webhook signatures and durably deduplicate provider event IDs.
+- [x] Normalize pending/charged/payment-failed and Payment Link events with stale-event tolerance.
+- [x] Add explicit action capabilities and separate decisions, plans, executions, outcomes, and attribution.
+- [x] Add an idempotent operator Test Payment Link with unknown-outcome reconciliation.
+- [x] Add sanitized contract fixtures, fake gateway, failure/security/replay tests, migrations, APIs, and runbooks.
+- [ ] Execute the credential-gated real Test Mode smoke and complete webhook E2E (Level B; optional and not claimed by offline evidence).
+
+Exit achieved for Level A: all integration behavior is reproducible without credentials, Live Mode is impossible, duplicate/reordered delivery cannot duplicate a case/link/attribution, and unavailable frozen-V2 context safely abstains. Level B remains separately reported.
+
+## 8. Gemini enrichment
 
 - [ ] Add versioned prompts and remaining structured schemas.
 - [ ] Implement allowlisting, retries/backoff, concurrency, circuit breaking, caching, and metrics.
@@ -92,18 +103,11 @@ Exit achieved: Model V2 passed its frozen quality gate; all Phase 6 strategies r
 
 Exit: all core decisions complete with Gemini disabled or failing.
 
-## 8. Recovery execution
+## 9. Broader recovery execution
 
-- [ ] Implement idempotent scheduling, simulated retries/nudges, observation, stopping rules, and attribution.
+- [ ] Implement idempotent scheduling/observation for permitted internal retry actions and any future genuine messaging provider.
 
 Exit: duplicate delivery and worker retry cannot duplicate side effects or revenue.
-
-## 9. Razorpay Test Mode
-
-- [ ] Validate webhook signatures and event idempotency.
-- [ ] Add Test Mode payment/subscription handling and Payment Links where policy permits.
-
-Exit: a credential-gated Test Mode demonstration succeeds; Live Mode is impossible.
 
 ## 10. Operational UI
 

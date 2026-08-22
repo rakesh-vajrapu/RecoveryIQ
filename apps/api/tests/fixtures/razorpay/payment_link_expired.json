@@ -1,0 +1,27 @@
+{
+  "entity": "event",
+  "account_id": "acc_test_recoveriq",
+  "event": "payment_link.expired",
+  "contains": ["payment_link"],
+  "payload": {
+    "payment_link": {
+      "entity": {
+        "id": "plink_test_replace",
+        "entity": "payment_link",
+        "amount": 49900,
+        "amount_paid": 0,
+        "currency": "INR",
+        "status": "expired",
+        "reference_id": "reference_replace",
+        "accept_partial": false,
+        "notes": {
+          "recoveriq_case": "case_replace",
+          "recoveriq_correlation": "correlation_replace"
+        },
+        "expired_at": 1700000300,
+        "updated_at": 1700000300
+      }
+    }
+  },
+  "created_at": 1700000301
+}

@@ -21,10 +21,18 @@ def test_sqlite_can_create_foundation_schema(tmp_path: Path) -> None:
     assert set(inspect(engine).get_table_names()) == {
         "audit_events",
         "customers",
+        "external_entity_mappings",
+        "external_executions",
+        "external_outcomes",
+        "external_webhook_events",
+        "failure_events",
         "merchants",
         "payment_attempts",
         "payments",
+        "recovery_attributions",
         "recovery_cases",
+        "recovery_decisions",
+        "recovery_execution_plans",
         "subscriptions",
     }
     engine.dispose()

@@ -1,0 +1,42 @@
+{
+  "entity": "event",
+  "account_id": "acc_test_recoveriq",
+  "event": "subscription.pending",
+  "contains": ["subscription", "payment"],
+  "payload": {
+    "subscription": {
+      "entity": {
+        "id": "sub_test_recoveriq_001",
+        "entity": "subscription",
+        "customer_id": "cust_test_recoveriq_001",
+        "status": "pending",
+        "paid_count": 1,
+        "remaining_count": 4,
+        "total_count": 6,
+        "created_at": 1699000000,
+        "current_start": 1700000000,
+        "current_end": 1702592000,
+        "charge_at": 1700000000
+      }
+    },
+    "payment": {
+      "entity": {
+        "id": "pay_test_failed_001",
+        "entity": "payment",
+        "amount": 49900,
+        "currency": "INR",
+        "status": "failed",
+        "method": "card",
+        "subscription_id": "sub_test_recoveriq_001",
+        "error_code": "BAD_REQUEST_ERROR",
+        "error_reason": "insufficient_funds",
+        "error_source": "customer",
+        "error_step": "payment_authentication",
+        "created_at": 1700000000,
+        "email": "redacted-test@example.invalid",
+        "contact": "+910000000000"
+      }
+    }
+  },
+  "created_at": 1700000001
+}

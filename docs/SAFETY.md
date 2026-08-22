@@ -2,7 +2,7 @@
 
 ## Operating environments
 
-RecoverIQ supports deterministic simulation and, in a future milestone, Razorpay Test Mode. Live Mode is outside V1 and must not be enabled by configuration alone. Every monetary display must state **SIMULATED** or **TEST MODE**. No development fixture or demonstration uses real customer PII or real payment credentials.
+RecoverIQ supports deterministic simulation and an isolated Razorpay Test Mode boundary. Live Mode is absent: configuration accepts only `SIMULATION` or `RAZORPAY_TEST`, `RAZORPAY_MODE=test`, and requires the documented `rzp_test_` Key ID prefix whenever API credentials are supplied. Every monetary display must state **SIMULATED** or **TEST MODE**. No development fixture or demonstration uses real customer PII or real payment credentials.
 
 ## Sensitive payment data
 
@@ -14,7 +14,7 @@ Secrets enter through environment variables or a deployment secret store. `.env*
 
 ## Authorization boundary
 
-Future predictive models estimate outcomes; they do not authorize actions. A deterministic policy engine will enforce retry and contact limits, opt-out state, channel permission, active degradation blocks, amount/risk thresholds, confidence requirements, cooldowns, test-mode restrictions, and stopping rules. Executors accept only persisted, approved commands and re-check idempotency before side effects.
+Predictive models estimate outcomes; they do not prove provider capability. Sequential Policy V2 remains frozen, and incomplete Razorpay history routes to human review. The execution planner classifies every action before an executor can act. The sole Test Mode side effect is an explicit, persisted Payment Link plan; the operator fallback is visibly separate from policy selection. Executors accept only persisted, approved commands and re-check mode, amount, currency, state, and idempotency before side effects.
 
 ## LLM trust boundary
 
@@ -22,7 +22,7 @@ Gemini receives allowlisted structured evidence and returns validated enrichment
 
 ## Idempotency and concurrency
 
-Provider event IDs and side-effect idempotency keys will be persisted with uniqueness constraints. Recovery creation, retry scheduling, payment-link creation, contact, and revenue attribution will each have independent deduplication. PostgreSQL transactions and row locking will protect concurrent workers in full environments. SQLite is for single-developer execution and tests, not evidence of production concurrency safety.
+Provider event IDs, side-effect idempotency keys, Payment Link references/IDs, plans, external payments, and per-case revenue attribution are persisted with uniqueness constraints. A provider timeout after create remains `UNKNOWN`; reconciliation by the unique reference cannot authorize another create merely because a lookup is empty. PostgreSQL transactions provide the full-environment concurrency boundary. SQLite is for single-developer execution and tests, not evidence of production worker concurrency safety.
 
 ## Auditability
 
@@ -30,9 +30,8 @@ Meaningful ingestion, evidence, model, policy, execution, outcome, attribution, 
 
 ## Safe failure and abstention
 
-Unknown events are retained and safely ignored. Invalid signatures are rejected. Contradictory states, low confidence, exhausted limits, missing required evidence, and unexpected provider responses lead to waiting, stopping, or human review—not an optimistic action. Gemini, Redis, Razorpay, and worker failures are injected during reliability testing. No external outage may create duplicate financial or customer-facing side effects.
+Unknown events are retained and safely ignored. Signatures are HMAC-SHA256 verified over exact raw bytes before parsing. Contradictory states, stale events, amount/reference mismatches, missing required evidence, and unexpected provider responses lead to ignoring, `UNKNOWN`, failure, or human review—not optimistic recovery. Duplicate/out-of-order events, provider timeouts/failures, expiry, and worker replay are injected offline. No external outage may create duplicate financial or customer-facing side effects.
 
-## Current foundation limitations
+## Current limitations
 
-Phase 1 contains models, configuration, a health endpoint, an eager Celery proof, and provider skeletons. It does not yet ingest provider events, make recovery decisions, execute actions, or attribute money. These missing capabilities are marked as unfinished rather than simulated through fake production metrics.
-
+Phase 7 is Level A offline complete; genuine credential/API/webhook evidence remains unverified until the opt-in runbook is executed. SQLite does not prove concurrent-worker locking. The context adapter deliberately abstains on a first provider event because complete frozen-V2 history/category semantics are unavailable. Payment Links recover an alternate Test Mode payment only; they do not repair the original subscription. Gemini, Live Mode, messaging, provider retry operations, and the final operational UI are not part of this phase.

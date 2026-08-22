@@ -18,6 +18,7 @@ celery_app = Celery(
     "recoveriq",
     broker=settings.celery_broker_url,
     backend=settings.celery_result_backend,
+    include=["app.tasks.razorpay"],
 )
 celery_app.conf.update(
     task_always_eager=settings.celery_task_always_eager,

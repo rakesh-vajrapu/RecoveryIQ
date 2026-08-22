@@ -7,8 +7,10 @@ from httpx import ASGITransport, AsyncClient
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.core.config import Settings, get_settings
+from app.db.base import Base
 from app.db.session import create_database_engine, get_db_session
 from app.main import app
+from app.models import entities, razorpay  # noqa: F401
 
 
 @pytest.fixture
@@ -25,6 +27,7 @@ def test_settings(tmp_path: Path) -> Settings:
 @pytest_asyncio.fixture
 async def client(test_settings: Settings) -> AsyncGenerator[AsyncClient, None]:
     engine = create_database_engine(test_settings)
+    Base.metadata.create_all(engine)
     test_session = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
 
     def override_settings() -> Settings:
@@ -43,4 +46,5 @@ async def client(test_settings: Settings) -> AsyncGenerator[AsyncClient, None]:
     ):
         yield test_client
     app.dependency_overrides.clear()
+    Base.metadata.drop_all(engine)
     engine.dispose()

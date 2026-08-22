@@ -1,0 +1,43 @@
+{
+  "entity": "event",
+  "account_id": "acc_test_recoveriq",
+  "event": "payment_link.paid",
+  "contains": ["payment_link", "payment"],
+  "payload": {
+    "payment_link": {
+      "entity": {
+        "id": "plink_test_replace",
+        "entity": "payment_link",
+        "amount": 49900,
+        "amount_paid": 49900,
+        "currency": "INR",
+        "status": "paid",
+        "reference_id": "reference_replace",
+        "accept_partial": false,
+        "notes": {
+          "recoveriq_case": "case_replace",
+          "recoveriq_correlation": "correlation_replace",
+          "recoveriq_mode": "test",
+          "customer_email": "must_be_removed@example.invalid"
+        },
+        "customer": {
+          "email": "must_be_removed@example.invalid",
+          "contact": "+910000000000"
+        },
+        "updated_at": 1700000200
+      }
+    },
+    "payment": {
+      "entity": {
+        "id": "pay_test_link_paid_001",
+        "entity": "payment",
+        "amount": 49900,
+        "currency": "INR",
+        "status": "captured",
+        "method": "card",
+        "created_at": 1700000200
+      }
+    }
+  },
+  "created_at": 1700000201
+}

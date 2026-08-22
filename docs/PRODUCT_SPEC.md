@@ -32,6 +32,8 @@ The product differentiator is safe, evidence-based adaptation across a short rec
 
 Phase 6 supplies the first apples-to-apples full-horizon evidence for that thesis. On its sealed synthetic validation, bounded RecoverIQ exceeded Fixed Retry, Reminder + Retry, the simple observable sequential rule, and the best-global sequence on recovery and net value with zero violations. It did not exceed the probability-only policy: ERV/support decisions traded a small amount of gross recovery for fewer contacts. Product claims must preserve both findings and must never generalize simulator value into live revenue.
 
+Phase 7 separately supplies an offline-verified Razorpay Test Mode integration: secure webhook ingestion, provider-object normalization, execution capability resolution, operator-initiated Payment Links, and exact Test Mode attribution. A genuine Test Mode payment proves the integration path only. It neither validates the simulated recovery-rate claim nor predicts production performance. Live Test Mode is reported as not run until real credentials and events are explicitly exercised.
+
 ## V1 scope
 
 V1 covers failed subscription or recurring-payment recovery in two clearly labelled environments:
@@ -49,7 +51,7 @@ The planned action space is:
 - `HUMAN_REVIEW`;
 - `STOP`.
 
-An action is a candidate, not an authorization. The policy engine remains authoritative.
+An action is a candidate, not an authorization. The policy engine remains authoritative, and the execution planner must additionally prove provider capability. Through Phase 7, only `CREATE_PAYMENT_LINK` has a real Razorpay Test Mode side effect; scheduled retries remain internal and messaging/method-update actions remain recommendations.
 
 ## Non-goals
 
@@ -63,4 +65,4 @@ No target number is asserted before the simulator and evaluation harness exist.
 
 ## Definition of done
 
-A reviewer can clone the repository, install locked dependencies, run a seeded benchmark, start the API and UI without external credentials, inspect a degradation-aware decision trace, run the tests, and reproduce reported results. Optional credentials unlock explicit Gemini smoke tests and Razorpay Test Mode only. Core recovery continues when Gemini, Redis, or an external payment API is unavailable, according to documented fallbacks and policy.
+A reviewer can clone the repository, install locked dependencies, run a seeded benchmark, start the API and UI without external credentials, inspect a degradation-aware decision trace, run the tests, and reproduce reported results. Optional credentials unlock only explicitly opted-in provider smoke tests. The Razorpay Level A contract is reproducible offline; Level B is claimed only after genuine Test Mode activity. Core recovery continues when Gemini, Redis, or an external payment API is unavailable, according to documented fallbacks and policy.

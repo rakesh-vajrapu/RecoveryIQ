@@ -1,0 +1,33 @@
+{
+  "entity": "event",
+  "account_id": "acc_test_recoveriq",
+  "event": "subscription.charged",
+  "contains": ["subscription", "payment"],
+  "payload": {
+    "subscription": {
+      "entity": {
+        "id": "sub_test_recoveriq_001",
+        "entity": "subscription",
+        "customer_id": "cust_test_recoveriq_001",
+        "status": "active",
+        "paid_count": 2,
+        "remaining_count": 3,
+        "total_count": 6,
+        "created_at": 1699000000
+      }
+    },
+    "payment": {
+      "entity": {
+        "id": "pay_test_charged_001",
+        "entity": "payment",
+        "amount": 49900,
+        "currency": "INR",
+        "status": "captured",
+        "method": "card",
+        "subscription_id": "sub_test_recoveriq_001",
+        "created_at": 1700000100
+      }
+    }
+  },
+  "created_at": 1700000101
+}
