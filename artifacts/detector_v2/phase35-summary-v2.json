@@ -1,0 +1,2407 @@
+{
+  "configuration_hash": "50f0ca055d561b447d1b2aa3769cf775917b9efbceb44c6934a8971c1585af8c",
+  "demo": {
+    "artifact": "demo-scenario-not-benchmark-v2.json",
+    "benchmark_data": false,
+    "label": "DEMO SCENARIO — NOT BENCHMARK DATA"
+  },
+  "detector_version": "2.0.0",
+  "development": {
+    "candidate_count": 6,
+    "candidates": [
+      {
+        "candidate_index": 0,
+        "config": {
+          "baseline_lookback_days": 14,
+          "baseline_prior_strength": 20.0,
+          "confirmation_cooldown_days": 7,
+          "confirmed_llr_threshold": 7.0,
+          "confirmed_min_events": 6,
+          "confirmed_parent_llr": 4.5,
+          "confirmed_strong_llr": 5.0,
+          "default_success_probability": 0.88,
+          "detector_version": "2.0.0",
+          "drop_hypotheses": [
+            0.1,
+            0.2,
+            0.35
+          ],
+          "failure_js_threshold": 0.1,
+          "failure_min_baseline": 10,
+          "failure_min_current": 5,
+          "failure_reason_min_support": 3,
+          "maximum_baseline_probability": 0.995,
+          "min_baseline_attempts": 50,
+          "minimum_alternative_probability": 0.05,
+          "minimum_baseline_probability": 0.55,
+          "recovery_min_events": 5,
+          "recovery_resolve_llr": 5.0,
+          "recovery_start_llr": 2.5,
+          "watch_llr_threshold": 2.0,
+          "watch_min_events": 3,
+          "watch_release_llr": 0.35,
+          "watch_release_successes": 3,
+          "windows_minutes": [
+            5,
+            15,
+            60
+          ]
+        },
+        "configuration_hash": "75b926e857ff1b5b989a19d439d8f61b2bc9c2672581e5dbe932b6f5f77cd299",
+        "metrics": {
+          "all_incident_count": 180,
+          "broad_watch_episode_count": 5649,
+          "confirmed": {
+            "all_incident_recall": 0.03888888888888889,
+            "delay_after_first_event_minutes": {
+              "count": 7,
+              "mean": 914.21468725,
+              "median": 839.9004468333334,
+              "p90": 1523.0163592
+            },
+            "delay_after_minimum_evidence_minutes": {
+              "count": 6,
+              "mean": 586.5472598583333,
+              "median": 509.63921288333336,
+              "p90": 912.5260172333333
+            },
+            "detection_delay_minutes": {
+              "count": 7,
+              "mean": 992.3090408642856,
+              "median": 947.7601076833333,
+              "p90": 1767.4605574166667
+            },
+            "eligible_incident_recall": 0.07575757575757576,
+            "episode_count": 353,
+            "episode_precision": 0.019830028328611898,
+            "false_confirmed_failed_payment_exposure": 2819,
+            "false_episode_count": 346,
+            "false_episodes_per_scope_day": 0.017903048546480206,
+            "high_evidence_incident_recall": 0.17391304347826086,
+            "matched_count": 7,
+            "recall_by_hidden_severity": {
+              "CRITICAL": {
+                "detected": 0,
+                "incidents": 8,
+                "recall": 0.0
+              },
+              "MILD": {
+                "detected": 0,
+                "incidents": 78,
+                "recall": 0.0
+              },
+              "MODERATE": {
+                "detected": 2,
+                "incidents": 58,
+                "recall": 0.034482758620689655
+              },
+              "SEVERE": {
+                "detected": 5,
+                "incidents": 36,
+                "recall": 0.1388888888888889
+              }
+            },
+            "recall_by_traffic_volume": {
+              "0-2": {
+                "detected": 0,
+                "incidents": 78,
+                "recall": 0.0
+              },
+              "10+": {
+                "detected": 6,
+                "incidents": 32,
+                "recall": 0.1875
+              },
+              "3-4": {
+                "detected": 1,
+                "incidents": 33,
+                "recall": 0.030303030303030304
+              },
+              "5-9": {
+                "detected": 0,
+                "incidents": 37,
+                "recall": 0.0
+              }
+            },
+            "resolution_delay_minutes": {
+              "count": 7,
+              "mean": 4835.3327534904765,
+              "median": 5213.121815933334,
+              "p90": 5991.508516533333
+            },
+            "watch_to_confirmed_delay_minutes": {
+              "count": 7,
+              "mean": 2311.109305288095,
+              "median": 818.3876348666666,
+              "p90": 5906.3481148
+            }
+          },
+          "eligible_incident_count": 66,
+          "high_evidence_incident_count": 23,
+          "root_cause_evidence": {
+            "confirmed_matches": 7,
+            "coverage": 0.7142857142857143,
+            "support_distribution": {
+              "count": 5,
+              "mean": 4.8,
+              "median": 4.0,
+              "p90": 10.0
+            },
+            "supported_top_reason_count": 5,
+            "top_1_agreement": 0.4
+          },
+          "seed_count": 10,
+          "watch": {
+            "all_incident_recall": 0.16111111111111112,
+            "delay_after_first_event_minutes": {
+              "count": 29,
+              "mean": 418.25477502873565,
+              "median": 253.24541675,
+              "p90": 1064.6289488166667
+            },
+            "delay_after_minimum_evidence_minutes": {
+              "count": 26,
+              "mean": 252.02390388525643,
+              "median": 110.72766648333334,
+              "p90": 885.2257524
+            },
+            "detection_delay_minutes": {
+              "count": 29,
+              "mean": 549.1572320609196,
+              "median": 389.74727809999996,
+              "p90": 1385.3163267833334
+            },
+            "eligible_incident_recall": 0.2878787878787879,
+            "episode_count": 2744,
+            "episode_precision": 0.010568513119533527,
+            "false_episode_count": 2715,
+            "false_episodes_per_scope_day": 0.14048201388350798,
+            "high_evidence_incident_recall": 0.391304347826087,
+            "matched_count": 29,
+            "recall_by_hidden_severity": {
+              "CRITICAL": {
+                "detected": 2,
+                "incidents": 8,
+                "recall": 0.25
+              },
+              "MILD": {
+                "detected": 9,
+                "incidents": 78,
+                "recall": 0.11538461538461539
+              },
+              "MODERATE": {
+                "detected": 7,
+                "incidents": 58,
+                "recall": 0.1206896551724138
+              },
+              "SEVERE": {
+                "detected": 11,
+                "incidents": 36,
+                "recall": 0.3055555555555556
+              }
+            },
+            "recall_by_traffic_volume": {
+              "0-2": {
+                "detected": 3,
+                "incidents": 78,
+                "recall": 0.038461538461538464
+              },
+              "10+": {
+                "detected": 16,
+                "incidents": 32,
+                "recall": 0.5
+              },
+              "3-4": {
+                "detected": 5,
+                "incidents": 33,
+                "recall": 0.15151515151515152
+              },
+              "5-9": {
+                "detected": 5,
+                "incidents": 37,
+                "recall": 0.13513513513513514
+              }
+            }
+          }
+        },
+        "throughput_events_per_second": 5466.410636755932
+      },
+      {
+        "candidate_index": 1,
+        "config": {
+          "baseline_lookback_days": 14,
+          "baseline_prior_strength": 20.0,
+          "confirmation_cooldown_days": 7,
+          "confirmed_llr_threshold": 8.0,
+          "confirmed_min_events": 8,
+          "confirmed_parent_llr": 5.0,
+          "confirmed_strong_llr": 5.5,
+          "default_success_probability": 0.88,
+          "detector_version": "2.0.0",
+          "drop_hypotheses": [
+            0.1,
+            0.2,
+            0.35
+          ],
+          "failure_js_threshold": 0.12,
+          "failure_min_baseline": 10,
+          "failure_min_current": 5,
+          "failure_reason_min_support": 3,
+          "maximum_baseline_probability": 0.995,
+          "min_baseline_attempts": 50,
+          "minimum_alternative_probability": 0.05,
+          "minimum_baseline_probability": 0.55,
+          "recovery_min_events": 5,
+          "recovery_resolve_llr": 5.0,
+          "recovery_start_llr": 2.5,
+          "watch_llr_threshold": 2.5,
+          "watch_min_events": 3,
+          "watch_release_llr": 0.35,
+          "watch_release_successes": 3,
+          "windows_minutes": [
+            5,
+            15,
+            60
+          ]
+        },
+        "configuration_hash": "3fd220471e5dc546c921a6e18a0942a5052cc04d6146bb30eb5fe1287d6f0b59",
+        "metrics": {
+          "all_incident_count": 180,
+          "broad_watch_episode_count": 3768,
+          "confirmed": {
+            "all_incident_recall": 0.027777777777777776,
+            "delay_after_first_event_minutes": {
+              "count": 5,
+              "mean": 993.8206569400002,
+              "median": 972.4157339,
+              "p90": 2525.4787987500004
+            },
+            "delay_after_minimum_evidence_minutes": {
+              "count": 5,
+              "mean": 452.56203843000003,
+              "median": 516.2386081166667,
+              "p90": 1760.4990813166667
+            },
+            "detection_delay_minutes": {
+              "count": 5,
+              "mean": 1054.6702542799999,
+              "median": 1064.47154175,
+              "p90": 2526.9075087
+            },
+            "eligible_incident_recall": 0.06060606060606061,
+            "episode_count": 215,
+            "episode_precision": 0.023255813953488372,
+            "false_confirmed_failed_payment_exposure": 1730,
+            "false_episode_count": 210,
+            "false_episodes_per_scope_day": 0.010866012123586252,
+            "high_evidence_incident_recall": 0.17391304347826086,
+            "matched_count": 5,
+            "recall_by_hidden_severity": {
+              "CRITICAL": {
+                "detected": 1,
+                "incidents": 8,
+                "recall": 0.125
+              },
+              "MILD": {
+                "detected": 0,
+                "incidents": 78,
+                "recall": 0.0
+              },
+              "MODERATE": {
+                "detected": 0,
+                "incidents": 58,
+                "recall": 0.0
+              },
+              "SEVERE": {
+                "detected": 4,
+                "incidents": 36,
+                "recall": 0.1111111111111111
+              }
+            },
+            "recall_by_traffic_volume": {
+              "0-2": {
+                "detected": 0,
+                "incidents": 78,
+                "recall": 0.0
+              },
+              "10+": {
+                "detected": 5,
+                "incidents": 32,
+                "recall": 0.15625
+              },
+              "3-4": {
+                "detected": 0,
+                "incidents": 33,
+                "recall": 0.0
+              },
+              "5-9": {
+                "detected": 0,
+                "incidents": 37,
+                "recall": 0.0
+              }
+            },
+            "resolution_delay_minutes": {
+              "count": 4,
+              "mean": 4726.0337084625,
+              "median": 4957.0210549583335,
+              "p90": 5991.508516533333
+            },
+            "watch_to_confirmed_delay_minutes": {
+              "count": 5,
+              "mean": 2505.04259218,
+              "median": 1760.4990813166667,
+              "p90": 4989.897480266666
+            }
+          },
+          "eligible_incident_count": 66,
+          "high_evidence_incident_count": 23,
+          "root_cause_evidence": {
+            "confirmed_matches": 5,
+            "coverage": 0.8,
+            "support_distribution": {
+              "count": 4,
+              "mean": 7.25,
+              "median": 7.0,
+              "p90": 11.0
+            },
+            "supported_top_reason_count": 4,
+            "top_1_agreement": 0.75
+          },
+          "seed_count": 10,
+          "watch": {
+            "all_incident_recall": 0.12777777777777777,
+            "delay_after_first_event_minutes": {
+              "count": 23,
+              "mean": 635.536202239855,
+              "median": 468.59295891666665,
+              "p90": 1315.9545481166667
+            },
+            "delay_after_minimum_evidence_minutes": {
+              "count": 22,
+              "mean": 452.57158325530304,
+              "median": 264.05603956666664,
+              "p90": 1124.7715882
+            },
+            "detection_delay_minutes": {
+              "count": 23,
+              "mean": 766.4836891992753,
+              "median": 616.5005375833333,
+              "p90": 1415.3503269666667
+            },
+            "eligible_incident_recall": 0.25757575757575757,
+            "episode_count": 1848,
+            "episode_precision": 0.012445887445887446,
+            "false_episode_count": 1825,
+            "false_episodes_per_scope_day": 0.09443081964545195,
+            "high_evidence_incident_recall": 0.34782608695652173,
+            "matched_count": 23,
+            "recall_by_hidden_severity": {
+              "CRITICAL": {
+                "detected": 2,
+                "incidents": 8,
+                "recall": 0.25
+              },
+              "MILD": {
+                "detected": 4,
+                "incidents": 78,
+                "recall": 0.05128205128205128
+              },
+              "MODERATE": {
+                "detected": 6,
+                "incidents": 58,
+                "recall": 0.10344827586206896
+              },
+              "SEVERE": {
+                "detected": 11,
+                "incidents": 36,
+                "recall": 0.3055555555555556
+              }
+            },
+            "recall_by_traffic_volume": {
+              "0-2": {
+                "detected": 1,
+                "incidents": 78,
+                "recall": 0.01282051282051282
+              },
+              "10+": {
+                "detected": 15,
+                "incidents": 32,
+                "recall": 0.46875
+              },
+              "3-4": {
+                "detected": 3,
+                "incidents": 33,
+                "recall": 0.09090909090909091
+              },
+              "5-9": {
+                "detected": 4,
+                "incidents": 37,
+                "recall": 0.10810810810810811
+              }
+            }
+          }
+        },
+        "throughput_events_per_second": 5769.529236964042
+      },
+      {
+        "candidate_index": 2,
+        "config": {
+          "baseline_lookback_days": 14,
+          "baseline_prior_strength": 20.0,
+          "confirmation_cooldown_days": 7,
+          "confirmed_llr_threshold": 9.0,
+          "confirmed_min_events": 8,
+          "confirmed_parent_llr": 6.0,
+          "confirmed_strong_llr": 6.5,
+          "default_success_probability": 0.88,
+          "detector_version": "2.0.0",
+          "drop_hypotheses": [
+            0.1,
+            0.2,
+            0.35
+          ],
+          "failure_js_threshold": 0.15,
+          "failure_min_baseline": 10,
+          "failure_min_current": 5,
+          "failure_reason_min_support": 3,
+          "maximum_baseline_probability": 0.995,
+          "min_baseline_attempts": 50,
+          "minimum_alternative_probability": 0.05,
+          "minimum_baseline_probability": 0.55,
+          "recovery_min_events": 5,
+          "recovery_resolve_llr": 5.0,
+          "recovery_start_llr": 2.5,
+          "watch_llr_threshold": 3.0,
+          "watch_min_events": 3,
+          "watch_release_llr": 0.35,
+          "watch_release_successes": 3,
+          "windows_minutes": [
+            5,
+            15,
+            60
+          ]
+        },
+        "configuration_hash": "b9b5d342b7e38531e4f4aa8626dad780bca99b7cd0704f0875e233fd16076137",
+        "metrics": {
+          "all_incident_count": 180,
+          "broad_watch_episode_count": 2182,
+          "confirmed": {
+            "all_incident_recall": 0.022222222222222223,
+            "delay_after_first_event_minutes": {
+              "count": 4,
+              "mean": 1221.5600065416666,
+              "median": 1085.207608825,
+              "p90": 2529.9040806499997
+            },
+            "delay_after_minimum_evidence_minutes": {
+              "count": 4,
+              "mean": 659.0310148499999,
+              "median": 627.773559175,
+              "p90": 1764.9243632166665
+            },
+            "detection_delay_minutes": {
+              "count": 4,
+              "mean": 1274.6080512541666,
+              "median": 1149.8441793583333,
+              "p90": 2531.3327906
+            },
+            "eligible_incident_recall": 0.045454545454545456,
+            "episode_count": 106,
+            "episode_precision": 0.03773584905660377,
+            "false_confirmed_failed_payment_exposure": 870,
+            "false_episode_count": 102,
+            "false_episodes_per_scope_day": 0.005277777317170465,
+            "high_evidence_incident_recall": 0.13043478260869565,
+            "matched_count": 4,
+            "recall_by_hidden_severity": {
+              "CRITICAL": {
+                "detected": 1,
+                "incidents": 8,
+                "recall": 0.125
+              },
+              "MILD": {
+                "detected": 0,
+                "incidents": 78,
+                "recall": 0.0
+              },
+              "MODERATE": {
+                "detected": 0,
+                "incidents": 58,
+                "recall": 0.0
+              },
+              "SEVERE": {
+                "detected": 3,
+                "incidents": 36,
+                "recall": 0.08333333333333333
+              }
+            },
+            "recall_by_traffic_volume": {
+              "0-2": {
+                "detected": 0,
+                "incidents": 78,
+                "recall": 0.0
+              },
+              "10+": {
+                "detected": 4,
+                "incidents": 32,
+                "recall": 0.125
+              },
+              "3-4": {
+                "detected": 0,
+                "incidents": 33,
+                "recall": 0.0
+              },
+              "5-9": {
+                "detected": 0,
+                "incidents": 37,
+                "recall": 0.0
+              }
+            },
+            "resolution_delay_minutes": {
+              "count": 3,
+              "mean": 4408.251671577777,
+              "median": 4234.6622908,
+              "p90": 5991.508516533333
+            },
+            "watch_to_confirmed_delay_minutes": {
+              "count": 4,
+              "mean": 3103.9673592041668,
+              "median": 2820.449647675,
+              "p90": 5460.371711583333
+            }
+          },
+          "eligible_incident_count": 66,
+          "high_evidence_incident_count": 23,
+          "root_cause_evidence": {
+            "confirmed_matches": 4,
+            "coverage": 0.75,
+            "support_distribution": {
+              "count": 3,
+              "mean": 8.333333333333334,
+              "median": 10.0,
+              "p90": 11.0
+            },
+            "supported_top_reason_count": 3,
+            "top_1_agreement": 1.0
+          },
+          "seed_count": 10,
+          "watch": {
+            "all_incident_recall": 0.11666666666666667,
+            "delay_after_first_event_minutes": {
+              "count": 21,
+              "mean": 697.5544397420634,
+              "median": 463.17000783333333,
+              "p90": 1302.9295091666668
+            },
+            "delay_after_minimum_evidence_minutes": {
+              "count": 21,
+              "mean": 453.36810889603174,
+              "median": 189.87552631666668,
+              "p90": 1024.0684885666667
+            },
+            "detection_delay_minutes": {
+              "count": 21,
+              "mean": 822.0247520452381,
+              "median": 625.236002,
+              "p90": 1547.3737073833333
+            },
+            "eligible_incident_recall": 0.24242424242424243,
+            "episode_count": 1136,
+            "episode_precision": 0.018485915492957746,
+            "false_episode_count": 1115,
+            "false_episodes_per_scope_day": 0.05769335008475558,
+            "high_evidence_incident_recall": 0.30434782608695654,
+            "matched_count": 21,
+            "recall_by_hidden_severity": {
+              "CRITICAL": {
+                "detected": 1,
+                "incidents": 8,
+                "recall": 0.125
+              },
+              "MILD": {
+                "detected": 2,
+                "incidents": 78,
+                "recall": 0.02564102564102564
+              },
+              "MODERATE": {
+                "detected": 8,
+                "incidents": 58,
+                "recall": 0.13793103448275862
+              },
+              "SEVERE": {
+                "detected": 10,
+                "incidents": 36,
+                "recall": 0.2777777777777778
+              }
+            },
+            "recall_by_traffic_volume": {
+              "0-2": {
+                "detected": 0,
+                "incidents": 78,
+                "recall": 0.0
+              },
+              "10+": {
+                "detected": 13,
+                "incidents": 32,
+                "recall": 0.40625
+              },
+              "3-4": {
+                "detected": 3,
+                "incidents": 33,
+                "recall": 0.09090909090909091
+              },
+              "5-9": {
+                "detected": 5,
+                "incidents": 37,
+                "recall": 0.13513513513513514
+              }
+            }
+          }
+        },
+        "throughput_events_per_second": 5955.301992559896
+      },
+      {
+        "candidate_index": 3,
+        "config": {
+          "baseline_lookback_days": 14,
+          "baseline_prior_strength": 20.0,
+          "confirmation_cooldown_days": 7,
+          "confirmed_llr_threshold": 9.0,
+          "confirmed_min_events": 10,
+          "confirmed_parent_llr": 5.5,
+          "confirmed_strong_llr": 6.0,
+          "default_success_probability": 0.88,
+          "detector_version": "2.0.0",
+          "drop_hypotheses": [
+            0.1,
+            0.2,
+            0.35
+          ],
+          "failure_js_threshold": 0.12,
+          "failure_min_baseline": 10,
+          "failure_min_current": 5,
+          "failure_reason_min_support": 3,
+          "maximum_baseline_probability": 0.995,
+          "min_baseline_attempts": 50,
+          "minimum_alternative_probability": 0.05,
+          "minimum_baseline_probability": 0.55,
+          "recovery_min_events": 5,
+          "recovery_resolve_llr": 5.0,
+          "recovery_start_llr": 2.5,
+          "watch_llr_threshold": 2.0,
+          "watch_min_events": 3,
+          "watch_release_llr": 0.35,
+          "watch_release_successes": 3,
+          "windows_minutes": [
+            5,
+            15,
+            60
+          ]
+        },
+        "configuration_hash": "0959983d48fabb31533b6ff194b3e078a776bcc89c9c4c0dac96f5eaebdde624",
+        "metrics": {
+          "all_incident_count": 180,
+          "broad_watch_episode_count": 5539,
+          "confirmed": {
+            "all_incident_recall": 0.03333333333333333,
+            "delay_after_first_event_minutes": {
+              "count": 6,
+              "mean": 1118.455496586111,
+              "median": 1056.5646328916666,
+              "p90": 1598.1869194666665
+            },
+            "delay_after_minimum_evidence_minutes": {
+              "count": 6,
+              "mean": 303.413554875,
+              "median": 437.89851365000004,
+              "p90": 508.08182193333334
+            },
+            "detection_delay_minutes": {
+              "count": 6,
+              "mean": 1208.5188408944443,
+              "median": 1156.5223672416666,
+              "p90": 1834.3189986166665
+            },
+            "eligible_incident_recall": 0.07575757575757576,
+            "episode_count": 191,
+            "episode_precision": 0.031413612565445025,
+            "false_confirmed_failed_payment_exposure": 1548,
+            "false_episode_count": 185,
+            "false_episodes_per_scope_day": 0.009572439251730746,
+            "high_evidence_incident_recall": 0.21739130434782608,
+            "matched_count": 6,
+            "recall_by_hidden_severity": {
+              "CRITICAL": {
+                "detected": 1,
+                "incidents": 8,
+                "recall": 0.125
+              },
+              "MILD": {
+                "detected": 0,
+                "incidents": 78,
+                "recall": 0.0
+              },
+              "MODERATE": {
+                "detected": 1,
+                "incidents": 58,
+                "recall": 0.017241379310344827
+              },
+              "SEVERE": {
+                "detected": 4,
+                "incidents": 36,
+                "recall": 0.1111111111111111
+              }
+            },
+            "recall_by_traffic_volume": {
+              "0-2": {
+                "detected": 0,
+                "incidents": 78,
+                "recall": 0.0
+              },
+              "10+": {
+                "detected": 6,
+                "incidents": 32,
+                "recall": 0.1875
+              },
+              "3-4": {
+                "detected": 0,
+                "incidents": 33,
+                "recall": 0.0
+              },
+              "5-9": {
+                "detected": 0,
+                "incidents": 37,
+                "recall": 0.0
+              }
+            },
+            "resolution_delay_minutes": {
+              "count": 5,
+              "mean": 6099.99988553,
+              "median": 5679.379819116667,
+              "p90": 11595.8645938
+            },
+            "watch_to_confirmed_delay_minutes": {
+              "count": 6,
+              "mean": 3387.598619933333,
+              "median": 3245.5150066416663,
+              "p90": 5962.407050716666
+            }
+          },
+          "eligible_incident_count": 66,
+          "high_evidence_incident_count": 23,
+          "root_cause_evidence": {
+            "confirmed_matches": 6,
+            "coverage": 0.8333333333333334,
+            "support_distribution": {
+              "count": 5,
+              "mean": 7.0,
+              "median": 6.0,
+              "p90": 11.0
+            },
+            "supported_top_reason_count": 5,
+            "top_1_agreement": 0.6
+          },
+          "seed_count": 10,
+          "watch": {
+            "all_incident_recall": 0.15555555555555556,
+            "delay_after_first_event_minutes": {
+              "count": 28,
+              "mean": 431.8154707827381,
+              "median": 280.1053941166666,
+              "p90": 1064.6289488166667
+            },
+            "delay_after_minimum_evidence_minutes": {
+              "count": 25,
+              "mean": 281.336108124,
+              "median": 130.68151718333334,
+              "p90": 1024.0684885666667
+            },
+            "detection_delay_minutes": {
+              "count": 28,
+              "mean": 555.0039962910714,
+              "median": 400.5491060083333,
+              "p90": 1385.3163267833334
+            },
+            "eligible_incident_recall": 0.2878787878787879,
+            "episode_count": 2629,
+            "episode_precision": 0.010650437428680106,
+            "false_episode_count": 2601,
+            "false_episodes_per_scope_day": 0.13458332158784686,
+            "high_evidence_incident_recall": 0.391304347826087,
+            "matched_count": 28,
+            "recall_by_hidden_severity": {
+              "CRITICAL": {
+                "detected": 2,
+                "incidents": 8,
+                "recall": 0.25
+              },
+              "MILD": {
+                "detected": 9,
+                "incidents": 78,
+                "recall": 0.11538461538461539
+              },
+              "MODERATE": {
+                "detected": 7,
+                "incidents": 58,
+                "recall": 0.1206896551724138
+              },
+              "SEVERE": {
+                "detected": 10,
+                "incidents": 36,
+                "recall": 0.2777777777777778
+              }
+            },
+            "recall_by_traffic_volume": {
+              "0-2": {
+                "detected": 3,
+                "incidents": 78,
+                "recall": 0.038461538461538464
+              },
+              "10+": {
+                "detected": 16,
+                "incidents": 32,
+                "recall": 0.5
+              },
+              "3-4": {
+                "detected": 4,
+                "incidents": 33,
+                "recall": 0.12121212121212122
+              },
+              "5-9": {
+                "detected": 5,
+                "incidents": 37,
+                "recall": 0.13513513513513514
+              }
+            }
+          }
+        },
+        "throughput_events_per_second": 5238.0557531319555
+      },
+      {
+        "candidate_index": 4,
+        "config": {
+          "baseline_lookback_days": 14,
+          "baseline_prior_strength": 20.0,
+          "confirmation_cooldown_days": 7,
+          "confirmed_llr_threshold": 10.0,
+          "confirmed_min_events": 10,
+          "confirmed_parent_llr": 6.5,
+          "confirmed_strong_llr": 7.0,
+          "default_success_probability": 0.88,
+          "detector_version": "2.0.0",
+          "drop_hypotheses": [
+            0.1,
+            0.2,
+            0.35
+          ],
+          "failure_js_threshold": 0.18,
+          "failure_min_baseline": 10,
+          "failure_min_current": 5,
+          "failure_reason_min_support": 3,
+          "maximum_baseline_probability": 0.995,
+          "min_baseline_attempts": 50,
+          "minimum_alternative_probability": 0.05,
+          "minimum_baseline_probability": 0.55,
+          "recovery_min_events": 5,
+          "recovery_resolve_llr": 5.0,
+          "recovery_start_llr": 2.5,
+          "watch_llr_threshold": 2.5,
+          "watch_min_events": 3,
+          "watch_release_llr": 0.35,
+          "watch_release_successes": 3,
+          "windows_minutes": [
+            5,
+            15,
+            60
+          ]
+        },
+        "configuration_hash": "50f0ca055d561b447d1b2aa3769cf775917b9efbceb44c6934a8971c1585af8c",
+        "metrics": {
+          "all_incident_count": 180,
+          "broad_watch_episode_count": 3726,
+          "confirmed": {
+            "all_incident_recall": 0.03333333333333333,
+            "delay_after_first_event_minutes": {
+              "count": 6,
+              "mean": 1141.037078375,
+              "median": 935.3053821666667,
+              "p90": 2033.2569122166667
+            },
+            "delay_after_minimum_evidence_minutes": {
+              "count": 5,
+              "mean": 485.3850698766667,
+              "median": 839.3100253499999,
+              "p90": 1736.8724259666667
+            },
+            "detection_delay_minutes": {
+              "count": 6,
+              "mean": 1245.4027043166668,
+              "median": 999.9419527,
+              "p90": 2269.3889913666667
+            },
+            "eligible_incident_recall": 0.06060606060606061,
+            "episode_count": 102,
+            "episode_precision": 0.058823529411764705,
+            "false_confirmed_failed_payment_exposure": 897,
+            "false_episode_count": 96,
+            "false_episodes_per_scope_day": 0.004967319827925144,
+            "high_evidence_incident_recall": 0.17391304347826086,
+            "matched_count": 6,
+            "recall_by_hidden_severity": {
+              "CRITICAL": {
+                "detected": 1,
+                "incidents": 8,
+                "recall": 0.125
+              },
+              "MILD": {
+                "detected": 0,
+                "incidents": 78,
+                "recall": 0.0
+              },
+              "MODERATE": {
+                "detected": 2,
+                "incidents": 58,
+                "recall": 0.034482758620689655
+              },
+              "SEVERE": {
+                "detected": 3,
+                "incidents": 36,
+                "recall": 0.08333333333333333
+              }
+            },
+            "recall_by_traffic_volume": {
+              "0-2": {
+                "detected": 1,
+                "incidents": 78,
+                "recall": 0.01282051282051282
+              },
+              "10+": {
+                "detected": 5,
+                "incidents": 32,
+                "recall": 0.15625
+              },
+              "3-4": {
+                "detected": 0,
+                "incidents": 33,
+                "recall": 0.0
+              },
+              "5-9": {
+                "detected": 0,
+                "incidents": 37,
+                "recall": 0.0
+              }
+            },
+            "resolution_delay_minutes": {
+              "count": 5,
+              "mean": 9344.151143143334,
+              "median": 5991.508516533333,
+              "p90": 21900.136107183334
+            },
+            "watch_to_confirmed_delay_minutes": {
+              "count": 6,
+              "mean": 4723.838087538889,
+              "median": 4749.981565158334,
+              "p90": 6397.477043466667
+            }
+          },
+          "eligible_incident_count": 66,
+          "high_evidence_incident_count": 23,
+          "root_cause_evidence": {
+            "confirmed_matches": 6,
+            "coverage": 0.6666666666666666,
+            "support_distribution": {
+              "count": 4,
+              "mean": 7.75,
+              "median": 8.0,
+              "p90": 11.0
+            },
+            "supported_top_reason_count": 4,
+            "top_1_agreement": 0.75
+          },
+          "seed_count": 10,
+          "watch": {
+            "all_incident_recall": 0.12222222222222222,
+            "delay_after_first_event_minutes": {
+              "count": 22,
+              "mean": 646.8737092189393,
+              "median": 476.80518019166664,
+              "p90": 1315.9545481166667
+            },
+            "delay_after_minimum_evidence_minutes": {
+              "count": 21,
+              "mean": 463.93643178571426,
+              "median": 285.26730634999996,
+              "p90": 1124.7715882
+            },
+            "detection_delay_minutes": {
+              "count": 22,
+              "mean": 783.6080715219697,
+              "median": 620.8682697916666,
+              "p90": 1415.3503269666667
+            },
+            "eligible_incident_recall": 0.24242424242424243,
+            "episode_count": 1750,
+            "episode_precision": 0.012571428571428572,
+            "false_episode_count": 1728,
+            "false_episodes_per_scope_day": 0.08941175690265259,
+            "high_evidence_incident_recall": 0.30434782608695654,
+            "matched_count": 22,
+            "recall_by_hidden_severity": {
+              "CRITICAL": {
+                "detected": 2,
+                "incidents": 8,
+                "recall": 0.25
+              },
+              "MILD": {
+                "detected": 4,
+                "incidents": 78,
+                "recall": 0.05128205128205128
+              },
+              "MODERATE": {
+                "detected": 6,
+                "incidents": 58,
+                "recall": 0.10344827586206896
+              },
+              "SEVERE": {
+                "detected": 10,
+                "incidents": 36,
+                "recall": 0.2777777777777778
+              }
+            },
+            "recall_by_traffic_volume": {
+              "0-2": {
+                "detected": 1,
+                "incidents": 78,
+                "recall": 0.01282051282051282
+              },
+              "10+": {
+                "detected": 14,
+                "incidents": 32,
+                "recall": 0.4375
+              },
+              "3-4": {
+                "detected": 3,
+                "incidents": 33,
+                "recall": 0.09090909090909091
+              },
+              "5-9": {
+                "detected": 4,
+                "incidents": 37,
+                "recall": 0.10810810810810811
+              }
+            }
+          }
+        },
+        "throughput_events_per_second": 5502.903620852777
+      },
+      {
+        "candidate_index": 5,
+        "config": {
+          "baseline_lookback_days": 14,
+          "baseline_prior_strength": 20.0,
+          "confirmation_cooldown_days": 7,
+          "confirmed_llr_threshold": 12.0,
+          "confirmed_min_events": 12,
+          "confirmed_parent_llr": 7.5,
+          "confirmed_strong_llr": 8.0,
+          "default_success_probability": 0.88,
+          "detector_version": "2.0.0",
+          "drop_hypotheses": [
+            0.1,
+            0.2,
+            0.35
+          ],
+          "failure_js_threshold": 0.2,
+          "failure_min_baseline": 10,
+          "failure_min_current": 5,
+          "failure_reason_min_support": 3,
+          "maximum_baseline_probability": 0.995,
+          "min_baseline_attempts": 50,
+          "minimum_alternative_probability": 0.05,
+          "minimum_baseline_probability": 0.55,
+          "recovery_min_events": 5,
+          "recovery_resolve_llr": 5.0,
+          "recovery_start_llr": 2.5,
+          "watch_llr_threshold": 3.0,
+          "watch_min_events": 3,
+          "watch_release_llr": 0.35,
+          "watch_release_successes": 3,
+          "windows_minutes": [
+            5,
+            15,
+            60
+          ]
+        },
+        "configuration_hash": "40b7f90adce1a8e9d5235927bb0b25be92df23e99b3cd76a10ef668e51fce6c2",
+        "metrics": {
+          "all_incident_count": 180,
+          "broad_watch_episode_count": 2169,
+          "confirmed": {
+            "all_incident_recall": 0.016666666666666666,
+            "delay_after_first_event_minutes": {
+              "count": 3,
+              "mean": 610.9664923277778,
+              "median": 515.4229544,
+              "p90": 839.9004468333334
+            },
+            "delay_after_minimum_evidence_minutes": {
+              "count": 2,
+              "mean": -96.82955678333335,
+              "median": -96.82955678333335,
+              "p90": 146.7876963
+            },
+            "detection_delay_minutes": {
+              "count": 3,
+              "mean": 681.2209819611111,
+              "median": 559.0664035833332,
+              "p90": 947.7601076833333
+            },
+            "eligible_incident_recall": 0.045454545454545456,
+            "episode_count": 55,
+            "episode_precision": 0.05454545454545454,
+            "false_confirmed_failed_payment_exposure": 455,
+            "false_episode_count": 52,
+            "false_episodes_per_scope_day": 0.002690631573459453,
+            "high_evidence_incident_recall": 0.13043478260869565,
+            "matched_count": 3,
+            "recall_by_hidden_severity": {
+              "CRITICAL": {
+                "detected": 1,
+                "incidents": 8,
+                "recall": 0.125
+              },
+              "MILD": {
+                "detected": 0,
+                "incidents": 78,
+                "recall": 0.0
+              },
+              "MODERATE": {
+                "detected": 0,
+                "incidents": 58,
+                "recall": 0.0
+              },
+              "SEVERE": {
+                "detected": 2,
+                "incidents": 36,
+                "recall": 0.05555555555555555
+              }
+            },
+            "recall_by_traffic_volume": {
+              "0-2": {
+                "detected": 0,
+                "incidents": 78,
+                "recall": 0.0
+              },
+              "10+": {
+                "detected": 3,
+                "incidents": 32,
+                "recall": 0.09375
+              },
+              "3-4": {
+                "detected": 0,
+                "incidents": 33,
+                "recall": 0.0
+              },
+              "5-9": {
+                "detected": 0,
+                "incidents": 37,
+                "recall": 0.0
+              }
+            },
+            "resolution_delay_minutes": {
+              "count": 2,
+              "mean": 7255.292763133333,
+              "median": 7255.292763133333,
+              "p90": 8519.077009733333
+            },
+            "watch_to_confirmed_delay_minutes": {
+              "count": 3,
+              "mean": 17815.392911377778,
+              "median": 5360.745942366667,
+              "p90": 43917.80251175
+            }
+          },
+          "eligible_incident_count": 66,
+          "high_evidence_incident_count": 23,
+          "root_cause_evidence": {
+            "confirmed_matches": 3,
+            "coverage": 0.6666666666666666,
+            "support_distribution": {
+              "count": 2,
+              "mean": 7.5,
+              "median": 7.5,
+              "p90": 11.0
+            },
+            "supported_top_reason_count": 2,
+            "top_1_agreement": 1.0
+          },
+          "seed_count": 10,
+          "watch": {
+            "all_incident_recall": 0.1111111111111111,
+            "delay_after_first_event_minutes": {
+              "count": 20,
+              "mean": 720.3937585216667,
+              "median": 493.64318554166664,
+              "p90": 1302.9295091666668
+            },
+            "delay_after_minimum_evidence_minutes": {
+              "count": 20,
+              "mean": 466.542738025,
+              "median": 214.61074390833335,
+              "p90": 1024.0684885666667
+            },
+            "detection_delay_minutes": {
+              "count": 20,
+              "mean": 845.6946033975,
+              "median": 628.052657825,
+              "p90": 1547.3737073833333
+            },
+            "eligible_incident_recall": 0.22727272727272727,
+            "episode_count": 1099,
+            "episode_precision": 0.018198362147406732,
+            "false_episode_count": 1079,
+            "false_episodes_per_scope_day": 0.05583060514928365,
+            "high_evidence_incident_recall": 0.2608695652173913,
+            "matched_count": 20,
+            "recall_by_hidden_severity": {
+              "CRITICAL": {
+                "detected": 1,
+                "incidents": 8,
+                "recall": 0.125
+              },
+              "MILD": {
+                "detected": 2,
+                "incidents": 78,
+                "recall": 0.02564102564102564
+              },
+              "MODERATE": {
+                "detected": 8,
+                "incidents": 58,
+                "recall": 0.13793103448275862
+              },
+              "SEVERE": {
+                "detected": 9,
+                "incidents": 36,
+                "recall": 0.25
+              }
+            },
+            "recall_by_traffic_volume": {
+              "0-2": {
+                "detected": 0,
+                "incidents": 78,
+                "recall": 0.0
+              },
+              "10+": {
+                "detected": 12,
+                "incidents": 32,
+                "recall": 0.375
+              },
+              "3-4": {
+                "detected": 3,
+                "incidents": 33,
+                "recall": 0.09090909090909091
+              },
+              "5-9": {
+                "detected": 5,
+                "incidents": 37,
+                "recall": 0.13513513513513514
+              }
+            }
+          }
+        },
+        "throughput_events_per_second": 5889.487414263935
+      }
+    ],
+    "chosen_candidate_index": 4,
+    "comparators": {
+      "DETECTOR_V1": {
+        "all_incident_count": 180,
+        "all_incident_recall": 0.05555555555555555,
+        "broad_scope_prediction_count": 61,
+        "delay_after_sufficient_evidence_minutes": {
+          "count": 8,
+          "mean": 365.04790230624997,
+          "median": 405.030600775,
+          "p90": 870.2996731000001
+        },
+        "detection_delay_minutes": {
+          "count": 10,
+          "mean": 704.876302165,
+          "median": 590.1034651749999,
+          "p90": 1455.3757446000002
+        },
+        "dominant_failure_shift": {
+          "detected_incidents": 10,
+          "incidents_with_supported_shift": 10,
+          "support_coverage": 1.0,
+          "top_reason_accuracy_when_supported": 0.4
+        },
+        "eligible_incident_count": 66,
+        "eligible_incident_recall": 0.12121212121212122,
+        "false_incidents_per_scope_day": 0.017747819801857547,
+        "false_positive_causes": {
+          "baseline_instability": 17,
+          "random_fluctuation": 295,
+          "sparse_sample": 31
+        },
+        "false_positive_incident_count": 343,
+        "matched_prediction_count": 10,
+        "predicted_incident_precision": 0.028328611898016998,
+        "predicted_issuer_incident_count": 353,
+        "recall_by_hidden_severity": {
+          "CRITICAL": {
+            "detected": 1,
+            "incidents": 8,
+            "recall": 0.125
+          },
+          "MILD": {
+            "detected": 1,
+            "incidents": 78,
+            "recall": 0.01282051282051282
+          },
+          "MODERATE": {
+            "detected": 4,
+            "incidents": 58,
+            "recall": 0.06896551724137931
+          },
+          "SEVERE": {
+            "detected": 4,
+            "incidents": 36,
+            "recall": 0.1111111111111111
+          }
+        },
+        "recall_by_traffic_volume": {
+          "0-2": {
+            "detected": 0,
+            "incidents": 78,
+            "recall": 0.0
+          },
+          "10+": {
+            "detected": 8,
+            "incidents": 32,
+            "recall": 0.25
+          },
+          "3-4": {
+            "detected": 2,
+            "incidents": 33,
+            "recall": 0.06060606060606061
+          },
+          "5-9": {
+            "detected": 0,
+            "incidents": 37,
+            "recall": 0.0
+          }
+        },
+        "resolution_delay_minutes": {
+          "count": 9,
+          "mean": 1922.8376575277778,
+          "median": 1740.9876312166666,
+          "p90": 2364.8331833333336
+        },
+        "seed_count": 10,
+        "severity_confusion_matrix": {
+          "CRITICAL": {
+            "MILD": 1
+          },
+          "MILD": {
+            "MILD": 1
+          },
+          "MODERATE": {
+            "MILD": 4
+          },
+          "SEVERE": {
+            "MILD": 4
+          }
+        }
+      },
+      "RELATIVE_DROP": {
+        "all_incident_count": 180,
+        "all_incident_recall": 0.12777777777777777,
+        "broad_scope_prediction_count": 0,
+        "delay_after_sufficient_evidence_minutes": {
+          "count": 19,
+          "mean": 471.3500205385965,
+          "median": 372.5170519166667,
+          "p90": 1027.5896779833333
+        },
+        "detection_delay_minutes": {
+          "count": 23,
+          "mean": 955.3401512855073,
+          "median": 715.61018745,
+          "p90": 1998.7135768666667
+        },
+        "dominant_failure_shift": {
+          "detected_incidents": 23,
+          "incidents_with_supported_shift": 0,
+          "support_coverage": 0.0,
+          "top_reason_accuracy_when_supported": null
+        },
+        "eligible_incident_count": 66,
+        "eligible_incident_recall": 0.2878787878787879,
+        "false_incidents_per_scope_day": 0.0896704714770237,
+        "false_positive_causes": {
+          "sparse_sample": 1733
+        },
+        "false_positive_incident_count": 1733,
+        "matched_prediction_count": 23,
+        "predicted_incident_precision": 0.013097949886104784,
+        "predicted_issuer_incident_count": 1756,
+        "recall_by_hidden_severity": {
+          "CRITICAL": {
+            "detected": 1,
+            "incidents": 8,
+            "recall": 0.125
+          },
+          "MILD": {
+            "detected": 2,
+            "incidents": 78,
+            "recall": 0.02564102564102564
+          },
+          "MODERATE": {
+            "detected": 12,
+            "incidents": 58,
+            "recall": 0.20689655172413793
+          },
+          "SEVERE": {
+            "detected": 8,
+            "incidents": 36,
+            "recall": 0.2222222222222222
+          }
+        },
+        "recall_by_traffic_volume": {
+          "0-2": {
+            "detected": 2,
+            "incidents": 78,
+            "recall": 0.02564102564102564
+          },
+          "10+": {
+            "detected": 14,
+            "incidents": 32,
+            "recall": 0.4375
+          },
+          "3-4": {
+            "detected": 2,
+            "incidents": 33,
+            "recall": 0.06060606060606061
+          },
+          "5-9": {
+            "detected": 5,
+            "incidents": 37,
+            "recall": 0.13513513513513514
+          }
+        },
+        "resolution_delay_minutes": {
+          "count": 22,
+          "mean": 1195.352110752273,
+          "median": 799.1293217083334,
+          "p90": 3712.504991766667
+        },
+        "seed_count": 10,
+        "severity_confusion_matrix": {
+          "CRITICAL": {
+            "MODERATE": 1
+          },
+          "MILD": {
+            "MODERATE": 2
+          },
+          "MODERATE": {
+            "MODERATE": 12
+          },
+          "SEVERE": {
+            "MODERATE": 8
+          }
+        }
+      },
+      "STATIC_THRESHOLD": {
+        "all_incident_count": 180,
+        "all_incident_recall": 0.15555555555555556,
+        "broad_scope_prediction_count": 0,
+        "delay_after_sufficient_evidence_minutes": {
+          "count": 20,
+          "mean": 457.0433254016667,
+          "median": 366.7831165,
+          "p90": 1027.5896779833333
+        },
+        "detection_delay_minutes": {
+          "count": 28,
+          "mean": 856.0926949315477,
+          "median": 678.6662085166668,
+          "p90": 1800.1660566166668
+        },
+        "dominant_failure_shift": {
+          "detected_incidents": 28,
+          "incidents_with_supported_shift": 0,
+          "support_coverage": 0.0,
+          "top_reason_accuracy_when_supported": null
+        },
+        "eligible_incident_count": 66,
+        "eligible_incident_recall": 0.30303030303030304,
+        "false_incidents_per_scope_day": 0.10265794311045298,
+        "false_positive_causes": {
+          "sparse_sample": 1984
+        },
+        "false_positive_incident_count": 1984,
+        "matched_prediction_count": 28,
+        "predicted_incident_precision": 0.013916500994035786,
+        "predicted_issuer_incident_count": 2012,
+        "recall_by_hidden_severity": {
+          "CRITICAL": {
+            "detected": 2,
+            "incidents": 8,
+            "recall": 0.25
+          },
+          "MILD": {
+            "detected": 4,
+            "incidents": 78,
+            "recall": 0.05128205128205128
+          },
+          "MODERATE": {
+            "detected": 12,
+            "incidents": 58,
+            "recall": 0.20689655172413793
+          },
+          "SEVERE": {
+            "detected": 10,
+            "incidents": 36,
+            "recall": 0.2777777777777778
+          }
+        },
+        "recall_by_traffic_volume": {
+          "0-2": {
+            "detected": 2,
+            "incidents": 78,
+            "recall": 0.02564102564102564
+          },
+          "10+": {
+            "detected": 16,
+            "incidents": 32,
+            "recall": 0.5
+          },
+          "3-4": {
+            "detected": 4,
+            "incidents": 33,
+            "recall": 0.12121212121212122
+          },
+          "5-9": {
+            "detected": 6,
+            "incidents": 37,
+            "recall": 0.16216216216216217
+          }
+        },
+        "resolution_delay_minutes": {
+          "count": 27,
+          "mean": 1422.056866795679,
+          "median": 922.1798150333333,
+          "p90": 3712.504991766667
+        },
+        "seed_count": 10,
+        "severity_confusion_matrix": {
+          "CRITICAL": {
+            "MODERATE": 2
+          },
+          "MILD": {
+            "MODERATE": 4
+          },
+          "MODERATE": {
+            "MODERATE": 12
+          },
+          "SEVERE": {
+            "MODERATE": 10
+          }
+        }
+      }
+    },
+    "mean_update_latency_ms": 0.18172224500000084,
+    "metrics": {
+      "all_incident_count": 180,
+      "broad_watch_episode_count": 3726,
+      "confirmed": {
+        "all_incident_recall": 0.03333333333333333,
+        "delay_after_first_event_minutes": {
+          "count": 6,
+          "mean": 1141.037078375,
+          "median": 935.3053821666667,
+          "p90": 2033.2569122166667
+        },
+        "delay_after_minimum_evidence_minutes": {
+          "count": 5,
+          "mean": 485.3850698766667,
+          "median": 839.3100253499999,
+          "p90": 1736.8724259666667
+        },
+        "detection_delay_minutes": {
+          "count": 6,
+          "mean": 1245.4027043166668,
+          "median": 999.9419527,
+          "p90": 2269.3889913666667
+        },
+        "eligible_incident_recall": 0.06060606060606061,
+        "episode_count": 102,
+        "episode_precision": 0.058823529411764705,
+        "false_confirmed_failed_payment_exposure": 897,
+        "false_episode_count": 96,
+        "false_episodes_per_scope_day": 0.004967319827925144,
+        "high_evidence_incident_recall": 0.17391304347826086,
+        "matched_count": 6,
+        "recall_by_hidden_severity": {
+          "CRITICAL": {
+            "detected": 1,
+            "incidents": 8,
+            "recall": 0.125
+          },
+          "MILD": {
+            "detected": 0,
+            "incidents": 78,
+            "recall": 0.0
+          },
+          "MODERATE": {
+            "detected": 2,
+            "incidents": 58,
+            "recall": 0.034482758620689655
+          },
+          "SEVERE": {
+            "detected": 3,
+            "incidents": 36,
+            "recall": 0.08333333333333333
+          }
+        },
+        "recall_by_traffic_volume": {
+          "0-2": {
+            "detected": 1,
+            "incidents": 78,
+            "recall": 0.01282051282051282
+          },
+          "10+": {
+            "detected": 5,
+            "incidents": 32,
+            "recall": 0.15625
+          },
+          "3-4": {
+            "detected": 0,
+            "incidents": 33,
+            "recall": 0.0
+          },
+          "5-9": {
+            "detected": 0,
+            "incidents": 37,
+            "recall": 0.0
+          }
+        },
+        "resolution_delay_minutes": {
+          "count": 5,
+          "mean": 9344.151143143334,
+          "median": 5991.508516533333,
+          "p90": 21900.136107183334
+        },
+        "watch_to_confirmed_delay_minutes": {
+          "count": 6,
+          "mean": 4723.838087538889,
+          "median": 4749.981565158334,
+          "p90": 6397.477043466667
+        }
+      },
+      "eligible_incident_count": 66,
+      "high_evidence_incident_count": 23,
+      "root_cause_evidence": {
+        "confirmed_matches": 6,
+        "coverage": 0.6666666666666666,
+        "support_distribution": {
+          "count": 4,
+          "mean": 7.75,
+          "median": 8.0,
+          "p90": 11.0
+        },
+        "supported_top_reason_count": 4,
+        "top_1_agreement": 0.75
+      },
+      "seed_count": 10,
+      "watch": {
+        "all_incident_recall": 0.12222222222222222,
+        "delay_after_first_event_minutes": {
+          "count": 22,
+          "mean": 646.8737092189393,
+          "median": 476.80518019166664,
+          "p90": 1315.9545481166667
+        },
+        "delay_after_minimum_evidence_minutes": {
+          "count": 21,
+          "mean": 463.93643178571426,
+          "median": 285.26730634999996,
+          "p90": 1124.7715882
+        },
+        "detection_delay_minutes": {
+          "count": 22,
+          "mean": 783.6080715219697,
+          "median": 620.8682697916666,
+          "p90": 1415.3503269666667
+        },
+        "eligible_incident_recall": 0.24242424242424243,
+        "episode_count": 1750,
+        "episode_precision": 0.012571428571428572,
+        "false_episode_count": 1728,
+        "false_episodes_per_scope_day": 0.08941175690265259,
+        "high_evidence_incident_recall": 0.30434782608695654,
+        "matched_count": 22,
+        "recall_by_hidden_severity": {
+          "CRITICAL": {
+            "detected": 2,
+            "incidents": 8,
+            "recall": 0.25
+          },
+          "MILD": {
+            "detected": 4,
+            "incidents": 78,
+            "recall": 0.05128205128205128
+          },
+          "MODERATE": {
+            "detected": 6,
+            "incidents": 58,
+            "recall": 0.10344827586206896
+          },
+          "SEVERE": {
+            "detected": 10,
+            "incidents": 36,
+            "recall": 0.2777777777777778
+          }
+        },
+        "recall_by_traffic_volume": {
+          "0-2": {
+            "detected": 1,
+            "incidents": 78,
+            "recall": 0.01282051282051282
+          },
+          "10+": {
+            "detected": 14,
+            "incidents": 32,
+            "recall": 0.4375
+          },
+          "3-4": {
+            "detected": 3,
+            "incidents": 33,
+            "recall": 0.09090909090909091
+          },
+          "5-9": {
+            "detected": 4,
+            "incidents": 37,
+            "recall": 0.10810810810810811
+          }
+        }
+      }
+    },
+    "selection_objective": "Prefer >=5 confirmed episodes and <=0.005 false confirmed episodes per issuer-scope-day; then maximize confirmed precision, high-evidence confirmed recall, lower WATCH-to-CONFIRMED delay, WATCH eligible recall, and lower WATCH delay. If no candidate meets the alert-rate constraint, minimize false confirmed rate before the same precision/recall ordering.",
+    "throughput_events_per_second": 5502.903620852777
+  },
+  "development_observability": {
+    "high_evidence_count": 23,
+    "high_evidence_rule": {
+      "baseline_lookback_days": 30,
+      "first_horizon_hours": 24,
+      "min_attempts_first_horizon": 10,
+      "min_prior_baseline_attempts": 100
+    },
+    "incident_count": 180,
+    "original_eligible_count": 66
+  },
+  "false_confirmed_exposure": {
+    "detail_artifact": "validation-false-confirmed-exposure-v2.json",
+    "episode_count": 104,
+    "total_failed_payments": 824
+  },
+  "frozen_config": {
+    "baseline_lookback_days": 14,
+    "baseline_prior_strength": 20.0,
+    "confirmation_cooldown_days": 7,
+    "confirmed_llr_threshold": 10.0,
+    "confirmed_min_events": 10,
+    "confirmed_parent_llr": 6.5,
+    "confirmed_strong_llr": 7.0,
+    "default_success_probability": 0.88,
+    "detector_version": "2.0.0",
+    "drop_hypotheses": [
+      0.1,
+      0.2,
+      0.35
+    ],
+    "failure_js_threshold": 0.18,
+    "failure_min_baseline": 10,
+    "failure_min_current": 5,
+    "failure_reason_min_support": 3,
+    "maximum_baseline_probability": 0.995,
+    "min_baseline_attempts": 50,
+    "minimum_alternative_probability": 0.05,
+    "minimum_baseline_probability": 0.55,
+    "recovery_min_events": 5,
+    "recovery_resolve_llr": 5.0,
+    "recovery_start_llr": 2.5,
+    "watch_llr_threshold": 2.5,
+    "watch_min_events": 3,
+    "watch_release_llr": 0.35,
+    "watch_release_successes": 3,
+    "windows_minutes": [
+      5,
+      15,
+      60
+    ]
+  },
+  "phase": "3.5_operational_degradation_detector_v2",
+  "policy_status": "ADVISORY_ONLY",
+  "seed_protocol": {
+    "development": [
+      20260901,
+      20260902,
+      20260903,
+      20260904,
+      20260905,
+      20260906,
+      20260907,
+      20260908,
+      20260909,
+      20260910
+    ],
+    "final_untouched": [
+      20261101,
+      20261102,
+      20261103,
+      20261104,
+      20261105,
+      20261106,
+      20261107,
+      20261108,
+      20261109,
+      20261110,
+      20261111,
+      20261112,
+      20261113,
+      20261114,
+      20261115,
+      20261116,
+      20261117,
+      20261118,
+      20261119,
+      20261120
+    ],
+    "v1_consumed_validation_forbidden": [
+      20261001,
+      20261002,
+      20261003,
+      20261004,
+      20261005,
+      20261006,
+      20261007,
+      20261008,
+      20261009,
+      20261010
+    ],
+    "v2_validation_executed_once": [
+      20261201,
+      20261202,
+      20261203,
+      20261204,
+      20261205,
+      20261206,
+      20261207,
+      20261208,
+      20261209,
+      20261210
+    ]
+  },
+  "v1_artifact_sha256": {
+    "degradation-detector-v1.json": "b1faea3bb3abfc3a808047dee8d7f4d0a9082cda65570a5a262085ceeeee35f9",
+    "demo-scenario-not-benchmark-v1.json": "b1021513c27c66b64a7d99f2be7241f9cd3968fb9ca973214085bd43474882ab",
+    "development-report-v1.md": "eeffc002e1251b665b29bb46aea2049380501f91b5015498ec339ff325cdb795",
+    "validation-report-v1.md": "5ab1d3367d5a19d20304b78b7bd220b4997aff874430e9aea3581d9d71ba866c"
+  },
+  "v1_historical_commit": "6bd0952bf4ff9182ed9c09b3e493a5807906d7fe",
+  "validation": {
+    "comparators": {
+      "DETECTOR_V1": {
+        "all_incident_count": 180,
+        "all_incident_recall": 0.044444444444444446,
+        "broad_scope_prediction_count": 59,
+        "delay_after_sufficient_evidence_minutes": {
+          "count": 8,
+          "mean": 348.64659448333333,
+          "median": 369.08521049166666,
+          "p90": 523.5415395
+        },
+        "detection_delay_minutes": {
+          "count": 8,
+          "mean": 711.8535051145833,
+          "median": 716.7104330500001,
+          "p90": 1076.5054228333333
+        },
+        "dominant_failure_shift": {
+          "detected_incidents": 8,
+          "incidents_with_supported_shift": 6,
+          "support_coverage": 0.75,
+          "top_reason_accuracy_when_supported": 0.3333333333333333
+        },
+        "eligible_incident_count": 78,
+        "eligible_incident_recall": 0.10256410256410256,
+        "false_incidents_per_scope_day": 0.017018425003471463,
+        "false_positive_causes": {
+          "baseline_instability": 12,
+          "naturally_lower_performing_scope": 2,
+          "random_fluctuation": 277,
+          "sparse_sample": 38
+        },
+        "false_positive_incident_count": 329,
+        "matched_prediction_count": 8,
+        "predicted_incident_precision": 0.02373887240356083,
+        "predicted_issuer_incident_count": 337,
+        "recall_by_hidden_severity": {
+          "CRITICAL": {
+            "detected": 2,
+            "incidents": 6,
+            "recall": 0.3333333333333333
+          },
+          "MILD": {
+            "detected": 1,
+            "incidents": 91,
+            "recall": 0.01098901098901099
+          },
+          "MODERATE": {
+            "detected": 4,
+            "incidents": 57,
+            "recall": 0.07017543859649122
+          },
+          "SEVERE": {
+            "detected": 1,
+            "incidents": 26,
+            "recall": 0.038461538461538464
+          }
+        },
+        "recall_by_traffic_volume": {
+          "0-2": {
+            "detected": 0,
+            "incidents": 67,
+            "recall": 0.0
+          },
+          "10+": {
+            "detected": 8,
+            "incidents": 39,
+            "recall": 0.20512820512820512
+          },
+          "3-4": {
+            "detected": 0,
+            "incidents": 30,
+            "recall": 0.0
+          },
+          "5-9": {
+            "detected": 0,
+            "incidents": 44,
+            "recall": 0.0
+          }
+        },
+        "resolution_delay_minutes": {
+          "count": 8,
+          "mean": 2212.0350800770834,
+          "median": 1747.1353859416668,
+          "p90": 4467.6142549666665
+        },
+        "seed_count": 10,
+        "severity_confusion_matrix": {
+          "CRITICAL": {
+            "MILD": 2
+          },
+          "MILD": {
+            "MILD": 1
+          },
+          "MODERATE": {
+            "MILD": 3,
+            "MODERATE": 1
+          },
+          "SEVERE": {
+            "MILD": 1
+          }
+        }
+      },
+      "RELATIVE_DROP": {
+        "all_incident_count": 180,
+        "all_incident_recall": 0.1111111111111111,
+        "broad_scope_prediction_count": 0,
+        "delay_after_sufficient_evidence_minutes": {
+          "count": 17,
+          "mean": 203.7751153627451,
+          "median": 0.0,
+          "p90": 987.8546057333333
+        },
+        "detection_delay_minutes": {
+          "count": 20,
+          "mean": 643.3190688458333,
+          "median": 470.0010139,
+          "p90": 1243.4428065666666
+        },
+        "dominant_failure_shift": {
+          "detected_incidents": 20,
+          "incidents_with_supported_shift": 0,
+          "support_coverage": 0.0,
+          "top_reason_accuracy_when_supported": null
+        },
+        "eligible_incident_count": 78,
+        "eligible_incident_recall": 0.21794871794871795,
+        "false_incidents_per_scope_day": 0.08664395708454317,
+        "false_positive_causes": {
+          "sparse_sample": 1675
+        },
+        "false_positive_incident_count": 1675,
+        "matched_prediction_count": 20,
+        "predicted_incident_precision": 0.011799410029498525,
+        "predicted_issuer_incident_count": 1695,
+        "recall_by_hidden_severity": {
+          "CRITICAL": {
+            "detected": 2,
+            "incidents": 6,
+            "recall": 0.3333333333333333
+          },
+          "MILD": {
+            "detected": 8,
+            "incidents": 91,
+            "recall": 0.08791208791208792
+          },
+          "MODERATE": {
+            "detected": 6,
+            "incidents": 57,
+            "recall": 0.10526315789473684
+          },
+          "SEVERE": {
+            "detected": 4,
+            "incidents": 26,
+            "recall": 0.15384615384615385
+          }
+        },
+        "recall_by_traffic_volume": {
+          "0-2": {
+            "detected": 1,
+            "incidents": 67,
+            "recall": 0.014925373134328358
+          },
+          "10+": {
+            "detected": 11,
+            "incidents": 39,
+            "recall": 0.28205128205128205
+          },
+          "3-4": {
+            "detected": 2,
+            "incidents": 30,
+            "recall": 0.06666666666666667
+          },
+          "5-9": {
+            "detected": 6,
+            "incidents": 44,
+            "recall": 0.13636363636363635
+          }
+        },
+        "resolution_delay_minutes": {
+          "count": 19,
+          "mean": 1753.8019582973686,
+          "median": 708.6342169,
+          "p90": 4281.110107016667
+        },
+        "seed_count": 10,
+        "severity_confusion_matrix": {
+          "CRITICAL": {
+            "MODERATE": 2
+          },
+          "MILD": {
+            "MODERATE": 8
+          },
+          "MODERATE": {
+            "MODERATE": 6
+          },
+          "SEVERE": {
+            "MODERATE": 4
+          }
+        }
+      },
+      "STATIC_THRESHOLD": {
+        "all_incident_count": 180,
+        "all_incident_recall": 0.1388888888888889,
+        "broad_scope_prediction_count": 0,
+        "delay_after_sufficient_evidence_minutes": {
+          "count": 19,
+          "mean": 349.451571827193,
+          "median": 8.1014464,
+          "p90": 1188.9931161499999
+        },
+        "detection_delay_minutes": {
+          "count": 25,
+          "mean": 726.2815127433333,
+          "median": 578.9154814833333,
+          "p90": 1800.6558023333334
+        },
+        "dominant_failure_shift": {
+          "detected_incidents": 25,
+          "incidents_with_supported_shift": 0,
+          "support_coverage": 0.0,
+          "top_reason_accuracy_when_supported": null
+        },
+        "eligible_incident_count": 78,
+        "eligible_incident_recall": 0.24358974358974358,
+        "false_incidents_per_scope_day": 0.09652395457895974,
+        "false_positive_causes": {
+          "sparse_sample": 1866
+        },
+        "false_positive_incident_count": 1866,
+        "matched_prediction_count": 25,
+        "predicted_incident_precision": 0.013220518244315178,
+        "predicted_issuer_incident_count": 1891,
+        "recall_by_hidden_severity": {
+          "CRITICAL": {
+            "detected": 2,
+            "incidents": 6,
+            "recall": 0.3333333333333333
+          },
+          "MILD": {
+            "detected": 9,
+            "incidents": 91,
+            "recall": 0.0989010989010989
+          },
+          "MODERATE": {
+            "detected": 8,
+            "incidents": 57,
+            "recall": 0.14035087719298245
+          },
+          "SEVERE": {
+            "detected": 6,
+            "incidents": 26,
+            "recall": 0.23076923076923078
+          }
+        },
+        "recall_by_traffic_volume": {
+          "0-2": {
+            "detected": 2,
+            "incidents": 67,
+            "recall": 0.029850746268656716
+          },
+          "10+": {
+            "detected": 13,
+            "incidents": 39,
+            "recall": 0.3333333333333333
+          },
+          "3-4": {
+            "detected": 4,
+            "incidents": 30,
+            "recall": 0.13333333333333333
+          },
+          "5-9": {
+            "detected": 6,
+            "incidents": 44,
+            "recall": 0.13636363636363635
+          }
+        },
+        "resolution_delay_minutes": {
+          "count": 25,
+          "mean": 1645.8502699906667,
+          "median": 688.3910306,
+          "p90": 4281.110107016667
+        },
+        "seed_count": 10,
+        "severity_confusion_matrix": {
+          "CRITICAL": {
+            "MODERATE": 2
+          },
+          "MILD": {
+            "MODERATE": 9
+          },
+          "MODERATE": {
+            "MODERATE": 8
+          },
+          "SEVERE": {
+            "MODERATE": 6
+          }
+        }
+      }
+    },
+    "hard_policy_safety_gate": {
+      "actual_confirmed_episode_count": 108,
+      "actual_false_confirmed_per_scope_day": 0.005379684499577606,
+      "actual_precision": 0.037037037037037035,
+      "failure_behavior": "ADVISORY_ONLY",
+      "future_hard_policy_eligible": false,
+      "maximum_false_confirmed_per_scope_day": 0.005,
+      "minimum_confirmed_episode_count": 5,
+      "required_precision": 0.7,
+      "status": "FAIL"
+    },
+    "mean_update_latency_ms": 0.18101714800000082,
+    "metrics": {
+      "all_incident_count": 180,
+      "broad_watch_episode_count": 3789,
+      "confirmed": {
+        "all_incident_recall": 0.022222222222222223,
+        "delay_after_first_event_minutes": {
+          "count": 4,
+          "mean": 878.0428881,
+          "median": 1001.9447656916666,
+          "p90": 1508.2820210166667
+        },
+        "delay_after_minimum_evidence_minutes": {
+          "count": 4,
+          "mean": -244.4755118625,
+          "median": 100.95937975,
+          "p90": 222.03580118333332
+        },
+        "detection_delay_minutes": {
+          "count": 4,
+          "mean": 932.2359199541667,
+          "median": 1064.802769525,
+          "p90": 1508.5835942166666
+        },
+        "eligible_incident_recall": 0.05128205128205128,
+        "episode_count": 108,
+        "episode_precision": 0.037037037037037035,
+        "false_confirmed_failed_payment_exposure": 824,
+        "false_episode_count": 104,
+        "false_episodes_per_scope_day": 0.005379684499577606,
+        "high_evidence_incident_recall": 0.07142857142857142,
+        "matched_count": 4,
+        "recall_by_hidden_severity": {
+          "CRITICAL": {
+            "detected": 1,
+            "incidents": 6,
+            "recall": 0.16666666666666666
+          },
+          "MILD": {
+            "detected": 0,
+            "incidents": 91,
+            "recall": 0.0
+          },
+          "MODERATE": {
+            "detected": 2,
+            "incidents": 57,
+            "recall": 0.03508771929824561
+          },
+          "SEVERE": {
+            "detected": 1,
+            "incidents": 26,
+            "recall": 0.038461538461538464
+          }
+        },
+        "recall_by_traffic_volume": {
+          "0-2": {
+            "detected": 0,
+            "incidents": 67,
+            "recall": 0.0
+          },
+          "10+": {
+            "detected": 4,
+            "incidents": 39,
+            "recall": 0.10256410256410256
+          },
+          "3-4": {
+            "detected": 0,
+            "incidents": 30,
+            "recall": 0.0
+          },
+          "5-9": {
+            "detected": 0,
+            "incidents": 44,
+            "recall": 0.0
+          }
+        },
+        "resolution_delay_minutes": {
+          "count": 4,
+          "mean": 7997.507063054167,
+          "median": 7727.688657425,
+          "p90": 13194.205037950001
+        },
+        "watch_to_confirmed_delay_minutes": {
+          "count": 4,
+          "mean": 3605.6143705583336,
+          "median": 1958.3664972916667,
+          "p90": 9220.54825175
+        }
+      },
+      "eligible_incident_count": 78,
+      "high_evidence_incident_count": 28,
+      "root_cause_evidence": {
+        "confirmed_matches": 4,
+        "coverage": 1.0,
+        "support_distribution": {
+          "count": 4,
+          "mean": 9.25,
+          "median": 9.5,
+          "p90": 13.0
+        },
+        "supported_top_reason_count": 4,
+        "top_1_agreement": 0.75
+      },
+      "seed_count": 10,
+      "watch": {
+        "all_incident_recall": 0.17222222222222222,
+        "delay_after_first_event_minutes": {
+          "count": 31,
+          "mean": 451.33575103978495,
+          "median": 239.90738691666667,
+          "p90": 1165.7463046999999
+        },
+        "delay_after_minimum_evidence_minutes": {
+          "count": 30,
+          "mean": 221.9614180227778,
+          "median": 0.0,
+          "p90": 989.0480346
+        },
+        "detection_delay_minutes": {
+          "count": 31,
+          "mean": 550.3554286650538,
+          "median": 274.24296615000003,
+          "p90": 1306.0370636333332
+        },
+        "eligible_incident_recall": 0.28205128205128205,
+        "episode_count": 1888,
+        "episode_precision": 0.01641949152542373,
+        "false_episode_count": 1857,
+        "false_episodes_per_scope_day": 0.09605840495880398,
+        "high_evidence_incident_recall": 0.39285714285714285,
+        "matched_count": 31,
+        "recall_by_hidden_severity": {
+          "CRITICAL": {
+            "detected": 4,
+            "incidents": 6,
+            "recall": 0.6666666666666666
+          },
+          "MILD": {
+            "detected": 12,
+            "incidents": 91,
+            "recall": 0.13186813186813187
+          },
+          "MODERATE": {
+            "detected": 8,
+            "incidents": 57,
+            "recall": 0.14035087719298245
+          },
+          "SEVERE": {
+            "detected": 7,
+            "incidents": 26,
+            "recall": 0.2692307692307692
+          }
+        },
+        "recall_by_traffic_volume": {
+          "0-2": {
+            "detected": 1,
+            "incidents": 67,
+            "recall": 0.014925373134328358
+          },
+          "10+": {
+            "detected": 16,
+            "incidents": 39,
+            "recall": 0.41025641025641024
+          },
+          "3-4": {
+            "detected": 5,
+            "incidents": 30,
+            "recall": 0.16666666666666666
+          },
+          "5-9": {
+            "detected": 9,
+            "incidents": 44,
+            "recall": 0.20454545454545456
+          }
+        }
+      }
+    },
+    "run_count": 1,
+    "throughput_events_per_second": 5524.338500792176
+  }
+}

@@ -1,0 +1,1357 @@
+{
+  "episodes": [
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-14T22:04:26.637926+00:00",
+      "failed_payments_during_episode": 10,
+      "incident_id": "DEG2-16eb3252c186",
+      "resolved_at": "2026-01-20T00:54:56.103116+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261201
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-24T23:29:46.350931+00:00",
+      "failed_payments_during_episode": 16,
+      "incident_id": "DEG2-f68669ed817e",
+      "resolved_at": "2026-01-29T15:02:24.061109+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261201
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-10T11:47:21.542071+00:00",
+      "failed_payments_during_episode": 4,
+      "incident_id": "DEG2-bb2ef464eae6",
+      "resolved_at": "2026-02-12T12:09:43.415946+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261201
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-13T22:35:12.762778+00:00",
+      "failed_payments_during_episode": 3,
+      "incident_id": "DEG2-7178d2a97981",
+      "resolved_at": "2026-02-15T21:18:21.641836+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261201
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-05T13:36:24.669709+00:00",
+      "failed_payments_during_episode": 9,
+      "incident_id": "DEG2-4c677aeb4e63",
+      "resolved_at": "2026-03-09T23:57:32.650532+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261201
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-05T11:00:00.555913+00:00",
+      "failed_payments_during_episode": 2,
+      "incident_id": "DEG2-a4b6e74b7dae",
+      "resolved_at": "2026-03-07T18:10:19.684533+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261201
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-08T06:39:37.038615+00:00",
+      "failed_payments_during_episode": 9,
+      "incident_id": "DEG2-2f88d9cb8c68",
+      "resolved_at": "2026-03-11T17:35:34.459043+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261201
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-11T13:43:23.657050+00:00",
+      "failed_payments_during_episode": 1,
+      "incident_id": "DEG2-c9afe66d2156",
+      "resolved_at": "2026-04-13T20:44:52.463984+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261201
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-08T22:36:16.932659+00:00",
+      "failed_payments_during_episode": 21,
+      "incident_id": "DEG2-33dcf1d71d8e",
+      "resolved_at": "2026-01-26T21:26:22.571972+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261202
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-08T06:05:28.466795+00:00",
+      "failed_payments_during_episode": 11,
+      "incident_id": "DEG2-2731caeee459",
+      "resolved_at": "2026-01-13T03:10:33.041674+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261202
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-27T01:26:21.659493+00:00",
+      "failed_payments_during_episode": 5,
+      "incident_id": "DEG2-b1fe93e90e11",
+      "resolved_at": "2026-02-02T01:34:15.372738+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261202
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-25T00:42:57.784088+00:00",
+      "failed_payments_during_episode": 7,
+      "incident_id": "DEG2-5937d414d41a",
+      "resolved_at": "2026-01-29T15:56:21.051954+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261202
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-12T18:09:38.962097+00:00",
+      "failed_payments_during_episode": 23,
+      "incident_id": "DEG2-1815e8ab27a3",
+      "resolved_at": "2026-03-04T22:18:11.106598+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261202
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-24T18:42:48.371402+00:00",
+      "failed_payments_during_episode": 5,
+      "incident_id": "DEG2-1aed48c08a5b",
+      "resolved_at": "2026-02-28T15:35:59.541060+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261202
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_FAILURE_SHIFT",
+      "confirmed_at": "2026-03-17T03:27:29.100672+00:00",
+      "failed_payments_during_episode": 7,
+      "incident_id": "DEG2-bffcb1bb45bf",
+      "resolved_at": "2026-03-25T14:25:43.572335+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261202
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-24T00:30:18.041772+00:00",
+      "failed_payments_during_episode": 2,
+      "incident_id": "DEG2-fa415eabd81d",
+      "resolved_at": "2026-04-26T21:26:22.571972+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261202
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_FAILURE_SHIFT",
+      "confirmed_at": "2026-04-14T19:40:07.268177+00:00",
+      "failed_payments_during_episode": 8,
+      "incident_id": "DEG2-1c4aec067f23",
+      "resolved_at": "2026-04-19T14:47:38.872625+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261202
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-17T14:29:23.269513+00:00",
+      "failed_payments_during_episode": 3,
+      "incident_id": "DEG2-af027f8d3f9b",
+      "resolved_at": "2026-04-20T00:36:12.116399+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261202
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-11T02:28:30.170250+00:00",
+      "failed_payments_during_episode": 5,
+      "incident_id": "DEG2-b1d19cfa5fce",
+      "resolved_at": "2026-01-19T00:37:49.554743+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261203
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-29T06:32:24.666723+00:00",
+      "failed_payments_during_episode": 7,
+      "incident_id": "DEG2-4963364777aa",
+      "resolved_at": "2026-02-01T09:50:42.658614+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261203
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-07T19:10:46.879615+00:00",
+      "failed_payments_during_episode": 5,
+      "incident_id": "DEG2-9aef9ef1e75c",
+      "resolved_at": "2026-02-10T01:06:06.001018+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261203
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-08T23:17:10.583781+00:00",
+      "failed_payments_during_episode": 9,
+      "incident_id": "DEG2-0d4b6a4dc3d9",
+      "resolved_at": "2026-02-19T18:24:39.613264+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261203
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-13T14:18:31.619459+00:00",
+      "failed_payments_during_episode": 37,
+      "incident_id": "DEG2-0a610e3ca3d4",
+      "resolved_at": "2026-03-20T11:05:49.717660+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261203
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-29T03:46:03.513234+00:00",
+      "failed_payments_during_episode": 1,
+      "incident_id": "DEG2-6d650859065e",
+      "resolved_at": "2026-04-01T14:03:55.234476+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261203
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-23T05:14:40.741500+00:00",
+      "failed_payments_during_episode": 8,
+      "incident_id": "DEG2-09804608da6e",
+      "resolved_at": "2026-03-03T20:37:21.895468+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261203
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-26T14:19:59.802537+00:00",
+      "failed_payments_during_episode": 8,
+      "incident_id": "DEG2-722935394f89",
+      "resolved_at": "2026-03-02T18:56:24.904757+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261203
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-03T11:43:48.516695+00:00",
+      "failed_payments_during_episode": 5,
+      "incident_id": "DEG2-62446ed20f8b",
+      "resolved_at": "2026-04-10T17:00:24.636774+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261203
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-06T22:53:27.387893+00:00",
+      "failed_payments_during_episode": 7,
+      "incident_id": "DEG2-f271fbf5f9ab",
+      "resolved_at": "2026-04-10T04:06:00.910060+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261203
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-18T19:07:08.261295+00:00",
+      "failed_payments_during_episode": 3,
+      "incident_id": "DEG2-7991755f7f61",
+      "resolved_at": "2026-04-21T12:14:37.007246+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261203
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-05T15:11:51.289345+00:00",
+      "failed_payments_during_episode": 5,
+      "incident_id": "DEG2-6a5bf641bbd3",
+      "resolved_at": "2026-01-11T02:12:22.913815+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-18T12:44:03.008673+00:00",
+      "failed_payments_during_episode": 1,
+      "incident_id": "DEG2-79368e104fca",
+      "resolved_at": "2026-01-21T20:51:59.023099+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-11T07:44:39.020769+00:00",
+      "failed_payments_during_episode": 11,
+      "incident_id": "DEG2-3016d1732930",
+      "resolved_at": "2026-01-20T00:12:57.331790+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-18T17:30:52.125494+00:00",
+      "failed_payments_during_episode": 4,
+      "incident_id": "DEG2-0758485b093b",
+      "resolved_at": "2026-01-21T19:43:08.888512+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-11T15:03:15.688190+00:00",
+      "failed_payments_during_episode": 1,
+      "incident_id": "DEG2-36e67dbccb56",
+      "resolved_at": "2026-01-12T23:47:00.641606+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-30T02:27:59.416710+00:00",
+      "failed_payments_during_episode": 1,
+      "incident_id": "DEG2-aa056d76a2e9",
+      "resolved_at": "2026-01-31T19:39:10.349819+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-13T07:10:09.202626+00:00",
+      "failed_payments_during_episode": 19,
+      "incident_id": "DEG2-798ea1ed608c",
+      "resolved_at": "2026-04-26T00:50:17.370533+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-10T00:32:04.569974+00:00",
+      "failed_payments_during_episode": 7,
+      "incident_id": "DEG2-b2e5a7d2956f",
+      "resolved_at": "2026-02-15T06:10:11.930496+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-22T19:53:59.315396+00:00",
+      "failed_payments_during_episode": 1,
+      "incident_id": "DEG2-699d919f4b11",
+      "resolved_at": "2026-02-25T09:08:53.109368+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-15T23:59:04.984346+00:00",
+      "failed_payments_during_episode": 6,
+      "incident_id": "DEG2-25eb864b8f56",
+      "resolved_at": "2026-03-19T15:43:48.676315+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-22T13:44:06.730726+00:00",
+      "failed_payments_during_episode": 18,
+      "incident_id": "DEG2-e04dfe01f545",
+      "resolved_at": "2026-03-30T09:28:44.616714+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-24T01:55:01.467643+00:00",
+      "failed_payments_during_episode": 12,
+      "incident_id": "DEG2-4341070c0626",
+      "resolved_at": "2026-03-31T05:12:58.792238+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-28T21:33:49.116891+00:00",
+      "failed_payments_during_episode": 6,
+      "incident_id": "DEG2-8a5b30049aef",
+      "resolved_at": "2026-04-01T18:04:46.312768+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-30T12:12:05.802743+00:00",
+      "failed_payments_during_episode": 1,
+      "incident_id": "DEG2-adffdc93016f",
+      "resolved_at": null,
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-13T02:17:43.321613+00:00",
+      "failed_payments_during_episode": 2,
+      "incident_id": "DEG2-b11e11185ae3",
+      "resolved_at": "2026-04-15T19:18:11.885526+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-29T23:41:51.500520+00:00",
+      "failed_payments_during_episode": 4,
+      "incident_id": "DEG2-fc394d3a8db8",
+      "resolved_at": null,
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261204
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-06T03:07:47.267010+00:00",
+      "failed_payments_during_episode": 21,
+      "incident_id": "DEG2-f88bf9b34ce3",
+      "resolved_at": "2026-01-21T08:56:25.385839+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261205
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-21T19:10:32.524086+00:00",
+      "failed_payments_during_episode": 4,
+      "incident_id": "DEG2-522a28e785b9",
+      "resolved_at": "2026-01-26T21:33:08.116222+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261205
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-24T06:29:31.952027+00:00",
+      "failed_payments_during_episode": 5,
+      "incident_id": "DEG2-300034328fe7",
+      "resolved_at": "2026-01-29T10:13:18.192482+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261205
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-27T23:28:49.584136+00:00",
+      "failed_payments_during_episode": 21,
+      "incident_id": "DEG2-a5d963d33110",
+      "resolved_at": "2026-02-02T23:49:15.260001+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261205
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-21T22:06:34.088172+00:00",
+      "failed_payments_during_episode": 16,
+      "incident_id": "DEG2-e8031d1aa162",
+      "resolved_at": "2026-02-27T08:17:06.077061+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261205
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-27T12:09:58.071185+00:00",
+      "failed_payments_during_episode": 1,
+      "incident_id": "DEG2-6d8788e0396a",
+      "resolved_at": "2026-04-28T08:23:49.661853+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261205
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-17T16:57:40.339020+00:00",
+      "failed_payments_during_episode": 11,
+      "incident_id": "DEG2-55ff8cdd4adc",
+      "resolved_at": "2026-01-22T09:30:33.523584+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261206
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-29T17:39:49.197475+00:00",
+      "failed_payments_during_episode": 4,
+      "incident_id": "DEG2-927eb516c0a8",
+      "resolved_at": "2026-02-01T10:16:09.038359+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261206
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-02T00:40:57.513442+00:00",
+      "failed_payments_during_episode": 12,
+      "incident_id": "DEG2-f6bb5072b79d",
+      "resolved_at": "2026-03-11T18:19:46.919716+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261206
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-23T08:10:12.373935+00:00",
+      "failed_payments_during_episode": 5,
+      "incident_id": "DEG2-7138ec6e5d86",
+      "resolved_at": "2026-03-01T19:40:09.982774+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261206
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-16T23:24:24.696438+00:00",
+      "failed_payments_during_episode": 3,
+      "incident_id": "DEG2-8690b6e7ce3c",
+      "resolved_at": "2026-02-18T21:12:25.788145+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261206
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-01T23:53:28.235703+00:00",
+      "failed_payments_during_episode": 8,
+      "incident_id": "DEG2-d3aaeaf9bb7d",
+      "resolved_at": "2026-03-05T06:18:52.755324+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261206
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-16T02:52:32.168608+00:00",
+      "failed_payments_during_episode": 10,
+      "incident_id": "DEG2-cd258bab0982",
+      "resolved_at": "2026-03-20T17:26:17.459557+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261206
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-17T15:22:28.774118+00:00",
+      "failed_payments_during_episode": 9,
+      "incident_id": "DEG2-c3f4559ad0c0",
+      "resolved_at": "2026-04-27T07:18:56.124424+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261206
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-25T08:15:31.129121+00:00",
+      "failed_payments_during_episode": 7,
+      "incident_id": "DEG2-82f07faea4dc",
+      "resolved_at": null,
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261206
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-10T11:44:40.801560+00:00",
+      "failed_payments_during_episode": 2,
+      "incident_id": "DEG2-d53ce3539fb2",
+      "resolved_at": "2026-01-12T21:52:50.403782+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261207
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-24T17:02:30.537787+00:00",
+      "failed_payments_during_episode": 2,
+      "incident_id": "DEG2-f1022484cb4e",
+      "resolved_at": "2026-01-27T14:01:00.618970+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261207
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-07T04:22:12.721643+00:00",
+      "failed_payments_during_episode": 6,
+      "incident_id": "DEG2-0c13c4a46931",
+      "resolved_at": "2026-01-11T12:40:08.976873+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261207
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-27T20:35:58.625483+00:00",
+      "failed_payments_during_episode": 7,
+      "incident_id": "DEG2-5280f3627bdd",
+      "resolved_at": "2026-01-31T04:36:00.384331+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261207
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-06T00:29:10.110196+00:00",
+      "failed_payments_during_episode": 6,
+      "incident_id": "DEG2-94a5d93a879d",
+      "resolved_at": "2026-02-14T15:15:10.795790+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261207
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-12T17:17:32.790570+00:00",
+      "failed_payments_during_episode": 3,
+      "incident_id": "DEG2-94598c66d249",
+      "resolved_at": "2026-02-14T08:00:03.336962+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261207
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-04T10:22:59.343451+00:00",
+      "failed_payments_during_episode": 2,
+      "incident_id": "DEG2-70675158bf84",
+      "resolved_at": "2026-03-07T13:54:49.865575+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261207
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-21T02:03:36.719254+00:00",
+      "failed_payments_during_episode": 11,
+      "incident_id": "DEG2-83cb8dd2ae06",
+      "resolved_at": "2026-02-25T11:25:06.341447+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261207
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-20T20:09:45.117500+00:00",
+      "failed_payments_during_episode": 13,
+      "incident_id": "DEG2-0ee399cfe71f",
+      "resolved_at": "2026-03-09T01:30:58.250405+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261207
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-15T05:43:25.484943+00:00",
+      "failed_payments_during_episode": 8,
+      "incident_id": "DEG2-fe30290c8d86",
+      "resolved_at": "2026-03-19T10:40:14.559162+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261207
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-12T18:17:30.062678+00:00",
+      "failed_payments_during_episode": 11,
+      "incident_id": "DEG2-0804cc29ecb9",
+      "resolved_at": "2026-04-17T07:13:56.643418+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261207
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-23T19:07:10.963334+00:00",
+      "failed_payments_during_episode": 1,
+      "incident_id": "DEG2-04560a736f7f",
+      "resolved_at": "2026-01-25T11:59:19.186272+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261208
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-13T05:24:24.946588+00:00",
+      "failed_payments_during_episode": 6,
+      "incident_id": "DEG2-1d0c77d5261e",
+      "resolved_at": "2026-01-17T16:17:53.606345+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261208
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-15T04:35:07.094980+00:00",
+      "failed_payments_during_episode": 5,
+      "incident_id": "DEG2-16ecf79a73a9",
+      "resolved_at": "2026-01-18T08:57:58.468224+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261208
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-25T18:40:12.582605+00:00",
+      "failed_payments_during_episode": 13,
+      "incident_id": "DEG2-bc87854769d6",
+      "resolved_at": "2026-02-01T02:30:39.692873+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261208
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-15T20:42:20.757779+00:00",
+      "failed_payments_during_episode": 7,
+      "incident_id": "DEG2-bff733acdd62",
+      "resolved_at": "2026-01-20T10:11:57.040595+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261208
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-17T08:40:17.344843+00:00",
+      "failed_payments_during_episode": 4,
+      "incident_id": "DEG2-2315a9ed2862",
+      "resolved_at": "2026-02-19T18:28:26.281795+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261208
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-28T11:24:05.742163+00:00",
+      "failed_payments_during_episode": 19,
+      "incident_id": "DEG2-7fddb60ac8b4",
+      "resolved_at": "2026-04-14T09:30:04.790773+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261208
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-27T08:22:34.711467+00:00",
+      "failed_payments_during_episode": 16,
+      "incident_id": "DEG2-07eb85dfa909",
+      "resolved_at": "2026-04-03T05:46:56.616422+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261208
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-05T10:57:14.111669+00:00",
+      "failed_payments_during_episode": 2,
+      "incident_id": "DEG2-d628c00028c2",
+      "resolved_at": "2026-04-09T07:53:33.646481+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261208
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-16T11:40:07.753356+00:00",
+      "failed_payments_during_episode": 3,
+      "incident_id": "DEG2-7c65f5f13992",
+      "resolved_at": "2026-01-19T23:59:19.946422+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261209
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-08T16:20:31.556290+00:00",
+      "failed_payments_during_episode": 3,
+      "incident_id": "DEG2-2921ad8df573",
+      "resolved_at": "2026-01-10T13:11:09.686497+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261209
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-20T13:16:22.070725+00:00",
+      "failed_payments_during_episode": 13,
+      "incident_id": "DEG2-0dfbbcf410b9",
+      "resolved_at": "2026-01-30T23:35:57.044990+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261209
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-19T04:47:11.484803+00:00",
+      "failed_payments_during_episode": 7,
+      "incident_id": "DEG2-74a2e3fd82ac",
+      "resolved_at": "2026-01-22T18:16:27.694194+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261209
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-14T03:11:01.391066+00:00",
+      "failed_payments_during_episode": 13,
+      "incident_id": "DEG2-2057202d9ff1",
+      "resolved_at": "2026-02-22T10:03:05.525928+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261209
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-05T08:11:21.239367+00:00",
+      "failed_payments_during_episode": 10,
+      "incident_id": "DEG2-920569e4e927",
+      "resolved_at": "2026-02-11T22:29:32.631479+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261209
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-24T18:37:52.369380+00:00",
+      "failed_payments_during_episode": 21,
+      "incident_id": "DEG2-0034c953339e",
+      "resolved_at": "2026-03-12T07:43:31.546970+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261209
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-19T12:29:44.665145+00:00",
+      "failed_payments_during_episode": 5,
+      "incident_id": "DEG2-25a04e501617",
+      "resolved_at": "2026-03-22T19:13:38.873128+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261209
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-23T10:07:09.623209+00:00",
+      "failed_payments_during_episode": 5,
+      "incident_id": "DEG2-aac4cf2af5fd",
+      "resolved_at": "2026-03-25T21:48:29.006064+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261209
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-07T18:07:09.829121+00:00",
+      "failed_payments_during_episode": 11,
+      "incident_id": "DEG2-d776c7ae92a1",
+      "resolved_at": "2026-04-15T17:38:23.514606+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261209
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-30T21:14:46.977800+00:00",
+      "failed_payments_during_episode": 10,
+      "incident_id": "DEG2-265829c3d6fd",
+      "resolved_at": "2026-04-04T13:27:09.421498+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261209
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-07T07:57:24.047586+00:00",
+      "failed_payments_during_episode": 7,
+      "incident_id": "DEG2-a2b6de2ce924",
+      "resolved_at": "2026-04-11T07:29:31.588483+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261209
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-26T11:43:57.431523+00:00",
+      "failed_payments_during_episode": 9,
+      "incident_id": "DEG2-7c68cc8d424d",
+      "resolved_at": null,
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261209
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-28T15:10:08.853929+00:00",
+      "failed_payments_during_episode": 6,
+      "incident_id": "DEG2-8d3398ffe7b2",
+      "resolved_at": null,
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261209
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-01T04:10:29.103771+00:00",
+      "failed_payments_during_episode": 6,
+      "incident_id": "DEG2-f8d45207b7b9",
+      "resolved_at": "2026-02-10T20:01:39.247443+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261210
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-01-26T02:23:20.088804+00:00",
+      "failed_payments_during_episode": 11,
+      "incident_id": "DEG2-bed862a334d7",
+      "resolved_at": "2026-01-30T00:26:58.655588+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261210
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-17T20:13:24.529200+00:00",
+      "failed_payments_during_episode": 12,
+      "incident_id": "DEG2-e7d3db45e8a5",
+      "resolved_at": "2026-03-03T03:11:33.857266+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261210
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-18T23:30:33.718783+00:00",
+      "failed_payments_during_episode": 14,
+      "incident_id": "DEG2-ab99ec237e85",
+      "resolved_at": "2026-03-03T15:09:53.761174+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "MANDATE"
+      },
+      "seed": 20261210
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-23T07:18:13.317020+00:00",
+      "failed_payments_during_episode": 7,
+      "incident_id": "DEG2-4729c8a0e7ee",
+      "resolved_at": "2026-03-01T09:45:55.764387+00:00",
+      "scope": {
+        "issuer": "ISSUER_A",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261210
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-02-22T23:45:41.586310+00:00",
+      "failed_payments_during_episode": 9,
+      "incident_id": "DEG2-7da2b3c4216d",
+      "resolved_at": "2026-02-25T12:13:00.259053+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261210
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-03-15T02:07:25.729089+00:00",
+      "failed_payments_during_episode": 6,
+      "incident_id": "DEG2-2132a8211840",
+      "resolved_at": "2026-03-17T12:32:47.483427+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "seed": 20261210
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-06T20:10:21.944078+00:00",
+      "failed_payments_during_episode": 11,
+      "incident_id": "DEG2-abc06fe43c4b",
+      "resolved_at": "2026-04-13T13:55:08.595434+00:00",
+      "scope": {
+        "issuer": "ISSUER_C",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261210
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-02T04:50:12.558930+00:00",
+      "failed_payments_during_episode": 3,
+      "incident_id": "DEG2-e40641f4d4c5",
+      "resolved_at": "2026-04-06T08:33:26.118738+00:00",
+      "scope": {
+        "issuer": "ISSUER_B",
+        "level": "ISSUER",
+        "payment_method": "NETBANKING"
+      },
+      "seed": 20261210
+    },
+    {
+      "confirmation_rule": "STRONG_LOCAL_PLUS_PARENT_CORROBORATION",
+      "confirmed_at": "2026-04-19T04:26:00.308837+00:00",
+      "failed_payments_during_episode": 1,
+      "incident_id": "DEG2-6ecd93ff4b87",
+      "resolved_at": "2026-04-20T22:19:24.453434+00:00",
+      "scope": {
+        "issuer": "ISSUER_D",
+        "level": "ISSUER",
+        "payment_method": "CARD"
+      },
+      "seed": 20261210
+    }
+  ],
+  "total_failed_payment_exposure": 824
+}

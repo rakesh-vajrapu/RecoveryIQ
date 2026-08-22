@@ -27,6 +27,13 @@ artifacts/detector/*
 !artifacts/detector/development-report-v1.md
 !artifacts/detector/validation-report-v1.md
 !artifacts/detector/demo-scenario-not-benchmark-v1.json
+artifacts/detector_v2/*
+!artifacts/detector_v2/degradation-detector-v2.json
+!artifacts/detector_v2/phase35-summary-v2.json
+!artifacts/detector_v2/development-report-v2.md
+!artifacts/detector_v2/validation-report-v2.md
+!artifacts/detector_v2/demo-scenario-not-benchmark-v2.json
+!artifacts/detector_v2/validation-false-confirmed-exposure-v2.json
 
 # JavaScript
 node_modules/

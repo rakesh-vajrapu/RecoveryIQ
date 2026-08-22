@@ -1,5 +1,7 @@
 # Statistical Payment Degradation Detection
 
+> Historical detector v1: research/statistical baseline; not safe as autonomous payment-action authority. Phase 3.5 implemented detector v2 separately and preserved this implementation and its frozen artifacts; v2 also remains advisory-only because its held-out hard-policy gate failed.
+
 ## Objective and boundary
 
 Phase 3 detects deterioration in observable payment success rates. The online detector receives only an immutable payment-result event containing event ID, observation timestamp, merchant ID, payment method, optional issuer, outcome, and optional failure reason/source. It never imports or accepts incident membership, hidden severity, incident end time, hidden success probability, true cause, future events, or future outcomes.

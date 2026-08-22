@@ -1,0 +1,333 @@
+{
+  "benchmark_data": false,
+  "degradation_started_at": "2026-08-03T00:00:00+00:00",
+  "episodes": [
+    {
+      "baseline_attempts": 578,
+      "baseline_success_probability": 0.8979038265791209,
+      "confirmation_rule": "EXTREME_LOCAL_SEQUENTIAL_EVIDENCE",
+      "confirmed_at": "2026-08-03T00:22:00Z",
+      "current_attempts": 109,
+      "current_failures": 71,
+      "current_severity": "CRITICAL",
+      "dissipated_without_confirmation": false,
+      "failure_distribution": {
+        "baseline_failure_count": 59,
+        "current_failure_count": 71,
+        "dominant_shifts": [
+          {
+            "absolute_increase": 0.9402777777777778,
+            "baseline_share": 0.025,
+            "current_share": 0.9652777777777778,
+            "reason": "ISSUER_UNAVAILABLE",
+            "relative_lift": 38.61111111111111,
+            "support_count": 69
+          }
+        ],
+        "jensen_shannon_divergence": 0.8068279105830892,
+        "supported": true
+      },
+      "incident_id": "DEG2-88e312a90f5c",
+      "maximum_llr": 99.7248068476779,
+      "parent_corroboration": {
+        "corroborated": false,
+        "global_level": "RESOLVED",
+        "global_maximum_llr": 88.04444046194749,
+        "method_level": "RESOLVED",
+        "method_maximum_llr": 88.37583363094357
+      },
+      "resolved_at": "2026-08-03T04:10:00Z",
+      "scope": {
+        "issuer": "ISSUER_DEMO",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "transitions": [
+        {
+          "evidence_level": "WATCH",
+          "maximum_llr": 2.987857033582162,
+          "severity": "MILD",
+          "timestamp": "2026-08-03T00:04:00Z"
+        },
+        {
+          "evidence_level": "WATCH",
+          "maximum_llr": 7.451796087153382,
+          "severity": "MODERATE",
+          "timestamp": "2026-08-03T00:10:00Z"
+        },
+        {
+          "evidence_level": "WATCH",
+          "maximum_llr": 10.427755456200863,
+          "severity": "SEVERE",
+          "timestamp": "2026-08-03T00:14:00Z"
+        },
+        {
+          "evidence_level": "WATCH",
+          "maximum_llr": 9.933792263587703,
+          "severity": "MODERATE",
+          "timestamp": "2026-08-03T00:16:00Z"
+        },
+        {
+          "evidence_level": "WATCH",
+          "maximum_llr": 11.421771948111443,
+          "severity": "SEVERE",
+          "timestamp": "2026-08-03T00:18:00Z"
+        },
+        {
+          "evidence_level": "CONFIRMED",
+          "maximum_llr": 14.397731317158923,
+          "severity": "SEVERE",
+          "timestamp": "2026-08-03T00:22:00Z"
+        },
+        {
+          "evidence_level": "CONFIRMED",
+          "maximum_llr": 15.885711001682663,
+          "severity": "CRITICAL",
+          "timestamp": "2026-08-03T00:24:00Z"
+        },
+        {
+          "evidence_level": "RECOVERING",
+          "maximum_llr": 94.29730183561732,
+          "severity": "CRITICAL",
+          "timestamp": "2026-08-03T03:22:00Z"
+        },
+        {
+          "evidence_level": "RESOLVED",
+          "maximum_llr": 88.37583363094357,
+          "severity": "CRITICAL",
+          "timestamp": "2026-08-03T04:10:00Z"
+        }
+      ],
+      "watch_at": "2026-08-03T00:04:00Z"
+    }
+  ],
+  "events": 816,
+  "final_context": {
+    "confirmed_hard_policy_gate_passed": false,
+    "context_version": "2.0",
+    "global_health": {
+      "active_incident_id": null,
+      "baseline_attempts": 815,
+      "baseline_source": "GLOBAL",
+      "baseline_success_probability": 0.834251497005988,
+      "evidence_level": "HEALTHY",
+      "failure_distribution": {
+        "baseline_failure_count": 0,
+        "current_failure_count": 0,
+        "dominant_shifts": [],
+        "jensen_shannon_divergence": null,
+        "supported": false
+      },
+      "observable_severity": null,
+      "parent_corroboration": {
+        "corroborated": false,
+        "global_level": null,
+        "global_maximum_llr": null,
+        "method_level": null,
+        "method_maximum_llr": null
+      },
+      "policy_evidence_role": "NONE",
+      "recent_windows": [
+        {
+          "attempts": 2,
+          "minutes": 5,
+          "success_rate": 1.0,
+          "successes": 2
+        },
+        {
+          "attempts": 6,
+          "minutes": 15,
+          "success_rate": 1.0,
+          "successes": 6
+        },
+        {
+          "attempts": 21,
+          "minutes": 60,
+          "success_rate": 0.9523809523809523,
+          "successes": 20
+        }
+      ],
+      "scope": {
+        "issuer": null,
+        "level": "GLOBAL",
+        "payment_method": null
+      },
+      "sequential_evidence": {
+        "hypotheses": [
+          {
+            "alternative_success_probability": 0.734251497005988,
+            "drop": 0.1,
+            "log_likelihood_ratio": 0.0
+          },
+          {
+            "alternative_success_probability": 0.634251497005988,
+            "drop": 0.2,
+            "log_likelihood_ratio": 0.0
+          },
+          {
+            "alternative_success_probability": 0.484251497005988,
+            "drop": 0.35,
+            "log_likelihood_ratio": 0.0
+          }
+        ],
+        "maximum_log_likelihood_ratio": 0.0,
+        "recovery_log_likelihood_ratio": 0.0,
+        "strongest_drop": null
+      },
+      "time_since_confirmed_seconds": null,
+      "time_since_watch_seconds": null,
+      "timestamp": "2026-08-03T10:37:00Z"
+    },
+    "issuer_health": {
+      "active_incident_id": null,
+      "baseline_attempts": 815,
+      "baseline_source": "ISSUER",
+      "baseline_success_probability": 0.8331557244791853,
+      "evidence_level": "HEALTHY",
+      "failure_distribution": {
+        "baseline_failure_count": 0,
+        "current_failure_count": 0,
+        "dominant_shifts": [],
+        "jensen_shannon_divergence": null,
+        "supported": false
+      },
+      "observable_severity": null,
+      "parent_corroboration": {
+        "corroborated": false,
+        "global_level": "HEALTHY",
+        "global_maximum_llr": 0.0,
+        "method_level": "HEALTHY",
+        "method_maximum_llr": 0.0
+      },
+      "policy_evidence_role": "NONE",
+      "recent_windows": [
+        {
+          "attempts": 2,
+          "minutes": 5,
+          "success_rate": 1.0,
+          "successes": 2
+        },
+        {
+          "attempts": 6,
+          "minutes": 15,
+          "success_rate": 1.0,
+          "successes": 6
+        },
+        {
+          "attempts": 21,
+          "minutes": 60,
+          "success_rate": 0.9523809523809523,
+          "successes": 20
+        }
+      ],
+      "scope": {
+        "issuer": "ISSUER_DEMO",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "sequential_evidence": {
+        "hypotheses": [
+          {
+            "alternative_success_probability": 0.7331557244791853,
+            "drop": 0.1,
+            "log_likelihood_ratio": 0.0
+          },
+          {
+            "alternative_success_probability": 0.6331557244791852,
+            "drop": 0.2,
+            "log_likelihood_ratio": 0.0
+          },
+          {
+            "alternative_success_probability": 0.4831557244791853,
+            "drop": 0.35,
+            "log_likelihood_ratio": 0.0
+          }
+        ],
+        "maximum_log_likelihood_ratio": 0.0,
+        "recovery_log_likelihood_ratio": 0.0,
+        "strongest_drop": null
+      },
+      "time_since_confirmed_seconds": null,
+      "time_since_watch_seconds": null,
+      "timestamp": "2026-08-03T10:37:00Z"
+    },
+    "method_health": {
+      "active_incident_id": null,
+      "baseline_attempts": 815,
+      "baseline_source": "PAYMENT_METHOD",
+      "baseline_success_probability": 0.8331557244791853,
+      "evidence_level": "HEALTHY",
+      "failure_distribution": {
+        "baseline_failure_count": 0,
+        "current_failure_count": 0,
+        "dominant_shifts": [],
+        "jensen_shannon_divergence": null,
+        "supported": false
+      },
+      "observable_severity": null,
+      "parent_corroboration": {
+        "corroborated": false,
+        "global_level": null,
+        "global_maximum_llr": null,
+        "method_level": null,
+        "method_maximum_llr": null
+      },
+      "policy_evidence_role": "NONE",
+      "recent_windows": [
+        {
+          "attempts": 2,
+          "minutes": 5,
+          "success_rate": 1.0,
+          "successes": 2
+        },
+        {
+          "attempts": 6,
+          "minutes": 15,
+          "success_rate": 1.0,
+          "successes": 6
+        },
+        {
+          "attempts": 21,
+          "minutes": 60,
+          "success_rate": 0.9523809523809523,
+          "successes": 20
+        }
+      ],
+      "scope": {
+        "issuer": null,
+        "level": "PAYMENT_METHOD",
+        "payment_method": "UPI"
+      },
+      "sequential_evidence": {
+        "hypotheses": [
+          {
+            "alternative_success_probability": 0.7331557244791853,
+            "drop": 0.1,
+            "log_likelihood_ratio": 0.0
+          },
+          {
+            "alternative_success_probability": 0.6331557244791852,
+            "drop": 0.2,
+            "log_likelihood_ratio": 0.0
+          },
+          {
+            "alternative_success_probability": 0.4831557244791853,
+            "drop": 0.35,
+            "log_likelihood_ratio": 0.0
+          }
+        ],
+        "maximum_log_likelihood_ratio": 0.0,
+        "recovery_log_likelihood_ratio": 0.0,
+        "strongest_drop": null
+      },
+      "time_since_confirmed_seconds": null,
+      "time_since_watch_seconds": null,
+      "timestamp": "2026-08-03T10:37:00Z"
+    },
+    "requested_issuer": "ISSUER_DEMO",
+    "requested_payment_method": "UPI",
+    "timestamp": "2026-08-03T10:37:00Z"
+  },
+  "label": "DEMO SCENARIO — NOT BENCHMARK DATA",
+  "recovery_started_at": "2026-08-03T02:40:00+00:00"
+}

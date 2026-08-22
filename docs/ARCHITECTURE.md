@@ -106,7 +106,9 @@ FastAPI exposes typed JSON under an HTTP boundary. The Next.js App Router fronte
 
 ## Payment-health detection boundary
 
-`simulator/recoveriq_detector/detector.py` contains the reusable online statistical component. Its update interface accepts only narrow observable payment-result events and exposes health snapshots and future-facing `PaymentHealthContext` values. Simulator-specific replay and evaluation adapters are separate modules. Only evaluation imports hidden incident truth, and it does so after detector predictions have been generated. Issuer, payment-method, and global lifecycles remain distinct; broader alerts cannot create narrower incidents.
+`simulator/recoveriq_detector/detector.py` remains the frozen v1 research/statistical benchmark. The separate `simulator/recoveriq_detector_v2/` package contains the Phase 3.5 online component. Its update interface accepts only narrow observable payment-result events and exposes versioned `PaymentHealthContextV2` values. Simulator-specific replay and evaluation adapters are separate modules. Only evaluation imports hidden incident truth, and it does so after detector predictions have been generated.
+
+V2 keeps issuer, payment-method, and global state distinct. Parent state may corroborate issuer evidence but cannot open or confirm an issuer episode without a local likelihood boundary and local volume. WATCH is explicitly advisory. The pre-registered validation safety gate failed, so the frozen V2 CONFIRMED signal is also advisory-only; architecture and context types expose no hard-policy permission. No recovery action, recovery model, payment-provider integration, or UI authority was added in Phase 3.5.
 
 ## Gemini boundary
 

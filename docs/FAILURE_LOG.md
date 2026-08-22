@@ -103,3 +103,13 @@ This file records failures actually observed while building or running RecoverIQ
 - **Fix/adaptation:** extend only the labelled non-benchmark demo to a two-day healthy warm-up, a two-hour degradation, and more than 24 hours of recovery. The frozen detector then opened, escalated, recovered, and resolved without threshold changes.
 - **Regression coverage:** the controlled-demo test requires the non-benchmark label, one deduplicated incident, a resolved lifecycle, and a final healthy state.
 - **Lesson:** demos must respect production-style warm-up requirements and should visibly show insufficient evidence when they do not.
+
+## 2026-08-22 — Detector v2 lifecycle: confirmation emitted a duplicate severity transition
+
+- **Context:** controlled detector-v2 lifecycle smoke before development selection, configuration freeze, or validation.
+- **Symptom:** the CONFIRMED event could contain two identical same-timestamp severity transitions.
+- **Root cause:** `_confirm` appended the correctly classified transition but did not synchronize the mutable episode's cached severity; the subsequent active-episode refresh interpreted the same classification as a new change.
+- **Investigation:** the deterministic smoke reached the expected full lifecycle, but transition inspection showed the duplicate at confirmation and traced both writes through `_confirm` and `_refresh_active`.
+- **Fix/adaptation:** synchronize the active episode severity inside `_confirm` before the refresh path runs.
+- **Regression coverage:** the deterministic full-lifecycle demo test now rejects duplicate `(timestamp, evidence level, severity)` transitions and requires identical output across two replays.
+- **Lesson:** state-transition emission and cached presentation state must update atomically when a single event drives both.

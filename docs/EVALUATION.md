@@ -18,6 +18,12 @@ The final test interval remains untouched until the strategy and policy configur
 
 The groups are stable, explicit, and non-overlapping. The `robustness` CLI group is the development-plus-validation union (20 seeds). The `final` CLI path emits a prominent warning and requires `--acknowledge-final`. This is methodological discipline, not an access-control mechanism. Phase 2.5 executed development and validation only.
 
+### Detector v2 protocol
+
+Detector v1 consumed `20261001`–`20261010`; those seeds are forbidden for v2 tuning. Phase 3.5 uses `20260901`–`20260910` for v2 architecture/selection and pre-registers a new one-time v2 validation group: `20261201`–`20261210`. The reserved final seeds `20261101`–`20261120` remain untouched. V2 retains the original eligibility definition and separately registers a high-evidence slice requiring 10 matching-scope observations within the first 24 hours after onset plus 100 prior 30-day matching-scope observations. The v2 hard-policy gate requires at least 70% confirmed-episode precision, at most 0.005 false confirmed episodes per issuer-scope-day, and at least 5 confirmed episodes on the new validation group.
+
+The V2 configuration was frozen at hash `50f0ca055d561b447d1b2aa3769cf775917b9efbceb44c6934a8971c1585af8c` before the new group was generated. The group was executed exactly once. Held-out CONFIRMED precision was 3.70%, the false-confirmation rate was 0.005380 per issuer-scope-day, and 108 episodes satisfied the non-vacuity count. The gate therefore failed, the detector was not retuned, and the frozen CONFIRMED output is advisory-only. Full denominators and slices are in `artifacts/detector_v2/validation-evaluation-v2.json`; final seeds remain untouched.
+
 ## Strategies
 
 Phase 2 strategies receive identical cases and paired outcome randomness:

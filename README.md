@@ -8,7 +8,7 @@ The central product insight is simple: **before retrying one failed payment, det
 
 ## Current status
 
-Phase 0–2.5 foundation, deterministic simulator, and robustness validation are implemented:
+Phase 0–3.5 foundation, deterministic simulator, robustness validation, and tiered degradation detection are implemented:
 
 - FastAPI health API with typed, secret-safe configuration;
 - portable SQLAlchemy 2 domain foundation and initial Alembic migration;
@@ -27,7 +27,7 @@ Phase 0–2.5 foundation, deterministic simulator, and robustness validation are
 - pre-registered development/validation/final seed groups and multi-seed confidence intervals;
 - heterogeneous incident severity/duration/volume, causal nudge audits, cost regimes, sensitivity analysis, and machine-checkable leakage boundaries.
 
-Implemented through Phase 3: the hardened deterministic simulator, paired recovery baselines, and an observable-only statistical degradation detector with frozen development/validation methodology. Not implemented yet: recovery ML, intelligent RecoverIQ action selection, executable production recovery, Razorpay APIs, production Gemini prompts, and operational dashboards. The UI intentionally shows no recovery metrics.
+Implemented through Phase 3.5: the hardened deterministic simulator, paired recovery baselines, frozen detector-v1 benchmark, and a separate observable-only detector v2 with advisory WATCH and stricter CONFIRMED evidence. V2 failed its pre-registered hard-policy validation gate, so both tiers remain advisory-only. Not implemented yet: recovery ML, intelligent RecoverIQ action selection, executable production recovery, Razorpay APIs, production Gemini prompts, and operational dashboards. The UI intentionally shows no recovery metrics.
 
 ## Architecture
 

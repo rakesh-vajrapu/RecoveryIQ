@@ -41,6 +41,15 @@ Exit: development and validation findings reproduce without using final seeds.
 
 Exit: held-out incident metrics and threshold rationale are reproducible; final seeds remain untouched.
 
+## 3.5. Operational degradation detector v2 — complete
+
+- [x] Preserve detector v1 code and frozen benchmark artifacts.
+- [x] Separate advisory WATCH evidence from strict CONFIRMED evidence.
+- [x] Add sequential likelihood evidence, adaptive frozen baselines, reason-shift evidence, and hierarchical corroboration.
+- [x] Select on development, freeze v2, and run the new `20261201`–`20261210` validation group exactly once.
+
+Exit: WATCH and CONFIRMED metrics are separate, the hard-policy safety gate is explicit and failed (therefore both signals are advisory-only), and final seeds remain untouched.
+
 ## 4. Recovery ML
 
 - [ ] Build leakage-safe temporal features and action-conditioned labels.

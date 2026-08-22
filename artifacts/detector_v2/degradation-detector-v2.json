@@ -1,0 +1,52 @@
+{
+  "artifact_type": "frozen_operational_degradation_detector_v2",
+  "config": {
+    "baseline_lookback_days": 14,
+    "baseline_prior_strength": 20.0,
+    "confirmation_cooldown_days": 7,
+    "confirmed_llr_threshold": 10.0,
+    "confirmed_min_events": 10,
+    "confirmed_parent_llr": 6.5,
+    "confirmed_strong_llr": 7.0,
+    "default_success_probability": 0.88,
+    "detector_version": "2.0.0",
+    "drop_hypotheses": [
+      0.1,
+      0.2,
+      0.35
+    ],
+    "failure_js_threshold": 0.18,
+    "failure_min_baseline": 10,
+    "failure_min_current": 5,
+    "failure_reason_min_support": 3,
+    "maximum_baseline_probability": 0.995,
+    "min_baseline_attempts": 50,
+    "minimum_alternative_probability": 0.05,
+    "minimum_baseline_probability": 0.55,
+    "recovery_min_events": 5,
+    "recovery_resolve_llr": 5.0,
+    "recovery_start_llr": 2.5,
+    "watch_llr_threshold": 2.5,
+    "watch_min_events": 3,
+    "watch_release_llr": 0.35,
+    "watch_release_successes": 3,
+    "windows_minutes": [
+      5,
+      15,
+      60
+    ]
+  },
+  "configuration_hash": "50f0ca055d561b447d1b2aa3769cf775917b9efbceb44c6934a8971c1585af8c",
+  "detector_version": "2.0.0",
+  "hard_policy_safety_gate": {
+    "maximum_false_confirmed_per_scope_day": 0.005,
+    "minimum_confirmed_episodes": 5,
+    "minimum_precision": 0.7
+  },
+  "high_evidence_rule_evaluation_only": {
+    "baseline_lookback_days": 30,
+    "first_horizon_hours": 24,
+    "min_attempts_first_horizon": 10,
+    "min_prior_baseline_attempts": 100
+  }
+}
