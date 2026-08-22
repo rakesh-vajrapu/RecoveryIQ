@@ -1,0 +1,21 @@
+{
+  "action_counts": {
+    "CREATE_PAYMENT_LINK": 4664,
+    "OFFER_ALTERNATE_METHOD": 4604,
+    "REQUEST_PAYMENT_METHOD_UPDATE": 4566,
+    "RETRY_LATER": 4585,
+    "RETRY_NOW": 4483,
+    "SEND_NUDGE": 4542
+  },
+  "candidate_count_distribution": {
+    "9": 27444
+  },
+  "example_count": 27444,
+  "positive_count": 6317,
+  "positive_rate": 0.23017781664480397,
+  "propensity_distribution": {
+    "0.041666666666666664": 4585,
+    "0.16666666666666666": 22859
+  },
+  "runtime_seconds": 72.01466520000031
+}

@@ -1,0 +1,727 @@
+{
+  "action_counts": {
+    "CREATE_PAYMENT_LINK": 8849,
+    "OFFER_ALTERNATE_METHOD": 9049,
+    "REQUEST_PAYMENT_METHOD_UPDATE": 8943,
+    "RETRY_LATER": 9009,
+    "RETRY_NOW": 8953,
+    "SEND_NUDGE": 8987
+  },
+  "artifact_type": "frozen_action_conditioned_recovery_model",
+  "development_metrics": {
+    "action_counts": {
+      "CREATE_PAYMENT_LINK": 8849,
+      "OFFER_ALTERNATE_METHOD": 9049,
+      "REQUEST_PAYMENT_METHOD_UPDATE": 8943,
+      "RETRY_LATER": 9009,
+      "RETRY_NOW": 8953,
+      "SEND_NUDGE": 8987
+    },
+    "development_example_count": 27444,
+    "feature_schema_hash": "b2cb0d026f0f625128a320122ba90a31cf4f0acdab729f3c5bfb429bdd74b559",
+    "lightgbm_candidates": [
+      {
+        "candidate_index": 0,
+        "hyperparameters": {
+          "colsample_bytree": 0.8,
+          "learning_rate": 0.05,
+          "max_depth": 5,
+          "min_child_samples": 80,
+          "n_estimators": 200,
+          "num_leaves": 15,
+          "reg_alpha": 0.0,
+          "reg_lambda": 1.0,
+          "subsample": 1.0
+        },
+        "metrics": {
+          "brier_score": 0.1460615035130438,
+          "expected_calibration_error": 0.022666212419607805,
+          "log_loss": 0.4485388948851688,
+          "positive_count": 6317,
+          "positive_rate": 0.23017781664480397,
+          "pr_auc": 0.4917802089955602,
+          "reliability_bins": [
+            {
+              "absolute_gap": 0.0155638956639177,
+              "bin": 0,
+              "count": 6968,
+              "lower": 0.0,
+              "mean_prediction": 0.06091406787976156,
+              "outcome_rate": 0.04535017221584386,
+              "upper": 0.1
+            },
+            {
+              "absolute_gap": 0.0295864989204222,
+              "bin": 1,
+              "count": 6401,
+              "lower": 0.1,
+              "mean_prediction": 0.14550588651611038,
+              "outcome_rate": 0.11591938759568818,
+              "upper": 0.2
+            },
+            {
+              "absolute_gap": 0.00023353449372864876,
+              "bin": 2,
+              "count": 6347,
+              "lower": 0.2,
+              "mean_prediction": 0.24759449242661033,
+              "outcome_rate": 0.24736095793288168,
+              "upper": 0.3
+            },
+            {
+              "absolute_gap": 0.05170000885491366,
+              "bin": 3,
+              "count": 3555,
+              "lower": 0.3,
+              "mean_prediction": 0.3457683455754661,
+              "outcome_rate": 0.39746835443037976,
+              "upper": 0.4
+            },
+            {
+              "absolute_gap": 0.03189606241346077,
+              "bin": 4,
+              "count": 1847,
+              "lower": 0.4,
+              "mean_prediction": 0.4570048579980173,
+              "outcome_rate": 0.4889009204114781,
+              "upper": 0.5
+            },
+            {
+              "absolute_gap": 0.03706975465847495,
+              "bin": 5,
+              "count": 1938,
+              "lower": 0.5,
+              "mean_prediction": 0.5413616178905447,
+              "outcome_rate": 0.5784313725490197,
+              "upper": 0.6
+            },
+            {
+              "absolute_gap": 0.02095309344392815,
+              "bin": 6,
+              "count": 385,
+              "lower": 0.6,
+              "mean_prediction": 0.6283975559067212,
+              "outcome_rate": 0.6493506493506493,
+              "upper": 0.7
+            },
+            {
+              "absolute_gap": 0.04106712510095889,
+              "bin": 7,
+              "count": 3,
+              "lower": 0.7,
+              "mean_prediction": 0.7077337917676255,
+              "outcome_rate": 0.6666666666666666,
+              "upper": 0.8
+            }
+          ],
+          "roc_auc": 0.781759008567551,
+          "sample_count": 27444
+        }
+      },
+      {
+        "candidate_index": 1,
+        "hyperparameters": {
+          "colsample_bytree": 0.8,
+          "learning_rate": 0.05,
+          "max_depth": 8,
+          "min_child_samples": 80,
+          "n_estimators": 200,
+          "num_leaves": 31,
+          "reg_alpha": 0.1,
+          "reg_lambda": 1.0,
+          "subsample": 1.0
+        },
+        "metrics": {
+          "brier_score": 0.14502958317768747,
+          "expected_calibration_error": 0.014440428496911892,
+          "log_loss": 0.4451783525870333,
+          "positive_count": 6317,
+          "positive_rate": 0.23017781664480397,
+          "pr_auc": 0.4955989658962252,
+          "reliability_bins": [
+            {
+              "absolute_gap": 0.011604089343196296,
+              "bin": 0,
+              "count": 7730,
+              "lower": 0.0,
+              "mean_prediction": 0.05856398585031143,
+              "outcome_rate": 0.046959896507115136,
+              "upper": 0.1
+            },
+            {
+              "absolute_gap": 0.014704644286214236,
+              "bin": 1,
+              "count": 6074,
+              "lower": 0.1,
+              "mean_prediction": 0.1434501167919765,
+              "outcome_rate": 0.12874547250576227,
+              "upper": 0.2
+            },
+            {
+              "absolute_gap": 5.609439357315282e-05,
+              "bin": 2,
+              "count": 5576,
+              "lower": 0.2,
+              "mean_prediction": 0.2442050246882059,
+              "outcome_rate": 0.24426111908177905,
+              "upper": 0.3
+            },
+            {
+              "absolute_gap": 0.025444219817994274,
+              "bin": 3,
+              "count": 3076,
+              "lower": 0.3,
+              "mean_prediction": 0.34646735365404735,
+              "outcome_rate": 0.3719115734720416,
+              "upper": 0.4
+            },
+            {
+              "absolute_gap": 0.023927487239173262,
+              "bin": 4,
+              "count": 2642,
+              "lower": 0.4,
+              "mean_prediction": 0.45336244463062236,
+              "outcome_rate": 0.4772899318697956,
+              "upper": 0.5
+            },
+            {
+              "absolute_gap": 0.026926585618063714,
+              "bin": 5,
+              "count": 1693,
+              "lower": 0.5,
+              "mean_prediction": 0.5448395100700638,
+              "outcome_rate": 0.5717660956881275,
+              "upper": 0.6
+            },
+            {
+              "absolute_gap": 0.04254968153505578,
+              "bin": 6,
+              "count": 638,
+              "lower": 0.6,
+              "mean_prediction": 0.6298641115683925,
+              "outcome_rate": 0.6724137931034483,
+              "upper": 0.7
+            },
+            {
+              "absolute_gap": 0.18389797310132017,
+              "bin": 7,
+              "count": 15,
+              "lower": 0.7,
+              "mean_prediction": 0.7172313064346535,
+              "outcome_rate": 0.5333333333333333,
+              "upper": 0.8
+            }
+          ],
+          "roc_auc": 0.7836799018942553,
+          "sample_count": 27444
+        }
+      },
+      {
+        "candidate_index": 2,
+        "hyperparameters": {
+          "colsample_bytree": 1.0,
+          "learning_rate": 0.03,
+          "max_depth": 5,
+          "min_child_samples": 40,
+          "n_estimators": 350,
+          "num_leaves": 15,
+          "reg_alpha": 0.0,
+          "reg_lambda": 2.0,
+          "subsample": 1.0
+        },
+        "metrics": {
+          "brier_score": 0.14572512662412002,
+          "expected_calibration_error": 0.02096207647679067,
+          "log_loss": 0.4475130512587679,
+          "positive_count": 6317,
+          "positive_rate": 0.23017781664480397,
+          "pr_auc": 0.49462056701703416,
+          "reliability_bins": [
+            {
+              "absolute_gap": 0.014316143268273934,
+              "bin": 0,
+              "count": 7130,
+              "lower": 0.0,
+              "mean_prediction": 0.05933718113643663,
+              "outcome_rate": 0.045021037868162694,
+              "upper": 0.1
+            },
+            {
+              "absolute_gap": 0.027558288228838032,
+              "bin": 1,
+              "count": 6244,
+              "lower": 0.1,
+              "mean_prediction": 0.14639236894632682,
+              "outcome_rate": 0.11883408071748879,
+              "upper": 0.2
+            },
+            {
+              "absolute_gap": 0.001411583828785895,
+              "bin": 2,
+              "count": 6008,
+              "lower": 0.2,
+              "mean_prediction": 0.2452531284359763,
+              "outcome_rate": 0.2438415446071904,
+              "upper": 0.3
+            },
+            {
+              "absolute_gap": 0.03713502632052651,
+              "bin": 3,
+              "count": 3912,
+              "lower": 0.3,
+              "mean_prediction": 0.3455336853359152,
+              "outcome_rate": 0.38266871165644173,
+              "upper": 0.4
+            },
+            {
+              "absolute_gap": 0.049290358002841095,
+              "bin": 4,
+              "count": 1748,
+              "lower": 0.4,
+              "mean_prediction": 0.46157920721455026,
+              "outcome_rate": 0.5108695652173914,
+              "upper": 0.5
+            },
+            {
+              "absolute_gap": 0.019936664004014393,
+              "bin": 5,
+              "count": 1994,
+              "lower": 0.5,
+              "mean_prediction": 0.5437544092156446,
+              "outcome_rate": 0.563691073219659,
+              "upper": 0.6
+            },
+            {
+              "absolute_gap": 0.05090713123649193,
+              "bin": 6,
+              "count": 407,
+              "lower": 0.6,
+              "mean_prediction": 0.6247685444391837,
+              "outcome_rate": 0.6756756756756757,
+              "upper": 0.7
+            },
+            {
+              "absolute_gap": 0.7496987899167789,
+              "bin": 7,
+              "count": 1,
+              "lower": 0.7,
+              "mean_prediction": 0.7496987899167789,
+              "outcome_rate": 0.0,
+              "upper": 0.8
+            }
+          ],
+          "roc_auc": 0.7823959595040163,
+          "sample_count": 27444
+        }
+      },
+      {
+        "candidate_index": 3,
+        "hyperparameters": {
+          "colsample_bytree": 1.0,
+          "learning_rate": 0.03,
+          "max_depth": 8,
+          "min_child_samples": 40,
+          "n_estimators": 350,
+          "num_leaves": 31,
+          "reg_alpha": 0.1,
+          "reg_lambda": 2.0,
+          "subsample": 1.0
+        },
+        "metrics": {
+          "brier_score": 0.1450475420444771,
+          "expected_calibration_error": 0.012957916616534684,
+          "log_loss": 0.44522424285850387,
+          "positive_count": 6317,
+          "positive_rate": 0.23017781664480397,
+          "pr_auc": 0.4951724125575575,
+          "reliability_bins": [
+            {
+              "absolute_gap": 0.011479558045070823,
+              "bin": 0,
+              "count": 7698,
+              "lower": 0.0,
+              "mean_prediction": 0.057465528426988204,
+              "outcome_rate": 0.04598597038191738,
+              "upper": 0.1
+            },
+            {
+              "absolute_gap": 0.012827682147712377,
+              "bin": 1,
+              "count": 6154,
+              "lower": 0.1,
+              "mean_prediction": 0.14574935910578843,
+              "outcome_rate": 0.13292167695807605,
+              "upper": 0.2
+            },
+            {
+              "absolute_gap": 0.0033374016500718473,
+              "bin": 2,
+              "count": 5471,
+              "lower": 0.2,
+              "mean_prediction": 0.24159039948317618,
+              "outcome_rate": 0.24492780113324802,
+              "upper": 0.3
+            },
+            {
+              "absolute_gap": 0.006582178348362389,
+              "bin": 3,
+              "count": 2913,
+              "lower": 0.3,
+              "mean_prediction": 0.34563203380405777,
+              "outcome_rate": 0.35221421215242016,
+              "upper": 0.4
+            },
+            {
+              "absolute_gap": 0.02832319478558054,
+              "bin": 4,
+              "count": 2788,
+              "lower": 0.4,
+              "mean_prediction": 0.45302544223020136,
+              "outcome_rate": 0.4813486370157819,
+              "upper": 0.5
+            },
+            {
+              "absolute_gap": 0.027666362715637938,
+              "bin": 5,
+              "count": 1803,
+              "lower": 0.5,
+              "mean_prediction": 0.544713005004828,
+              "outcome_rate": 0.5723793677204659,
+              "upper": 0.6
+            },
+            {
+              "absolute_gap": 0.03035017615017055,
+              "bin": 6,
+              "count": 602,
+              "lower": 0.6,
+              "mean_prediction": 0.6307793919561417,
+              "outcome_rate": 0.6611295681063123,
+              "upper": 0.7
+            },
+            {
+              "absolute_gap": 0.2503156545987718,
+              "bin": 7,
+              "count": 15,
+              "lower": 0.7,
+              "mean_prediction": 0.7169823212654385,
+              "outcome_rate": 0.4666666666666667,
+              "upper": 0.8
+            }
+          ],
+          "roc_auc": 0.7834674250664018,
+          "sample_count": 27444
+        }
+      }
+    ],
+    "logistic_regression": {
+      "brier_score": 0.16604537620363224,
+      "expected_calibration_error": 0.02949589512880159,
+      "log_loss": 0.5084254775122106,
+      "positive_count": 6317,
+      "positive_rate": 0.23017781664480397,
+      "pr_auc": 0.35892964527103943,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.0522942477286506,
+          "bin": 0,
+          "count": 2915,
+          "lower": 0.0,
+          "mean_prediction": 0.0797812239694626,
+          "outcome_rate": 0.1320754716981132,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.03682263306333626,
+          "bin": 1,
+          "count": 9593,
+          "lower": 0.1,
+          "mean_prediction": 0.14898775346362814,
+          "outcome_rate": 0.11216512040029188,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.034798173163709256,
+          "bin": 2,
+          "count": 7775,
+          "lower": 0.2,
+          "mean_prediction": 0.24751693937648367,
+          "outcome_rate": 0.2823151125401929,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.004332889778763838,
+          "bin": 3,
+          "count": 4836,
+          "lower": 0.3,
+          "mean_prediction": 0.34779856388959923,
+          "outcome_rate": 0.3434656741108354,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.003821015318720422,
+          "bin": 4,
+          "count": 2297,
+          "lower": 0.4,
+          "mean_prediction": 0.4343826174084026,
+          "outcome_rate": 0.4305616020896822,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.12577040372097775,
+          "bin": 5,
+          "count": 28,
+          "lower": 0.5,
+          "mean_prediction": 0.5186275465781206,
+          "outcome_rate": 0.39285714285714285,
+          "upper": 0.6
+        }
+      ],
+      "roc_auc": 0.6708182832035655,
+      "sample_count": 27444
+    },
+    "phase": "model_development_selection",
+    "runtime_seconds": 21.758934999999838,
+    "selected_lightgbm": {
+      "brier_score": 0.14502958317768747,
+      "expected_calibration_error": 0.014440428496911892,
+      "log_loss": 0.4451783525870333,
+      "positive_count": 6317,
+      "positive_rate": 0.23017781664480397,
+      "pr_auc": 0.4955989658962252,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.011604089343196296,
+          "bin": 0,
+          "count": 7730,
+          "lower": 0.0,
+          "mean_prediction": 0.05856398585031143,
+          "outcome_rate": 0.046959896507115136,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.014704644286214236,
+          "bin": 1,
+          "count": 6074,
+          "lower": 0.1,
+          "mean_prediction": 0.1434501167919765,
+          "outcome_rate": 0.12874547250576227,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 5.609439357315282e-05,
+          "bin": 2,
+          "count": 5576,
+          "lower": 0.2,
+          "mean_prediction": 0.2442050246882059,
+          "outcome_rate": 0.24426111908177905,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.025444219817994274,
+          "bin": 3,
+          "count": 3076,
+          "lower": 0.3,
+          "mean_prediction": 0.34646735365404735,
+          "outcome_rate": 0.3719115734720416,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.023927487239173262,
+          "bin": 4,
+          "count": 2642,
+          "lower": 0.4,
+          "mean_prediction": 0.45336244463062236,
+          "outcome_rate": 0.4772899318697956,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.026926585618063714,
+          "bin": 5,
+          "count": 1693,
+          "lower": 0.5,
+          "mean_prediction": 0.5448395100700638,
+          "outcome_rate": 0.5717660956881275,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.04254968153505578,
+          "bin": 6,
+          "count": 638,
+          "lower": 0.6,
+          "mean_prediction": 0.6298641115683925,
+          "outcome_rate": 0.6724137931034483,
+          "upper": 0.7
+        },
+        {
+          "absolute_gap": 0.18389797310132017,
+          "bin": 7,
+          "count": 15,
+          "lower": 0.7,
+          "mean_prediction": 0.7172313064346535,
+          "outcome_rate": 0.5333333333333333,
+          "upper": 0.8
+        }
+      ],
+      "roc_auc": 0.7836799018942553,
+      "sample_count": 27444
+    },
+    "selected_lightgbm_candidate_index": 1,
+    "selected_lightgbm_without_health": {
+      "brier_score": 0.1445390650260719,
+      "expected_calibration_error": 0.012003103966869409,
+      "log_loss": 0.4433860669250859,
+      "positive_count": 6317,
+      "positive_rate": 0.23017781664480397,
+      "pr_auc": 0.49769281976204754,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.008567392729638655,
+          "bin": 0,
+          "count": 8144,
+          "lower": 0.0,
+          "mean_prediction": 0.05706935736618089,
+          "outcome_rate": 0.04850196463654224,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.013512146766329308,
+          "bin": 1,
+          "count": 5632,
+          "lower": 0.1,
+          "mean_prediction": 0.14348373767542022,
+          "outcome_rate": 0.1299715909090909,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.003788623490170673,
+          "bin": 2,
+          "count": 5630,
+          "lower": 0.2,
+          "mean_prediction": 0.24399112784197852,
+          "outcome_rate": 0.2477797513321492,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.020443455060498883,
+          "bin": 3,
+          "count": 3091,
+          "lower": 0.3,
+          "mean_prediction": 0.34707514733354833,
+          "outcome_rate": 0.3675186023940472,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.027337458828301187,
+          "bin": 4,
+          "count": 2286,
+          "lower": 0.4,
+          "mean_prediction": 0.45341494712095515,
+          "outcome_rate": 0.48075240594925633,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.010468244705218899,
+          "bin": 5,
+          "count": 1747,
+          "lower": 0.5,
+          "mean_prediction": 0.5424796659988452,
+          "outcome_rate": 0.5529479107040641,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.016397531494517614,
+          "bin": 6,
+          "count": 875,
+          "lower": 0.6,
+          "mean_prediction": 0.6350310399340539,
+          "outcome_rate": 0.6514285714285715,
+          "upper": 0.7
+        },
+        {
+          "absolute_gap": 0.09974266686513866,
+          "bin": 7,
+          "count": 39,
+          "lower": 0.7,
+          "mean_prediction": 0.7151272822497541,
+          "outcome_rate": 0.6153846153846154,
+          "upper": 0.8
+        }
+      ],
+      "roc_auc": 0.7853752919458363,
+      "sample_count": 27444
+    },
+    "selection_rule": "minimum Brier, then log loss, then ECE",
+    "training_example_count": 53790,
+    "training_prevalence": 0.2285369027700316
+  },
+  "development_seeds": [
+    20270201,
+    20270202,
+    20270203,
+    20270204,
+    20270205,
+    20270206,
+    20270207,
+    20270208,
+    20270209,
+    20270210
+  ],
+  "feature_schema_hash": "b2cb0d026f0f625128a320122ba90a31cf4f0acdab729f3c5bfb429bdd74b559",
+  "feature_schema_version": "1.0",
+  "model_artifacts": {
+    "lightgbm": "lightgbm-v1.joblib",
+    "lightgbm_without_health": "lightgbm-without-health-v1.joblib",
+    "logistic": "logistic-regression-v1.joblib"
+  },
+  "model_sha256": {
+    "lightgbm": "2f8f72c2a158dd04579597399f85d2881de2e88ae36b1835c535599ec5e5e0b4",
+    "lightgbm_without_health": "d70689ccb98fd0360c8def8be043c518fff121f815dff6457dc4ec26ab9cb1b8",
+    "logistic": "da9135357c9fa3df5ae912920ad1592492d3230fc399e97b55a763dac14a511e"
+  },
+  "model_version": "1.0.0",
+  "selected_lightgbm_candidate_index": 1,
+  "selected_lightgbm_hyperparameters": {
+    "colsample_bytree": 0.8,
+    "learning_rate": 0.05,
+    "max_depth": 8,
+    "min_child_samples": 80,
+    "n_estimators": 200,
+    "num_leaves": 31,
+    "reg_alpha": 0.1,
+    "reg_lambda": 1.0,
+    "subsample": 1.0
+  },
+  "software_versions": {
+    "joblib": "1.5.3",
+    "lightgbm": "4.7.0",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "recoveriq-simulator": "0.3.0",
+    "scikit-learn": "1.9.0",
+    "shap": "0.52.0"
+  },
+  "training_example_count": 53790,
+  "training_seeds": [
+    20270101,
+    20270102,
+    20270103,
+    20270104,
+    20270105,
+    20270106,
+    20270107,
+    20270108,
+    20270109,
+    20270110,
+    20270111,
+    20270112,
+    20270113,
+    20270114,
+    20270115,
+    20270116,
+    20270117,
+    20270118,
+    20270119,
+    20270120
+  ],
+  "training_timestamp": "2026-08-22T07:49:23.131957Z"
+}

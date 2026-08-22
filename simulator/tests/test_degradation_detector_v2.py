@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import inspect
+from collections.abc import Iterable
 from datetime import UTC, datetime, timedelta
 
 from recoveriq_detector_v2.config import DetectorV2Config
 from recoveriq_detector_v2.detector import OperationalDegradationDetectorV2
 from recoveriq_detector_v2.models import (
     EvidenceLevel,
+    HealthSnapshotV2,
     PaymentHealthContextV2,
     PaymentResultEvent,
     PolicyEvidenceRole,
@@ -47,7 +49,7 @@ def _baseline(start: datetime, *, issuer: str = "ISSUER_A") -> list[PaymentResul
     ]
 
 
-def _issuer_snapshot(snapshots):  # type: ignore[no-untyped-def]
+def _issuer_snapshot(snapshots: Iterable[HealthSnapshotV2]) -> HealthSnapshotV2:
     return next(item for item in snapshots if item.scope.level is ScopeLevel.ISSUER)
 
 

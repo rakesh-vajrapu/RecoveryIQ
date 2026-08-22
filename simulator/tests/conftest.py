@@ -4,8 +4,8 @@ import pytest
 
 from recoveriq_simulator.benchmark import run_benchmark
 from recoveriq_simulator.config import SimulatorConfig
+from recoveriq_simulator.ground_truth import GeneratedScenario
 from recoveriq_simulator.results import BenchmarkResult
-from recoveriq_simulator.scenario import GeneratedScenario
 
 
 @pytest.fixture(scope="session")

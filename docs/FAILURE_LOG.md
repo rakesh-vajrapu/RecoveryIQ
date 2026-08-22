@@ -113,3 +113,13 @@ This file records failures actually observed while building or running RecoverIQ
 - **Fix/adaptation:** synchronize the active episode severity inside `_confirm` before the refresh path runs.
 - **Regression coverage:** the deterministic full-lifecycle demo test now rejects duplicate `(timestamp, evidence level, severity)` transitions and requires identical output across two replays.
 - **Lesson:** state-transition emission and cached presentation state must update atomically when a single event drives both.
+
+## 2026-08-22 — Phase 4 quality: strict mypy exposed legacy test annotation debt
+
+- **Context:** final full-scope strict-mypy verification across simulator, both detector packages, Recovery ML, and all simulator tests.
+- **Symptom:** mypy reported 22 errors in four pre-existing test-support files even though runtime tests passed.
+- **Root cause:** fixture parameters and helper functions lacked explicit types, and `GeneratedScenario` was imported through a module that did not explicitly re-export it.
+- **Investigation:** the errors were confined to tests; the frozen detector implementations, thresholds, and Phase 4 production packages were clean.
+- **Fix/adaptation:** annotate the affected fixtures/helpers with their existing domain types and import `GeneratedScenario` from its defining ground-truth module. No detector logic or artifact changed.
+- **Regression coverage:** strict mypy now passes all 73 simulator/detector/ML/test source files; all 88 runtime tests also pass.
+- **Lesson:** run the repository's complete strict type-check scope, because runtime coverage alone does not validate typed test infrastructure.

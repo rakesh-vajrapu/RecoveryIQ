@@ -2,19 +2,25 @@ from __future__ import annotations
 
 from datetime import timedelta
 
-from recoveriq_simulator.config import SimulatorConfig
+from recoveriq_simulator.config import SimulationCosts, SimulatorConfig
 from recoveriq_simulator.enums import ActionType, CostRegime
 from recoveriq_simulator.environment import RecoveryEnvironment
+from recoveriq_simulator.ground_truth import GeneratedScenario
 from recoveriq_simulator.observation import PaymentObservation, RecoveryAction
 from recoveriq_simulator.policies import FixedRetryPolicy, ReminderThenRetryPolicy
 from recoveriq_simulator.policies.base import build_action
+from recoveriq_simulator.results import PolicyEvaluation
 from recoveriq_simulator.scenario import scenario_digest
 
 
 class FixedRetryWithUnusedCandidate(FixedRetryPolicy):
     name = "fixed_retry_with_unused_candidate"
 
-    def plan(self, observation: PaymentObservation, costs) -> tuple[RecoveryAction, ...]:  # type: ignore[no-untyped-def]
+    def plan(
+        self,
+        observation: PaymentObservation,
+        costs: SimulationCosts,
+    ) -> tuple[RecoveryAction, ...]:
         actions = list(super().plan(observation, costs))
         actions.append(
             build_action(
@@ -29,7 +35,7 @@ class FixedRetryWithUnusedCandidate(FixedRetryPolicy):
         return tuple(actions)
 
 
-def _outcome_semantics(evaluation) -> tuple[tuple[object, ...], ...]:  # type: ignore[no-untyped-def]
+def _outcome_semantics(evaluation: PolicyEvaluation) -> tuple[tuple[object, ...], ...]:
     return tuple(
         (
             outcome.payment_id,
@@ -43,8 +49,8 @@ def _outcome_semantics(evaluation) -> tuple[tuple[object, ...], ...]:  # type: i
 
 
 def test_unused_candidate_does_not_change_outcomes(
-    shared_scenario,
-    shared_config,  # type: ignore[no-untyped-def]
+    shared_scenario: GeneratedScenario,
+    shared_config: SimulatorConfig,
 ) -> None:
     environment = RecoveryEnvironment(shared_scenario, shared_config)
     normal = environment.evaluate(FixedRetryPolicy())
@@ -53,8 +59,8 @@ def test_unused_candidate_does_not_change_outcomes(
 
 
 def test_semantically_identical_retry_uses_same_keyed_draw(
-    shared_scenario,
-    shared_config,  # type: ignore[no-untyped-def]
+    shared_scenario: GeneratedScenario,
+    shared_config: SimulatorConfig,
 ) -> None:
     observation = shared_scenario.public.failure_observations[0]
     fixed_retry = FixedRetryPolicy().plan(observation, shared_config.resolved_costs)[0]
@@ -68,8 +74,8 @@ def test_semantically_identical_retry_uses_same_keyed_draw(
 
 
 def test_both_policies_share_one_unchanged_hidden_world(
-    shared_scenario,
-    shared_config,  # type: ignore[no-untyped-def]
+    shared_scenario: GeneratedScenario,
+    shared_config: SimulatorConfig,
 ) -> None:
     before = scenario_digest(shared_scenario)
     environment = RecoveryEnvironment(shared_scenario, shared_config)
@@ -83,8 +89,8 @@ def test_both_policies_share_one_unchanged_hidden_world(
 
 
 def test_cost_regime_changes_net_not_raw_outcomes(
-    shared_scenario,
-    shared_config,  # type: ignore[no-untyped-def]
+    shared_scenario: GeneratedScenario,
+    shared_config: SimulatorConfig,
 ) -> None:
     low = shared_config.model_copy(update={"cost_regime": CostRegime.LOW_FRICTION})
     high = shared_config.model_copy(update={"cost_regime": CostRegime.HIGH_FRICTION})
@@ -102,7 +108,9 @@ def test_cost_regime_changes_net_not_raw_outcomes(
         )
 
 
-def test_repeated_contact_friction_increases_and_is_bounded(shared_scenario) -> None:  # type: ignore[no-untyped-def]
+def test_repeated_contact_friction_increases_and_is_bounded(
+    shared_scenario: GeneratedScenario,
+) -> None:
     observation = shared_scenario.public.failure_observations[0]
     costs = SimulatorConfig(cost_regime=CostRegime.HIGH_FRICTION).resolved_costs
     friction = [

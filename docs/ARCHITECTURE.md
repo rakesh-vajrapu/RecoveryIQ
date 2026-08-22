@@ -110,6 +110,14 @@ FastAPI exposes typed JSON under an HTTP boundary. The Next.js App Router fronte
 
 V2 keeps issuer, payment-method, and global state distinct. Parent state may corroborate issuer evidence but cannot open or confirm an issuer episode without a local likelihood boundary and local volume. WATCH is explicitly advisory. The pre-registered validation safety gate failed, so the frozen V2 CONFIRMED signal is also advisory-only; architecture and context types expose no hard-policy permission. No recovery action, recovery model, payment-provider integration, or UI authority was added in Phase 3.5.
 
+## Recovery-model boundary
+
+Phase 4 introduces a separate action-conditioned prediction package. Its versioned `RecoveryFeatureSnapshot` is constructed only from public payment observations, preceding observable history, prior logged interventions whose execution time has arrived, and frozen detector-V2 snapshots through decision time. Raw entity IDs, seeds, hidden incident/cause/state fields, and unselected counterfactual outcomes are outside the model boundary.
+
+A randomized exploration logger selects and executes one feasible action per failed payment and records its propensity. Model training therefore resembles logged intervention data rather than a fully revealed counterfactual table. Hidden simulator response probabilities remain environment-owned and may be used only after frozen predictions for held-out ranking diagnostics.
+
+The shared logistic and LightGBM models estimate a 48-hour action-conditioned recovery probability. Calibration is a distinct artifact fitted on its own seeds. SHAP is structured explanatory evidence only. Recovery Model V1 completed its registered held-out evaluation with both probability/ranking gates passing. The health-free ablation nevertheless performed slightly better on most primary metrics, so no architectural authority is inferred from health features and no detector threshold changed. Phase 4 performs no expected-value calculation, policy choice, financial authorization, execution integration, or UI mutation. Frozen detector-V2 WATCH and CONFIRMED values remain advisory features, never policy authority or truth labels.
+
 ## Gemini boundary
 
 Application code depends on an `LLMProvider` protocol. `GeminiLLMProvider` contains SDK-specific behavior, `FakeLLMProvider` provides deterministic tests, and `DeterministicFallbackProvider` keeps explanations available without network access. Providers return Pydantic-validated structures. They cannot mutate payment state, authorize actions, or determine outcomes. Gemini is never called automatically during startup.

@@ -1,0 +1,39 @@
+{
+  "action_counts": {
+    "CREATE_PAYMENT_LINK": 4417,
+    "OFFER_ALTERNATE_METHOD": 4353,
+    "REQUEST_PAYMENT_METHOD_UPDATE": 4487,
+    "RETRY_LATER": 4510,
+    "RETRY_NOW": 4502,
+    "SEND_NUDGE": 4461
+  },
+  "artifact_type": "randomized_exploration_logged_dataset",
+  "example_count": 26730,
+  "feature_schema_hash": "b2cb0d026f0f625128a320122ba90a31cf4f0acdab729f3c5bfb429bdd74b559",
+  "feature_schema_version": "1.0",
+  "group": "calibration",
+  "logged_digest": "fa0d17e714823b912eac9ed262899dbc4909ae01766a124d13bc644923adba1c",
+  "positive_count": 6039,
+  "positive_rate": 0.22592592592592592,
+  "seeds": [
+    20270301,
+    20270302,
+    20270303,
+    20270304,
+    20270305,
+    20270306,
+    20270307,
+    20270308,
+    20270309,
+    20270310
+  ],
+  "software_versions": {
+    "joblib": "1.5.3",
+    "lightgbm": "4.7.0",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "recoveriq-simulator": "0.3.0",
+    "scikit-learn": "1.9.0",
+    "shap": "0.52.0"
+  }
+}

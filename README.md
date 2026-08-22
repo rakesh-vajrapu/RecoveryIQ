@@ -8,7 +8,7 @@ The central product insight is simple: **before retrying one failed payment, det
 
 ## Current status
 
-Phase 0–3.5 foundation, deterministic simulator, robustness validation, and tiered degradation detection are implemented:
+Phase 0–4 foundation, deterministic simulator, robustness validation, tiered degradation detection, and action-conditioned recovery prediction are implemented:
 
 - FastAPI health API with typed, secret-safe configuration;
 - portable SQLAlchemy 2 domain foundation and initial Alembic migration;
@@ -26,8 +26,10 @@ Phase 0–3.5 foundation, deterministic simulator, robustness validation, and ti
 - reproducible Parquet/JSON experiment artifacts, sanity analysis, and baseline metrics.
 - pre-registered development/validation/final seed groups and multi-seed confidence intervals;
 - heterogeneous incident severity/duration/volume, causal nudge audits, cost regimes, sensitivity analysis, and machine-checkable leakage boundaries.
+- one-action randomized exploration logs with explicit propensities and no unselected training counterfactuals;
+- leakage-safe `RecoveryFeatureSnapshot` V1, deterministic logistic/LightGBM pipelines, isotonic calibration, held-out ranking, ablation, and structured SHAP evidence.
 
-Implemented through Phase 3.5: the hardened deterministic simulator, paired recovery baselines, frozen detector-v1 benchmark, and a separate observable-only detector v2 with advisory WATCH and stricter CONFIRMED evidence. V2 failed its pre-registered hard-policy validation gate, so both tiers remain advisory-only. Not implemented yet: recovery ML, intelligent RecoverIQ action selection, executable production recovery, Razorpay APIs, production Gemini prompts, and operational dashboards. The UI intentionally shows no recovery metrics.
+Implemented through Phase 4: Recovery Model V1 estimates calibrated 48-hour recovery probabilities from observable context, candidate action, and timing. Its one-time held-out calibration and model-quality gates passed; the health-free ablation slightly outperformed the health-inclusive primary on most metrics, which remains reported without detector retuning. Detector V2 failed its hard-policy gate, so WATCH and CONFIRMED remain advisory-only. Not implemented yet: intelligent RecoverIQ action selection, ERV, executable production recovery, Razorpay APIs, production Gemini prompts, or operational dashboards. The UI intentionally shows no recovery metrics.
 
 ## Architecture
 
@@ -56,7 +58,7 @@ Detailed decisions are in [Architecture](docs/ARCHITECTURE.md), [Gemini Design](
 apps/api/       FastAPI, SQLAlchemy, Alembic, Celery, Gemini providers, tests
 apps/web/       Next.js operational shell
 docs/           Product, architecture, evaluation, safety, and delivery records
-ml/             Reserved for the later recovery-model milestone
+simulator/recoveriq_ml/  Leakage-safe recovery logging, models, calibration, and evaluation
 simulator/      Deterministic payment environment, baseline policies, CLI, and tests
 artifacts/      Ignored generated simulation experiments (with tracked placeholders)
 infra/          Reserved for deployment-specific assets
@@ -128,6 +130,22 @@ uv run --project simulator python -m recoveriq_simulator.cli inspect <experiment
 ```
 
 The default benchmark evaluates 20,000 attempts and writes ignored artifacts below `artifacts/simulations/`. Multi-seed and sensitivity reports use adjacent ignored directories. Reserved final seeds are not run during development. All financial outputs are synthetic. See [Simulator](docs/SIMULATOR.md) and [Simulator Validation](docs/SIMULATOR_VALIDATION.md).
+
+### Recovery Model V1
+
+The completed machine-readable reports and reproducibility protocol are documented in [Recovery Model](docs/RECOVERY_MODEL.md). The guarded pipeline is:
+
+```powershell
+uv run --project simulator recovery-model generate-logged --group training
+uv run --project simulator recovery-model generate-logged --group development
+uv run --project simulator recovery-model train
+uv run --project simulator recovery-model calibrate
+uv run --project simulator recovery-model evaluate-heldout
+uv run --project simulator recovery-model shap-report
+uv run --project simulator recovery-model phase4-summary
+```
+
+The held-out command refuses overwrite. Overall-final seeds remain command-guarded and untouched.
 
 ## Full PostgreSQL and Redis environment
 

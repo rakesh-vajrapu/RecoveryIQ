@@ -1,0 +1,2918 @@
+{
+  "calibration_safety_gate": {
+    "actual_brier": 0.1424947293775314,
+    "actual_ece": 0.0037209725743257323,
+    "checks": {
+      "brier_beats_constant_prevalence": true,
+      "ece_at_most_0_05": true,
+      "no_supported_bin_gap_above_0_15": true
+    },
+    "constant_brier": 0.1749862097933759,
+    "failure_behavior": "PROBABILITY_BANDS_OR_ADVISORY_CONFIDENCE_ONLY",
+    "maximum_supported_reliability_gap": 0.010106128669853831,
+    "status": "PASS"
+  },
+  "constant_prevalence_baseline": {
+    "brier_score": 0.1749862097933759,
+    "expected_calibration_error": 0.00243417440974919,
+    "log_loss": 0.5345410170478336,
+    "positive_count": 5859,
+    "positive_rate": 0.22610272836028247,
+    "pr_auc": 0.22610272836028247,
+    "reliability_bins": [
+      {
+        "absolute_gap": 0.00243417440974919,
+        "bin": 2,
+        "count": 25913,
+        "lower": 0.2,
+        "mean_prediction": 0.22853690277003166,
+        "outcome_rate": 0.22610272836028247,
+        "upper": 0.3
+      }
+    ],
+    "roc_auc": 0.5,
+    "sample_count": 25913
+  },
+  "failure_family_slices": {
+    "AUTHENTICATION_FRICTION": {
+      "brier_score": 0.17318444659957782,
+      "expected_calibration_error": 0.03726513134307912,
+      "log_loss": 0.5263898587202064,
+      "positive_count": 882,
+      "positive_rate": 0.23476177801437317,
+      "pr_auc": 0.3195831935213256,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.03186102273613853,
+          "bin": 0,
+          "count": 1002,
+          "lower": 0.0,
+          "mean_prediction": 0.07791941638561796,
+          "outcome_rate": 0.10978043912175649,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.0541867297652362,
+          "bin": 1,
+          "count": 846,
+          "lower": 0.1,
+          "mean_prediction": 0.15621516148771888,
+          "outcome_rate": 0.21040189125295508,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.048502708344755396,
+          "bin": 2,
+          "count": 932,
+          "lower": 0.2,
+          "mean_prediction": 0.23154021011018022,
+          "outcome_rate": 0.2800429184549356,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.004195224656528607,
+          "bin": 3,
+          "count": 833,
+          "lower": 0.3,
+          "mean_prediction": 0.33674114989329135,
+          "outcome_rate": 0.34093637454981995,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.07183098451133824,
+          "bin": 4,
+          "count": 130,
+          "lower": 0.4,
+          "mean_prediction": 0.4256771383574921,
+          "outcome_rate": 0.35384615384615387,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.3000861421623784,
+          "bin": 5,
+          "count": 14,
+          "lower": 0.5,
+          "mean_prediction": 0.5143718564480927,
+          "outcome_rate": 0.21428571428571427,
+          "upper": 0.6
+        }
+      ],
+      "roc_auc": 0.6457367642709256,
+      "sample_count": 3757
+    },
+    "CUSTOMER_CONFIRMATION": {
+      "brier_score": 0.15561875119622098,
+      "expected_calibration_error": 0.02287121305025988,
+      "log_loss": 0.47951976586381106,
+      "positive_count": 634,
+      "positive_rate": 0.21196924105650283,
+      "pr_auc": 0.33097731745948133,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.0017363260922279716,
+          "bin": 0,
+          "count": 916,
+          "lower": 0.0,
+          "mean_prediction": 0.07686629399510828,
+          "outcome_rate": 0.07860262008733625,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.020058048914437188,
+          "bin": 1,
+          "count": 699,
+          "lower": 0.1,
+          "mean_prediction": 0.16592192247325951,
+          "outcome_rate": 0.1859799713876967,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.05377608045122262,
+          "bin": 2,
+          "count": 763,
+          "lower": 0.2,
+          "mean_prediction": 0.23062758927354804,
+          "outcome_rate": 0.28440366972477066,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.016769813435325964,
+          "bin": 3,
+          "count": 559,
+          "lower": 0.3,
+          "mean_prediction": 0.3284895783356937,
+          "outcome_rate": 0.34525939177101966,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.02987405948091748,
+          "bin": 4,
+          "count": 48,
+          "lower": 0.4,
+          "mean_prediction": 0.4257073928142508,
+          "outcome_rate": 0.3958333333333333,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.11154461429079277,
+          "bin": 5,
+          "count": 5,
+          "lower": 0.5,
+          "mean_prediction": 0.5115446142907928,
+          "outcome_rate": 0.4,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.3995943204868154,
+          "bin": 6,
+          "count": 1,
+          "lower": 0.6,
+          "mean_prediction": 0.6004056795131846,
+          "outcome_rate": 1.0,
+          "upper": 0.7
+        }
+      ],
+      "roc_auc": 0.6863761746003916,
+      "sample_count": 2991
+    },
+    "INACTIVE_MANDATE": {
+      "brier_score": 0.1301211297353003,
+      "expected_calibration_error": 0.031433688791467115,
+      "log_loss": 0.38973884144825555,
+      "positive_count": 449,
+      "positive_rate": 0.26694411414982167,
+      "pr_auc": 0.5768838123330121,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.021807161145762498,
+          "bin": 0,
+          "count": 830,
+          "lower": 0.0,
+          "mean_prediction": 0.04469872741082274,
+          "outcome_rate": 0.02289156626506024,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.059265699033961866,
+          "bin": 1,
+          "count": 56,
+          "lower": 0.1,
+          "mean_prediction": 0.1306942704625333,
+          "outcome_rate": 0.07142857142857142,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.03959664098685292,
+          "bin": 2,
+          "count": 7,
+          "lower": 0.2,
+          "mean_prediction": 0.24611764472743278,
+          "outcome_rate": 0.2857142857142857,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.083322041521537,
+          "bin": 3,
+          "count": 85,
+          "lower": 0.3,
+          "mean_prediction": 0.3755014878902277,
+          "outcome_rate": 0.4588235294117647,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.004475122679245269,
+          "bin": 4,
+          "count": 208,
+          "lower": 0.4,
+          "mean_prediction": 0.44264026193613937,
+          "outcome_rate": 0.44711538461538464,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.049354711870210566,
+          "bin": 5,
+          "count": 420,
+          "lower": 0.5,
+          "mean_prediction": 0.5292167167012181,
+          "outcome_rate": 0.5785714285714286,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.0320169359388538,
+          "bin": 6,
+          "count": 76,
+          "lower": 0.6,
+          "mean_prediction": 0.6127199061664094,
+          "outcome_rate": 0.6447368421052632,
+          "upper": 0.7
+        }
+      ],
+      "roc_auc": 0.8507695753562481,
+      "sample_count": 1682
+    },
+    "INVALID_INSTRUMENT": {
+      "brier_score": 0.12931954536829982,
+      "expected_calibration_error": 0.023544784976254018,
+      "log_loss": 0.38314960437449586,
+      "positive_count": 1113,
+      "positive_rate": 0.2634319526627219,
+      "pr_auc": 0.5932811227666843,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.011651669965213765,
+          "bin": 0,
+          "count": 2070,
+          "lower": 0.0,
+          "mean_prediction": 0.025178240013522944,
+          "outcome_rate": 0.01352657004830918,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.17004967280459551,
+          "bin": 1,
+          "count": 59,
+          "lower": 0.1,
+          "mean_prediction": 0.1519842255004892,
+          "outcome_rate": 0.3220338983050847,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.20321192799469895,
+          "bin": 2,
+          "count": 32,
+          "lower": 0.2,
+          "mean_prediction": 0.23428807200530105,
+          "outcome_rate": 0.4375,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.02482619866559882,
+          "bin": 3,
+          "count": 261,
+          "lower": 0.3,
+          "mean_prediction": 0.3736412342845927,
+          "outcome_rate": 0.39846743295019155,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.062288431570409475,
+          "bin": 4,
+          "count": 459,
+          "lower": 0.4,
+          "mean_prediction": 0.4348374511782526,
+          "outcome_rate": 0.37254901960784315,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.022445032047939906,
+          "bin": 5,
+          "count": 614,
+          "lower": 0.5,
+          "mean_prediction": 0.5257023610381679,
+          "outcome_rate": 0.503257328990228,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.013419274421395233,
+          "bin": 6,
+          "count": 720,
+          "lower": 0.6,
+          "mean_prediction": 0.6268585033563825,
+          "outcome_rate": 0.6402777777777777,
+          "upper": 0.7
+        },
+        {
+          "absolute_gap": 0.030889210200031658,
+          "bin": 7,
+          "count": 10,
+          "lower": 0.7,
+          "mean_prediction": 0.7308892102000316,
+          "outcome_rate": 0.7,
+          "upper": 0.8
+        }
+      ],
+      "roc_auc": 0.8585188598405847,
+      "sample_count": 4225
+    },
+    "ISSUER_DEGRADATION": {
+      "brier_score": 0.1772236729126634,
+      "expected_calibration_error": 0.049371462600983164,
+      "log_loss": 0.5166734494934586,
+      "positive_count": 690,
+      "positive_rate": 0.34760705289672544,
+      "pr_auc": 0.574220343605313,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.0051815834456198015,
+          "bin": 0,
+          "count": 449,
+          "lower": 0.0,
+          "mean_prediction": 0.0341348128442835,
+          "outcome_rate": 0.028953229398663696,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.023479937897980335,
+          "bin": 1,
+          "count": 274,
+          "lower": 0.1,
+          "mean_prediction": 0.14440327378085177,
+          "outcome_rate": 0.1678832116788321,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.020248581231245566,
+          "bin": 2,
+          "count": 270,
+          "lower": 0.2,
+          "mean_prediction": 0.22789956691690258,
+          "outcome_rate": 0.24814814814814815,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.1739325626791524,
+          "bin": 3,
+          "count": 177,
+          "lower": 0.3,
+          "mean_prediction": 0.35149116613440695,
+          "outcome_rate": 0.5254237288135594,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.10984921992443919,
+          "bin": 4,
+          "count": 259,
+          "lower": 0.4,
+          "mean_prediction": 0.44227433219911294,
+          "outcome_rate": 0.5521235521235521,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.05455112013451513,
+          "bin": 5,
+          "count": 352,
+          "lower": 0.5,
+          "mean_prediction": 0.5249943344109395,
+          "outcome_rate": 0.5795454545454546,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.02582896970311499,
+          "bin": 6,
+          "count": 200,
+          "lower": 0.6,
+          "mean_prediction": 0.630828969703115,
+          "outcome_rate": 0.605,
+          "upper": 0.7
+        },
+        {
+          "absolute_gap": 0.05680053225777637,
+          "bin": 7,
+          "count": 3,
+          "lower": 0.7,
+          "mean_prediction": 0.723467198924443,
+          "outcome_rate": 0.6666666666666666,
+          "upper": 0.8
+        },
+        {
+          "absolute_gap": 1.0000000000287557e-06,
+          "bin": 9,
+          "count": 1,
+          "lower": 0.9,
+          "mean_prediction": 0.999999,
+          "outcome_rate": 1.0,
+          "upper": 1.0
+        }
+      ],
+      "roc_auc": 0.7848094678529461,
+      "sample_count": 1985
+    },
+    "LIQUIDITY_SHORTFALL": {
+      "brier_score": 0.11016202346093414,
+      "expected_calibration_error": 0.02407962715624197,
+      "log_loss": 0.3728456178076365,
+      "positive_count": 806,
+      "positive_rate": 0.13228294764483833,
+      "pr_auc": 0.24645354444523002,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.0008026586316878109,
+          "bin": 0,
+          "count": 2625,
+          "lower": 0.0,
+          "mean_prediction": 0.07432646815549733,
+          "outcome_rate": 0.07352380952380952,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.0251000552942075,
+          "bin": 1,
+          "count": 1987,
+          "lower": 0.1,
+          "mean_prediction": 0.1589702113082991,
+          "outcome_rate": 0.1338701560140916,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.04519058619591959,
+          "bin": 2,
+          "count": 840,
+          "lower": 0.2,
+          "mean_prediction": 0.2285239195292529,
+          "outcome_rate": 0.18333333333333332,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.09505119260507133,
+          "bin": 3,
+          "count": 463,
+          "lower": 0.3,
+          "mean_prediction": 0.3304723589117668,
+          "outcome_rate": 0.23542116630669546,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.08154465027004382,
+          "bin": 4,
+          "count": 46,
+          "lower": 0.4,
+          "mean_prediction": 0.42937073722656555,
+          "outcome_rate": 0.34782608695652173,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.04511265994995428,
+          "bin": 5,
+          "count": 59,
+          "lower": 0.5,
+          "mean_prediction": 0.5366380836787679,
+          "outcome_rate": 0.4915254237288136,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.08705320623317414,
+          "bin": 6,
+          "count": 73,
+          "lower": 0.6,
+          "mean_prediction": 0.6212997815756399,
+          "outcome_rate": 0.5342465753424658,
+          "upper": 0.7
+        }
+      ],
+      "roc_auc": 0.6575562700964631,
+      "sample_count": 6093
+    },
+    "NETWORK_INSTABILITY": {
+      "brier_score": 0.15794167764063927,
+      "expected_calibration_error": 0.012159961415516956,
+      "log_loss": 0.4710197281115009,
+      "positive_count": 1030,
+      "positive_rate": 0.27800269905533065,
+      "pr_auc": 0.5322216136811397,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.0014470442319080776,
+          "bin": 0,
+          "count": 1015,
+          "lower": 0.0,
+          "mean_prediction": 0.03303571438878158,
+          "outcome_rate": 0.034482758620689655,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.0005851089307392365,
+          "bin": 1,
+          "count": 463,
+          "lower": 0.1,
+          "mean_prediction": 0.14628314160921757,
+          "outcome_rate": 0.1468682505399568,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.045614165736462986,
+          "bin": 2,
+          "count": 507,
+          "lower": 0.2,
+          "mean_prediction": 0.2270737318114137,
+          "outcome_rate": 0.1814595660749507,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.010372970935340231,
+          "bin": 3,
+          "count": 383,
+          "lower": 0.3,
+          "mean_prediction": 0.35255131104899395,
+          "outcome_rate": 0.3629242819843342,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.012214985628996089,
+          "bin": 4,
+          "count": 398,
+          "lower": 0.4,
+          "mean_prediction": 0.44004632090366724,
+          "outcome_rate": 0.45226130653266333,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.00036972873480511925,
+          "bin": 5,
+          "count": 604,
+          "lower": 0.5,
+          "mean_prediction": 0.523548536681825,
+          "outcome_rate": 0.5231788079470199,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.02898960739593126,
+          "bin": 6,
+          "count": 331,
+          "lower": 0.6,
+          "mean_prediction": 0.6241557705379253,
+          "outcome_rate": 0.595166163141994,
+          "upper": 0.7
+        },
+        {
+          "absolute_gap": 0.2666666666666667,
+          "bin": 7,
+          "count": 2,
+          "lower": 0.7,
+          "mean_prediction": 0.7333333333333333,
+          "outcome_rate": 1.0,
+          "upper": 0.8
+        },
+        {
+          "absolute_gap": 0.49999899999999997,
+          "bin": 9,
+          "count": 2,
+          "lower": 0.9,
+          "mean_prediction": 0.999999,
+          "outcome_rate": 0.5,
+          "upper": 1.0
+        }
+      ],
+      "roc_auc": 0.7948405770801198,
+      "sample_count": 3705
+    },
+    "UNKNOWN_TEMPORARY": {
+      "brier_score": 0.13758463520267253,
+      "expected_calibration_error": 0.03023689445969012,
+      "log_loss": 0.44126791910393987,
+      "positive_count": 255,
+      "positive_rate": 0.17288135593220338,
+      "pr_auc": 0.2747928286146416,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.012690268975422067,
+          "bin": 0,
+          "count": 372,
+          "lower": 0.0,
+          "mean_prediction": 0.08139575252995428,
+          "outcome_rate": 0.09408602150537634,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.023103956030649825,
+          "bin": 1,
+          "count": 448,
+          "lower": 0.1,
+          "mean_prediction": 0.1548003846020784,
+          "outcome_rate": 0.13169642857142858,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.03865342941725239,
+          "bin": 2,
+          "count": 315,
+          "lower": 0.2,
+          "mean_prediction": 0.23230422306804605,
+          "outcome_rate": 0.19365079365079366,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.03375498581912878,
+          "bin": 3,
+          "count": 302,
+          "lower": 0.3,
+          "mean_prediction": 0.33507948913038704,
+          "outcome_rate": 0.30132450331125826,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.18837449956956323,
+          "bin": 4,
+          "count": 38,
+          "lower": 0.4,
+          "mean_prediction": 0.4252166048327211,
+          "outcome_rate": 0.23684210526315788,
+          "upper": 0.5
+        }
+      ],
+      "roc_auc": 0.6568241722918676,
+      "sample_count": 1475
+    }
+  },
+  "health_feature_ablation": {
+    "delta_with_minus_without": {
+      "brier_score": 0.00012660182169596523,
+      "expected_calibration_error": -0.0032776595654774292,
+      "log_loss": 0.0011767868468391396,
+      "mean_probability_regret": 0.005385909102388238,
+      "pairwise_ranking_accuracy": -0.0030843261377968556,
+      "top_1_oracle_action_agreement": -0.01342955273414892
+    },
+    "with_health": {
+      "probability_metrics": {
+        "brier_score": 0.1424947293775314,
+        "expected_calibration_error": 0.0037209725743257323,
+        "log_loss": 0.4391456623542836,
+        "positive_count": 5859,
+        "positive_rate": 0.22610272836028247,
+        "pr_auc": 0.4866015344646343,
+        "reliability_bins": [
+          {
+            "absolute_gap": 0.0007487510526892754,
+            "bin": 0,
+            "count": 9279,
+            "lower": 0.0,
+            "mean_prediction": 0.05517271915270005,
+            "outcome_rate": 0.054423968100010774,
+            "upper": 0.1
+          },
+          {
+            "absolute_gap": 0.0027021165914337952,
+            "bin": 1,
+            "count": 4832,
+            "lower": 0.1,
+            "mean_prediction": 0.1566521880443278,
+            "outcome_rate": 0.15935430463576158,
+            "upper": 0.2
+          },
+          {
+            "absolute_gap": 0.0068795537308717625,
+            "bin": 2,
+            "count": 3666,
+            "lower": 0.2,
+            "mean_prediction": 0.2298907681458331,
+            "outcome_rate": 0.23677032187670485,
+            "upper": 0.3
+          },
+          {
+            "absolute_gap": 0.002281150114008479,
+            "bin": 3,
+            "count": 3063,
+            "lower": 0.3,
+            "mean_prediction": 0.34117297982396083,
+            "outcome_rate": 0.3434541299379693,
+            "upper": 0.4
+          },
+          {
+            "absolute_gap": 0.010106128669853831,
+            "bin": 4,
+            "count": 1586,
+            "lower": 0.4,
+            "mean_prediction": 0.4369661538905348,
+            "outcome_rate": 0.42686002522068095,
+            "upper": 0.5
+          },
+          {
+            "absolute_gap": 0.008948661238300626,
+            "bin": 5,
+            "count": 2068,
+            "lower": 0.5,
+            "mean_prediction": 0.5258675863439044,
+            "outcome_rate": 0.534816247582205,
+            "upper": 0.6
+          },
+          {
+            "absolute_gap": 0.006153803717668382,
+            "bin": 6,
+            "count": 1401,
+            "lower": 0.6,
+            "mean_prediction": 0.6257112626755557,
+            "outcome_rate": 0.6195574589578873,
+            "upper": 0.7
+          },
+          {
+            "absolute_gap": 0.003602642303979331,
+            "bin": 7,
+            "count": 15,
+            "lower": 0.7,
+            "mean_prediction": 0.729730691029354,
+            "outcome_rate": 0.7333333333333333,
+            "upper": 0.8
+          },
+          {
+            "absolute_gap": 0.33333233333333334,
+            "bin": 9,
+            "count": 3,
+            "lower": 0.9,
+            "mean_prediction": 0.999999,
+            "outcome_rate": 0.6666666666666666,
+            "upper": 1.0
+          }
+        ],
+        "roc_auc": 0.7863483733023072,
+        "sample_count": 25913
+      },
+      "ranking_metrics": {
+        "decision_count": 25913,
+        "mean_random_top_1_agreement": 0.1111111111111111,
+        "pairwise_ranking_accuracy": 0.8828660111912429,
+        "probability_regret": {
+          "count": 25913,
+          "mean": 0.04695021807091392,
+          "median": 0.0,
+          "p90": 0.19786222300876877
+        },
+        "top_1_oracle_action_agreement": 0.6844055107475012,
+        "top_2_oracle_action_coverage": 0.8317446841353761
+      }
+    },
+    "without_health": {
+      "probability_metrics": {
+        "brier_score": 0.14236812755583544,
+        "expected_calibration_error": 0.0069986321398031615,
+        "log_loss": 0.43796887550744446,
+        "positive_count": 5859,
+        "positive_rate": 0.22610272836028247,
+        "pr_auc": 0.4833236988589378,
+        "reliability_bins": [
+          {
+            "absolute_gap": 0.0014901593969263924,
+            "bin": 0,
+            "count": 9306,
+            "lower": 0.0,
+            "mean_prediction": 0.05607859696408737,
+            "outcome_rate": 0.054588437567160975,
+            "upper": 0.1
+          },
+          {
+            "absolute_gap": 0.008325168408539224,
+            "bin": 1,
+            "count": 5928,
+            "lower": 0.1,
+            "mean_prediction": 0.16171531742142028,
+            "outcome_rate": 0.1700404858299595,
+            "upper": 0.2
+          },
+          {
+            "absolute_gap": 0.011560288241583866,
+            "bin": 2,
+            "count": 2999,
+            "lower": 0.2,
+            "mean_prediction": 0.2438581845826909,
+            "outcome_rate": 0.25541847282427477,
+            "upper": 0.3
+          },
+          {
+            "absolute_gap": 0.017628380190300497,
+            "bin": 3,
+            "count": 1749,
+            "lower": 0.3,
+            "mean_prediction": 0.34410065005879675,
+            "outcome_rate": 0.32647226986849626,
+            "upper": 0.4
+          },
+          {
+            "absolute_gap": 0.008030718860128794,
+            "bin": 4,
+            "count": 2956,
+            "lower": 0.4,
+            "mean_prediction": 0.44071001520654285,
+            "outcome_rate": 0.43267929634641406,
+            "upper": 0.5
+          },
+          {
+            "absolute_gap": 0.010925031133304453,
+            "bin": 5,
+            "count": 1749,
+            "lower": 0.5,
+            "mean_prediction": 0.538531801342396,
+            "outcome_rate": 0.5494568324757004,
+            "upper": 0.6
+          },
+          {
+            "absolute_gap": 0.007990617284135526,
+            "bin": 6,
+            "count": 1225,
+            "lower": 0.6,
+            "mean_prediction": 0.6324804132025029,
+            "outcome_rate": 0.6244897959183674,
+            "upper": 0.7
+          },
+          {
+            "absolute_gap": 1.0000000000287557e-06,
+            "bin": 9,
+            "count": 1,
+            "lower": 0.9,
+            "mean_prediction": 0.999999,
+            "outcome_rate": 1.0,
+            "upper": 1.0
+          }
+        ],
+        "roc_auc": 0.7865992959136634,
+        "sample_count": 25913
+      },
+      "ranking_metrics": {
+        "decision_count": 25913,
+        "mean_random_top_1_agreement": 0.1111111111111111,
+        "pairwise_ranking_accuracy": 0.8859503373290397,
+        "probability_regret": {
+          "count": 25913,
+          "mean": 0.041564308968525684,
+          "median": 0.0,
+          "p90": 0.1724215532539064
+        },
+        "top_1_oracle_action_agreement": 0.6978350634816501,
+        "top_2_oracle_action_coverage": 0.845444371550959
+      }
+    }
+  },
+  "heldout_run_count": 1,
+  "heldout_seeds": [
+    20270401,
+    20270402,
+    20270403,
+    20270404,
+    20270405,
+    20270406,
+    20270407,
+    20270408,
+    20270409,
+    20270410
+  ],
+  "incident_adjacent_slices": {
+    "during_hidden_incident": {
+      "brier_score": 0.13224574246546086,
+      "expected_calibration_error": 0.09990493368685736,
+      "log_loss": 0.40912587586815685,
+      "positive_count": 28,
+      "positive_rate": 0.1590909090909091,
+      "pr_auc": 0.33387641603574497,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.03069581265307079,
+          "bin": 0,
+          "count": 50,
+          "lower": 0.0,
+          "mean_prediction": 0.05069581265307079,
+          "outcome_rate": 0.02,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.012438556148006319,
+          "bin": 1,
+          "count": 30,
+          "lower": 0.1,
+          "mean_prediction": 0.14577188948133965,
+          "outcome_rate": 0.13333333333333333,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.11770405981776101,
+          "bin": 2,
+          "count": 29,
+          "lower": 0.2,
+          "mean_prediction": 0.22115233567982998,
+          "outcome_rate": 0.10344827586206896,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.14189507761259784,
+          "bin": 3,
+          "count": 15,
+          "lower": 0.3,
+          "mean_prediction": 0.34189507761259785,
+          "outcome_rate": 0.2,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.15606461487415102,
+          "bin": 4,
+          "count": 18,
+          "lower": 0.4,
+          "mean_prediction": 0.4338423926519288,
+          "outcome_rate": 0.2777777777777778,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.20776288914042906,
+          "bin": 5,
+          "count": 19,
+          "lower": 0.5,
+          "mean_prediction": 0.5235523628246396,
+          "outcome_rate": 0.3157894736842105,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.22512127676575067,
+          "bin": 6,
+          "count": 15,
+          "lower": 0.6,
+          "mean_prediction": 0.6251212767657507,
+          "outcome_rate": 0.4,
+          "upper": 0.7
+        }
+      ],
+      "roc_auc": 0.7635135135135135,
+      "sample_count": 176
+    },
+    "high_observable_health_evidence": {
+      "brier_score": 0.14224447677126445,
+      "expected_calibration_error": 0.004780386490535094,
+      "log_loss": 0.4384176533518027,
+      "positive_count": 4439,
+      "positive_rate": 0.22571951591579376,
+      "pr_auc": 0.4849010223642061,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.0019670214337171796,
+          "bin": 0,
+          "count": 7047,
+          "lower": 0.0,
+          "mean_prediction": 0.055464963820548455,
+          "outcome_rate": 0.053497942386831275,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.0011168546180297945,
+          "bin": 1,
+          "count": 3635,
+          "lower": 0.1,
+          "mean_prediction": 0.15651725817426732,
+          "outcome_rate": 0.1576341127922971,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.00997150285856685,
+          "bin": 2,
+          "count": 2805,
+          "lower": 0.2,
+          "mean_prediction": 0.2303137021325205,
+          "outcome_rate": 0.24028520499108735,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.001295851654578517,
+          "bin": 3,
+          "count": 2330,
+          "lower": 0.3,
+          "mean_prediction": 0.34121001474470725,
+          "outcome_rate": 0.33991416309012873,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.005315444169629424,
+          "bin": 4,
+          "count": 1199,
+          "lower": 0.4,
+          "mean_prediction": 0.4373421330770523,
+          "outcome_rate": 0.43202668890742285,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.012353871657058701,
+          "bin": 5,
+          "count": 1573,
+          "lower": 0.5,
+          "mean_prediction": 0.5261076668044797,
+          "outcome_rate": 0.5384615384615384,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.017058332605118798,
+          "bin": 6,
+          "count": 1060,
+          "lower": 0.6,
+          "mean_prediction": 0.6264922948692697,
+          "outcome_rate": 0.6094339622641509,
+          "upper": 0.7
+        },
+        {
+          "absolute_gap": 0.015187645150498308,
+          "bin": 7,
+          "count": 14,
+          "lower": 0.7,
+          "mean_prediction": 0.7294733594362126,
+          "outcome_rate": 0.7142857142857143,
+          "upper": 0.8
+        },
+        {
+          "absolute_gap": 0.33333233333333334,
+          "bin": 9,
+          "count": 3,
+          "lower": 0.9,
+          "mean_prediction": 0.999999,
+          "outcome_rate": 0.6666666666666666,
+          "upper": 1.0
+        }
+      ],
+      "roc_auc": 0.787010320485571,
+      "sample_count": 19666
+    },
+    "low_observable_health_evidence": {
+      "brier_score": 0.14328254236854246,
+      "expected_calibration_error": 0.007839899145260103,
+      "log_loss": 0.4414374864366895,
+      "positive_count": 1420,
+      "positive_rate": 0.22730910837201856,
+      "pr_auc": 0.4933480058026223,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.0030976429325721977,
+          "bin": 0,
+          "count": 2232,
+          "lower": 0.0,
+          "mean_prediction": 0.05425002731832386,
+          "outcome_rate": 0.05734767025089606,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.007516174463884556,
+          "bin": 1,
+          "count": 1197,
+          "lower": 0.1,
+          "mean_prediction": 0.15706193748264843,
+          "outcome_rate": 0.164578111946533,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.0031935209534310616,
+          "bin": 2,
+          "count": 861,
+          "lower": 0.2,
+          "mean_prediction": 0.22851291700453444,
+          "outcome_rate": 0.22531939605110338,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.0136514285871428,
+          "bin": 3,
+          "count": 733,
+          "lower": 0.3,
+          "mean_prediction": 0.34105525626961025,
+          "outcome_rate": 0.35470668485675305,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.02494858529974775,
+          "bin": 4,
+          "count": 387,
+          "lower": 0.4,
+          "mean_prediction": 0.43580129847804233,
+          "outcome_rate": 0.4108527131782946,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.0018723407590860441,
+          "bin": 5,
+          "count": 495,
+          "lower": 0.5,
+          "mean_prediction": 0.5251046639914093,
+          "outcome_rate": 0.5232323232323233,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.027742972296106894,
+          "bin": 6,
+          "count": 341,
+          "lower": 0.6,
+          "mean_prediction": 0.6232834206657699,
+          "outcome_rate": 0.6510263929618768,
+          "upper": 0.7
+        },
+        {
+          "absolute_gap": 0.2666666666666667,
+          "bin": 7,
+          "count": 1,
+          "lower": 0.7,
+          "mean_prediction": 0.7333333333333333,
+          "outcome_rate": 1.0,
+          "upper": 0.8
+        }
+      ],
+      "roc_auc": 0.7842224050747411,
+      "sample_count": 6247
+    },
+    "near_incident_boundary_6h": {
+      "brier_score": 0.1439681285095902,
+      "expected_calibration_error": 0.05286096340043264,
+      "log_loss": 0.43601137157434283,
+      "positive_count": 58,
+      "positive_rate": 0.21722846441947566,
+      "pr_auc": 0.4230855118391455,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.016144918271516047,
+          "bin": 0,
+          "count": 84,
+          "lower": 0.0,
+          "mean_prediction": 0.05185920398580176,
+          "outcome_rate": 0.03571428571428571,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.000673133787918917,
+          "bin": 1,
+          "count": 47,
+          "lower": 0.1,
+          "mean_prediction": 0.14960930400068487,
+          "outcome_rate": 0.14893617021276595,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.048040125022477675,
+          "bin": 2,
+          "count": 35,
+          "lower": 0.2,
+          "mean_prediction": 0.2194686964510491,
+          "outcome_rate": 0.17142857142857143,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.046982805713531084,
+          "bin": 3,
+          "count": 28,
+          "lower": 0.3,
+          "mean_prediction": 0.34587433714361177,
+          "outcome_rate": 0.39285714285714285,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.17325421501030436,
+          "bin": 4,
+          "count": 26,
+          "lower": 0.4,
+          "mean_prediction": 0.4424849842410736,
+          "outcome_rate": 0.2692307692307692,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.047271536440089856,
+          "bin": 5,
+          "count": 28,
+          "lower": 0.5,
+          "mean_prediction": 0.5241570349884815,
+          "outcome_rate": 0.5714285714285714,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.20531217151157688,
+          "bin": 6,
+          "count": 19,
+          "lower": 0.6,
+          "mean_prediction": 0.6263648030905242,
+          "outcome_rate": 0.42105263157894735,
+          "upper": 0.7
+        }
+      ],
+      "roc_auc": 0.7790793598416104,
+      "sample_count": 267
+    },
+    "not_near_incident_boundary_6h": {
+      "brier_score": 0.14247938984823796,
+      "expected_calibration_error": 0.003342968432434891,
+      "log_loss": 0.4391782933937535,
+      "positive_count": 5801,
+      "positive_rate": 0.22619511814707946,
+      "pr_auc": 0.4875365267027571,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.0006081009117016312,
+          "bin": 0,
+          "count": 9195,
+          "lower": 0.0,
+          "mean_prediction": 0.05520298943807466,
+          "outcome_rate": 0.05459488852637303,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.002735269520969752,
+          "bin": 1,
+          "count": 4785,
+          "lower": 0.1,
+          "mean_prediction": 0.15672136579773452,
+          "outcome_rate": 0.15945663531870427,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.007408936478425415,
+          "bin": 2,
+          "count": 3631,
+          "lower": 0.2,
+          "mean_prediction": 0.22999122876530909,
+          "outcome_rate": 0.2374001652437345,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.0018687460425795277,
+          "bin": 3,
+          "count": 3035,
+          "lower": 0.3,
+          "mean_prediction": 0.34112960651096247,
+          "outcome_rate": 0.342998352553542,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.007386993897513017,
+          "bin": 4,
+          "count": 1560,
+          "lower": 0.4,
+          "mean_prediction": 0.4368741733846925,
+          "outcome_rate": 0.42948717948717946,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.008422660990432984,
+          "bin": 5,
+          "count": 2040,
+          "lower": 0.5,
+          "mean_prediction": 0.5258910644997631,
+          "outcome_rate": 0.5343137254901961,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.003415736432513472,
+          "bin": 6,
+          "count": 1382,
+          "lower": 0.6,
+          "mean_prediction": 0.6257022776770865,
+          "outcome_rate": 0.622286541244573,
+          "upper": 0.7
+        },
+        {
+          "absolute_gap": 0.003602642303979331,
+          "bin": 7,
+          "count": 15,
+          "lower": 0.7,
+          "mean_prediction": 0.729730691029354,
+          "outcome_rate": 0.7333333333333333,
+          "upper": 0.8
+        },
+        {
+          "absolute_gap": 0.33333233333333334,
+          "bin": 9,
+          "count": 3,
+          "lower": 0.9,
+          "mean_prediction": 0.999999,
+          "outcome_rate": 0.6666666666666666,
+          "upper": 1.0
+        }
+      ],
+      "roc_auc": 0.7864373519843432,
+      "sample_count": 25646
+    },
+    "outside_hidden_incident": {
+      "brier_score": 0.14256481608913432,
+      "expected_calibration_error": 0.003829633793512884,
+      "log_loss": 0.43935094977789785,
+      "positive_count": 5831,
+      "positive_rate": 0.22656098224346272,
+      "pr_auc": 0.48811966747335406,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.0005865067055206771,
+          "bin": 0,
+          "count": 9229,
+          "lower": 0.0,
+          "mean_prediction": 0.05519697371169686,
+          "outcome_rate": 0.05461046700617618,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.002796706383641878,
+          "bin": 1,
+          "count": 4802,
+          "lower": 0.1,
+          "mean_prediction": 0.1567201615880366,
+          "outcome_rate": 0.15951686797167847,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.007872934207338728,
+          "bin": 2,
+          "count": 3637,
+          "lower": 0.2,
+          "mean_prediction": 0.22996044495130852,
+          "outcome_rate": 0.23783337915864725,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.002990678793765411,
+          "bin": 3,
+          "count": 3048,
+          "lower": 0.3,
+          "mean_prediction": 0.34116942619311125,
+          "outcome_rate": 0.34416010498687666,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.008430584823120868,
+          "bin": 4,
+          "count": 1568,
+          "lower": 0.4,
+          "mean_prediction": 0.4370020133945494,
+          "outcome_rate": 0.42857142857142855,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.010958187571729616,
+          "bin": 5,
+          "count": 2049,
+          "lower": 0.5,
+          "mean_prediction": 0.5258890549856154,
+          "outcome_rate": 0.5368472425573451,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.003784025870827823,
+          "bin": 6,
+          "count": 1386,
+          "lower": 0.6,
+          "mean_prediction": 0.6257176478044497,
+          "outcome_rate": 0.6219336219336219,
+          "upper": 0.7
+        },
+        {
+          "absolute_gap": 0.003602642303979331,
+          "bin": 7,
+          "count": 15,
+          "lower": 0.7,
+          "mean_prediction": 0.729730691029354,
+          "outcome_rate": 0.7333333333333333,
+          "upper": 0.8
+        },
+        {
+          "absolute_gap": 0.33333233333333334,
+          "bin": 9,
+          "count": 3,
+          "lower": 0.9,
+          "mean_prediction": 0.999999,
+          "outcome_rate": 0.6666666666666666,
+          "upper": 1.0
+        }
+      ],
+      "roc_auc": 0.7866981759906961,
+      "sample_count": 25737
+    }
+  },
+  "logged_generation_runtime_seconds": 206.2224752000002,
+  "model_quality_gate": {
+    "brier_improvement_over_logistic": 0.019636534238716474,
+    "checks": {
+      "pairwise_ranking_better_than_random": true,
+      "probability_metric_improvement": true,
+      "top_1_better_than_random": true
+    },
+    "failure_behavior": "RETAIN_LOGISTIC_REGRESSION",
+    "log_loss_improvement_over_logistic": 0.05808435911217252,
+    "status": "PASS"
+  },
+  "models": {
+    "lightgbm": {
+      "calibrated": {
+        "brier_score": 0.1424947293775314,
+        "expected_calibration_error": 0.0037209725743257323,
+        "log_loss": 0.4391456623542836,
+        "positive_count": 5859,
+        "positive_rate": 0.22610272836028247,
+        "pr_auc": 0.4866015344646343,
+        "reliability_bins": [
+          {
+            "absolute_gap": 0.0007487510526892754,
+            "bin": 0,
+            "count": 9279,
+            "lower": 0.0,
+            "mean_prediction": 0.05517271915270005,
+            "outcome_rate": 0.054423968100010774,
+            "upper": 0.1
+          },
+          {
+            "absolute_gap": 0.0027021165914337952,
+            "bin": 1,
+            "count": 4832,
+            "lower": 0.1,
+            "mean_prediction": 0.1566521880443278,
+            "outcome_rate": 0.15935430463576158,
+            "upper": 0.2
+          },
+          {
+            "absolute_gap": 0.0068795537308717625,
+            "bin": 2,
+            "count": 3666,
+            "lower": 0.2,
+            "mean_prediction": 0.2298907681458331,
+            "outcome_rate": 0.23677032187670485,
+            "upper": 0.3
+          },
+          {
+            "absolute_gap": 0.002281150114008479,
+            "bin": 3,
+            "count": 3063,
+            "lower": 0.3,
+            "mean_prediction": 0.34117297982396083,
+            "outcome_rate": 0.3434541299379693,
+            "upper": 0.4
+          },
+          {
+            "absolute_gap": 0.010106128669853831,
+            "bin": 4,
+            "count": 1586,
+            "lower": 0.4,
+            "mean_prediction": 0.4369661538905348,
+            "outcome_rate": 0.42686002522068095,
+            "upper": 0.5
+          },
+          {
+            "absolute_gap": 0.008948661238300626,
+            "bin": 5,
+            "count": 2068,
+            "lower": 0.5,
+            "mean_prediction": 0.5258675863439044,
+            "outcome_rate": 0.534816247582205,
+            "upper": 0.6
+          },
+          {
+            "absolute_gap": 0.006153803717668382,
+            "bin": 6,
+            "count": 1401,
+            "lower": 0.6,
+            "mean_prediction": 0.6257112626755557,
+            "outcome_rate": 0.6195574589578873,
+            "upper": 0.7
+          },
+          {
+            "absolute_gap": 0.003602642303979331,
+            "bin": 7,
+            "count": 15,
+            "lower": 0.7,
+            "mean_prediction": 0.729730691029354,
+            "outcome_rate": 0.7333333333333333,
+            "upper": 0.8
+          },
+          {
+            "absolute_gap": 0.33333233333333334,
+            "bin": 9,
+            "count": 3,
+            "lower": 0.9,
+            "mean_prediction": 0.999999,
+            "outcome_rate": 0.6666666666666666,
+            "upper": 1.0
+          }
+        ],
+        "roc_auc": 0.7863483733023072,
+        "sample_count": 25913
+      },
+      "raw": {
+        "brier_score": 0.14261842690902496,
+        "expected_calibration_error": 0.01430959717153067,
+        "log_loss": 0.43897993310793876,
+        "positive_count": 5859,
+        "positive_rate": 0.22610272836028247,
+        "pr_auc": 0.49443557083230877,
+        "reliability_bins": [
+          {
+            "absolute_gap": 0.01175146185564422,
+            "bin": 0,
+            "count": 7539,
+            "lower": 0.0,
+            "mean_prediction": 0.058442004367913754,
+            "outcome_rate": 0.046690542512269534,
+            "upper": 0.1
+          },
+          {
+            "absolute_gap": 0.015422696666140157,
+            "bin": 1,
+            "count": 5550,
+            "lower": 0.1,
+            "mean_prediction": 0.1431704444138879,
+            "outcome_rate": 0.12774774774774775,
+            "upper": 0.2
+          },
+          {
+            "absolute_gap": 0.0043564868401483325,
+            "bin": 2,
+            "count": 5318,
+            "lower": 0.2,
+            "mean_prediction": 0.24354415137568802,
+            "outcome_rate": 0.2391876645355397,
+            "upper": 0.3
+          },
+          {
+            "absolute_gap": 0.01314723702299958,
+            "bin": 3,
+            "count": 2897,
+            "lower": 0.3,
+            "mean_prediction": 0.34688037775090447,
+            "outcome_rate": 0.36002761477390405,
+            "upper": 0.4
+          },
+          {
+            "absolute_gap": 0.03175552447448032,
+            "bin": 4,
+            "count": 2277,
+            "lower": 0.4,
+            "mean_prediction": 0.4522146116695689,
+            "outcome_rate": 0.4839701361440492,
+            "upper": 0.5
+          },
+          {
+            "absolute_gap": 0.03418558107876102,
+            "bin": 5,
+            "count": 1706,
+            "lower": 0.5,
+            "mean_prediction": 0.5455330590150256,
+            "outcome_rate": 0.5797186400937866,
+            "upper": 0.6
+          },
+          {
+            "absolute_gap": 0.006035949585909917,
+            "bin": 6,
+            "count": 619,
+            "lower": 0.6,
+            "mean_prediction": 0.6296223793112734,
+            "outcome_rate": 0.6235864297253635,
+            "upper": 0.7
+          },
+          {
+            "absolute_gap": 0.14211829501711082,
+            "bin": 7,
+            "count": 7,
+            "lower": 0.7,
+            "mean_prediction": 0.7150245621257463,
+            "outcome_rate": 0.8571428571428571,
+            "upper": 0.8
+          }
+        ],
+        "roc_auc": 0.786739261920788,
+        "sample_count": 25913
+      }
+    },
+    "lightgbm_without_health": {
+      "calibrated": {
+        "brier_score": 0.14236812755583544,
+        "expected_calibration_error": 0.0069986321398031615,
+        "log_loss": 0.43796887550744446,
+        "positive_count": 5859,
+        "positive_rate": 0.22610272836028247,
+        "pr_auc": 0.4833236988589378,
+        "reliability_bins": [
+          {
+            "absolute_gap": 0.0014901593969263924,
+            "bin": 0,
+            "count": 9306,
+            "lower": 0.0,
+            "mean_prediction": 0.05607859696408737,
+            "outcome_rate": 0.054588437567160975,
+            "upper": 0.1
+          },
+          {
+            "absolute_gap": 0.008325168408539224,
+            "bin": 1,
+            "count": 5928,
+            "lower": 0.1,
+            "mean_prediction": 0.16171531742142028,
+            "outcome_rate": 0.1700404858299595,
+            "upper": 0.2
+          },
+          {
+            "absolute_gap": 0.011560288241583866,
+            "bin": 2,
+            "count": 2999,
+            "lower": 0.2,
+            "mean_prediction": 0.2438581845826909,
+            "outcome_rate": 0.25541847282427477,
+            "upper": 0.3
+          },
+          {
+            "absolute_gap": 0.017628380190300497,
+            "bin": 3,
+            "count": 1749,
+            "lower": 0.3,
+            "mean_prediction": 0.34410065005879675,
+            "outcome_rate": 0.32647226986849626,
+            "upper": 0.4
+          },
+          {
+            "absolute_gap": 0.008030718860128794,
+            "bin": 4,
+            "count": 2956,
+            "lower": 0.4,
+            "mean_prediction": 0.44071001520654285,
+            "outcome_rate": 0.43267929634641406,
+            "upper": 0.5
+          },
+          {
+            "absolute_gap": 0.010925031133304453,
+            "bin": 5,
+            "count": 1749,
+            "lower": 0.5,
+            "mean_prediction": 0.538531801342396,
+            "outcome_rate": 0.5494568324757004,
+            "upper": 0.6
+          },
+          {
+            "absolute_gap": 0.007990617284135526,
+            "bin": 6,
+            "count": 1225,
+            "lower": 0.6,
+            "mean_prediction": 0.6324804132025029,
+            "outcome_rate": 0.6244897959183674,
+            "upper": 0.7
+          },
+          {
+            "absolute_gap": 1.0000000000287557e-06,
+            "bin": 9,
+            "count": 1,
+            "lower": 0.9,
+            "mean_prediction": 0.999999,
+            "outcome_rate": 1.0,
+            "upper": 1.0
+          }
+        ],
+        "roc_auc": 0.7865992959136634,
+        "sample_count": 25913
+      },
+      "raw": {
+        "brier_score": 0.14243568124443173,
+        "expected_calibration_error": 0.011673567148612146,
+        "log_loss": 0.4379822453805111,
+        "positive_count": 5859,
+        "positive_rate": 0.22610272836028247,
+        "pr_auc": 0.491076376932105,
+        "reliability_bins": [
+          {
+            "absolute_gap": 0.005863799988007533,
+            "bin": 0,
+            "count": 7951,
+            "lower": 0.0,
+            "mean_prediction": 0.05680078904598766,
+            "outcome_rate": 0.05093698905798013,
+            "upper": 0.1
+          },
+          {
+            "absolute_gap": 0.017957626273417876,
+            "bin": 1,
+            "count": 5210,
+            "lower": 0.1,
+            "mean_prediction": 0.14367739594712228,
+            "outcome_rate": 0.1257197696737044,
+            "upper": 0.2
+          },
+          {
+            "absolute_gap": 0.001361462317458706,
+            "bin": 2,
+            "count": 5238,
+            "lower": 0.2,
+            "mean_prediction": 0.24305676586843236,
+            "outcome_rate": 0.24169530355097366,
+            "upper": 0.3
+          },
+          {
+            "absolute_gap": 0.008397844545004363,
+            "bin": 3,
+            "count": 2846,
+            "lower": 0.3,
+            "mean_prediction": 0.34718894393004834,
+            "outcome_rate": 0.3555867884750527,
+            "upper": 0.4
+          },
+          {
+            "absolute_gap": 0.029920341943237394,
+            "bin": 4,
+            "count": 2140,
+            "lower": 0.4,
+            "mean_prediction": 0.4523226487109682,
+            "outcome_rate": 0.4822429906542056,
+            "upper": 0.5
+          },
+          {
+            "absolute_gap": 0.029872138304302243,
+            "bin": 5,
+            "count": 1583,
+            "lower": 0.5,
+            "mean_prediction": 0.5430905906912757,
+            "outcome_rate": 0.572962728995578,
+            "upper": 0.6
+          },
+          {
+            "absolute_gap": 0.017393096175392753,
+            "bin": 6,
+            "count": 914,
+            "lower": 0.6,
+            "mean_prediction": 0.6344609298734234,
+            "outcome_rate": 0.6170678336980306,
+            "upper": 0.7
+          },
+          {
+            "absolute_gap": 0.13125216581783783,
+            "bin": 7,
+            "count": 31,
+            "lower": 0.7,
+            "mean_prediction": 0.7118973271081604,
+            "outcome_rate": 0.5806451612903226,
+            "upper": 0.8
+          }
+        ],
+        "roc_auc": 0.7870900556890321,
+        "sample_count": 25913
+      }
+    },
+    "logistic": {
+      "calibrated": {
+        "brier_score": 0.16213126361624788,
+        "expected_calibration_error": 0.004999599736667873,
+        "log_loss": 0.4972300214664561,
+        "positive_count": 5859,
+        "positive_rate": 0.22610272836028247,
+        "pr_auc": 0.3436236463866922,
+        "reliability_bins": [
+          {
+            "absolute_gap": 0.004528913480935648,
+            "bin": 0,
+            "count": 9254,
+            "lower": 0.0,
+            "mean_prediction": 0.09629235299842463,
+            "outcome_rate": 0.10082126647936028,
+            "upper": 0.1
+          },
+          {
+            "absolute_gap": 0.0013841056982081823,
+            "bin": 1,
+            "count": 2051,
+            "lower": 0.1,
+            "mean_prediction": 0.14781140868501952,
+            "outcome_rate": 0.1491955143832277,
+            "upper": 0.2
+          },
+          {
+            "absolute_gap": 0.002540931561714088,
+            "bin": 2,
+            "count": 7693,
+            "lower": 0.2,
+            "mean_prediction": 0.2732942432725508,
+            "outcome_rate": 0.2758351748342649,
+            "upper": 0.3
+          },
+          {
+            "absolute_gap": 0.009059535694325438,
+            "bin": 3,
+            "count": 4975,
+            "lower": 0.3,
+            "mean_prediction": 0.3358937065485968,
+            "outcome_rate": 0.32683417085427136,
+            "upper": 0.4
+          },
+          {
+            "absolute_gap": 0.0040076977407393355,
+            "bin": 4,
+            "count": 1754,
+            "lower": 0.4,
+            "mean_prediction": 0.4487055312641145,
+            "outcome_rate": 0.44469783352337516,
+            "upper": 0.5
+          },
+          {
+            "absolute_gap": 0.06571451035610165,
+            "bin": 5,
+            "count": 185,
+            "lower": 0.5,
+            "mean_prediction": 0.563011807653399,
+            "outcome_rate": 0.4972972972972973,
+            "upper": 0.6
+          },
+          {
+            "absolute_gap": 0.999999,
+            "bin": 9,
+            "count": 1,
+            "lower": 0.9,
+            "mean_prediction": 0.999999,
+            "outcome_rate": 0.0,
+            "upper": 1.0
+          }
+        ],
+        "roc_auc": 0.6766876131832684,
+        "sample_count": 25913
+      },
+      "raw": {
+        "brier_score": 0.16401635379399832,
+        "expected_calibration_error": 0.033587827885700194,
+        "log_loss": 0.5037888988241888,
+        "positive_count": 5859,
+        "positive_rate": 0.22610272836028247,
+        "pr_auc": 0.3584933919163465,
+        "reliability_bins": [
+          {
+            "absolute_gap": 0.05336522250565631,
+            "bin": 0,
+            "count": 2726,
+            "lower": 0.0,
+            "mean_prediction": 0.08016375768509937,
+            "outcome_rate": 0.13352898019075568,
+            "upper": 0.1
+          },
+          {
+            "absolute_gap": 0.04139808430813875,
+            "bin": 1,
+            "count": 9214,
+            "lower": 0.1,
+            "mean_prediction": 0.1491688678983276,
+            "outcome_rate": 0.10777078359018884,
+            "upper": 0.2
+          },
+          {
+            "absolute_gap": 0.03636017790324683,
+            "bin": 2,
+            "count": 7301,
+            "lower": 0.2,
+            "mean_prediction": 0.24729959473063892,
+            "outcome_rate": 0.28365977263388575,
+            "upper": 0.3
+          },
+          {
+            "absolute_gap": 0.01697834953612215,
+            "bin": 3,
+            "count": 4462,
+            "lower": 0.3,
+            "mean_prediction": 0.34665114200586666,
+            "outcome_rate": 0.3296727924697445,
+            "upper": 0.4
+          },
+          {
+            "absolute_gap": 0.00014529545890157314,
+            "bin": 4,
+            "count": 2181,
+            "lower": 0.4,
+            "mean_prediction": 0.434059197892772,
+            "outcome_rate": 0.43420449335167355,
+            "upper": 0.5
+          },
+          {
+            "absolute_gap": 0.06572050823769404,
+            "bin": 5,
+            "count": 29,
+            "lower": 0.5,
+            "mean_prediction": 0.5139963703066596,
+            "outcome_rate": 0.4482758620689655,
+            "upper": 0.6
+          }
+        ],
+        "roc_auc": 0.6705780039906931,
+        "sample_count": 25913
+      }
+    }
+  },
+  "phase": "one_time_heldout_model_test",
+  "primary_per_action_metrics": {
+    "CREATE_PAYMENT_LINK": {
+      "brier_score": 0.1981450385055552,
+      "expected_calibration_error": 0.02910899804920245,
+      "log_loss": 0.5834753882899576,
+      "positive_count": 1190,
+      "positive_rate": 0.27947393142320337,
+      "pr_auc": 0.3347255176896647,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.08227571115973742,
+          "bin": 0,
+          "count": 1,
+          "lower": 0.0,
+          "mean_prediction": 0.08227571115973742,
+          "outcome_rate": 0.0,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.013023386516919838,
+          "bin": 1,
+          "count": 736,
+          "lower": 0.1,
+          "mean_prediction": 0.18262878739612365,
+          "outcome_rate": 0.1956521739130435,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.02632459080701971,
+          "bin": 2,
+          "count": 1304,
+          "lower": 0.2,
+          "mean_prediction": 0.22954544970272522,
+          "outcome_rate": 0.20322085889570551,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.004465569740776387,
+          "bin": 3,
+          "count": 1398,
+          "lower": 0.3,
+          "mean_prediction": 0.3474657607313266,
+          "outcome_rate": 0.351931330472103,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.07301061513990958,
+          "bin": 4,
+          "count": 712,
+          "lower": 0.4,
+          "mean_prediction": 0.43115668255563994,
+          "outcome_rate": 0.35814606741573035,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.20698222745053985,
+          "bin": 5,
+          "count": 104,
+          "lower": 0.5,
+          "mean_prediction": 0.5146745351428476,
+          "outcome_rate": 0.3076923076923077,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.06626098715348205,
+          "bin": 6,
+          "count": 3,
+          "lower": 0.6,
+          "mean_prediction": 0.6004056795131846,
+          "outcome_rate": 0.6666666666666666,
+          "upper": 0.7
+        }
+      ],
+      "roc_auc": 0.5980265248211409,
+      "sample_count": 4258
+    },
+    "OFFER_ALTERNATE_METHOD": {
+      "brier_score": 0.20499482485148082,
+      "expected_calibration_error": 0.022942609346702177,
+      "log_loss": 0.5948526961833318,
+      "positive_count": 1518,
+      "positive_rate": 0.35417638824078396,
+      "pr_auc": 0.49793557900838353,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.02834637797252032,
+          "bin": 0,
+          "count": 26,
+          "lower": 0.0,
+          "mean_prediction": 0.08703823741209507,
+          "outcome_rate": 0.11538461538461539,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.01894677186234664,
+          "bin": 1,
+          "count": 913,
+          "lower": 0.1,
+          "mean_prediction": 0.15476276310002463,
+          "outcome_rate": 0.13581599123767799,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.044579092861728314,
+          "bin": 2,
+          "count": 829,
+          "lower": 0.2,
+          "mean_prediction": 0.23165733657132356,
+          "outcome_rate": 0.2762364294330519,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.021205400413484177,
+          "bin": 3,
+          "count": 656,
+          "lower": 0.3,
+          "mean_prediction": 0.32913222968177686,
+          "outcome_rate": 0.3079268292682927,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.017716159329650927,
+          "bin": 4,
+          "count": 358,
+          "lower": 0.4,
+          "mean_prediction": 0.44876428759772335,
+          "outcome_rate": 0.4664804469273743,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.005883860792999185,
+          "bin": 5,
+          "count": 1352,
+          "lower": 0.5,
+          "mean_prediction": 0.5237019380235689,
+          "outcome_rate": 0.5295857988165681,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.09955552392492895,
+          "bin": 6,
+          "count": 152,
+          "lower": 0.6,
+          "mean_prediction": 0.60613447129335,
+          "outcome_rate": 0.506578947368421,
+          "upper": 0.7
+        }
+      ],
+      "roc_auc": 0.6922853027637522,
+      "sample_count": 4286
+    },
+    "REQUEST_PAYMENT_METHOD_UPDATE": {
+      "brier_score": 0.11530874610172771,
+      "expected_calibration_error": 0.01910805634433536,
+      "log_loss": 0.38137859928418943,
+      "positive_count": 949,
+      "positive_rate": 0.21485170930495812,
+      "pr_auc": 0.5484425150776008,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.008277266653065204,
+          "bin": 0,
+          "count": 2794,
+          "lower": 0.0,
+          "mean_prediction": 0.07583153792818031,
+          "outcome_rate": 0.08410880458124552,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.011013810913477431,
+          "bin": 1,
+          "count": 641,
+          "lower": 0.1,
+          "mean_prediction": 0.12801849110068492,
+          "outcome_rate": 0.11700468018720749,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.04637836214156177,
+          "bin": 2,
+          "count": 11,
+          "lower": 0.2,
+          "mean_prediction": 0.22634891058571094,
+          "outcome_rate": 0.2727272727272727,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.10751355431072085,
+          "bin": 3,
+          "count": 2,
+          "lower": 0.3,
+          "mean_prediction": 0.39248644568927915,
+          "outcome_rate": 0.5,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.28124449278553204,
+          "bin": 4,
+          "count": 38,
+          "lower": 0.4,
+          "mean_prediction": 0.4555976124776258,
+          "outcome_rate": 0.7368421052631579,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.09302640455465871,
+          "bin": 5,
+          "count": 232,
+          "lower": 0.5,
+          "mean_prediction": 0.5362839402729275,
+          "outcome_rate": 0.6293103448275862,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.030348695605248333,
+          "bin": 6,
+          "count": 689,
+          "lower": 0.6,
+          "mean_prediction": 0.6285772840754483,
+          "outcome_rate": 0.6589259796806967,
+          "upper": 0.7
+        },
+        {
+          "absolute_gap": 0.030889210200031658,
+          "bin": 7,
+          "count": 10,
+          "lower": 0.7,
+          "mean_prediction": 0.7308892102000316,
+          "outcome_rate": 0.7,
+          "upper": 0.8
+        }
+      ],
+      "roc_auc": 0.7973678965170645,
+      "sample_count": 4417
+    },
+    "RETRY_LATER": {
+      "brier_score": 0.14806401094321667,
+      "expected_calibration_error": 0.025944964630336496,
+      "log_loss": 0.44949867787908454,
+      "positive_count": 1110,
+      "positive_rate": 0.2573614653373522,
+      "pr_auc": 0.5338312364621622,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.025713368433852194,
+          "bin": 0,
+          "count": 1038,
+          "lower": 0.0,
+          "mean_prediction": 0.03823745321227223,
+          "outcome_rate": 0.012524084778420038,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.008766215534209726,
+          "bin": 1,
+          "count": 1029,
+          "lower": 0.1,
+          "mean_prediction": 0.15842607947978796,
+          "outcome_rate": 0.14965986394557823,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.019742972057457175,
+          "bin": 2,
+          "count": 679,
+          "lower": 0.2,
+          "mean_prediction": 0.23209797050513487,
+          "outcome_rate": 0.25184094256259204,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.02611273896850369,
+          "bin": 3,
+          "count": 515,
+          "lower": 0.3,
+          "mean_prediction": 0.3309671079005425,
+          "outcome_rate": 0.3048543689320388,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.08195361735772971,
+          "bin": 4,
+          "count": 185,
+          "lower": 0.4,
+          "mean_prediction": 0.43696530156118923,
+          "outcome_rate": 0.518918918918919,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.057353771738702264,
+          "bin": 5,
+          "count": 304,
+          "lower": 0.5,
+          "mean_prediction": 0.5347514914191924,
+          "outcome_rate": 0.5921052631578947,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.027705021764869553,
+          "bin": 6,
+          "count": 555,
+          "lower": 0.6,
+          "mean_prediction": 0.6277050217648695,
+          "outcome_rate": 0.6,
+          "upper": 0.7
+        },
+        {
+          "absolute_gap": 0.07258634731200098,
+          "bin": 7,
+          "count": 5,
+          "lower": 0.7,
+          "mean_prediction": 0.7274136526879991,
+          "outcome_rate": 0.8,
+          "upper": 0.8
+        },
+        {
+          "absolute_gap": 0.33333233333333334,
+          "bin": 9,
+          "count": 3,
+          "lower": 0.9,
+          "mean_prediction": 0.999999,
+          "outcome_rate": 0.6666666666666666,
+          "upper": 1.0
+        }
+      ],
+      "roc_auc": 0.8077203803866306,
+      "sample_count": 4313
+    },
+    "RETRY_NOW": {
+      "brier_score": 0.10514450647867152,
+      "expected_calibration_error": 0.013632608578738272,
+      "log_loss": 0.3420727244860795,
+      "positive_count": 639,
+      "positive_rate": 0.14781401804302569,
+      "pr_auc": 0.37623883586918655,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.0007340264961711793,
+          "bin": 0,
+          "count": 2652,
+          "lower": 0.0,
+          "mean_prediction": 0.05544998557019383,
+          "outcome_rate": 0.05618401206636501,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.013062839731691617,
+          "bin": 1,
+          "count": 804,
+          "lower": 0.1,
+          "mean_prediction": 0.1411660159897014,
+          "outcome_rate": 0.15422885572139303,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.061549411532973136,
+          "bin": 2,
+          "count": 95,
+          "lower": 0.2,
+          "mean_prediction": 0.23318743057229,
+          "outcome_rate": 0.29473684210526313,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.07270420401512206,
+          "bin": 3,
+          "count": 401,
+          "lower": 0.3,
+          "mean_prediction": 0.35871724236891783,
+          "outcome_rate": 0.4314214463840399,
+          "upper": 0.4
+        },
+        {
+          "absolute_gap": 0.012846904205399912,
+          "bin": 4,
+          "count": 293,
+          "lower": 0.4,
+          "mean_prediction": 0.4342520719038151,
+          "outcome_rate": 0.447098976109215,
+          "upper": 0.5
+        },
+        {
+          "absolute_gap": 0.09132459423314865,
+          "bin": 5,
+          "count": 76,
+          "lower": 0.5,
+          "mean_prediction": 0.512377225812096,
+          "outcome_rate": 0.42105263157894735,
+          "upper": 0.6
+        },
+        {
+          "absolute_gap": 0.3891067370808242,
+          "bin": 6,
+          "count": 2,
+          "lower": 0.6,
+          "mean_prediction": 0.6108932629191758,
+          "outcome_rate": 1.0,
+          "upper": 0.7
+        }
+      ],
+      "roc_auc": 0.7984217586857859,
+      "sample_count": 4323
+    },
+    "SEND_NUDGE": {
+      "brier_score": 0.08519416516523375,
+      "expected_calibration_error": 0.008440208691856212,
+      "log_loss": 0.28813420544997076,
+      "positive_count": 453,
+      "positive_rate": 0.10495829471733086,
+      "pr_auc": 0.22686413547214923,
+      "reliability_bins": [
+        {
+          "absolute_gap": 0.002162296241402191,
+          "bin": 0,
+          "count": 2768,
+          "lower": 0.0,
+          "mean_prediction": 0.04009582225296288,
+          "outcome_rate": 0.03793352601156069,
+          "upper": 0.1
+        },
+        {
+          "absolute_gap": 0.037161612185667686,
+          "bin": 1,
+          "count": 709,
+          "lower": 0.1,
+          "mean_prediction": 0.17299353591024205,
+          "outcome_rate": 0.21015514809590974,
+          "upper": 0.2
+        },
+        {
+          "absolute_gap": 0.0037818292796173714,
+          "bin": 2,
+          "count": 748,
+          "lower": 0.2,
+          "mean_prediction": 0.22616469478455375,
+          "outcome_rate": 0.22994652406417113,
+          "upper": 0.3
+        },
+        {
+          "absolute_gap": 0.013915531616021604,
+          "bin": 3,
+          "count": 91,
+          "lower": 0.3,
+          "mean_prediction": 0.3106188283193183,
+          "outcome_rate": 0.2967032967032967,
+          "upper": 0.4
+        }
+      ],
+      "roc_auc": 0.7765236388239819,
+      "sample_count": 4316
+    }
+  },
+  "ranking": {
+    "lightgbm": {
+      "decision_count": 25913,
+      "mean_random_top_1_agreement": 0.1111111111111111,
+      "pairwise_ranking_accuracy": 0.8828660111912429,
+      "probability_regret": {
+        "count": 25913,
+        "mean": 0.04695021807091392,
+        "median": 0.0,
+        "p90": 0.19786222300876877
+      },
+      "top_1_oracle_action_agreement": 0.6844055107475012,
+      "top_2_oracle_action_coverage": 0.8317446841353761
+    },
+    "lightgbm_without_health": {
+      "decision_count": 25913,
+      "mean_random_top_1_agreement": 0.1111111111111111,
+      "pairwise_ranking_accuracy": 0.8859503373290397,
+      "probability_regret": {
+        "count": 25913,
+        "mean": 0.041564308968525684,
+        "median": 0.0,
+        "p90": 0.1724215532539064
+      },
+      "top_1_oracle_action_agreement": 0.6978350634816501,
+      "top_2_oracle_action_coverage": 0.845444371550959
+    },
+    "logistic": {
+      "decision_count": 25913,
+      "mean_random_top_1_agreement": 0.1111111111111111,
+      "pairwise_ranking_accuracy": 0.6934768767371527,
+      "probability_regret": {
+        "count": 25913,
+        "mean": 0.2144771541779769,
+        "median": 0.059567791703435014,
+        "p90": 0.6659623574889405
+      },
+      "top_1_oracle_action_agreement": 0.24786786555010998,
+      "top_2_oracle_action_coverage": 0.3332690155520395
+    }
+  },
+  "recommended_model": "lightgbm",
+  "runtime_seconds": 28.584825899999487,
+  "sample_count": 25913,
+  "shap": {
+    "explained_sample_count": 1000,
+    "explanation_role": "STRUCTURED_EVIDENCE_ONLY_NO_POLICY_AUTHORITY",
+    "global_gain_importance": [
+      {
+        "feature": "categorical__failure_source_CUSTOMER",
+        "gain_importance": 15034.398970127106
+      },
+      {
+        "feature": "numeric__delay_hours",
+        "gain_importance": 11998.086360931396
+      },
+      {
+        "feature": "categorical__action_type_SEND_NUDGE",
+        "gain_importance": 10134.203938961029
+      },
+      {
+        "feature": "categorical__failure_source_INSTRUMENT",
+        "gain_importance": 9530.098727703094
+      },
+      {
+        "feature": "categorical__failure_source_MANDATE",
+        "gain_importance": 7126.234400272369
+      },
+      {
+        "feature": "categorical__failure_reason_ISSUER_UNAVAILABLE",
+        "gain_importance": 6583.653115272522
+      },
+      {
+        "feature": "categorical__action_type_OFFER_ALTERNATE_METHOD",
+        "gain_importance": 6389.557679891586
+      },
+      {
+        "feature": "categorical__action_type_REQUEST_PAYMENT_METHOD_UPDATE",
+        "gain_importance": 4449.110786437988
+      },
+      {
+        "feature": "categorical__action_type_RETRY_NOW",
+        "gain_importance": 4396.3756330013275
+      },
+      {
+        "feature": "categorical__action_type_CREATE_PAYMENT_LINK",
+        "gain_importance": 4021.2255806922913
+      },
+      {
+        "feature": "categorical__failure_reason_TEMPORARY_NETWORK_ERROR",
+        "gain_importance": 3999.6739959716797
+      },
+      {
+        "feature": "categorical__failure_reason_INSUFFICIENT_FUNDS",
+        "gain_importance": 3735.2083164453506
+      },
+      {
+        "feature": "categorical__failure_source_UNKNOWN",
+        "gain_importance": 2774.2537463903427
+      },
+      {
+        "feature": "numeric__payment_method_change_action",
+        "gain_importance": 2746.602843761444
+      },
+      {
+        "feature": "numeric__subscription_success_rate",
+        "gain_importance": 2300.903706073761
+      },
+      {
+        "feature": "categorical__failure_source_NETWORK",
+        "gain_importance": 2108.2485222816467
+      },
+      {
+        "feature": "numeric__customer_contact_action",
+        "gain_importance": 2059.401530265808
+      },
+      {
+        "feature": "numeric__decision_hour_sin",
+        "gain_importance": 1627.7687191963196
+      },
+      {
+        "feature": "numeric__health_global_baseline_attempts",
+        "gain_importance": 1431.4721224308014
+      },
+      {
+        "feature": "numeric__subscription_tenure_days",
+        "gain_importance": 1356.5016951560974
+      },
+      {
+        "feature": "numeric__health_method_baseline_attempts",
+        "gain_importance": 1260.025710105896
+      },
+      {
+        "feature": "numeric__amount_minor",
+        "gain_importance": 1241.0024619102478
+      },
+      {
+        "feature": "numeric__decision_hour_cos",
+        "gain_importance": 1224.077681183815
+      },
+      {
+        "feature": "numeric__health_issuer_baseline_attempts",
+        "gain_importance": 1153.6182942390442
+      },
+      {
+        "feature": "numeric__health_global_maximum_llr",
+        "gain_importance": 1144.5822520256042
+      }
+    ],
+    "global_mean_absolute_shap": [
+      {
+        "feature": "categorical__action_type_SEND_NUDGE",
+        "mean_absolute_shap": 0.2925039358781721
+      },
+      {
+        "feature": "categorical__failure_source_CUSTOMER",
+        "mean_absolute_shap": 0.2206638095853096
+      },
+      {
+        "feature": "categorical__action_type_RETRY_NOW",
+        "mean_absolute_shap": 0.13486866461207123
+      },
+      {
+        "feature": "categorical__action_type_OFFER_ALTERNATE_METHOD",
+        "mean_absolute_shap": 0.13428591968022896
+      },
+      {
+        "feature": "categorical__action_type_REQUEST_PAYMENT_METHOD_UPDATE",
+        "mean_absolute_shap": 0.11605544375298743
+      },
+      {
+        "feature": "categorical__failure_source_INSTRUMENT",
+        "mean_absolute_shap": 0.10070694475725712
+      },
+      {
+        "feature": "numeric__delay_hours",
+        "mean_absolute_shap": 0.09820435350959625
+      },
+      {
+        "feature": "categorical__action_type_CREATE_PAYMENT_LINK",
+        "mean_absolute_shap": 0.09188138452230364
+      },
+      {
+        "feature": "numeric__customer_contact_action",
+        "mean_absolute_shap": 0.08647973941840614
+      },
+      {
+        "feature": "categorical__failure_reason_INSUFFICIENT_FUNDS",
+        "mean_absolute_shap": 0.07762671148572606
+      },
+      {
+        "feature": "numeric__subscription_prior_successes",
+        "mean_absolute_shap": 0.07573493460486508
+      },
+      {
+        "feature": "categorical__failure_reason_ISSUER_UNAVAILABLE",
+        "mean_absolute_shap": 0.03842213778831771
+      },
+      {
+        "feature": "numeric__payment_method_change_action",
+        "mean_absolute_shap": 0.03531978625929394
+      },
+      {
+        "feature": "numeric__subscription_success_rate",
+        "mean_absolute_shap": 0.03275528043444138
+      },
+      {
+        "feature": "categorical__failure_reason_AUTHENTICATION_FAILURE",
+        "mean_absolute_shap": 0.03205594598564193
+      },
+      {
+        "feature": "categorical__failure_source_MANDATE",
+        "mean_absolute_shap": 0.030975755389351912
+      },
+      {
+        "feature": "categorical__failure_source_UNKNOWN",
+        "mean_absolute_shap": 0.029053757458565397
+      },
+      {
+        "feature": "categorical__failure_reason_TEMPORARY_NETWORK_ERROR",
+        "mean_absolute_shap": 0.023661728391451968
+      },
+      {
+        "feature": "categorical__failure_source_NETWORK",
+        "mean_absolute_shap": 0.023625460943965556
+      },
+      {
+        "feature": "numeric__subscription_tenure_days",
+        "mean_absolute_shap": 0.019086834046628448
+      },
+      {
+        "feature": "numeric__health_issuer_baseline_success",
+        "mean_absolute_shap": 0.015840621187937252
+      },
+      {
+        "feature": "numeric__health_method_baseline_success",
+        "mean_absolute_shap": 0.015830941850081052
+      },
+      {
+        "feature": "numeric__amount_minor",
+        "mean_absolute_shap": 0.015588148455922251
+      },
+      {
+        "feature": "numeric__health_method_delta_60m",
+        "mean_absolute_shap": 0.015093728947100316
+      },
+      {
+        "feature": "numeric__health_method_maximum_llr",
+        "mean_absolute_shap": 0.014957689411285426
+      }
+    ],
+    "local_action_comparisons": [
+      {
+        "action_comparison": [
+          {
+            "action_type": "RETRY_LATER",
+            "calibrated_probability": 0.5644599303135889,
+            "delay_hours": 24.0,
+            "raw_probability": 0.537152982159466,
+            "top_contributions": [
+              {
+                "feature": "numeric__delay_hours",
+                "shap_value": 0.8616951275727719
+              },
+              {
+                "feature": "categorical__action_type_SEND_NUDGE",
+                "shap_value": 0.22076382405310369
+              },
+              {
+                "feature": "categorical__failure_source_INSTRUMENT",
+                "shap_value": 0.16797609382515213
+              },
+              {
+                "feature": "numeric__subscription_prior_successes",
+                "shap_value": -0.1430282688320961
+              },
+              {
+                "feature": "categorical__failure_reason_INSUFFICIENT_FUNDS",
+                "shap_value": 0.13846561948503097
+              },
+              {
+                "feature": "categorical__action_type_RETRY_NOW",
+                "shap_value": 0.13666593607182514
+              },
+              {
+                "feature": "numeric__health_method_maximum_llr",
+                "shap_value": 0.12404665841816083
+              },
+              {
+                "feature": "categorical__action_type_REQUEST_PAYMENT_METHOD_UPDATE",
+                "shap_value": 0.1174674434398673
+              },
+              {
+                "feature": "numeric__health_issuer_maximum_llr",
+                "shap_value": 0.09120606995443488
+              },
+              {
+                "feature": "numeric__customer_contact_action",
+                "shap_value": -0.08344405407162624
+              }
+            ]
+          },
+          {
+            "action_type": "SEND_NUDGE",
+            "calibrated_probability": 0.05994550408719346,
+            "delay_hours": 0.0,
+            "raw_probability": 0.06650435593915618,
+            "top_contributions": [
+              {
+                "feature": "categorical__action_type_SEND_NUDGE",
+                "shap_value": -0.7459244162484251
+              },
+              {
+                "feature": "categorical__failure_reason_INSUFFICIENT_FUNDS",
+                "shap_value": -0.3842857765221429
+              },
+              {
+                "feature": "categorical__failure_source_CUSTOMER",
+                "shap_value": 0.1863341185623873
+              },
+              {
+                "feature": "numeric__health_method_baseline_attempts",
+                "shap_value": -0.07988478893363962
+              },
+              {
+                "feature": "numeric__delay_hours",
+                "shap_value": -0.0627477811877723
+              },
+              {
+                "feature": "numeric__health_method_maximum_llr",
+                "shap_value": 0.06096001149783602
+              },
+              {
+                "feature": "numeric__subscription_prior_successes",
+                "shap_value": -0.055853367861115714
+              },
+              {
+                "feature": "categorical__action_type_REQUEST_PAYMENT_METHOD_UPDATE",
+                "shap_value": 0.055211722303997804
+              },
+              {
+                "feature": "numeric__customer_contact_action",
+                "shap_value": 0.05206678478194052
+              },
+              {
+                "feature": "categorical__action_type_RETRY_NOW",
+                "shap_value": 0.048274088838024067
+              }
+            ]
+          }
+        ],
+        "decision_key": "e1fd2cf7f93bcc7570d637656d3e340d1d93444e0ce7fbcb8f67d10bd6a6d9a4"
+      },
+      {
+        "action_comparison": [
+          {
+            "action_type": "RETRY_LATER",
+            "calibrated_probability": 0.621380846325167,
+            "delay_hours": 24.0,
+            "raw_probability": 0.5858241154834584,
+            "top_contributions": [
+              {
+                "feature": "numeric__delay_hours",
+                "shap_value": 0.8484552974712662
+              },
+              {
+                "feature": "categorical__action_type_SEND_NUDGE",
+                "shap_value": 0.22483562476503435
+              },
+              {
+                "feature": "numeric__health_method_maximum_llr",
+                "shap_value": 0.18863349110562658
+              },
+              {
+                "feature": "categorical__failure_source_INSTRUMENT",
+                "shap_value": 0.17148078022902835
+              },
+              {
+                "feature": "numeric__subscription_prior_successes",
+                "shap_value": -0.1516224079858931
+              },
+              {
+                "feature": "categorical__failure_reason_INSUFFICIENT_FUNDS",
+                "shap_value": 0.1406976685384116
+              },
+              {
+                "feature": "categorical__action_type_RETRY_NOW",
+                "shap_value": 0.1322885808960356
+              },
+              {
+                "feature": "categorical__action_type_REQUEST_PAYMENT_METHOD_UPDATE",
+                "shap_value": 0.11838374911187428
+              },
+              {
+                "feature": "numeric__health_issuer_maximum_llr",
+                "shap_value": 0.11325840038344276
+              },
+              {
+                "feature": "numeric__subscription_tenure_days",
+                "shap_value": 0.09653250666195619
+              }
+            ]
+          },
+          {
+            "action_type": "SEND_NUDGE",
+            "calibrated_probability": 0.05994550408719346,
+            "delay_hours": 0.0,
+            "raw_probability": 0.07493359546749974,
+            "top_contributions": [
+              {
+                "feature": "categorical__action_type_SEND_NUDGE",
+                "shap_value": -0.7680593355911433
+              },
+              {
+                "feature": "categorical__failure_reason_INSUFFICIENT_FUNDS",
+                "shap_value": -0.38053538366859246
+              },
+              {
+                "feature": "categorical__failure_source_CUSTOMER",
+                "shap_value": 0.18639477625688985
+              },
+              {
+                "feature": "numeric__health_method_maximum_llr",
+                "shap_value": 0.09123141602053766
+              },
+              {
+                "feature": "numeric__health_method_baseline_attempts",
+                "shap_value": -0.07773094878700908
+              },
+              {
+                "feature": "numeric__subscription_prior_successes",
+                "shap_value": -0.07132124019428664
+              },
+              {
+                "feature": "numeric__delay_hours",
+                "shap_value": -0.0626600640324953
+              },
+              {
+                "feature": "numeric__health_issuer_maximum_llr",
+                "shap_value": 0.059812457351099815
+              },
+              {
+                "feature": "numeric__subscription_tenure_days",
+                "shap_value": 0.05918063258186224
+              },
+              {
+                "feature": "categorical__action_type_REQUEST_PAYMENT_METHOD_UPDATE",
+                "shap_value": 0.05717554694166902
+              }
+            ]
+          }
+        ],
+        "decision_key": "eccda000064bf95f37d35d920f047b6bf98d98e48853099b3bb07866615c4635"
+      },
+      {
+        "action_comparison": [
+          {
+            "action_type": "CREATE_PAYMENT_LINK",
+            "calibrated_probability": 0.47297297297297297,
+            "delay_hours": 0.0,
+            "raw_probability": 0.44590467035671594,
+            "top_contributions": [
+              {
+                "feature": "categorical__action_type_CREATE_PAYMENT_LINK",
+                "shap_value": 0.41410391156154885
+              },
+              {
+                "feature": "numeric__health_method_maximum_llr",
+                "shap_value": 0.1661119976321378
+              },
+              {
+                "feature": "categorical__action_type_SEND_NUDGE",
+                "shap_value": 0.15902543286250548
+              },
+              {
+                "feature": "categorical__action_type_RETRY_NOW",
+                "shap_value": 0.11867153568788606
+              },
+              {
+                "feature": "numeric__health_issuer_maximum_llr",
+                "shap_value": 0.11299016420206086
+              },
+              {
+                "feature": "categorical__action_type_REQUEST_PAYMENT_METHOD_UPDATE",
+                "shap_value": 0.11287948832557747
+              },
+              {
+                "feature": "categorical__failure_reason_INSUFFICIENT_FUNDS",
+                "shap_value": 0.11082518919082374
+              },
+              {
+                "feature": "numeric__subscription_tenure_days",
+                "shap_value": 0.09620535631316504
+              },
+              {
+                "feature": "numeric__health_issuer_baseline_attempts",
+                "shap_value": 0.09549326275003522
+              },
+              {
+                "feature": "numeric__customer_contact_action",
+                "shap_value": 0.06018445719854495
+              }
+            ]
+          },
+          {
+            "action_type": "RETRY_NOW",
+            "calibrated_probability": 0.12312633832976445,
+            "delay_hours": 0.0,
+            "raw_probability": 0.1342642872833052,
+            "top_contributions": [
+              {
+                "feature": "categorical__action_type_RETRY_NOW",
+                "shap_value": -0.359002640348097
+              },
+              {
+                "feature": "categorical__failure_source_CUSTOMER",
+                "shap_value": -0.21638445933607853
+              },
+              {
+                "feature": "numeric__health_method_maximum_llr",
+                "shap_value": 0.14557736156214718
+              },
+              {
+                "feature": "categorical__failure_source_INSTRUMENT",
+                "shap_value": 0.1340013888472791
+              },
+              {
+                "feature": "numeric__health_issuer_maximum_llr",
+                "shap_value": 0.1084930350149821
+              },
+              {
+                "feature": "numeric__customer_contact_action",
+                "shap_value": -0.10664342645820972
+              },
+              {
+                "feature": "categorical__action_type_CREATE_PAYMENT_LINK",
+                "shap_value": -0.10641196222904593
+              },
+              {
+                "feature": "numeric__subscription_tenure_days",
+                "shap_value": 0.1046511719631864
+              },
+              {
+                "feature": "numeric__subscription_prior_successes",
+                "shap_value": -0.09573441093571236
+              },
+              {
+                "feature": "categorical__action_type_OFFER_ALTERNATE_METHOD",
+                "shap_value": -0.0931790337932572
+              }
+            ]
+          }
+        ],
+        "decision_key": "c16c35052607450ef009e904a46f05c2641ba1e57844156bfa5ec5019857785f"
+      }
+    ]
+  },
+  "training_prevalence": 0.2285369027700316
+}

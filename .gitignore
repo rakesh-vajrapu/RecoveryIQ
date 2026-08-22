@@ -34,6 +34,30 @@ artifacts/detector_v2/*
 !artifacts/detector_v2/validation-report-v2.md
 !artifacts/detector_v2/demo-scenario-not-benchmark-v2.json
 !artifacts/detector_v2/validation-false-confirmed-exposure-v2.json
+artifacts/ml/*
+!artifacts/ml/models/
+artifacts/ml/models/*
+!artifacts/ml/models/recovery-model-v1/
+artifacts/ml/models/recovery-model-v1/*
+!artifacts/ml/models/recovery-model-v1/model-manifest-v1.json
+!artifacts/ml/models/recovery-model-v1/*.joblib
+!artifacts/ml/calibration/
+artifacts/ml/calibration/*
+!artifacts/ml/calibration/recovery-model-v1/
+artifacts/ml/calibration/recovery-model-v1/*
+!artifacts/ml/calibration/recovery-model-v1/calibration-manifest-v1.json
+!artifacts/ml/calibration/recovery-model-v1/*.joblib
+!artifacts/ml/logged/
+artifacts/ml/logged/*
+!artifacts/ml/logged/*-manifest-v1.json
+!artifacts/ml/reports/
+artifacts/ml/reports/*
+!artifacts/ml/reports/*-logging-audit-v1.json
+!artifacts/ml/reports/development-selection-v1.json
+!artifacts/ml/reports/heldout-evaluation-v1.json
+!artifacts/ml/reports/heldout-report-v1.md
+!artifacts/ml/reports/shap-report-v1.json
+!artifacts/ml/phase4-summary-v1.json
 
 # JavaScript
 node_modules/

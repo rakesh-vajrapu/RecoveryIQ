@@ -1,0 +1,513 @@
+{
+  "explained_sample_count": 1000,
+  "explanation_role": "STRUCTURED_EVIDENCE_ONLY_NO_POLICY_AUTHORITY",
+  "global_gain_importance": [
+    {
+      "feature": "categorical__failure_source_CUSTOMER",
+      "gain_importance": 15034.398970127106
+    },
+    {
+      "feature": "numeric__delay_hours",
+      "gain_importance": 11998.086360931396
+    },
+    {
+      "feature": "categorical__action_type_SEND_NUDGE",
+      "gain_importance": 10134.203938961029
+    },
+    {
+      "feature": "categorical__failure_source_INSTRUMENT",
+      "gain_importance": 9530.098727703094
+    },
+    {
+      "feature": "categorical__failure_source_MANDATE",
+      "gain_importance": 7126.234400272369
+    },
+    {
+      "feature": "categorical__failure_reason_ISSUER_UNAVAILABLE",
+      "gain_importance": 6583.653115272522
+    },
+    {
+      "feature": "categorical__action_type_OFFER_ALTERNATE_METHOD",
+      "gain_importance": 6389.557679891586
+    },
+    {
+      "feature": "categorical__action_type_REQUEST_PAYMENT_METHOD_UPDATE",
+      "gain_importance": 4449.110786437988
+    },
+    {
+      "feature": "categorical__action_type_RETRY_NOW",
+      "gain_importance": 4396.3756330013275
+    },
+    {
+      "feature": "categorical__action_type_CREATE_PAYMENT_LINK",
+      "gain_importance": 4021.2255806922913
+    },
+    {
+      "feature": "categorical__failure_reason_TEMPORARY_NETWORK_ERROR",
+      "gain_importance": 3999.6739959716797
+    },
+    {
+      "feature": "categorical__failure_reason_INSUFFICIENT_FUNDS",
+      "gain_importance": 3735.2083164453506
+    },
+    {
+      "feature": "categorical__failure_source_UNKNOWN",
+      "gain_importance": 2774.2537463903427
+    },
+    {
+      "feature": "numeric__payment_method_change_action",
+      "gain_importance": 2746.602843761444
+    },
+    {
+      "feature": "numeric__subscription_success_rate",
+      "gain_importance": 2300.903706073761
+    },
+    {
+      "feature": "categorical__failure_source_NETWORK",
+      "gain_importance": 2108.2485222816467
+    },
+    {
+      "feature": "numeric__customer_contact_action",
+      "gain_importance": 2059.401530265808
+    },
+    {
+      "feature": "numeric__decision_hour_sin",
+      "gain_importance": 1627.7687191963196
+    },
+    {
+      "feature": "numeric__health_global_baseline_attempts",
+      "gain_importance": 1431.4721224308014
+    },
+    {
+      "feature": "numeric__subscription_tenure_days",
+      "gain_importance": 1356.5016951560974
+    },
+    {
+      "feature": "numeric__health_method_baseline_attempts",
+      "gain_importance": 1260.025710105896
+    },
+    {
+      "feature": "numeric__amount_minor",
+      "gain_importance": 1241.0024619102478
+    },
+    {
+      "feature": "numeric__decision_hour_cos",
+      "gain_importance": 1224.077681183815
+    },
+    {
+      "feature": "numeric__health_issuer_baseline_attempts",
+      "gain_importance": 1153.6182942390442
+    },
+    {
+      "feature": "numeric__health_global_maximum_llr",
+      "gain_importance": 1144.5822520256042
+    }
+  ],
+  "global_mean_absolute_shap": [
+    {
+      "feature": "categorical__action_type_SEND_NUDGE",
+      "mean_absolute_shap": 0.2925039358781721
+    },
+    {
+      "feature": "categorical__failure_source_CUSTOMER",
+      "mean_absolute_shap": 0.2206638095853096
+    },
+    {
+      "feature": "categorical__action_type_RETRY_NOW",
+      "mean_absolute_shap": 0.13486866461207123
+    },
+    {
+      "feature": "categorical__action_type_OFFER_ALTERNATE_METHOD",
+      "mean_absolute_shap": 0.13428591968022896
+    },
+    {
+      "feature": "categorical__action_type_REQUEST_PAYMENT_METHOD_UPDATE",
+      "mean_absolute_shap": 0.11605544375298743
+    },
+    {
+      "feature": "categorical__failure_source_INSTRUMENT",
+      "mean_absolute_shap": 0.10070694475725712
+    },
+    {
+      "feature": "numeric__delay_hours",
+      "mean_absolute_shap": 0.09820435350959625
+    },
+    {
+      "feature": "categorical__action_type_CREATE_PAYMENT_LINK",
+      "mean_absolute_shap": 0.09188138452230364
+    },
+    {
+      "feature": "numeric__customer_contact_action",
+      "mean_absolute_shap": 0.08647973941840614
+    },
+    {
+      "feature": "categorical__failure_reason_INSUFFICIENT_FUNDS",
+      "mean_absolute_shap": 0.07762671148572606
+    },
+    {
+      "feature": "numeric__subscription_prior_successes",
+      "mean_absolute_shap": 0.07573493460486508
+    },
+    {
+      "feature": "categorical__failure_reason_ISSUER_UNAVAILABLE",
+      "mean_absolute_shap": 0.03842213778831771
+    },
+    {
+      "feature": "numeric__payment_method_change_action",
+      "mean_absolute_shap": 0.03531978625929394
+    },
+    {
+      "feature": "numeric__subscription_success_rate",
+      "mean_absolute_shap": 0.03275528043444138
+    },
+    {
+      "feature": "categorical__failure_reason_AUTHENTICATION_FAILURE",
+      "mean_absolute_shap": 0.03205594598564193
+    },
+    {
+      "feature": "categorical__failure_source_MANDATE",
+      "mean_absolute_shap": 0.030975755389351912
+    },
+    {
+      "feature": "categorical__failure_source_UNKNOWN",
+      "mean_absolute_shap": 0.029053757458565397
+    },
+    {
+      "feature": "categorical__failure_reason_TEMPORARY_NETWORK_ERROR",
+      "mean_absolute_shap": 0.023661728391451968
+    },
+    {
+      "feature": "categorical__failure_source_NETWORK",
+      "mean_absolute_shap": 0.023625460943965556
+    },
+    {
+      "feature": "numeric__subscription_tenure_days",
+      "mean_absolute_shap": 0.019086834046628448
+    },
+    {
+      "feature": "numeric__health_issuer_baseline_success",
+      "mean_absolute_shap": 0.015840621187937252
+    },
+    {
+      "feature": "numeric__health_method_baseline_success",
+      "mean_absolute_shap": 0.015830941850081052
+    },
+    {
+      "feature": "numeric__amount_minor",
+      "mean_absolute_shap": 0.015588148455922251
+    },
+    {
+      "feature": "numeric__health_method_delta_60m",
+      "mean_absolute_shap": 0.015093728947100316
+    },
+    {
+      "feature": "numeric__health_method_maximum_llr",
+      "mean_absolute_shap": 0.014957689411285426
+    }
+  ],
+  "local_action_comparisons": [
+    {
+      "action_comparison": [
+        {
+          "action_type": "RETRY_LATER",
+          "calibrated_probability": 0.5644599303135889,
+          "delay_hours": 24.0,
+          "raw_probability": 0.537152982159466,
+          "top_contributions": [
+            {
+              "feature": "numeric__delay_hours",
+              "shap_value": 0.8616951275727719
+            },
+            {
+              "feature": "categorical__action_type_SEND_NUDGE",
+              "shap_value": 0.22076382405310369
+            },
+            {
+              "feature": "categorical__failure_source_INSTRUMENT",
+              "shap_value": 0.16797609382515213
+            },
+            {
+              "feature": "numeric__subscription_prior_successes",
+              "shap_value": -0.1430282688320961
+            },
+            {
+              "feature": "categorical__failure_reason_INSUFFICIENT_FUNDS",
+              "shap_value": 0.13846561948503097
+            },
+            {
+              "feature": "categorical__action_type_RETRY_NOW",
+              "shap_value": 0.13666593607182514
+            },
+            {
+              "feature": "numeric__health_method_maximum_llr",
+              "shap_value": 0.12404665841816083
+            },
+            {
+              "feature": "categorical__action_type_REQUEST_PAYMENT_METHOD_UPDATE",
+              "shap_value": 0.1174674434398673
+            },
+            {
+              "feature": "numeric__health_issuer_maximum_llr",
+              "shap_value": 0.09120606995443488
+            },
+            {
+              "feature": "numeric__customer_contact_action",
+              "shap_value": -0.08344405407162624
+            }
+          ]
+        },
+        {
+          "action_type": "SEND_NUDGE",
+          "calibrated_probability": 0.05994550408719346,
+          "delay_hours": 0.0,
+          "raw_probability": 0.06650435593915618,
+          "top_contributions": [
+            {
+              "feature": "categorical__action_type_SEND_NUDGE",
+              "shap_value": -0.7459244162484251
+            },
+            {
+              "feature": "categorical__failure_reason_INSUFFICIENT_FUNDS",
+              "shap_value": -0.3842857765221429
+            },
+            {
+              "feature": "categorical__failure_source_CUSTOMER",
+              "shap_value": 0.1863341185623873
+            },
+            {
+              "feature": "numeric__health_method_baseline_attempts",
+              "shap_value": -0.07988478893363962
+            },
+            {
+              "feature": "numeric__delay_hours",
+              "shap_value": -0.0627477811877723
+            },
+            {
+              "feature": "numeric__health_method_maximum_llr",
+              "shap_value": 0.06096001149783602
+            },
+            {
+              "feature": "numeric__subscription_prior_successes",
+              "shap_value": -0.055853367861115714
+            },
+            {
+              "feature": "categorical__action_type_REQUEST_PAYMENT_METHOD_UPDATE",
+              "shap_value": 0.055211722303997804
+            },
+            {
+              "feature": "numeric__customer_contact_action",
+              "shap_value": 0.05206678478194052
+            },
+            {
+              "feature": "categorical__action_type_RETRY_NOW",
+              "shap_value": 0.048274088838024067
+            }
+          ]
+        }
+      ],
+      "decision_key": "e1fd2cf7f93bcc7570d637656d3e340d1d93444e0ce7fbcb8f67d10bd6a6d9a4"
+    },
+    {
+      "action_comparison": [
+        {
+          "action_type": "RETRY_LATER",
+          "calibrated_probability": 0.621380846325167,
+          "delay_hours": 24.0,
+          "raw_probability": 0.5858241154834584,
+          "top_contributions": [
+            {
+              "feature": "numeric__delay_hours",
+              "shap_value": 0.8484552974712662
+            },
+            {
+              "feature": "categorical__action_type_SEND_NUDGE",
+              "shap_value": 0.22483562476503435
+            },
+            {
+              "feature": "numeric__health_method_maximum_llr",
+              "shap_value": 0.18863349110562658
+            },
+            {
+              "feature": "categorical__failure_source_INSTRUMENT",
+              "shap_value": 0.17148078022902835
+            },
+            {
+              "feature": "numeric__subscription_prior_successes",
+              "shap_value": -0.1516224079858931
+            },
+            {
+              "feature": "categorical__failure_reason_INSUFFICIENT_FUNDS",
+              "shap_value": 0.1406976685384116
+            },
+            {
+              "feature": "categorical__action_type_RETRY_NOW",
+              "shap_value": 0.1322885808960356
+            },
+            {
+              "feature": "categorical__action_type_REQUEST_PAYMENT_METHOD_UPDATE",
+              "shap_value": 0.11838374911187428
+            },
+            {
+              "feature": "numeric__health_issuer_maximum_llr",
+              "shap_value": 0.11325840038344276
+            },
+            {
+              "feature": "numeric__subscription_tenure_days",
+              "shap_value": 0.09653250666195619
+            }
+          ]
+        },
+        {
+          "action_type": "SEND_NUDGE",
+          "calibrated_probability": 0.05994550408719346,
+          "delay_hours": 0.0,
+          "raw_probability": 0.07493359546749974,
+          "top_contributions": [
+            {
+              "feature": "categorical__action_type_SEND_NUDGE",
+              "shap_value": -0.7680593355911433
+            },
+            {
+              "feature": "categorical__failure_reason_INSUFFICIENT_FUNDS",
+              "shap_value": -0.38053538366859246
+            },
+            {
+              "feature": "categorical__failure_source_CUSTOMER",
+              "shap_value": 0.18639477625688985
+            },
+            {
+              "feature": "numeric__health_method_maximum_llr",
+              "shap_value": 0.09123141602053766
+            },
+            {
+              "feature": "numeric__health_method_baseline_attempts",
+              "shap_value": -0.07773094878700908
+            },
+            {
+              "feature": "numeric__subscription_prior_successes",
+              "shap_value": -0.07132124019428664
+            },
+            {
+              "feature": "numeric__delay_hours",
+              "shap_value": -0.0626600640324953
+            },
+            {
+              "feature": "numeric__health_issuer_maximum_llr",
+              "shap_value": 0.059812457351099815
+            },
+            {
+              "feature": "numeric__subscription_tenure_days",
+              "shap_value": 0.05918063258186224
+            },
+            {
+              "feature": "categorical__action_type_REQUEST_PAYMENT_METHOD_UPDATE",
+              "shap_value": 0.05717554694166902
+            }
+          ]
+        }
+      ],
+      "decision_key": "eccda000064bf95f37d35d920f047b6bf98d98e48853099b3bb07866615c4635"
+    },
+    {
+      "action_comparison": [
+        {
+          "action_type": "CREATE_PAYMENT_LINK",
+          "calibrated_probability": 0.47297297297297297,
+          "delay_hours": 0.0,
+          "raw_probability": 0.44590467035671594,
+          "top_contributions": [
+            {
+              "feature": "categorical__action_type_CREATE_PAYMENT_LINK",
+              "shap_value": 0.41410391156154885
+            },
+            {
+              "feature": "numeric__health_method_maximum_llr",
+              "shap_value": 0.1661119976321378
+            },
+            {
+              "feature": "categorical__action_type_SEND_NUDGE",
+              "shap_value": 0.15902543286250548
+            },
+            {
+              "feature": "categorical__action_type_RETRY_NOW",
+              "shap_value": 0.11867153568788606
+            },
+            {
+              "feature": "numeric__health_issuer_maximum_llr",
+              "shap_value": 0.11299016420206086
+            },
+            {
+              "feature": "categorical__action_type_REQUEST_PAYMENT_METHOD_UPDATE",
+              "shap_value": 0.11287948832557747
+            },
+            {
+              "feature": "categorical__failure_reason_INSUFFICIENT_FUNDS",
+              "shap_value": 0.11082518919082374
+            },
+            {
+              "feature": "numeric__subscription_tenure_days",
+              "shap_value": 0.09620535631316504
+            },
+            {
+              "feature": "numeric__health_issuer_baseline_attempts",
+              "shap_value": 0.09549326275003522
+            },
+            {
+              "feature": "numeric__customer_contact_action",
+              "shap_value": 0.06018445719854495
+            }
+          ]
+        },
+        {
+          "action_type": "RETRY_NOW",
+          "calibrated_probability": 0.12312633832976445,
+          "delay_hours": 0.0,
+          "raw_probability": 0.1342642872833052,
+          "top_contributions": [
+            {
+              "feature": "categorical__action_type_RETRY_NOW",
+              "shap_value": -0.359002640348097
+            },
+            {
+              "feature": "categorical__failure_source_CUSTOMER",
+              "shap_value": -0.21638445933607853
+            },
+            {
+              "feature": "numeric__health_method_maximum_llr",
+              "shap_value": 0.14557736156214718
+            },
+            {
+              "feature": "categorical__failure_source_INSTRUMENT",
+              "shap_value": 0.1340013888472791
+            },
+            {
+              "feature": "numeric__health_issuer_maximum_llr",
+              "shap_value": 0.1084930350149821
+            },
+            {
+              "feature": "numeric__customer_contact_action",
+              "shap_value": -0.10664342645820972
+            },
+            {
+              "feature": "categorical__action_type_CREATE_PAYMENT_LINK",
+              "shap_value": -0.10641196222904593
+            },
+            {
+              "feature": "numeric__subscription_tenure_days",
+              "shap_value": 0.1046511719631864
+            },
+            {
+              "feature": "numeric__subscription_prior_successes",
+              "shap_value": -0.09573441093571236
+            },
+            {
+              "feature": "categorical__action_type_OFFER_ALTERNATE_METHOD",
+              "shap_value": -0.0931790337932572
+            }
+          ]
+        }
+      ],
+      "decision_key": "c16c35052607450ef009e904a46f05c2641ba1e57844156bfa5ec5019857785f"
+    }
+  ]
+}

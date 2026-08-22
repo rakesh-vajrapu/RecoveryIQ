@@ -50,13 +50,17 @@ Exit: held-out incident metrics and threshold rationale are reproducible; final 
 
 Exit: WATCH and CONFIRMED metrics are separate, the hard-policy safety gate is explicit and failed (therefore both signals are advisory-only), and final seeds remain untouched.
 
-## 4. Recovery ML
+## 4. Recovery ML — complete
 
-- [ ] Build leakage-safe temporal features and action-conditioned labels.
-- [ ] Compare simple classifier and LightGBM; calibrate on validation only.
-- [ ] Add SHAP evidence and model artifact/version tracking.
+- [x] Pre-register new training, development, calibration, and one-time model-test groups.
+- [x] Generate one-action randomized exploration logs with explicit propensities.
+- [x] Build leakage-safe temporal feature snapshots and action-conditioned 48-hour labels.
+- [x] Compare logistic regression and a modest deterministic LightGBM search.
+- [x] Freeze features/hyperparameters, select calibration on calibration seeds, and run held-out once.
+- [x] Evaluate action ranking, health ablation, incident/cause slices, and structured SHAP evidence.
+- [x] Persist versioned model/schema/calibration/report artifacts.
 
-Exit: held-out Brier/calibration and action-level performance are reported honestly.
+Exit: held-out Brier/calibration and action-level performance are reported honestly; both gates passed, the non-improving health-feature ablation remains visible, and final seeds remain untouched.
 
 ## 5. Decision and policy engine
 

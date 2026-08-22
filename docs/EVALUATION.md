@@ -24,6 +24,14 @@ Detector v1 consumed `20261001`–`20261010`; those seeds are forbidden for v2 t
 
 The V2 configuration was frozen at hash `50f0ca055d561b447d1b2aa3769cf775917b9efbceb44c6934a8971c1585af8c` before the new group was generated. The group was executed exactly once. Held-out CONFIRMED precision was 3.70%, the false-confirmation rate was 0.005380 per issuer-scope-day, and 108 episodes satisfied the non-vacuity count. The gate therefore failed, the detector was not retuned, and the frozen CONFIRMED output is advisory-only. Full denominators and slices are in `artifacts/detector_v2/validation-evaluation-v2.json`; final seeds remain untouched.
 
+### Recovery-model v1 protocol
+
+Before any Phase 4 scenario generation, recovery-model v1 registers four new disjoint groups: training `20270101`–`20270120`, model development `20270201`–`20270210`, calibration `20270301`–`20270310`, and a one-time held-out model test `20270401`–`20270410`. The overall final seeds `20261101`–`20261120` remain untouched. Detector benchmark seeds are not ML training data.
+
+Each initial failed payment contributes exactly one randomized logged action and one realized 48-hour outcome. Unselected counterfactual outcomes are absent from training and feature artifacts. Model architecture, feature allowlist/hash, LightGBM hyperparameters, and calibration method must freeze before the held-out command is enabled. The held-out command refuses overwrite. Counterfactual probabilities and hidden incident/cause fields may be joined only in evaluation after frozen predictions exist. Exact gates and feature boundaries are pre-registered in `docs/RECOVERY_MODEL.md`.
+
+The registered stages completed in that order. The one-time held-out group produced 25,913 decisions. Isotonic-calibrated LightGBM achieved Brier 0.142495, log loss 0.439146, ECE 0.003721, ROC-AUC 0.786348, and PR-AUC 0.486602. Its top-1 oracle-action agreement was 68.44% versus 11.11% random and its pairwise ranking accuracy was 88.29%. Both preregistered gates passed. The matched model without health features was slightly better on Brier, log loss, ranking, and regret, so Phase 4 makes no claim that detector-health features improved prediction. No post-held-out tuning occurred and overall-final seeds remain untouched.
+
 ## Strategies
 
 Phase 2 strategies receive identical cases and paired outcome randomness:
@@ -49,7 +57,7 @@ The Phase 2 report includes retries, customer contacts, payment links, human rev
 
 ## Predictive quality
 
-No predictive metric is calculated in Phase 2 because no model exists. A future action-conditioned model will be reported with Brier score, reliability curves, expected calibration error, and discrimination metrics where useful. Calibration will be fit only on validation data.
+Phase 2 calculates no predictive metric. Phase 4 Recovery Model V1 reports Brier score, log loss, equal-width reliability bins and ECE, ROC-AUC, and PR-AUC overall and per action. It also reports simulator-only counterfactual ranking, a matched health-feature ablation, incident-adjacent slices, and hidden failure-family diagnostics. Calibration uses its distinct `20270301`–`20270310` group only after training/development freeze. The complete protocol and results are in `docs/RECOVERY_MODEL.md` and `artifacts/ml/reports/heldout-evaluation-v1.json`.
 
 ## Degradation quality
 
@@ -61,4 +69,4 @@ Aggregate point estimates include mean, median, sample standard deviation, minim
 
 ## Reproduction artifact
 
-Single benchmarks write a manifest, separately rooted observable/ground-truth Parquet data, baseline outcomes, JSON analysis, and Markdown quality report under `artifacts/simulations/<experiment-id>/`. Multi-seed reports use `artifacts/benchmark_suites/<suite-id>/`; sensitivity reports use `artifacts/sensitivity/<report-id>/`. Generated artifacts and all displayed financial values must be labelled **SIMULATED**. Later model benchmarks will add code revision, temporal splits, and model hashes through a controlled label-join step.
+Single benchmarks write a manifest, separately rooted observable/ground-truth Parquet data, baseline outcomes, JSON analysis, and Markdown quality report under `artifacts/simulations/<experiment-id>/`. Multi-seed reports use `artifacts/benchmark_suites/<suite-id>/`; sensitivity reports use `artifacts/sensitivity/<report-id>/`. Generated artifacts and all displayed financial values must be labelled **SIMULATED**. Recovery-model artifacts add separated logged/feature tables, frozen joblib models and calibrators, schema/model hashes, registered seed manifests, full evaluation/SHAP reports, and `artifacts/ml/phase4-summary-v1.json`. Bulky Parquet data remains ignored while the compact manifests and frozen binaries are versioned.
