@@ -62,12 +62,16 @@ Exit: WATCH and CONFIRMED metrics are separate, the hard-policy safety gate is e
 
 Exit: held-out Brier/calibration and action-level performance are reported honestly; both gates passed, the non-improving health-feature ablation remains visible, and final seeds remain untouched.
 
-## 5. Decision and policy engine
+## 5. Decision and policy engine — complete
 
-- [ ] Score ERV, implement executable state transitions, confidence gates, limits, abstention, and human review.
-- [ ] Enforce degradation-aware blocks and single-attribution invariants.
+- [x] Pre-register policy development/validation seeds, ERV, candidates, costs, rules, margin selection, and validation gates.
+- [x] Audit personalization and freeze global/simple observable baselines on policy development only.
+- [x] Score exact-minor-unit ERV and implement typed feasibility, safety, abstention, STOP, and human-review decisions.
+- [x] Freeze Policy V1 and execute the one-time policy-validation group.
+- [x] Report paired strategy economics, oracle regret, ablations, slices, block analysis, and decision traces.
+- [x] Preserve the detector's advisory-only boundary and enforce single-attribution invariants.
 
-Exit: property/invariant tests prove policies cannot be bypassed.
+Detector V2 cannot provide a degradation-aware hard block in V1 because its safety gate failed; its fields remain advisory model inputs only. Policy V1 passed all four frozen validation gates with zero violations, but the no-health comparator again outperformed the primary and the legacy multi-action Reminder + Retry workflow remained stronger than the first-action policy. Exit: invariant tests prove the registered deterministic rules cannot be bypassed, policy validation is reported without retuning, and final seeds remain untouched.
 
 ## 6. Gemini enrichment
 

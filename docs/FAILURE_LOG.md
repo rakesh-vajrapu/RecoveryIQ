@@ -123,3 +123,23 @@ This file records failures actually observed while building or running RecoverIQ
 - **Fix/adaptation:** annotate the affected fixtures/helpers with their existing domain types and import `GeneratedScenario` from its defining ground-truth module. No detector logic or artifact changed.
 - **Regression coverage:** strict mypy now passes all 73 simulator/detector/ML/test source files; all 88 runtime tests also pass.
 - **Lesson:** run the repository's complete strict type-check scope, because runtime coverage alone does not validate typed test infrastructure.
+
+## 2026-08-22 — Policy development: first freeze failed after redundant threshold evaluation
+
+- **Context:** first `recovery-policy develop-policy` execution over all ten registered development seeds after the personalization audit.
+- **Symptom:** after roughly 13 minutes, frozen-artifact construction raised `TypeError: FrozenPolicyArtifact got multiple values for normalized_erv_margin_threshold`; no policy artifact was written and validation had not started.
+- **Root cause:** the serialized config payload already contained the threshold string while the constructor also supplied an explicit `Decimal` threshold. The threshold sweep also repeated the complete typed engine evaluation five times even though only the final margin decision changed.
+- **Investigation:** confirmed both policy output paths were absent, traced the duplicate keyword to config assembly, and checked that every registered threshold shared identical candidate economics and hard/support evaluations.
+- **Fix/adaptation:** build one explicit policy payload with a single Decimal threshold, execute the engine once at threshold zero, and apply each registered margin threshold as a deterministic transformation of those base decisions. A 200-decision parity check matched direct engine decisions at threshold `0.005` before the corrected full development freeze.
+- **Regression coverage:** focused policy tests cover deterministic decisions, margin review behavior, config-hash reproduction, and the frozen policy artifact; Ruff and strict mypy cover the split implementation.
+- **Lesson:** expensive threshold sweeps should cache invariant scoring/rule work, and artifact constructors should receive one canonical typed representation per field.
+
+## 2026-08-22 — Policy validation reporting: abstention counterfactual and oracle STOP regret were misderived
+
+- **Context:** audit of the compact report immediately after the single registered Policy V1 validation completed successfully.
+- **Symptom:** all review cases appeared to have zero top-model oracle agreement because the analysis joined the probability policy's HUMAN_REVIEW outcome rather than its underlying top action; the oracle upper bound also showed a small negative mean regret when every feasible action had negative ERV and rationally selected STOP.
+- **Root cause:** the abstention join reused post-policy records that intentionally removed autonomous selection on low support, and oracle regret did not include STOP's zero ERV when flooring the best/second-best oracle alternatives.
+- **Investigation:** compared the 186 review records with their sealed candidate rows and found 122 underlying top-probability actions matched oracle-best; inspected the 675 oracle STOP cases and confirmed negative candidate ERV caused the impossible negative-regret result.
+- **Fix/adaptation:** derive the top-model abstention counterfactual directly from sealed feasible candidate scores, include realized recovery and oracle regret only as evaluation diagnostics, and floor oracle best/second ERV at the rational STOP value of zero. Rebuilt derived JSON/Markdown metrics from the sealed candidate and decision Parquets; registered worlds, model scores, strategy decisions, outcomes, policy config, and gates were not rerun or changed. The validation artifact records this analysis-only correction and its refreshed digest.
+- **Regression coverage:** the validation harness smoke verifies first-action attribution, trace outcomes, safety gates, and no-side-effect review/STOP records; oracle STOP normalization and abstention analysis run in the typed report path under Ruff and strict mypy.
+- **Lesson:** counterfactual diagnostics must join pre-abstention candidate evidence, and any policy with STOP requires zero to be part of the oracle value set.

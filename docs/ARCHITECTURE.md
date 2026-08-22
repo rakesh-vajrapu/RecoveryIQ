@@ -24,7 +24,7 @@ flowchart LR
     L -. explanation only .-> A
 ```
 
-The foundation, standalone simulator/baselines, robustness methodology, and statistical degradation detector are implemented through Phase 3. Recovery ML, intelligent policy, execution adapters, and operational UI remain future commitments.
+The foundation, standalone simulator/baselines, robustness methodology, statistical degradation detector, Recovery Model V1, and first-intervention ERV Policy V1 are implemented through Phase 5. Execution adapters, Gemini enrichment, and the operational UI remain future commitments.
 
 ## Simulator/environment boundary
 
@@ -117,6 +117,14 @@ Phase 4 introduces a separate action-conditioned prediction package. Its version
 A randomized exploration logger selects and executes one feasible action per failed payment and records its propensity. Model training therefore resembles logged intervention data rather than a fully revealed counterfactual table. Hidden simulator response probabilities remain environment-owned and may be used only after frozen predictions for held-out ranking diagnostics.
 
 The shared logistic and LightGBM models estimate a 48-hour action-conditioned recovery probability. Calibration is a distinct artifact fitted on its own seeds. SHAP is structured explanatory evidence only. Recovery Model V1 completed its registered held-out evaluation with both probability/ranking gates passing. The health-free ablation nevertheless performed slightly better on most primary metrics, so no architectural authority is inferred from health features and no detector threshold changed. Phase 4 performs no expected-value calculation, policy choice, financial authorization, execution integration, or UI mutation. Frozen detector-V2 WATCH and CONFIRMED values remain advisory features, never policy authority or truth labels.
+
+## Recovery-policy boundary
+
+Phase 5 adds a separate typed first-intervention policy package. Observable context produces nine deterministic candidate actions; frozen calibrated Model V1 probabilities feed exact integer-minor ERV scores; structured feasibility, support, non-positive-value, and decision-margin rules then produce ACTION, HUMAN_REVIEW, or STOP. Candidate generation, model scoring, economics, hard policy, selection, and audit explanation remain separate layers. Neither detector state nor hidden simulator truth is a hard policy input.
+
+The policy package cannot import the evaluation oracle or simulator ground truth. The evaluation adapter alone joins hidden action outcomes after decisions, applies single-attribution semantics, and compares paired strategies. Policy V1 has no executor: ACTION is a simulated first intervention, while HUMAN_REVIEW and STOP have no autonomous side effect. Existing multi-action Phase 2 workflows are retained as a distinct secondary comparison rather than mixed into the equivalent first-action headline.
+
+The one-time Policy V1 validation passed its frozen safety/value gates, but architecture does not infer production readiness. The exact no-health research policy outperformed the frozen primary again, and the existing multi-action Reminder + Retry workflow outperformed the first-action policy. Those results constrain future model and repeated-decision work; they do not authorize a post-validation model switch or broader action loop.
 
 ## Gemini boundary
 

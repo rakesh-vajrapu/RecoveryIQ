@@ -1,0 +1,1043 @@
+{
+  "best_global_action_by_erv": "OFFER_ALTERNATE_METHOD",
+  "best_global_action_by_probability": "OFFER_ALTERNATE_METHOD",
+  "candidate_count_per_decision": 9,
+  "candidate_row_count": 248715,
+  "context_action_heterogeneity": {
+    "amount_bucket": [
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.3033725246031283,
+          "OFFER_ALTERNATE_METHOD": 0.35727985080926644,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.19638447997208244,
+          "RETRY_LATER_12H": 0.28260759347456516,
+          "RETRY_LATER_24H": 0.33968877233954703,
+          "RETRY_LATER_2H": 0.19651699414745225,
+          "RETRY_LATER_6H": 0.2417832069056351,
+          "RETRY_NOW": 0.14201092966360118,
+          "SEND_NUDGE": 0.09797854838141881
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 951.9759099701041,
+        "oracle_best_action": "OFFER_ALTERNATE_METHOD",
+        "sample_count": 11374,
+        "slice": "500_TO_2000_INR"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.30182456673425107,
+          "OFFER_ALTERNATE_METHOD": 0.3537004214342737,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.19363538854199436,
+          "RETRY_LATER_12H": 0.28284189265970805,
+          "RETRY_LATER_24H": 0.34064083811349455,
+          "RETRY_LATER_2H": 0.1962825325137567,
+          "RETRY_LATER_6H": 0.242918252413119,
+          "RETRY_NOW": 0.1411037830054039,
+          "SEND_NUDGE": 0.09748618926210709
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 2688.746007162903,
+        "oracle_best_action": "OFFER_ALTERNATE_METHOD",
+        "sample_count": 10331,
+        "slice": "GE_2000_INR"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.3060949635332299,
+          "OFFER_ALTERNATE_METHOD": 0.3578144530828735,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.19031689161475313,
+          "RETRY_LATER_12H": 0.28901685701138374,
+          "RETRY_LATER_24H": 0.34519725081108527,
+          "RETRY_LATER_2H": 0.19931934703639007,
+          "RETRY_LATER_6H": 0.24598283611384547,
+          "RETRY_NOW": 0.14254809655125353,
+          "SEND_NUDGE": 0.10088927055653775
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 375.82647554806135,
+        "oracle_best_action": "RETRY_LATER_24H",
+        "sample_count": 5930,
+        "slice": "LT_500_INR"
+      }
+    ],
+    "customer_history_bucket": [
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.2873635541011276,
+          "OFFER_ALTERNATE_METHOD": 0.3282667290125876,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.12221357722456797,
+          "RETRY_LATER_12H": 0.3518341192368205,
+          "RETRY_LATER_24H": 0.4255051263593816,
+          "RETRY_LATER_2H": 0.23414365764028072,
+          "RETRY_LATER_6H": 0.2935018950541145,
+          "RETRY_NOW": 0.17919694708749573,
+          "SEND_NUDGE": 0.110761151253725
+        },
+        "model_preferred_action": "RETRY_LATER_24H",
+        "oracle_advantage_best_vs_second_minor": 16742.976868174403,
+        "oracle_best_action": "RETRY_LATER_24H",
+        "sample_count": 11629,
+        "slice": "HIGH_GE_0_90"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.33208706020839784,
+          "OFFER_ALTERNATE_METHOD": 0.39808493125550015,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.29743517880653914,
+          "RETRY_LATER_12H": 0.1887556805445259,
+          "RETRY_LATER_24H": 0.2272090123728471,
+          "RETRY_LATER_2H": 0.14413214178527814,
+          "RETRY_LATER_6H": 0.16891906210250138,
+          "RETRY_NOW": 0.08483918974052404,
+          "SEND_NUDGE": 0.08494312311745214
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 14467.522758780033,
+        "oracle_best_action": "OFFER_ALTERNATE_METHOD",
+        "sample_count": 8656,
+        "slice": "LOW_LT_0_70"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.2930570834465206,
+          "OFFER_ALTERNATE_METHOD": 0.3488977948537223,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.14856970668355227,
+          "RETRY_LATER_12H": 0.343819003553928,
+          "RETRY_LATER_24H": 0.4118655253530167,
+          "RETRY_LATER_2H": 0.23393965096035718,
+          "RETRY_LATER_6H": 0.29026560354071207,
+          "RETRY_NOW": 0.16821078650057386,
+          "SEND_NUDGE": 0.10312980101811514
+        },
+        "model_preferred_action": "RETRY_LATER_24H",
+        "oracle_advantage_best_vs_second_minor": 14575.408174097654,
+        "oracle_best_action": "RETRY_LATER_24H",
+        "sample_count": 1884,
+        "slice": "MEDIUM_0_70_TO_0_90"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.29554261223937667,
+          "OFFER_ALTERNATE_METHOD": 0.35109026373657426,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.19886160205261247,
+          "RETRY_LATER_12H": 0.27024975800048495,
+          "RETRY_LATER_24H": 0.31813489153907043,
+          "RETRY_LATER_2H": 0.18912113910666492,
+          "RETRY_LATER_6H": 0.23712981027542604,
+          "RETRY_NOW": 0.14327245937248734,
+          "SEND_NUDGE": 0.09187807504665055
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 2792.5603732162417,
+        "oracle_best_action": "OFFER_ALTERNATE_METHOD",
+        "sample_count": 5466,
+        "slice": "NO_HISTORY"
+      }
+    ],
+    "failure_reason": [
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.3980760602262852,
+          "OFFER_ALTERNATE_METHOD": 0.3537763504302447,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.21385357479934233,
+          "RETRY_LATER_12H": 0.16889262126538,
+          "RETRY_LATER_24H": 0.21484382627199716,
+          "RETRY_LATER_2H": 0.12355100422814858,
+          "RETRY_LATER_6H": 0.14874427413629737,
+          "RETRY_NOW": 0.08457086326269807,
+          "SEND_NUDGE": 0.18012296117419815
+        },
+        "model_preferred_action": "CREATE_PAYMENT_LINK",
+        "oracle_advantage_best_vs_second_minor": 10860.584034435524,
+        "oracle_best_action": "CREATE_PAYMENT_LINK",
+        "sample_count": 5111,
+        "slice": "AUTHENTICATION_FAILURE"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.32382079124736346,
+          "OFFER_ALTERNATE_METHOD": 0.24313083128803853,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.11444785346786916,
+          "RETRY_LATER_12H": 0.19860199416203417,
+          "RETRY_LATER_24H": 0.2641406786748867,
+          "RETRY_LATER_2H": 0.13179941439792428,
+          "RETRY_LATER_6H": 0.16206320893412302,
+          "RETRY_NOW": 0.07936312674617173,
+          "SEND_NUDGE": 0.18620114891379463
+        },
+        "model_preferred_action": "CREATE_PAYMENT_LINK",
+        "oracle_advantage_best_vs_second_minor": 12176.908968079719,
+        "oracle_best_action": "CREATE_PAYMENT_LINK",
+        "sample_count": 5921,
+        "slice": "CUSTOMER_ACTION_REQUIRED"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.41510646921015737,
+          "OFFER_ALTERNATE_METHOD": 0.5266406984052681,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.6281951193482188,
+          "RETRY_LATER_12H": 0.018565766142425808,
+          "RETRY_LATER_24H": 0.01864713290268156,
+          "RETRY_LATER_2H": 0.03887342774028153,
+          "RETRY_LATER_6H": 0.03263315804867595,
+          "RETRY_NOW": 0.01290685767912536,
+          "SEND_NUDGE": 0.028817077606761426
+        },
+        "model_preferred_action": "REQUEST_PAYMENT_METHOD_UPDATE",
+        "oracle_advantage_best_vs_second_minor": 29805.392745029632,
+        "oracle_best_action": "REQUEST_PAYMENT_METHOD_UPDATE",
+        "sample_count": 2867,
+        "slice": "INSTRUMENT_EXPIRED"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.19210851306034915,
+          "OFFER_ALTERNATE_METHOD": 0.14076802672240485,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.06713507880158777,
+          "RETRY_LATER_12H": 0.3160413233999521,
+          "RETRY_LATER_24H": 0.5394998614975128,
+          "RETRY_LATER_2H": 0.1279614539272095,
+          "RETRY_LATER_6H": 0.19178243222456154,
+          "RETRY_NOW": 0.07642233433073356,
+          "SEND_NUDGE": 0.08058378305445854
+        },
+        "model_preferred_action": "RETRY_LATER_24H",
+        "oracle_advantage_best_vs_second_minor": 50925.10297265161,
+        "oracle_best_action": "RETRY_LATER_24H",
+        "sample_count": 4205,
+        "slice": "INSUFFICIENT_FUNDS"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.22969514779606823,
+          "OFFER_ALTERNATE_METHOD": 0.5060737495970451,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.10611194794183972,
+          "RETRY_LATER_12H": 0.6144332028057005,
+          "RETRY_LATER_24H": 0.6148916015615417,
+          "RETRY_LATER_2H": 0.49503882391116016,
+          "RETRY_LATER_6H": 0.560005342480039,
+          "RETRY_NOW": 0.4160318863520994,
+          "SEND_NUDGE": 0.0002371442813183411
+        },
+        "model_preferred_action": "RETRY_LATER_24H",
+        "oracle_advantage_best_vs_second_minor": 859.4173584905802,
+        "oracle_best_action": "RETRY_LATER_24H",
+        "sample_count": 2650,
+        "slice": "ISSUER_UNAVAILABLE"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.4395841336167176,
+          "OFFER_ALTERNATE_METHOD": 0.533099565033806,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.5403081959955199,
+          "RETRY_LATER_12H": 0.04607530652609175,
+          "RETRY_LATER_24H": 0.04624443097734235,
+          "RETRY_LATER_2H": 0.07748996763330963,
+          "RETRY_LATER_6H": 0.07150895787776758,
+          "RETRY_NOW": 0.029364883822243275,
+          "SEND_NUDGE": 0.05189981831908062
+        },
+        "model_preferred_action": "REQUEST_PAYMENT_METHOD_UPDATE",
+        "oracle_advantage_best_vs_second_minor": 29835.48293963255,
+        "oracle_best_action": "REQUEST_PAYMENT_METHOD_UPDATE",
+        "sample_count": 1143,
+        "slice": "MANDATE_INACTIVE"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.22599459976049485,
+          "OFFER_ALTERNATE_METHOD": 0.49458208837817264,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.09885941360833728,
+          "RETRY_LATER_12H": 0.5690688600101261,
+          "RETRY_LATER_24H": 0.5702092416925671,
+          "RETRY_LATER_2H": 0.4107385935892438,
+          "RETRY_LATER_6H": 0.530811613249901,
+          "RETRY_NOW": 0.3191422525675941,
+          "SEND_NUDGE": 0.012664829694587433
+        },
+        "model_preferred_action": "RETRY_LATER_24H",
+        "oracle_advantage_best_vs_second_minor": 2358.3215859030897,
+        "oracle_best_action": "RETRY_LATER_24H",
+        "sample_count": 3859,
+        "slice": "TEMPORARY_NETWORK_ERROR"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.23989657648955393,
+          "OFFER_ALTERNATE_METHOD": 0.3358500540741182,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.12157863736415947,
+          "RETRY_LATER_12H": 0.29378665173137464,
+          "RETRY_LATER_24H": 0.29959590094424693,
+          "RETRY_LATER_2H": 0.2118665073830316,
+          "RETRY_LATER_6H": 0.2577676053127073,
+          "RETRY_NOW": 0.15442073584077076,
+          "SEND_NUDGE": 0.0885624672481379
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 15005.389036721652,
+        "oracle_best_action": "RETRY_LATER_24H",
+        "sample_count": 1879,
+        "slice": "UNKNOWN_TRANSIENT_ERROR"
+      }
+    ],
+    "health_evidence_bucket": [
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.3074577234054968,
+          "OFFER_ALTERNATE_METHOD": 0.3549168693714782,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.19675146752458572,
+          "RETRY_LATER_12H": 0.2833520094080067,
+          "RETRY_LATER_24H": 0.3398070471309618,
+          "RETRY_LATER_2H": 0.19793498932485423,
+          "RETRY_LATER_6H": 0.24428174060775912,
+          "RETRY_NOW": 0.1426369337059775,
+          "SEND_NUDGE": 0.09785005335813415
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 867.4637184677558,
+        "oracle_best_action": "OFFER_ALTERNATE_METHOD",
+        "sample_count": 6422,
+        "slice": "LOW_CONTINUOUS_EVIDENCE"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.3018458496548822,
+          "OFFER_ALTERNATE_METHOD": 0.3561344272154199,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.19298223461932912,
+          "RETRY_LATER_12H": 0.28434640086996776,
+          "RETRY_LATER_24H": 0.34175756470910285,
+          "RETRY_LATER_2H": 0.19677878417082031,
+          "RETRY_LATER_6H": 0.24276183736492293,
+          "RETRY_NOW": 0.14153358869470356,
+          "SEND_NUDGE": 0.09863064294932818
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 1458.4815217905707,
+        "oracle_best_action": "OFFER_ALTERNATE_METHOD",
+        "sample_count": 21133,
+        "slice": "WATCH_OR_CONFIRMED"
+      }
+    ],
+    "payment_method": [
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.3002467162623412,
+          "OFFER_ALTERNATE_METHOD": 0.3514946261895121,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.18808285906812747,
+          "RETRY_LATER_12H": 0.2890263942850535,
+          "RETRY_LATER_24H": 0.3474458283661918,
+          "RETRY_LATER_2H": 0.19885599188929767,
+          "RETRY_LATER_6H": 0.24646420693642804,
+          "RETRY_NOW": 0.14361031911923486,
+          "SEND_NUDGE": 0.10041320019832496
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 362.9006349952979,
+        "oracle_best_action": "OFFER_ALTERNATE_METHOD",
+        "sample_count": 8504,
+        "slice": "CARD"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.3075633546622182,
+          "OFFER_ALTERNATE_METHOD": 0.36309327513477063,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.19879444578052288,
+          "RETRY_LATER_12H": 0.28035874687334594,
+          "RETRY_LATER_24H": 0.33566958718833045,
+          "RETRY_LATER_2H": 0.19884481998337303,
+          "RETRY_LATER_6H": 0.2422970759580333,
+          "RETRY_NOW": 0.1414423424799917,
+          "SEND_NUDGE": 0.09532957095311428
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 5780.513099693766,
+        "oracle_best_action": "OFFER_ALTERNATE_METHOD",
+        "sample_count": 5878,
+        "slice": "MANDATE"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.2982875011039822,
+          "OFFER_ALTERNATE_METHOD": 0.3519691437830594,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.18842117558899282,
+          "RETRY_LATER_12H": 0.28970739132943846,
+          "RETRY_LATER_24H": 0.34904666109506577,
+          "RETRY_LATER_2H": 0.19980946045764214,
+          "RETRY_LATER_6H": 0.24788792853061295,
+          "RETRY_NOW": 0.14383418458834946,
+          "SEND_NUDGE": 0.09284009690595561
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 3704.26148595431,
+        "oracle_best_action": "RETRY_LATER_24H",
+        "sample_count": 3809,
+        "slice": "NETBANKING"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.3056458346055746,
+          "OFFER_ALTERNATE_METHOD": 0.35743294607116183,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.1987544258654757,
+          "RETRY_LATER_12H": 0.27964461018945364,
+          "RETRY_LATER_24H": 0.33593142761754013,
+          "RETRY_LATER_2H": 0.19313716867709896,
+          "RETRY_LATER_6H": 0.23866475340299884,
+          "RETRY_NOW": 0.13953420762253002,
+          "SEND_NUDGE": 0.10079650606666755
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 1421.2332698009413,
+        "oracle_best_action": "OFFER_ALTERNATE_METHOD",
+        "sample_count": 9444,
+        "slice": "UPI"
+      }
+    ],
+    "prior_retry_bucket": [
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.3033780288590404,
+          "OFFER_ALTERNATE_METHOD": 0.3560564423276106,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.19405476538828645,
+          "RETRY_LATER_12H": 0.28407050202007067,
+          "RETRY_LATER_24H": 0.34122671584766623,
+          "RETRY_LATER_2H": 0.1970306807584055,
+          "RETRY_LATER_6H": 0.2431086983600409,
+          "RETRY_NOW": 0.1417870710610299,
+          "SEND_NUDGE": 0.09841907743648831
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 1316.3219829925802,
+        "oracle_best_action": "OFFER_ALTERNATE_METHOD",
+        "sample_count": 27635,
+        "slice": "0"
+      }
+    ],
+    "subscription_tenure_bucket": [
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.3022693293916354,
+          "OFFER_ALTERNATE_METHOD": 0.35473572574646284,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.19340004570298272,
+          "RETRY_LATER_12H": 0.2820204456143888,
+          "RETRY_LATER_24H": 0.33778181199362955,
+          "RETRY_LATER_2H": 0.19785835756310338,
+          "RETRY_LATER_6H": 0.24378100186424306,
+          "RETRY_NOW": 0.14266574365078827,
+          "SEND_NUDGE": 0.09811252370177348
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 780.216987793814,
+        "oracle_best_action": "OFFER_ALTERNATE_METHOD",
+        "sample_count": 9913,
+        "slice": "90_TO_365D"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.30406377281749625,
+          "OFFER_ALTERNATE_METHOD": 0.3569205413028848,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.19447828880731624,
+          "RETRY_LATER_12H": 0.28524271420552294,
+          "RETRY_LATER_24H": 0.34318829602702255,
+          "RETRY_LATER_2H": 0.19656251520798596,
+          "RETRY_LATER_6H": 0.242729049153911,
+          "RETRY_NOW": 0.1412307931408432,
+          "SEND_NUDGE": 0.09863032281436808
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 1751.395314454683,
+        "oracle_best_action": "OFFER_ALTERNATE_METHOD",
+        "sample_count": 17586,
+        "slice": "GE_365D"
+      }
+    ],
+    "time_since_failure_bucket": [
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.298283673916123,
+          "OFFER_ALTERNATE_METHOD": 0.3483326097241942,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.1818091762811619,
+          "RETRY_LATER_12H": 0.2715705780724437,
+          "RETRY_LATER_24H": 0.32556946209978305,
+          "RETRY_LATER_2H": 0.18783285462240765,
+          "RETRY_LATER_6H": 0.2318704924615208,
+          "RETRY_NOW": 0.13425661544822184,
+          "SEND_NUDGE": 0.09869460348022158
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 363.94594594594673,
+        "oracle_best_action": "OFFER_ALTERNATE_METHOD",
+        "sample_count": 666,
+        "slice": "15M_TO_1H"
+      },
+      {
+        "average_predicted_probability_by_action": {
+          "CREATE_PAYMENT_LINK": 0.30350383405730447,
+          "OFFER_ALTERNATE_METHOD": 0.35624718252983817,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 0.1943571704587505,
+          "RETRY_LATER_12H": 0.2843791878945606,
+          "RETRY_LATER_24H": 0.34161337204537806,
+          "RETRY_LATER_2H": 0.19725782126070718,
+          "RETRY_LATER_6H": 0.24338622608181085,
+          "RETRY_NOW": 0.14197303581456655,
+          "SEND_NUDGE": 0.09841227331527039
+        },
+        "model_preferred_action": "OFFER_ALTERNATE_METHOD",
+        "oracle_advantage_best_vs_second_minor": 1339.8409284734225,
+        "oracle_best_action": "OFFER_ALTERNATE_METHOD",
+        "sample_count": 26969,
+        "slice": "LE_15M"
+      }
+    ]
+  },
+  "decision_count": 27635,
+  "development_seeds": [
+    20270501,
+    20270502,
+    20270503,
+    20270504,
+    20270505,
+    20270506,
+    20270507,
+    20270508,
+    20270509,
+    20270510
+  ],
+  "development_strategy_audit": {
+    "best_global_action": {
+      "action_distribution": {
+        "CREATE_PAYMENT_LINK": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "OFFER_ALTERNATE_METHOD": {
+          "count": 27635,
+          "rate": 1.0
+        },
+        "REQUEST_PAYMENT_METHOD_UPDATE": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "RETRY_LATER_12H": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "RETRY_LATER_24H": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "RETRY_LATER_2H": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "RETRY_LATER_6H": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "RETRY_NOW": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "SEND_NUDGE": {
+          "count": 0,
+          "rate": 0.0
+        }
+      },
+      "mean_oracle_erv_minor": 76350.88123756106,
+      "mean_oracle_erv_regret_minor": 43276.574199384835,
+      "median_oracle_erv_regret_minor": 19810.0,
+      "p90_oracle_erv_regret_minor": 110018.00000000003,
+      "top_1_oracle_erv_agreement": 0.03231409444544961
+    },
+    "failure_reason_method_rule": {
+      "action_distribution": {
+        "CREATE_PAYMENT_LINK": {
+          "count": 11032,
+          "rate": 0.3992039080875701
+        },
+        "OFFER_ALTERNATE_METHOD": {
+          "count": 1919,
+          "rate": 0.0694409263614981
+        },
+        "REQUEST_PAYMENT_METHOD_UPDATE": {
+          "count": 3125,
+          "rate": 0.11308123756106386
+        },
+        "RETRY_LATER_12H": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "RETRY_LATER_24H": {
+          "count": 11559,
+          "rate": 0.4182739279898679
+        },
+        "RETRY_LATER_2H": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "RETRY_LATER_6H": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "RETRY_NOW": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "SEND_NUDGE": {
+          "count": 0,
+          "rate": 0.0
+        }
+      },
+      "mean_oracle_erv_minor": 105678.4163922562,
+      "mean_oracle_erv_regret_minor": 13949.039044689705,
+      "median_oracle_erv_regret_minor": 0.0,
+      "p90_oracle_erv_regret_minor": 39731.40000000001,
+      "top_1_oracle_erv_agreement": 0.5240455943549847
+    },
+    "failure_reason_rule": {
+      "action_distribution": {
+        "CREATE_PAYMENT_LINK": {
+          "count": 11032,
+          "rate": 0.3992039080875701
+        },
+        "OFFER_ALTERNATE_METHOD": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "REQUEST_PAYMENT_METHOD_UPDATE": {
+          "count": 4010,
+          "rate": 0.14510584403835716
+        },
+        "RETRY_LATER_12H": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "RETRY_LATER_24H": {
+          "count": 12593,
+          "rate": 0.45569024787407275
+        },
+        "RETRY_LATER_2H": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "RETRY_LATER_6H": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "RETRY_NOW": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "SEND_NUDGE": {
+          "count": 0,
+          "rate": 0.0
+        }
+      },
+      "mean_oracle_erv_minor": 107204.68930703818,
+      "mean_oracle_erv_regret_minor": 12422.766129907726,
+      "median_oracle_erv_regret_minor": 0.0,
+      "p90_oracle_erv_regret_minor": 31616.600000000046,
+      "top_1_oracle_erv_agreement": 0.5675049755744527
+    },
+    "model_v1_top_probability": {
+      "action_distribution": {
+        "CREATE_PAYMENT_LINK": {
+          "count": 6698,
+          "rate": 0.24237380133888184
+        },
+        "OFFER_ALTERNATE_METHOD": {
+          "count": 2047,
+          "rate": 0.07407273385199928
+        },
+        "REQUEST_PAYMENT_METHOD_UPDATE": {
+          "count": 5426,
+          "rate": 0.1963452144020264
+        },
+        "RETRY_LATER_12H": {
+          "count": 5779,
+          "rate": 0.2091188709969242
+        },
+        "RETRY_LATER_24H": {
+          "count": 7287,
+          "rate": 0.26368735299439117
+        },
+        "RETRY_LATER_2H": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "RETRY_LATER_6H": {
+          "count": 390,
+          "rate": 0.014112538447620771
+        },
+        "RETRY_NOW": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "SEND_NUDGE": {
+          "count": 8,
+          "rate": 0.0002894879681563235
+        }
+      },
+      "mean_oracle_erv_minor": 109681.34792835172,
+      "mean_oracle_erv_regret_minor": 9946.107508594174,
+      "median_oracle_erv_regret_minor": 0.0,
+      "p90_oracle_erv_regret_minor": 25297.80000000003,
+      "top_1_oracle_erv_agreement": 0.6830468608648453
+    },
+    "no_health_top_probability": {
+      "action_distribution": {
+        "CREATE_PAYMENT_LINK": {
+          "count": 6859,
+          "rate": 0.24819974669802786
+        },
+        "OFFER_ALTERNATE_METHOD": {
+          "count": 1383,
+          "rate": 0.050045232495024426
+        },
+        "REQUEST_PAYMENT_METHOD_UPDATE": {
+          "count": 5612,
+          "rate": 0.20307580966166094
+        },
+        "RETRY_LATER_12H": {
+          "count": 4104,
+          "rate": 0.14850732766419394
+        },
+        "RETRY_LATER_24H": {
+          "count": 8226,
+          "rate": 0.29766600325673964
+        },
+        "RETRY_LATER_2H": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "RETRY_LATER_6H": {
+          "count": 1450,
+          "rate": 0.052469694228333634
+        },
+        "RETRY_NOW": {
+          "count": 0,
+          "rate": 0.0
+        },
+        "SEND_NUDGE": {
+          "count": 1,
+          "rate": 3.618599601954044e-05
+        }
+      },
+      "mean_oracle_erv_minor": 110568.82102406368,
+      "mean_oracle_erv_regret_minor": 9058.634412882215,
+      "median_oracle_erv_regret_minor": 0.0,
+      "p90_oracle_erv_regret_minor": 19305.40000000001,
+      "top_1_oracle_erv_agreement": 0.6887642482359327
+    }
+  },
+  "frozen_simple_baselines": {
+    "artifact_type": "policy_development_frozen_baselines",
+    "config_hash": "7fde0fbceae643a708cda2022b22520afdace6ad10d6bc047437543c55833543",
+    "development_seeds": [
+      20270501,
+      20270502,
+      20270503,
+      20270504,
+      20270505,
+      20270506,
+      20270507,
+      20270508,
+      20270509,
+      20270510
+    ],
+    "failure_reason_mapping": {
+      "AUTHENTICATION_FAILURE": "CREATE_PAYMENT_LINK",
+      "CUSTOMER_ACTION_REQUIRED": "CREATE_PAYMENT_LINK",
+      "INSTRUMENT_EXPIRED": "REQUEST_PAYMENT_METHOD_UPDATE",
+      "INSUFFICIENT_FUNDS": "RETRY_LATER_24H",
+      "ISSUER_UNAVAILABLE": "RETRY_LATER_24H",
+      "MANDATE_INACTIVE": "REQUEST_PAYMENT_METHOD_UPDATE",
+      "TEMPORARY_NETWORK_ERROR": "RETRY_LATER_24H",
+      "UNKNOWN_TRANSIENT_ERROR": "RETRY_LATER_24H"
+    },
+    "failure_reason_method_mapping": {
+      "AUTHENTICATION_FAILURE|CARD": "CREATE_PAYMENT_LINK",
+      "AUTHENTICATION_FAILURE|MANDATE": "CREATE_PAYMENT_LINK",
+      "AUTHENTICATION_FAILURE|NETBANKING": "CREATE_PAYMENT_LINK",
+      "AUTHENTICATION_FAILURE|UPI": "CREATE_PAYMENT_LINK",
+      "CUSTOMER_ACTION_REQUIRED|CARD": "CREATE_PAYMENT_LINK",
+      "CUSTOMER_ACTION_REQUIRED|MANDATE": "CREATE_PAYMENT_LINK",
+      "CUSTOMER_ACTION_REQUIRED|NETBANKING": "CREATE_PAYMENT_LINK",
+      "CUSTOMER_ACTION_REQUIRED|UPI": "CREATE_PAYMENT_LINK",
+      "INSTRUMENT_EXPIRED|CARD": "REQUEST_PAYMENT_METHOD_UPDATE",
+      "INSTRUMENT_EXPIRED|MANDATE": "OFFER_ALTERNATE_METHOD",
+      "INSTRUMENT_EXPIRED|NETBANKING": "OFFER_ALTERNATE_METHOD",
+      "INSTRUMENT_EXPIRED|UPI": "REQUEST_PAYMENT_METHOD_UPDATE",
+      "INSUFFICIENT_FUNDS|CARD": "RETRY_LATER_24H",
+      "INSUFFICIENT_FUNDS|MANDATE": "RETRY_LATER_24H",
+      "INSUFFICIENT_FUNDS|NETBANKING": "RETRY_LATER_24H",
+      "INSUFFICIENT_FUNDS|UPI": "RETRY_LATER_24H",
+      "ISSUER_UNAVAILABLE|CARD": "RETRY_LATER_24H",
+      "ISSUER_UNAVAILABLE|MANDATE": "RETRY_LATER_24H",
+      "ISSUER_UNAVAILABLE|NETBANKING": "OFFER_ALTERNATE_METHOD",
+      "ISSUER_UNAVAILABLE|UPI": "RETRY_LATER_24H",
+      "MANDATE_INACTIVE|CARD": "OFFER_ALTERNATE_METHOD",
+      "MANDATE_INACTIVE|MANDATE": "REQUEST_PAYMENT_METHOD_UPDATE",
+      "MANDATE_INACTIVE|NETBANKING": "OFFER_ALTERNATE_METHOD",
+      "MANDATE_INACTIVE|UPI": "OFFER_ALTERNATE_METHOD",
+      "TEMPORARY_NETWORK_ERROR|CARD": "RETRY_LATER_24H",
+      "TEMPORARY_NETWORK_ERROR|MANDATE": "RETRY_LATER_24H",
+      "TEMPORARY_NETWORK_ERROR|NETBANKING": "RETRY_LATER_24H",
+      "TEMPORARY_NETWORK_ERROR|UPI": "RETRY_LATER_24H",
+      "UNKNOWN_TRANSIENT_ERROR|CARD": "RETRY_LATER_24H",
+      "UNKNOWN_TRANSIENT_ERROR|MANDATE": "OFFER_ALTERNATE_METHOD",
+      "UNKNOWN_TRANSIENT_ERROR|NETBANKING": "OFFER_ALTERNATE_METHOD",
+      "UNKNOWN_TRANSIENT_ERROR|UPI": "RETRY_LATER_24H"
+    },
+    "global_action_order": [
+      "OFFER_ALTERNATE_METHOD",
+      "RETRY_LATER_24H",
+      "CREATE_PAYMENT_LINK",
+      "RETRY_LATER_12H",
+      "RETRY_LATER_6H",
+      "REQUEST_PAYMENT_METHOD_UPDATE",
+      "RETRY_LATER_2H",
+      "RETRY_NOW",
+      "SEND_NUDGE"
+    ],
+    "global_best_action": "OFFER_ALTERNATE_METHOD",
+    "reason_method_min_support": 500,
+    "reason_min_support": 200,
+    "selection_metric": "maximum mean hidden oracle ERV minor on policy development",
+    "source_digest": "e6c781005d55b8803c9dff212f793de7b0b3547b8c1bc962dd81e68a6d4f97f3"
+  },
+  "global_single_action_table": [
+    {
+      "candidate_label": "RETRY_NOW",
+      "mean_oracle_erv_minor": 32305.507979012124,
+      "mean_oracle_probability": 0.14978410668418152,
+      "mean_primary_probability": 0.1417870710610299
+    },
+    {
+      "candidate_label": "RETRY_LATER_2H",
+      "mean_oracle_erv_minor": 39271.64313370726,
+      "mean_oracle_probability": 0.18176581366551842,
+      "mean_primary_probability": 0.1970306807584055
+    },
+    {
+      "candidate_label": "RETRY_LATER_6H",
+      "mean_oracle_erv_minor": 53300.93747059888,
+      "mean_oracle_probability": 0.24603461851667427,
+      "mean_primary_probability": 0.2431086983600409
+    },
+    {
+      "candidate_label": "RETRY_LATER_12H",
+      "mean_oracle_erv_minor": 62255.69741270129,
+      "mean_oracle_probability": 0.2870505436945862,
+      "mean_primary_probability": 0.28407050202007067
+    },
+    {
+      "candidate_label": "RETRY_LATER_24H",
+      "mean_oracle_erv_minor": 75034.55925456848,
+      "mean_oracle_probability": 0.34548190219534286,
+      "mean_primary_probability": 0.34122671584766623
+    },
+    {
+      "candidate_label": "SEND_NUDGE",
+      "mean_oracle_erv_minor": 22593.017224534105,
+      "mean_oracle_probability": 0.10562195061334753,
+      "mean_primary_probability": 0.09841907743648831
+    },
+    {
+      "candidate_label": "CREATE_PAYMENT_LINK",
+      "mean_oracle_erv_minor": 65994.73790483084,
+      "mean_oracle_probability": 0.3033977302417607,
+      "mean_primary_probability": 0.3033780288590404
+    },
+    {
+      "candidate_label": "REQUEST_PAYMENT_METHOD_UPDATE",
+      "mean_oracle_erv_minor": 43540.699945721004,
+      "mean_oracle_probability": 0.20037978288311953,
+      "mean_primary_probability": 0.19405476538828645
+    },
+    {
+      "candidate_label": "OFFER_ALTERNATE_METHOD",
+      "mean_oracle_erv_minor": 76350.88123756106,
+      "mean_oracle_probability": 0.35151400361953383,
+      "mean_primary_probability": 0.3560564423276106
+    }
+  ],
+  "learnability_conclusion": "DEVELOPMENT_SUGGESTS_CONTEXT_VALUE; VALIDATION_REQUIRED",
+  "model_probability_ranking": {
+    "pairwise_ranking_accuracy": 0.8836116969992603,
+    "probability_regret": {
+      "mean": 0.04645230461501287,
+      "median": 0.0,
+      "p90": 0.1955685364305454
+    },
+    "top_1_oracle_agreement": 0.6852903926180568,
+    "top_2_oracle_coverage": 0.8319160484892346
+  },
+  "model_top_action_dominance": 0.26368735299439117,
+  "model_v1_top_action_distribution": {
+    "CREATE_PAYMENT_LINK": {
+      "count": 6698,
+      "rate": 0.24237380133888184
+    },
+    "OFFER_ALTERNATE_METHOD": {
+      "count": 2047,
+      "rate": 0.07407273385199928
+    },
+    "REQUEST_PAYMENT_METHOD_UPDATE": {
+      "count": 5426,
+      "rate": 0.1963452144020264
+    },
+    "RETRY_LATER_12H": {
+      "count": 5779,
+      "rate": 0.2091188709969242
+    },
+    "RETRY_LATER_24H": {
+      "count": 7287,
+      "rate": 0.26368735299439117
+    },
+    "RETRY_LATER_2H": {
+      "count": 0,
+      "rate": 0.0
+    },
+    "RETRY_LATER_6H": {
+      "count": 390,
+      "rate": 0.014112538447620771
+    },
+    "RETRY_NOW": {
+      "count": 0,
+      "rate": 0.0
+    },
+    "SEND_NUDGE": {
+      "count": 8,
+      "rate": 0.0002894879681563235
+    }
+  },
+  "no_health_top_action_distribution": {
+    "CREATE_PAYMENT_LINK": {
+      "count": 6859,
+      "rate": 0.24819974669802786
+    },
+    "OFFER_ALTERNATE_METHOD": {
+      "count": 1383,
+      "rate": 0.050045232495024426
+    },
+    "REQUEST_PAYMENT_METHOD_UPDATE": {
+      "count": 5612,
+      "rate": 0.20307580966166094
+    },
+    "RETRY_LATER_12H": {
+      "count": 4104,
+      "rate": 0.14850732766419394
+    },
+    "RETRY_LATER_24H": {
+      "count": 8226,
+      "rate": 0.29766600325673964
+    },
+    "RETRY_LATER_2H": {
+      "count": 0,
+      "rate": 0.0
+    },
+    "RETRY_LATER_6H": {
+      "count": 1450,
+      "rate": 0.052469694228333634
+    },
+    "RETRY_NOW": {
+      "count": 0,
+      "rate": 0.0
+    },
+    "SEND_NUDGE": {
+      "count": 1,
+      "rate": 3.618599601954044e-05
+    }
+  },
+  "oracle_best_erv_distribution": {
+    "CREATE_PAYMENT_LINK": {
+      "count": 6975,
+      "rate": 0.2523973222362946
+    },
+    "OFFER_ALTERNATE_METHOD": {
+      "count": 893,
+      "rate": 0.03231409444544961
+    },
+    "REQUEST_PAYMENT_METHOD_UPDATE": {
+      "count": 5902,
+      "rate": 0.21356974850732766
+    },
+    "RETRY_LATER_12H": {
+      "count": 4209,
+      "rate": 0.1523068572462457
+    },
+    "RETRY_LATER_24H": {
+      "count": 7233,
+      "rate": 0.26173330920933596
+    },
+    "RETRY_LATER_2H": {
+      "count": 5,
+      "rate": 0.0001809299800977022
+    },
+    "RETRY_LATER_6H": {
+      "count": 172,
+      "rate": 0.006223991315360955
+    },
+    "RETRY_NOW": {
+      "count": 1849,
+      "rate": 0.06690790664013027
+    },
+    "SEND_NUDGE": {
+      "count": 397,
+      "rate": 0.014365840419757555
+    }
+  },
+  "oracle_best_probability_distribution": {
+    "CREATE_PAYMENT_LINK": {
+      "count": 7061,
+      "rate": 0.255509317893975
+    },
+    "OFFER_ALTERNATE_METHOD": {
+      "count": 934,
+      "rate": 0.03379772028225077
+    },
+    "REQUEST_PAYMENT_METHOD_UPDATE": {
+      "count": 5902,
+      "rate": 0.21356974850732766
+    },
+    "RETRY_LATER_12H": {
+      "count": 4125,
+      "rate": 0.1492672335806043
+    },
+    "RETRY_LATER_24H": {
+      "count": 7233,
+      "rate": 0.26173330920933596
+    },
+    "RETRY_LATER_2H": {
+      "count": 5,
+      "rate": 0.0001809299800977022
+    },
+    "RETRY_LATER_6H": {
+      "count": 171,
+      "rate": 0.006187805319341415
+    },
+    "RETRY_NOW": {
+      "count": 1849,
+      "rate": 0.06690790664013027
+    },
+    "SEND_NUDGE": {
+      "count": 355,
+      "rate": 0.012846028586936856
+    }
+  },
+  "phase": "policy_development_personalization_audit",
+  "runtime_seconds": 108.59623789999932,
+  "seed_decision_counts": {
+    "20270501": 2703,
+    "20270502": 2820,
+    "20270503": 2764,
+    "20270504": 2882,
+    "20270505": 2746,
+    "20270506": 2793,
+    "20270507": 2943,
+    "20270508": 2534,
+    "20270509": 2807,
+    "20270510": 2643
+  },
+  "source_digest": "e6c781005d55b8803c9dff212f793de7b0b3547b8c1bc962dd81e68a6d4f97f3"
+}

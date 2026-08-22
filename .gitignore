@@ -58,6 +58,20 @@ artifacts/ml/reports/*
 !artifacts/ml/reports/heldout-report-v1.md
 !artifacts/ml/reports/shap-report-v1.json
 !artifacts/ml/phase4-summary-v1.json
+artifacts/policy/*
+!artifacts/policy/recoveriq-policy-v1/
+artifacts/policy/recoveriq-policy-v1/*
+!artifacts/policy/recoveriq-policy-v1/development-audit-v1.json
+!artifacts/policy/recoveriq-policy-v1/development-audit-v1.md
+!artifacts/policy/recoveriq-policy-v1/development-baselines-v1.json
+!artifacts/policy/recoveriq-policy-v1/recoveriq-policy-v1.json
+!artifacts/policy/recoveriq-policy-v1/development-policy-v1.json
+!artifacts/policy/recoveriq-policy-v1/development-policy-v1.md
+!artifacts/policy/recoveriq-policy-v1/validation-attempt-v1.json
+!artifacts/policy/recoveriq-policy-v1/validation-evaluation-v1.json
+!artifacts/policy/recoveriq-policy-v1/validation-report-v1.md
+!artifacts/policy/recoveriq-policy-v1/decision-trace-example-v1.json
+!artifacts/policy/recoveriq-policy-v1/phase5-summary-v1.json
 
 # JavaScript
 node_modules/

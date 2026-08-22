@@ -8,7 +8,7 @@ The central product insight is simple: **before retrying one failed payment, det
 
 ## Current status
 
-Phase 0–4 foundation, deterministic simulator, robustness validation, tiered degradation detection, and action-conditioned recovery prediction are implemented:
+Phase 0–5 foundation, deterministic simulator, robustness validation, tiered degradation detection, action-conditioned recovery prediction, and first-intervention ERV policy are implemented:
 
 - FastAPI health API with typed, secret-safe configuration;
 - portable SQLAlchemy 2 domain foundation and initial Alembic migration;
@@ -28,8 +28,9 @@ Phase 0–4 foundation, deterministic simulator, robustness validation, tiered d
 - heterogeneous incident severity/duration/volume, causal nudge audits, cost regimes, sensitivity analysis, and machine-checkable leakage boundaries.
 - one-action randomized exploration logs with explicit propensities and no unselected training counterfactuals;
 - leakage-safe `RecoveryFeatureSnapshot` V1, deterministic logistic/LightGBM pipelines, isotonic calibration, held-out ranking, ablation, and structured SHAP evidence.
+- exact-minor-unit ERV scoring, nine deterministic action candidates, structured safety/support rules, STOP/HUMAN_REVIEW, paired policy validation, and decision traces.
 
-Implemented through Phase 4: Recovery Model V1 estimates calibrated 48-hour recovery probabilities from observable context, candidate action, and timing. Its one-time held-out calibration and model-quality gates passed; the health-free ablation slightly outperformed the health-inclusive primary on most metrics, which remains reported without detector retuning. Detector V2 failed its hard-policy gate, so WATCH and CONFIRMED remain advisory-only. Not implemented yet: intelligent RecoverIQ action selection, ERV, executable production recovery, Razorpay APIs, production Gemini prompts, or operational dashboards. The UI intentionally shows no recovery metrics.
+Implemented through Phase 5: RecoverIQ ERV Policy V1 converts frozen calibrated 48-hour Model V1 predictions into bounded first-intervention ACTION, HUMAN_REVIEW, or STOP decisions. Its one-time policy validation passed all frozen gates with zero policy violations. The exact no-health comparator again outperformed the primary, and the legacy multi-action Reminder + Retry workflow remained stronger; both limitations are preserved without retuning. Detector V2 WATCH and CONFIRMED remain advisory-only. Not implemented yet: executable production recovery, Razorpay APIs, production Gemini prompts, sequential replanning, or operational dashboards. The UI intentionally shows no recovery metrics.
 
 ## Architecture
 
@@ -146,6 +147,18 @@ uv run --project simulator recovery-model phase4-summary
 ```
 
 The held-out command refuses overwrite. Overall-final seeds remain command-guarded and untouched.
+
+### RecoverIQ ERV Policy V1
+
+The development audit, frozen policy, one-time validation, and structured decision trace are documented in [Recovery Policy](docs/RECOVERY_POLICY.md). Reproduction commands are deliberately stage-guarded:
+
+```powershell
+uv run --project simulator recovery-policy audit-development
+uv run --project simulator recovery-policy develop-policy
+uv run --project simulator recovery-policy evaluate-validation
+```
+
+Each completed stage refuses overwrite; validation was executed once and cannot be rerun silently. The overall-final seeds remain untouched.
 
 ## Full PostgreSQL and Redis environment
 

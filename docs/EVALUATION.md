@@ -32,6 +32,16 @@ Each initial failed payment contributes exactly one randomized logged action and
 
 The registered stages completed in that order. The one-time held-out group produced 25,913 decisions. Isotonic-calibrated LightGBM achieved Brier 0.142495, log loss 0.439146, ECE 0.003721, ROC-AUC 0.786348, and PR-AUC 0.486602. Its top-1 oracle-action agreement was 68.44% versus 11.11% random and its pairwise ranking accuracy was 88.29%. Both preregistered gates passed. The matched model without health features was slightly better on Brier, log loss, ranking, and regret, so Phase 4 makes no claim that detector-health features improved prediction. No post-held-out tuning occurred and overall-final seeds remain untouched.
 
+### Recovery-policy v1 protocol
+
+Before any Phase 5 policy scenario generation, Policy V1 registers development `20270501`–`20270510`, one-time validation `20270601`–`20270610`, and optional stress `20270701`–`20270705`. Phase 4 held-out seeds are forbidden to policy tuning, and overall-final `20261101`–`20261120` remains untouched. Development first audits whether Model V1 personalization exceeds simple global and observable lookup strategies, then freezes baseline mappings, balanced synthetic costs, candidates, feasibility/support rules, a development-selected normalized ERV-margin threshold, and a hashed policy artifact. Validation cannot run before that freeze and refuses overwrite.
+
+The primary view compares equivalent first interventions over Model V1's 48-hour horizon. Existing Phase 2 multi-action workflows are a separate secondary view. Simulator hidden action probabilities and causes are evaluation-only and are joined after deterministic policy decisions. Exact ERV arithmetic, safety/abstention rules, baseline definitions, threshold selection, and validation gates are pre-registered in `docs/RECOVERY_POLICY.md`.
+
+Policy V1 froze at config hash `ddf875ea3406f62236b4a9fe91f9e40c0ad129ee60d6482c4524f64a0ed1e8b5` with a development-selected normalized margin threshold of zero. The one-time validation group was then executed exactly once, producing 27,135 decisions. RecoverIQ recovered 11,653 payments (42.94%) with 2,422,746,200 simulated gross minor and 2,409,326,450 simulated net minor, 18,995 retries, 7,869 contacts, 186 reviews, 85 STOP decisions, and zero violations. All four frozen gates passed. Mean paired net lift per seed was 102,958,840 minor versus equivalent Fixed Retry, 45,570,235 versus Best Global Action, and 1,513,880 versus the failure-reason lookup.
+
+The no-health research comparator recovered 11,872 payments and produced 2,450,967,750 net minor, again outperforming the frozen primary. Payment-health features therefore have not shown downstream value. Under separate original multi-action semantics, Reminder + Retry recovered 12,885 payments and produced 2,623,000,700 net minor; RecoverIQ did not beat it. No retuning followed either result, and overall-final seeds remain untouched. Full paired intervals, strategy metrics, diagnostic slices, block analysis, and abstention evidence are in `artifacts/policy/recoveriq-policy-v1/validation-evaluation-v1.json`.
+
 ## Strategies
 
 Phase 2 strategies receive identical cases and paired outcome randomness:

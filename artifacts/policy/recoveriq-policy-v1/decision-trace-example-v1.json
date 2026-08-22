@@ -1,0 +1,818 @@
+{
+  "artifact_type": "structured_policy_decision_trace",
+  "decision": {
+    "absolute_erv_margin_minor": 0,
+    "candidates": [
+      {
+        "economic": {
+          "erv_minor": 91562,
+          "expected_recovered_minor": 91912,
+          "friction_cost_minor": 100,
+          "intervention_cost_minor": 250
+        },
+        "final_policy_result": "PASS",
+        "policy_checks": [
+          {
+            "observed_value": "0.0",
+            "policy_id": "RECOVERY_HORIZON_EXCEEDED",
+            "reason": "candidate execution must remain inside the 48-hour horizon",
+            "result": "PASS",
+            "threshold": "48.0"
+          },
+          {
+            "observed_value": "0",
+            "policy_id": "MAX_RETRY_COUNT",
+            "reason": "retry count must remain below the autonomous cap",
+            "result": "PASS",
+            "threshold": "2"
+          },
+          {
+            "observed_value": "0.0",
+            "policy_id": "MIN_RETRY_INTERVAL",
+            "reason": "retry-now must satisfy the configured interval",
+            "result": "PASS",
+            "threshold": "0.0"
+          },
+          {
+            "observed_value": "SUPPORTED",
+            "policy_id": "LOW_SUPPORT",
+            "reason": "poorly supported candidates require human review",
+            "result": "PASS",
+            "threshold": "action>=1000; calibration_bin>=100; no unknown categorical values"
+          },
+          {
+            "observed_value": "91562",
+            "policy_id": "NON_POSITIVE_ERV",
+            "reason": "autonomous candidates must have positive expected recovery value",
+            "result": "PASS",
+            "threshold": ">0 minor INR"
+          }
+        ],
+        "prediction": {
+          "calibrated_probability": "0.43375394321766564",
+          "candidate": {
+            "is_customer_contact": false,
+            "label": "RETRY_NOW",
+            "recovery_action": {
+              "action_id": "pact_d2c4776a7855fc0eb46fbf50",
+              "action_type": "RETRY_NOW",
+              "attempt_number": 1,
+              "execute_at": "2026-01-01T08:36:52.613181Z",
+              "friction_cost_minor": 100,
+              "intervention_cost_minor": 250,
+              "scheduled_delay_hours": 0.0
+            },
+            "requests_method_change": false
+          },
+          "model_name": "lightgbm",
+          "raw_probability": "0.40686074591847854",
+          "support": {
+            "action_training_count": 8953,
+            "calibration_bin": 4,
+            "calibration_bin_count": 1544,
+            "low_support": false,
+            "reasons": [],
+            "unknown_categories": []
+          }
+        }
+      },
+      {
+        "economic": {
+          "erv_minor": 108949,
+          "expected_recovered_minor": 109299,
+          "friction_cost_minor": 100,
+          "intervention_cost_minor": 250
+        },
+        "final_policy_result": "PASS",
+        "policy_checks": [
+          {
+            "observed_value": "2.0",
+            "policy_id": "RECOVERY_HORIZON_EXCEEDED",
+            "reason": "candidate execution must remain inside the 48-hour horizon",
+            "result": "PASS",
+            "threshold": "48.0"
+          },
+          {
+            "observed_value": "0",
+            "policy_id": "MAX_RETRY_COUNT",
+            "reason": "retry count must remain below the autonomous cap",
+            "result": "PASS",
+            "threshold": "2"
+          },
+          {
+            "observed_value": "0.0",
+            "policy_id": "MIN_RETRY_INTERVAL",
+            "reason": "retry-now must satisfy the configured interval",
+            "result": "PASS",
+            "threshold": "0.0"
+          },
+          {
+            "observed_value": "SUPPORTED",
+            "policy_id": "LOW_SUPPORT",
+            "reason": "poorly supported candidates require human review",
+            "result": "PASS",
+            "threshold": "action>=1000; calibration_bin>=100; no unknown categorical values"
+          },
+          {
+            "observed_value": "108949",
+            "policy_id": "NON_POSITIVE_ERV",
+            "reason": "autonomous candidates must have positive expected recovery value",
+            "result": "PASS",
+            "threshold": ">0 minor INR"
+          }
+        ],
+        "prediction": {
+          "calibrated_probability": "0.5158045977011495",
+          "candidate": {
+            "is_customer_contact": false,
+            "label": "RETRY_LATER_2H",
+            "recovery_action": {
+              "action_id": "pact_cf28e7f8b6fa1a8ccff06072",
+              "action_type": "RETRY_LATER",
+              "attempt_number": 1,
+              "execute_at": "2026-01-01T10:36:52.613181Z",
+              "friction_cost_minor": 100,
+              "intervention_cost_minor": 250,
+              "scheduled_delay_hours": 2.0
+            },
+            "requests_method_change": false
+          },
+          "model_name": "lightgbm",
+          "raw_probability": "0.4998289559912839",
+          "support": {
+            "action_training_count": 9009,
+            "calibration_bin": 5,
+            "calibration_bin_count": 2245,
+            "low_support": false,
+            "reasons": [],
+            "unknown_categories": []
+          }
+        }
+      },
+      {
+        "economic": {
+          "erv_minor": 137631,
+          "expected_recovered_minor": 137981,
+          "friction_cost_minor": 100,
+          "intervention_cost_minor": 250
+        },
+        "final_policy_result": "PASS",
+        "policy_checks": [
+          {
+            "observed_value": "6.0",
+            "policy_id": "RECOVERY_HORIZON_EXCEEDED",
+            "reason": "candidate execution must remain inside the 48-hour horizon",
+            "result": "PASS",
+            "threshold": "48.0"
+          },
+          {
+            "observed_value": "0",
+            "policy_id": "MAX_RETRY_COUNT",
+            "reason": "retry count must remain below the autonomous cap",
+            "result": "PASS",
+            "threshold": "2"
+          },
+          {
+            "observed_value": "0.0",
+            "policy_id": "MIN_RETRY_INTERVAL",
+            "reason": "retry-now must satisfy the configured interval",
+            "result": "PASS",
+            "threshold": "0.0"
+          },
+          {
+            "observed_value": "SUPPORTED",
+            "policy_id": "LOW_SUPPORT",
+            "reason": "poorly supported candidates require human review",
+            "result": "PASS",
+            "threshold": "action>=1000; calibration_bin>=100; no unknown categorical values"
+          },
+          {
+            "observed_value": "137631",
+            "policy_id": "NON_POSITIVE_ERV",
+            "reason": "autonomous candidates must have positive expected recovery value",
+            "result": "PASS",
+            "threshold": ">0 minor INR"
+          }
+        ],
+        "prediction": {
+          "calibrated_probability": "0.6511627906976745",
+          "candidate": {
+            "is_customer_contact": false,
+            "label": "RETRY_LATER_6H",
+            "recovery_action": {
+              "action_id": "pact_a66b3d2a454d60a3c056216d",
+              "action_type": "RETRY_LATER",
+              "attempt_number": 1,
+              "execute_at": "2026-01-01T14:36:52.613181Z",
+              "friction_cost_minor": 100,
+              "intervention_cost_minor": 250,
+              "scheduled_delay_hours": 6.0
+            },
+            "requests_method_change": false
+          },
+          "model_name": "lightgbm",
+          "raw_probability": "0.6300284665392183",
+          "support": {
+            "action_training_count": 9009,
+            "calibration_bin": 6,
+            "calibration_bin_count": 1429,
+            "low_support": false,
+            "reasons": [],
+            "unknown_categories": []
+          }
+        }
+      },
+      {
+        "economic": {
+          "erv_minor": 137631,
+          "expected_recovered_minor": 137981,
+          "friction_cost_minor": 100,
+          "intervention_cost_minor": 250
+        },
+        "final_policy_result": "PASS",
+        "policy_checks": [
+          {
+            "observed_value": "12.0",
+            "policy_id": "RECOVERY_HORIZON_EXCEEDED",
+            "reason": "candidate execution must remain inside the 48-hour horizon",
+            "result": "PASS",
+            "threshold": "48.0"
+          },
+          {
+            "observed_value": "0",
+            "policy_id": "MAX_RETRY_COUNT",
+            "reason": "retry count must remain below the autonomous cap",
+            "result": "PASS",
+            "threshold": "2"
+          },
+          {
+            "observed_value": "0.0",
+            "policy_id": "MIN_RETRY_INTERVAL",
+            "reason": "retry-now must satisfy the configured interval",
+            "result": "PASS",
+            "threshold": "0.0"
+          },
+          {
+            "observed_value": "SUPPORTED",
+            "policy_id": "LOW_SUPPORT",
+            "reason": "poorly supported candidates require human review",
+            "result": "PASS",
+            "threshold": "action>=1000; calibration_bin>=100; no unknown categorical values"
+          },
+          {
+            "observed_value": "137631",
+            "policy_id": "NON_POSITIVE_ERV",
+            "reason": "autonomous candidates must have positive expected recovery value",
+            "result": "PASS",
+            "threshold": ">0 minor INR"
+          }
+        ],
+        "prediction": {
+          "calibrated_probability": "0.6511627906976745",
+          "candidate": {
+            "is_customer_contact": false,
+            "label": "RETRY_LATER_12H",
+            "recovery_action": {
+              "action_id": "pact_2028136403ad63796457a338",
+              "action_type": "RETRY_LATER",
+              "attempt_number": 1,
+              "execute_at": "2026-01-01T20:36:52.613181Z",
+              "friction_cost_minor": 100,
+              "intervention_cost_minor": 250,
+              "scheduled_delay_hours": 12.0
+            },
+            "requests_method_change": false
+          },
+          "model_name": "lightgbm",
+          "raw_probability": "0.6546939466859343",
+          "support": {
+            "action_training_count": 9009,
+            "calibration_bin": 6,
+            "calibration_bin_count": 1429,
+            "low_support": false,
+            "reasons": [],
+            "unknown_categories": []
+          }
+        }
+      },
+      {
+        "economic": {
+          "erv_minor": 137631,
+          "expected_recovered_minor": 137981,
+          "friction_cost_minor": 100,
+          "intervention_cost_minor": 250
+        },
+        "final_policy_result": "PASS",
+        "policy_checks": [
+          {
+            "observed_value": "24.0",
+            "policy_id": "RECOVERY_HORIZON_EXCEEDED",
+            "reason": "candidate execution must remain inside the 48-hour horizon",
+            "result": "PASS",
+            "threshold": "48.0"
+          },
+          {
+            "observed_value": "0",
+            "policy_id": "MAX_RETRY_COUNT",
+            "reason": "retry count must remain below the autonomous cap",
+            "result": "PASS",
+            "threshold": "2"
+          },
+          {
+            "observed_value": "0.0",
+            "policy_id": "MIN_RETRY_INTERVAL",
+            "reason": "retry-now must satisfy the configured interval",
+            "result": "PASS",
+            "threshold": "0.0"
+          },
+          {
+            "observed_value": "SUPPORTED",
+            "policy_id": "LOW_SUPPORT",
+            "reason": "poorly supported candidates require human review",
+            "result": "PASS",
+            "threshold": "action>=1000; calibration_bin>=100; no unknown categorical values"
+          },
+          {
+            "observed_value": "137631",
+            "policy_id": "NON_POSITIVE_ERV",
+            "reason": "autonomous candidates must have positive expected recovery value",
+            "result": "PASS",
+            "threshold": ">0 minor INR"
+          }
+        ],
+        "prediction": {
+          "calibrated_probability": "0.6511627906976745",
+          "candidate": {
+            "is_customer_contact": false,
+            "label": "RETRY_LATER_24H",
+            "recovery_action": {
+              "action_id": "pact_5c78c855bbc25bcadb9e1208",
+              "action_type": "RETRY_LATER",
+              "attempt_number": 1,
+              "execute_at": "2026-01-02T08:36:52.613181Z",
+              "friction_cost_minor": 100,
+              "intervention_cost_minor": 250,
+              "scheduled_delay_hours": 24.0
+            },
+            "requests_method_change": false
+          },
+          "model_name": "lightgbm",
+          "raw_probability": "0.6546939466859343",
+          "support": {
+            "action_training_count": 9009,
+            "calibration_bin": 6,
+            "calibration_bin_count": 1429,
+            "low_support": false,
+            "reasons": [],
+            "unknown_categories": []
+          }
+        }
+      },
+      {
+        "economic": {
+          "erv_minor": -500,
+          "expected_recovered_minor": 0,
+          "friction_cost_minor": 400,
+          "intervention_cost_minor": 100
+        },
+        "final_policy_result": "BLOCK",
+        "policy_checks": [
+          {
+            "observed_value": "0.0",
+            "policy_id": "RECOVERY_HORIZON_EXCEEDED",
+            "reason": "candidate execution must remain inside the 48-hour horizon",
+            "result": "PASS",
+            "threshold": "48.0"
+          },
+          {
+            "observed_value": "0",
+            "policy_id": "MAX_CONTACT_COUNT",
+            "reason": "contact count must remain below the autonomous cap",
+            "result": "PASS",
+            "threshold": "2"
+          },
+          {
+            "observed_value": "True",
+            "policy_id": "CUSTOMER_OPT_OUT",
+            "reason": "customer contact must be permitted",
+            "result": "PASS",
+            "threshold": "True"
+          },
+          {
+            "observed_value": "False",
+            "policy_id": "QUIET_HOURS",
+            "reason": "immediate customer contact is blocked during quiet hours",
+            "result": "PASS",
+            "threshold": "False"
+          },
+          {
+            "observed_value": "SUPPORTED",
+            "policy_id": "LOW_SUPPORT",
+            "reason": "poorly supported candidates require human review",
+            "result": "PASS",
+            "threshold": "action>=1000; calibration_bin>=100; no unknown categorical values"
+          },
+          {
+            "observed_value": "-500",
+            "policy_id": "NON_POSITIVE_ERV",
+            "reason": "autonomous candidates must have positive expected recovery value",
+            "result": "BLOCK",
+            "threshold": ">0 minor INR"
+          }
+        ],
+        "prediction": {
+          "calibrated_probability": "0.000001",
+          "candidate": {
+            "is_customer_contact": true,
+            "label": "SEND_NUDGE",
+            "recovery_action": {
+              "action_id": "pact_12f10a7f95147fc089fc921a",
+              "action_type": "SEND_NUDGE",
+              "attempt_number": 0,
+              "execute_at": "2026-01-01T08:36:52.613181Z",
+              "friction_cost_minor": 400,
+              "intervention_cost_minor": 100,
+              "scheduled_delay_hours": 0.0
+            },
+            "requests_method_change": false
+          },
+          "model_name": "lightgbm",
+          "raw_probability": "0.020376004263068875",
+          "support": {
+            "action_training_count": 8987,
+            "calibration_bin": 0,
+            "calibration_bin_count": 9543,
+            "low_support": false,
+            "reasons": [],
+            "unknown_categories": []
+          }
+        }
+      },
+      {
+        "economic": {
+          "erv_minor": 60622,
+          "expected_recovered_minor": 61322,
+          "friction_cost_minor": 400,
+          "intervention_cost_minor": 300
+        },
+        "final_policy_result": "PASS",
+        "policy_checks": [
+          {
+            "observed_value": "0.0",
+            "policy_id": "RECOVERY_HORIZON_EXCEEDED",
+            "reason": "candidate execution must remain inside the 48-hour horizon",
+            "result": "PASS",
+            "threshold": "48.0"
+          },
+          {
+            "observed_value": "0",
+            "policy_id": "MAX_CONTACT_COUNT",
+            "reason": "contact count must remain below the autonomous cap",
+            "result": "PASS",
+            "threshold": "2"
+          },
+          {
+            "observed_value": "True",
+            "policy_id": "CUSTOMER_OPT_OUT",
+            "reason": "customer contact must be permitted",
+            "result": "PASS",
+            "threshold": "True"
+          },
+          {
+            "observed_value": "False",
+            "policy_id": "QUIET_HOURS",
+            "reason": "immediate customer contact is blocked during quiet hours",
+            "result": "PASS",
+            "threshold": "False"
+          },
+          {
+            "observed_value": "False",
+            "policy_id": "DUPLICATE_PAYMENT_LINK",
+            "reason": "a second active payment link is not allowed",
+            "result": "PASS",
+            "threshold": "False"
+          },
+          {
+            "observed_value": "SUPPORTED",
+            "policy_id": "LOW_SUPPORT",
+            "reason": "poorly supported candidates require human review",
+            "result": "PASS",
+            "threshold": "action>=1000; calibration_bin>=100; no unknown categorical values"
+          },
+          {
+            "observed_value": "60622",
+            "policy_id": "NON_POSITIVE_ERV",
+            "reason": "autonomous candidates must have positive expected recovery value",
+            "result": "PASS",
+            "threshold": ">0 minor INR"
+          }
+        ],
+        "prediction": {
+          "calibrated_probability": "0.28938906752411575",
+          "candidate": {
+            "is_customer_contact": true,
+            "label": "CREATE_PAYMENT_LINK",
+            "recovery_action": {
+              "action_id": "pact_76f651a7be0e2a08c47126b4",
+              "action_type": "CREATE_PAYMENT_LINK",
+              "attempt_number": 0,
+              "execute_at": "2026-01-01T08:36:52.613181Z",
+              "friction_cost_minor": 400,
+              "intervention_cost_minor": 300,
+              "scheduled_delay_hours": 0.0
+            },
+            "requests_method_change": false
+          },
+          "model_name": "lightgbm",
+          "raw_probability": "0.28107944108043553",
+          "support": {
+            "action_training_count": 8849,
+            "calibration_bin": 2,
+            "calibration_bin_count": 3705,
+            "low_support": false,
+            "reasons": [],
+            "unknown_categories": []
+          }
+        }
+      },
+      {
+        "economic": {
+          "erv_minor": 30998,
+          "expected_recovered_minor": 31798,
+          "friction_cost_minor": 400,
+          "intervention_cost_minor": 400
+        },
+        "final_policy_result": "PASS",
+        "policy_checks": [
+          {
+            "observed_value": "0.0",
+            "policy_id": "RECOVERY_HORIZON_EXCEEDED",
+            "reason": "candidate execution must remain inside the 48-hour horizon",
+            "result": "PASS",
+            "threshold": "48.0"
+          },
+          {
+            "observed_value": "0",
+            "policy_id": "MAX_CONTACT_COUNT",
+            "reason": "contact count must remain below the autonomous cap",
+            "result": "PASS",
+            "threshold": "2"
+          },
+          {
+            "observed_value": "True",
+            "policy_id": "CUSTOMER_OPT_OUT",
+            "reason": "customer contact must be permitted",
+            "result": "PASS",
+            "threshold": "True"
+          },
+          {
+            "observed_value": "False",
+            "policy_id": "QUIET_HOURS",
+            "reason": "immediate customer contact is blocked during quiet hours",
+            "result": "PASS",
+            "threshold": "False"
+          },
+          {
+            "observed_value": "SUPPORTED",
+            "policy_id": "LOW_SUPPORT",
+            "reason": "poorly supported candidates require human review",
+            "result": "PASS",
+            "threshold": "action>=1000; calibration_bin>=100; no unknown categorical values"
+          },
+          {
+            "observed_value": "30998",
+            "policy_id": "NON_POSITIVE_ERV",
+            "reason": "autonomous candidates must have positive expected recovery value",
+            "result": "PASS",
+            "threshold": ">0 minor INR"
+          }
+        ],
+        "prediction": {
+          "calibrated_probability": "0.15006150061500614",
+          "candidate": {
+            "is_customer_contact": true,
+            "label": "REQUEST_PAYMENT_METHOD_UPDATE",
+            "recovery_action": {
+              "action_id": "pact_86dbc68b3eda4d993502130d",
+              "action_type": "REQUEST_PAYMENT_METHOD_UPDATE",
+              "attempt_number": 0,
+              "execute_at": "2026-01-01T08:36:52.613181Z",
+              "friction_cost_minor": 400,
+              "intervention_cost_minor": 400,
+              "scheduled_delay_hours": 0.0
+            },
+            "requests_method_change": true
+          },
+          "model_name": "lightgbm",
+          "raw_probability": "0.16234532599217047",
+          "support": {
+            "action_training_count": 8943,
+            "calibration_bin": 1,
+            "calibration_bin_count": 5001,
+            "low_support": false,
+            "reasons": [],
+            "unknown_categories": []
+          }
+        }
+      },
+      {
+        "economic": {
+          "erv_minor": 126326,
+          "expected_recovered_minor": 127226,
+          "friction_cost_minor": 400,
+          "intervention_cost_minor": 500
+        },
+        "final_policy_result": "PASS",
+        "policy_checks": [
+          {
+            "observed_value": "0.0",
+            "policy_id": "RECOVERY_HORIZON_EXCEEDED",
+            "reason": "candidate execution must remain inside the 48-hour horizon",
+            "result": "PASS",
+            "threshold": "48.0"
+          },
+          {
+            "observed_value": "0",
+            "policy_id": "MAX_CONTACT_COUNT",
+            "reason": "contact count must remain below the autonomous cap",
+            "result": "PASS",
+            "threshold": "2"
+          },
+          {
+            "observed_value": "True",
+            "policy_id": "CUSTOMER_OPT_OUT",
+            "reason": "customer contact must be permitted",
+            "result": "PASS",
+            "threshold": "True"
+          },
+          {
+            "observed_value": "False",
+            "policy_id": "QUIET_HOURS",
+            "reason": "immediate customer contact is blocked during quiet hours",
+            "result": "PASS",
+            "threshold": "False"
+          },
+          {
+            "observed_value": "True",
+            "policy_id": "ALTERNATE_METHOD_UNAVAILABLE",
+            "reason": "alternate-method workflow must be available",
+            "result": "PASS",
+            "threshold": "True"
+          },
+          {
+            "observed_value": "SUPPORTED",
+            "policy_id": "LOW_SUPPORT",
+            "reason": "poorly supported candidates require human review",
+            "result": "PASS",
+            "threshold": "action>=1000; calibration_bin>=100; no unknown categorical values"
+          },
+          {
+            "observed_value": "126326",
+            "policy_id": "NON_POSITIVE_ERV",
+            "reason": "autonomous candidates must have positive expected recovery value",
+            "result": "PASS",
+            "threshold": ">0 minor INR"
+          }
+        ],
+        "prediction": {
+          "calibrated_probability": "0.6004056795131846",
+          "candidate": {
+            "is_customer_contact": true,
+            "label": "OFFER_ALTERNATE_METHOD",
+            "recovery_action": {
+              "action_id": "pact_55cbe307435bc0d8029ee94a",
+              "action_type": "OFFER_ALTERNATE_METHOD",
+              "attempt_number": 0,
+              "execute_at": "2026-01-01T08:36:52.613181Z",
+              "friction_cost_minor": 400,
+              "intervention_cost_minor": 500,
+              "scheduled_delay_hours": 0.0
+            },
+            "requests_method_change": true
+          },
+          "model_name": "lightgbm",
+          "raw_probability": "0.5653562266815377",
+          "support": {
+            "action_training_count": 9049,
+            "calibration_bin": 6,
+            "calibration_bin_count": 1429,
+            "low_support": false,
+            "reasons": [],
+            "unknown_categories": []
+          }
+        }
+      }
+    ],
+    "decision_key": "17150d6b23a089f1c4be5eb643ab12f7b2fcdf95fa0456970741648c3ff06035",
+    "decision_kind": "ACTION",
+    "decision_rules": [
+      {
+        "observed_value": "0",
+        "policy_id": "LOW_DECISION_MARGIN",
+        "reason": "small normalized ERV separation requires human review",
+        "result": "PASS",
+        "threshold": "0.0"
+      }
+    ],
+    "normalized_erv_margin": "0",
+    "policy_config_hash": "ddf875ea3406f62236b4a9fe91f9e40c0ad129ee60d6482c4524f64a0ed1e8b5",
+    "policy_version": "1.0.0",
+    "reason": "selected maximum positive ERV among policy-allowed candidates",
+    "selected_candidate": {
+      "economic": {
+        "erv_minor": 137631,
+        "expected_recovered_minor": 137981,
+        "friction_cost_minor": 100,
+        "intervention_cost_minor": 250
+      },
+      "final_policy_result": "PASS",
+      "policy_checks": [
+        {
+          "observed_value": "6.0",
+          "policy_id": "RECOVERY_HORIZON_EXCEEDED",
+          "reason": "candidate execution must remain inside the 48-hour horizon",
+          "result": "PASS",
+          "threshold": "48.0"
+        },
+        {
+          "observed_value": "0",
+          "policy_id": "MAX_RETRY_COUNT",
+          "reason": "retry count must remain below the autonomous cap",
+          "result": "PASS",
+          "threshold": "2"
+        },
+        {
+          "observed_value": "0.0",
+          "policy_id": "MIN_RETRY_INTERVAL",
+          "reason": "retry-now must satisfy the configured interval",
+          "result": "PASS",
+          "threshold": "0.0"
+        },
+        {
+          "observed_value": "SUPPORTED",
+          "policy_id": "LOW_SUPPORT",
+          "reason": "poorly supported candidates require human review",
+          "result": "PASS",
+          "threshold": "action>=1000; calibration_bin>=100; no unknown categorical values"
+        },
+        {
+          "observed_value": "137631",
+          "policy_id": "NON_POSITIVE_ERV",
+          "reason": "autonomous candidates must have positive expected recovery value",
+          "result": "PASS",
+          "threshold": ">0 minor INR"
+        }
+      ],
+      "prediction": {
+        "calibrated_probability": "0.6511627906976745",
+        "candidate": {
+          "is_customer_contact": false,
+          "label": "RETRY_LATER_6H",
+          "recovery_action": {
+            "action_id": "pact_a66b3d2a454d60a3c056216d",
+            "action_type": "RETRY_LATER",
+            "attempt_number": 1,
+            "execute_at": "2026-01-01T14:36:52.613181Z",
+            "friction_cost_minor": 100,
+            "intervention_cost_minor": 250,
+            "scheduled_delay_hours": 6.0
+          },
+          "requests_method_change": false
+        },
+        "model_name": "lightgbm",
+        "raw_probability": "0.6300284665392183",
+        "support": {
+          "action_training_count": 9009,
+          "calibration_bin": 6,
+          "calibration_bin_count": 1429,
+          "low_support": false,
+          "reasons": [],
+          "unknown_categories": []
+        }
+      }
+    }
+  },
+  "observable_context": {
+    "current_contact_count": 0,
+    "current_retry_count": 0,
+    "decision_at": "2026-01-01T08:36:52.613181+00:00",
+    "decision_key": "17150d6b23a089f1c4be5eb643ab12f7b2fcdf95fa0456970741648c3ff06035",
+    "failure_reason": "TEMPORARY_NETWORK_ERROR",
+    "operational": {
+      "alternate_method_available": true,
+      "customer_contact_allowed": true,
+      "existing_active_payment_link": false,
+      "quiet_hours": false
+    },
+    "payment_amount_minor": 211900,
+    "payment_method": "CARD"
+  },
+  "outcome": {
+    "recovered": true,
+    "recovery_time_hours": 6.0,
+    "selected_action": "RETRY_LATER_6H",
+    "simulated_net_recovery_value_minor": 211550,
+    "simulated_recovered_amount_minor": 211900
+  },
+  "policy_authority": "DETERMINISTIC_RULES_ONLY"
+}

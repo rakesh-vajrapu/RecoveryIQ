@@ -1,0 +1,20 @@
+{
+  "analysis_correction_count": 1,
+  "artifact_type": "registered_policy_validation_attempt",
+  "overall_gate_pass": true,
+  "policy_config_hash": "ddf875ea3406f62236b4a9fe91f9e40c0ad129ee60d6482c4524f64a0ed1e8b5",
+  "result_sha256": "723ad7fb4ba2a3c4b87e26a00679dab686380a541e8bc6b7885501a5ba475b7b",
+  "status": "COMPLETED",
+  "validation_seeds": [
+    20270601,
+    20270602,
+    20270603,
+    20270604,
+    20270605,
+    20270606,
+    20270607,
+    20270608,
+    20270609,
+    20270610
+  ]
+}

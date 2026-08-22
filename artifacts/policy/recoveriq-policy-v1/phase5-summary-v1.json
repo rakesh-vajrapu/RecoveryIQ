@@ -1,0 +1,2331 @@
+{
+  "artifact_type": "recoveriq_phase5_checkpoint_summary",
+  "development_strategy_results": {
+    "best_global_action": {
+      "alternate_method_actions": 14757,
+      "autonomous_decisions": 27635,
+      "average_actions_per_failure": 1.0,
+      "customer_contacts": 14757,
+      "deterministic_policy_violations": 0,
+      "failed_payments_evaluated": 27635,
+      "friction_cost_minor": 7190600,
+      "human_review_decisions": 0,
+      "intervention_cost_minor": 10598000,
+      "mean_recovery_time_hours": 11.010270774976657,
+      "median_recovery_time_hours": 0.0,
+      "method_update_actions": 0,
+      "oracle_erv_regret_minor": {
+        "mean": 25896.366383209697,
+        "median": 3327.0,
+        "p90": 74376.0
+      },
+      "payment_links": 0,
+      "recovered_payments": 9639,
+      "recovery_rate": 0.34879681563235027,
+      "retry_count": 12878,
+      "selected_action_distribution": {
+        "OFFER_ALTERNATE_METHOD": 14757,
+        "RETRY_LATER_24H": 12878
+      },
+      "simulated_gross_recovered_minor": 2112932300,
+      "simulated_net_recovery_value_minor": 2095143700,
+      "stop_decisions": 0,
+      "top_1_oracle_agreement": 0.15212592726614801,
+      "top_2_oracle_coverage": 0.44512393703636693
+    },
+    "failure_reason_method_rule": {
+      "alternate_method_actions": 1239,
+      "autonomous_decisions": 27635,
+      "average_actions_per_failure": 1.0,
+      "customer_contacts": 9501,
+      "deterministic_policy_violations": 0,
+      "failed_payments_evaluated": 27635,
+      "friction_cost_minor": 5613800,
+      "human_review_decisions": 0,
+      "intervention_cost_minor": 7820200,
+      "mean_recovery_time_hours": 15.617021276595745,
+      "median_recovery_time_hours": 24.0,
+      "method_update_actions": 1886,
+      "oracle_erv_regret_minor": {
+        "mean": 8483.871286412159,
+        "median": 0.0,
+        "p90": 16003.0
+      },
+      "payment_links": 6376,
+      "recovered_payments": 11844,
+      "recovery_rate": 0.428586936855437,
+      "retry_count": 18134,
+      "selected_action_distribution": {
+        "CREATE_PAYMENT_LINK": 6376,
+        "OFFER_ALTERNATE_METHOD": 1239,
+        "REQUEST_PAYMENT_METHOD_UPDATE": 1886,
+        "RETRY_LATER_24H": 18134
+      },
+      "simulated_gross_recovered_minor": 2637145800,
+      "simulated_net_recovery_value_minor": 2623711800,
+      "stop_decisions": 0,
+      "top_1_oracle_agreement": 0.4293468427718473,
+      "top_2_oracle_coverage": 0.6629636330740004
+    },
+    "failure_reason_rule": {
+      "alternate_method_actions": 187,
+      "autonomous_decisions": 27635,
+      "average_actions_per_failure": 1.0,
+      "customer_contacts": 9008,
+      "deterministic_policy_violations": 0,
+      "failed_payments_evaluated": 27635,
+      "friction_cost_minor": 5465900,
+      "human_review_decisions": 0,
+      "intervention_cost_minor": 7641050,
+      "mean_recovery_time_hours": 15.961233185729801,
+      "median_recovery_time_hours": 24.0,
+      "method_update_actions": 2445,
+      "oracle_erv_regret_minor": {
+        "mean": 7255.780604306134,
+        "median": 0.0,
+        "p90": 8279.0
+      },
+      "payment_links": 6376,
+      "recovered_payments": 11969,
+      "recovery_rate": 0.4331101863578795,
+      "retry_count": 18627,
+      "selected_action_distribution": {
+        "CREATE_PAYMENT_LINK": 6376,
+        "OFFER_ALTERNATE_METHOD": 187,
+        "REQUEST_PAYMENT_METHOD_UPDATE": 2445,
+        "RETRY_LATER_24H": 18627
+      },
+      "simulated_gross_recovered_minor": 2668644300,
+      "simulated_net_recovery_value_minor": 2655537350,
+      "stop_decisions": 0,
+      "top_1_oracle_agreement": 0.45576261986611183,
+      "top_2_oracle_coverage": 0.676062963633074
+    },
+    "fixed_retry_first": {
+      "alternate_method_actions": 0,
+      "autonomous_decisions": 27635,
+      "average_actions_per_failure": 1.0,
+      "customer_contacts": 0,
+      "deterministic_policy_violations": 0,
+      "failed_payments_evaluated": 27635,
+      "friction_cost_minor": 2763500,
+      "human_review_decisions": 0,
+      "intervention_cost_minor": 6908750,
+      "mean_recovery_time_hours": 6.0,
+      "median_recovery_time_hours": 6.0,
+      "method_update_actions": 0,
+      "oracle_erv_regret_minor": {
+        "mean": 48751.841143477475,
+        "median": 12584.0,
+        "p90": 143791.0
+      },
+      "payment_links": 0,
+      "recovered_payments": 6739,
+      "recovery_rate": 0.243857427175683,
+      "retry_count": 27635,
+      "selected_action_distribution": {
+        "RETRY_LATER_6H": 27635
+      },
+      "simulated_gross_recovered_minor": 1447318100,
+      "simulated_net_recovery_value_minor": 1437645850,
+      "stop_decisions": 0,
+      "top_1_oracle_agreement": 0.006368735299439117,
+      "top_2_oracle_coverage": 0.007056269223810386
+    },
+    "generic_reminder_first": {
+      "alternate_method_actions": 0,
+      "autonomous_decisions": 16460,
+      "average_actions_per_failure": 0.5956214944816356,
+      "customer_contacts": 16460,
+      "deterministic_policy_violations": 0,
+      "failed_payments_evaluated": 27635,
+      "friction_cost_minor": 6584000,
+      "human_review_decisions": 0,
+      "intervention_cost_minor": 1646000,
+      "mean_recovery_time_hours": 0.0,
+      "median_recovery_time_hours": 0.0,
+      "method_update_actions": 0,
+      "oracle_erv_regret_minor": {
+        "mean": 88651.92976298173,
+        "median": 39904.0,
+        "p90": 242672.0
+      },
+      "payment_links": 0,
+      "recovered_payments": 1701,
+      "recovery_rate": 0.061552379229238285,
+      "retry_count": 0,
+      "selected_action_distribution": {
+        "SEND_NUDGE": 16460,
+        "STOP": 11175
+      },
+      "simulated_gross_recovered_minor": 374036800,
+      "simulated_net_recovery_value_minor": 365806800,
+      "stop_decisions": 11175,
+      "top_1_oracle_agreement": 0.009444544961100055,
+      "top_2_oracle_coverage": 0.053880948073095715
+    },
+    "model_probability_policy": {
+      "alternate_method_actions": 1079,
+      "autonomous_decisions": 27421,
+      "average_actions_per_failure": 0.9922561968518183,
+      "customer_contacts": 8292,
+      "deterministic_policy_violations": 0,
+      "failed_payments_evaluated": 27635,
+      "friction_cost_minor": 5229700,
+      "human_review_decisions": 214,
+      "intervention_cost_minor": 8667250,
+      "mean_recovery_time_hours": 11.768887391560684,
+      "median_recovery_time_hours": 12.0,
+      "method_update_actions": 3296,
+      "oracle_erv_regret_minor": {
+        "mean": 7543.601302695857,
+        "median": 0.0,
+        "p90": 11856.0
+      },
+      "payment_links": 3897,
+      "recovered_payments": 11873,
+      "recovery_rate": 0.4296363307400036,
+      "retry_count": 19129,
+      "selected_action_distribution": {
+        "CREATE_PAYMENT_LINK": 3897,
+        "HUMAN_REVIEW": 214,
+        "OFFER_ALTERNATE_METHOD": 1079,
+        "REQUEST_PAYMENT_METHOD_UPDATE": 3296,
+        "RETRY_LATER_12H": 6139,
+        "RETRY_LATER_24H": 10119,
+        "RETRY_LATER_2H": 2353,
+        "RETRY_LATER_6H": 511,
+        "RETRY_NOW": 7,
+        "SEND_NUDGE": 20
+      },
+      "simulated_gross_recovered_minor": 2612949600,
+      "simulated_net_recovery_value_minor": 2599052650,
+      "stop_decisions": 0,
+      "top_1_oracle_agreement": 0.5595440564501538,
+      "top_2_oracle_coverage": 0.7594716844581147
+    },
+    "oracle_erv_upper_bound": {
+      "alternate_method_actions": 518,
+      "autonomous_decisions": 27048,
+      "average_actions_per_failure": 0.9787588203365297,
+      "customer_contacts": 8401,
+      "deterministic_policy_violations": 0,
+      "failed_payments_evaluated": 27635,
+      "friction_cost_minor": 5225100,
+      "human_review_decisions": 0,
+      "intervention_cost_minor": 7590850,
+      "mean_recovery_time_hours": 10.424265902223599,
+      "median_recovery_time_hours": 12.0,
+      "method_update_actions": 3574,
+      "oracle_erv_regret_minor": {
+        "mean": -3.1695675773475664,
+        "median": 0.0,
+        "p90": 0.0
+      },
+      "payment_links": 4048,
+      "recovered_payments": 12907,
+      "recovery_rate": 0.4670526506242084,
+      "retry_count": 18647,
+      "selected_action_distribution": {
+        "CREATE_PAYMENT_LINK": 4048,
+        "OFFER_ALTERNATE_METHOD": 518,
+        "REQUEST_PAYMENT_METHOD_UPDATE": 3574,
+        "RETRY_LATER_12H": 5846,
+        "RETRY_LATER_24H": 7585,
+        "RETRY_LATER_2H": 5,
+        "RETRY_LATER_6H": 176,
+        "RETRY_NOW": 5035,
+        "SEND_NUDGE": 261,
+        "STOP": 587
+      },
+      "simulated_gross_recovered_minor": 2851370200,
+      "simulated_net_recovery_value_minor": 2838554250,
+      "stop_decisions": 587,
+      "top_1_oracle_agreement": 0.9787588203365297,
+      "top_2_oracle_coverage": 0.9787588203365297
+    },
+    "recoveriq_erv_policy_v1": {
+      "alternate_method_actions": 1038,
+      "autonomous_decisions": 27352,
+      "average_actions_per_failure": 0.9897593631264701,
+      "customer_contacts": 8196,
+      "deterministic_policy_violations": 0,
+      "failed_payments_evaluated": 27635,
+      "friction_cost_minor": 5194000,
+      "human_review_decisions": 214,
+      "intervention_cost_minor": 8636800,
+      "mean_recovery_time_hours": 11.822319622387054,
+      "median_recovery_time_hours": 12.0,
+      "method_update_actions": 3296,
+      "oracle_erv_regret_minor": {
+        "mean": 7549.231156142573,
+        "median": 0.0,
+        "p90": 11863.0
+      },
+      "payment_links": 3841,
+      "recovered_payments": 11864,
+      "recovery_rate": 0.42931065677582775,
+      "retry_count": 19156,
+      "selected_action_distribution": {
+        "CREATE_PAYMENT_LINK": 3841,
+        "HUMAN_REVIEW": 214,
+        "OFFER_ALTERNATE_METHOD": 1038,
+        "REQUEST_PAYMENT_METHOD_UPDATE": 3296,
+        "RETRY_LATER_12H": 6164,
+        "RETRY_LATER_24H": 10190,
+        "RETRY_LATER_2H": 2287,
+        "RETRY_LATER_6H": 511,
+        "RETRY_NOW": 4,
+        "SEND_NUDGE": 21,
+        "STOP": 69
+      },
+      "simulated_gross_recovered_minor": 2612758100,
+      "simulated_net_recovery_value_minor": 2598927300,
+      "stop_decisions": 69,
+      "top_1_oracle_agreement": 0.5588565225257826,
+      "top_2_oracle_coverage": 0.756612990772571
+    },
+    "recoveriq_no_health_research": {
+      "alternate_method_actions": 747,
+      "autonomous_decisions": 27415,
+      "average_actions_per_failure": 0.9920390808757011,
+      "customer_contacts": 8162,
+      "deterministic_policy_violations": 0,
+      "failed_payments_evaluated": 27635,
+      "friction_cost_minor": 5190100,
+      "human_review_decisions": 185,
+      "intervention_cost_minor": 8485150,
+      "mean_recovery_time_hours": 12.028545196561222,
+      "median_recovery_time_hours": 12.0,
+      "method_update_actions": 3369,
+      "oracle_erv_regret_minor": {
+        "mean": 6512.596128098426,
+        "median": 0.0,
+        "p90": 4738.0
+      },
+      "payment_links": 4031,
+      "recovered_payments": 11981,
+      "recovery_rate": 0.433544418310114,
+      "retry_count": 19253,
+      "selected_action_distribution": {
+        "CREATE_PAYMENT_LINK": 4031,
+        "HUMAN_REVIEW": 185,
+        "OFFER_ALTERNATE_METHOD": 747,
+        "REQUEST_PAYMENT_METHOD_UPDATE": 3369,
+        "RETRY_LATER_12H": 4059,
+        "RETRY_LATER_24H": 11336,
+        "RETRY_LATER_2H": 2278,
+        "RETRY_LATER_6H": 1580,
+        "SEND_NUDGE": 15,
+        "STOP": 35
+      },
+      "simulated_gross_recovered_minor": 2644320400,
+      "simulated_net_recovery_value_minor": 2630645150,
+      "stop_decisions": 35,
+      "top_1_oracle_agreement": 0.5617514022073458,
+      "top_2_oracle_coverage": 0.7413063144563055
+    }
+  },
+  "frozen_model": {
+    "calibration_method": "isotonic",
+    "calibration_sha256": "2ce2d5f181ac7ab7e23c98512064640005024631a696890c59c19acffb66a9bb",
+    "feature_schema_hash": "b2cb0d026f0f625128a320122ba90a31cf4f0acdab729f3c5bfb429bdd74b559",
+    "sha256": "2f8f72c2a158dd04579597399f85d2881de2e88ae36b1835c535599ec5e5e0b4",
+    "version": "1.0.0"
+  },
+  "known_limitations": [
+    "synthetic simulator evidence only",
+    "first intervention only; no sequential replanning",
+    "human-review outcomes are not simulated",
+    "no-health research comparator outperformed the frozen primary",
+    "existing multi-action Reminder + Retry workflow outperformed the first-action RecoverIQ policy",
+    "no production side effects, Razorpay, Gemini runtime, frontend policy UI, or final benchmark"
+  ],
+  "personalization_audit": {
+    "best_global_action": "OFFER_ALTERNATE_METHOD",
+    "decision_count": 27635,
+    "heterogeneity_conclusion": "DEVELOPMENT_SUGGESTS_CONTEXT_VALUE; VALIDATION_REQUIRED",
+    "model_v1_top_action_distribution": {
+      "CREATE_PAYMENT_LINK": {
+        "count": 6698,
+        "rate": 0.24237380133888184
+      },
+      "OFFER_ALTERNATE_METHOD": {
+        "count": 2047,
+        "rate": 0.07407273385199928
+      },
+      "REQUEST_PAYMENT_METHOD_UPDATE": {
+        "count": 5426,
+        "rate": 0.1963452144020264
+      },
+      "RETRY_LATER_12H": {
+        "count": 5779,
+        "rate": 0.2091188709969242
+      },
+      "RETRY_LATER_24H": {
+        "count": 7287,
+        "rate": 0.26368735299439117
+      },
+      "RETRY_LATER_2H": {
+        "count": 0,
+        "rate": 0.0
+      },
+      "RETRY_LATER_6H": {
+        "count": 390,
+        "rate": 0.014112538447620771
+      },
+      "RETRY_NOW": {
+        "count": 0,
+        "rate": 0.0
+      },
+      "SEND_NUDGE": {
+        "count": 8,
+        "rate": 0.0002894879681563235
+      }
+    },
+    "oracle_best_erv_distribution": {
+      "CREATE_PAYMENT_LINK": {
+        "count": 6975,
+        "rate": 0.2523973222362946
+      },
+      "OFFER_ALTERNATE_METHOD": {
+        "count": 893,
+        "rate": 0.03231409444544961
+      },
+      "REQUEST_PAYMENT_METHOD_UPDATE": {
+        "count": 5902,
+        "rate": 0.21356974850732766
+      },
+      "RETRY_LATER_12H": {
+        "count": 4209,
+        "rate": 0.1523068572462457
+      },
+      "RETRY_LATER_24H": {
+        "count": 7233,
+        "rate": 0.26173330920933596
+      },
+      "RETRY_LATER_2H": {
+        "count": 5,
+        "rate": 0.0001809299800977022
+      },
+      "RETRY_LATER_6H": {
+        "count": 172,
+        "rate": 0.006223991315360955
+      },
+      "RETRY_NOW": {
+        "count": 1849,
+        "rate": 0.06690790664013027
+      },
+      "SEND_NUDGE": {
+        "count": 397,
+        "rate": 0.014365840419757555
+      }
+    },
+    "primary_ranking_metrics": {
+      "pairwise_ranking_accuracy": 0.8836116969992603,
+      "probability_regret": {
+        "mean": 0.04645230461501287,
+        "median": 0.0,
+        "p90": 0.1955685364305454
+      },
+      "top_1_oracle_agreement": 0.6852903926180568,
+      "top_2_oracle_coverage": 0.8319160484892346
+    }
+  },
+  "phase": 5,
+  "policy": {
+    "artifact_type": "frozen_recoveriq_erv_policy",
+    "baseline_artifact_sha256": "bfc137c5cd7706dd5ea02a5eb14f7e2f9b4fc6f4614b9497a896c620579a8ec9",
+    "calibration_method": "isotonic",
+    "calibration_sha256": "2ce2d5f181ac7ab7e23c98512064640005024631a696890c59c19acffb66a9bb",
+    "candidate_labels": [
+      "RETRY_NOW",
+      "RETRY_LATER_2H",
+      "RETRY_LATER_6H",
+      "RETRY_LATER_12H",
+      "RETRY_LATER_24H",
+      "SEND_NUDGE",
+      "CREATE_PAYMENT_LINK",
+      "REQUEST_PAYMENT_METHOD_UPDATE",
+      "OFFER_ALTERNATE_METHOD"
+    ],
+    "config_hash": "ddf875ea3406f62236b4a9fe91f9e40c0ad129ee60d6482c4524f64a0ed1e8b5",
+    "cost_regime": "BALANCED",
+    "development_seeds": [
+      20270501,
+      20270502,
+      20270503,
+      20270504,
+      20270505,
+      20270506,
+      20270507,
+      20270508,
+      20270509,
+      20270510
+    ],
+    "feature_schema_hash": "b2cb0d026f0f625128a320122ba90a31cf4f0acdab729f3c5bfb429bdd74b559",
+    "final_seeds": [
+      20261101,
+      20261102,
+      20261103,
+      20261104,
+      20261105,
+      20261106,
+      20261107,
+      20261108,
+      20261109,
+      20261110,
+      20261111,
+      20261112,
+      20261113,
+      20261114,
+      20261115,
+      20261116,
+      20261117,
+      20261118,
+      20261119,
+      20261120
+    ],
+    "max_contact_count": 2,
+    "max_retry_count": 2,
+    "min_action_training_support": 1000,
+    "min_calibration_bin_support": 100,
+    "min_retry_interval_hours": 0.0,
+    "normalized_erv_margin_threshold": "0.0",
+    "policy_schema_version": "1.0",
+    "policy_version": "1.0.0",
+    "quiet_hours_end_utc": 7,
+    "quiet_hours_start_utc": 22,
+    "recovery_model_sha256": "2f8f72c2a158dd04579597399f85d2881de2e88ae36b1835c535599ec5e5e0b4",
+    "recovery_model_version": "1.0.0",
+    "validation_seeds": [
+      20270601,
+      20270602,
+      20270603,
+      20270604,
+      20270605,
+      20270606,
+      20270607,
+      20270608,
+      20270609,
+      20270610
+    ],
+    "validation_status": "EXECUTED_ONCE_PASS"
+  },
+  "quality": {
+    "backend_tests": {
+      "failed": 0,
+      "passed": 12
+    },
+    "dependency_lock_verification": "PASS",
+    "frontend_checks": "NOT_RUN_NO_FRONTEND_CHANGES",
+    "ruff_format": "PASS",
+    "ruff_lint": "PASS",
+    "simulator_detector_ml_policy_tests": {
+      "failed": 0,
+      "passed": 109
+    },
+    "strict_mypy": "PASS",
+    "total_tests": {
+      "failed": 0,
+      "passed": 121
+    }
+  },
+  "real_failures_fixed": [
+    "duplicate normalized margin field and redundant full threshold evaluations in first development freeze",
+    "post-validation abstention counterfactual join and oracle STOP-option regret derivation; derived analysis only, no registered rerun"
+  ],
+  "recommended_next_milestone": "Phase 6 — Gemini enrichment with structured explanation-only authority; do not begin within this checkpoint.",
+  "seed_protocol": {
+    "development": [
+      20270501,
+      20270502,
+      20270503,
+      20270504,
+      20270505,
+      20270506,
+      20270507,
+      20270508,
+      20270509,
+      20270510
+    ],
+    "overall_final": [
+      20261101,
+      20261102,
+      20261103,
+      20261104,
+      20261105,
+      20261106,
+      20261107,
+      20261108,
+      20261109,
+      20261110,
+      20261111,
+      20261112,
+      20261113,
+      20261114,
+      20261115,
+      20261116,
+      20261117,
+      20261118,
+      20261119,
+      20261120
+    ],
+    "overall_final_untouched": true,
+    "validation": [
+      20270601,
+      20270602,
+      20270603,
+      20270604,
+      20270605,
+      20270606,
+      20270607,
+      20270608,
+      20270609,
+      20270610
+    ]
+  },
+  "status": "COMPLETE",
+  "validation": {
+    "abstention_analysis": {
+      "human_review_count": 186,
+      "human_review_rate": 0.006854615809839691,
+      "interpretation": "human-review outcomes are not simulated; top-model values are an evaluation-only counterfactual, not attributed recovery",
+      "oracle_ambiguous_count": 129,
+      "oracle_ambiguous_rate": 0.6935483870967742,
+      "oracle_ambiguous_threshold": 0.005,
+      "oracle_regret_of_no_autonomous_action_minor": {
+        "mean": 190099.45698924732,
+        "median": 86812.5
+      },
+      "payment_value_distribution_minor": {
+        "amount_bucket_counts": {
+          "500_TO_2000_INR": 74,
+          "GE_2000_INR": 75,
+          "LT_500_INR": 37
+        },
+        "max": 1000000,
+        "mean": 291934.40860215056,
+        "median": 134500.0,
+        "min": 11200
+      },
+      "reason_distribution": {
+        "LOW_SUPPORT": 186
+      },
+      "top_model_action_analysis": {
+        "mean_oracle_erv_regret_minor_if_executed": 2718.7634408602153,
+        "oracle_best_action_agreement_count": 122,
+        "oracle_best_action_agreement_rate": 0.6559139784946236,
+        "realized_recovery_count_if_executed": 117,
+        "realized_recovery_rate_if_executed": 0.6290322580645161
+      }
+    },
+    "action_dominance_analysis": {
+      "model_probability_policy": {
+        "dominant_action": "RETRY_LATER_24H",
+        "dominant_share": 0.36565321540445916,
+        "exceeds_80_percent": false
+      },
+      "recoveriq_erv_policy_v1": {
+        "dominant_action": "RETRY_LATER_24H",
+        "dominant_share": 0.3687119955776672,
+        "exceeds_80_percent": false
+      },
+      "recoveriq_no_health_research": {
+        "dominant_action": "RETRY_LATER_24H",
+        "dominant_share": 0.40696517412935324,
+        "exceeds_80_percent": false
+      }
+    },
+    "analysis_corrections": [
+      {
+        "policy_changed": false,
+        "reason": "Corrected top-model abstention counterfactual and floored oracle STOP-option ERV at zero; sealed worlds, decisions, and outcomes unchanged.",
+        "registered_worlds_rerun": false,
+        "scope": "derived metrics and abstention analysis only",
+        "strategy_decisions_rerun": false
+      }
+    ],
+    "decision_count": 27135,
+    "existing_workflow_view": {
+      "fixed_retry": {
+        "average_actions_per_failure": 1.7541551501750507,
+        "customer_contacts": 0,
+        "failed_payments_evaluated": 27135,
+        "friction_cost_minor": 6806300,
+        "human_reviews": 0,
+        "intervention_cost_minor": 11899750,
+        "payment_links": 0,
+        "recovered_payments": 10357,
+        "recovery_rate": 0.381684171733923,
+        "retry_count": 47599,
+        "selected_action_distribution": {
+          "RETRY_LATER": 47599,
+          "STOP": 16778
+        },
+        "simulated_gross_recovered_minor": 2149829000,
+        "simulated_net_recovery_value_minor": 2131122950
+      },
+      "reminder_then_retry": {
+        "average_actions_per_failure": 2.551796572692095,
+        "customer_contacts": 27135,
+        "failed_payments_evaluated": 27135,
+        "friction_cost_minor": 21051900,
+        "human_reviews": 0,
+        "intervention_cost_minor": 13240500,
+        "payment_links": 0,
+        "recovered_payments": 12885,
+        "recovery_rate": 0.4748479823106689,
+        "retry_count": 42108,
+        "selected_action_distribution": {
+          "RETRY_LATER": 42108,
+          "SEND_NUDGE": 27135,
+          "STOP": 14250
+        },
+        "simulated_gross_recovered_minor": 2657293100,
+        "simulated_net_recovery_value_minor": 2623000700
+      }
+    },
+    "gates": {
+      "abstention_transparency": {
+        "autonomous_rate": 0.9900128984706099,
+        "criterion": "autonomous, human-review, STOP rates and review reasons reported",
+        "human_review_rate": 0.006854615809839691,
+        "pass": true,
+        "stop_rate": 0.0031324857195503962
+      },
+      "deterministic_safety": {
+        "criterion": "zero deterministic policy violations",
+        "observed": 0,
+        "pass": true
+      },
+      "fixed_retry_value": {
+        "criterion": "mean paired net-value difference versus fixed retry > 0",
+        "observed_minor": 102958840.0,
+        "pass": true
+      },
+      "overall": {
+        "pass": true
+      },
+      "personalization_value": {
+        "comparators": {
+          "best_global_action": {
+            "mean_paired_net_value_difference_minor": 45570235.0,
+            "mean_paired_oracle_erv_regret_difference_minor": -16516.191693036602,
+            "pass": true
+          },
+          "failure_reason_rule": {
+            "mean_paired_net_value_difference_minor": 1513880.0,
+            "mean_paired_oracle_erv_regret_difference_minor": -26.862381962488552,
+            "pass": true
+          }
+        },
+        "criterion": "beat global or failure-reason policy on paired mean net value, or reduce mean oracle-ERV regret by at least one minor, with zero violations",
+        "pass": true
+      },
+      "reminder_comparison_reported": {
+        "criterion": "paired Reminder comparison is reported without gating success",
+        "mean_paired_net_value_difference_minor": 207315965.0,
+        "pass": true
+      }
+    },
+    "policy_block_analysis": {
+      "by_rule": {
+        "ALTERNATE_METHOD_UNAVAILABLE": {
+          "block_count": 198,
+          "customer_contact_exposures_avoided": 198,
+          "friction_cost_minor_avoided": 79200,
+          "oracle_erv_minor_forgone": 16470222
+        },
+        "CUSTOMER_OPT_OUT": {
+          "block_count": 693,
+          "customer_contact_exposures_avoided": 693,
+          "friction_cost_minor_avoided": 277200,
+          "oracle_erv_minor_forgone": 64466058
+        },
+        "DUPLICATE_PAYMENT_LINK": {
+          "block_count": 191,
+          "customer_contact_exposures_avoided": 191,
+          "friction_cost_minor_avoided": 76400,
+          "oracle_erv_minor_forgone": 15098522
+        },
+        "QUIET_HOURS": {
+          "block_count": 5156,
+          "customer_contact_exposures_avoided": 5156,
+          "friction_cost_minor_avoided": 2062400,
+          "oracle_erv_minor_forgone": 513088123
+        }
+      },
+      "definition": "rule blocks affecting the highest primary-model predicted-ERV candidate",
+      "highest_predicted_erv_block_count": 6238
+    },
+    "recoveriq_paired_lifts": {
+      "best_global_action": {
+        "contact_difference": {
+          "ci95": [
+            -692.4730206935378,
+            -607.1269793064621
+          ],
+          "mean": -649.8,
+          "median": -655.0,
+          "standard_deviation": 68.84894899544784,
+          "values_by_seed": [
+            -685.0,
+            -716.0,
+            -538.0,
+            -705.0,
+            -601.0,
+            -574.0,
+            -625.0,
+            -735.0,
+            -711.0,
+            -608.0
+          ]
+        },
+        "gross_recovered_minor_difference": {
+          "ci95": [
+            32105302.309532993,
+            58239297.69046701
+          ],
+          "mean": 45172300.0,
+          "median": 42352150.0,
+          "standard_deviation": 21082385.143895734,
+          "values_by_seed": [
+            45767400.0,
+            70175000.0,
+            39539700.0,
+            88832700.0,
+            28547000.0,
+            45164600.0,
+            15729900.0,
+            29708500.0,
+            49237700.0,
+            39020500.0
+          ]
+        },
+        "human_review_difference": {
+          "ci95": [
+            13.039369500177562,
+            24.16063049982244
+          ],
+          "mean": 18.6,
+          "median": 19.0,
+          "standard_deviation": 8.971560003081342,
+          "values_by_seed": [
+            23.0,
+            33.0,
+            22.0,
+            26.0,
+            16.0,
+            13.0,
+            10.0,
+            26.0,
+            14.0,
+            3.0
+          ]
+        },
+        "net_recovery_value_minor_difference": {
+          "ci95": [
+            32503014.43054287,
+            58637455.56945713
+          ],
+          "mean": 45570235.0,
+          "median": 42688625.0,
+          "standard_deviation": 21082744.738411736,
+          "values_by_seed": [
+            46173050.0,
+            70566900.0,
+            39839700.0,
+            89233650.0,
+            28929150.0,
+            45537550.0,
+            16143350.0,
+            30124750.0,
+            49696000.0,
+            39458250.0
+          ]
+        },
+        "oracle_erv_regret_minor_difference": {
+          "ci95": [
+            -19210.3789586552,
+            -13822.004427418005
+          ],
+          "mean": -16516.191693036602,
+          "median": -15769.953146745313,
+          "standard_deviation": 4346.820511416235,
+          "values_by_seed": [
+            -13361.897777777776,
+            -18958.41948717949,
+            -20323.853483146067,
+            -24530.855341506125,
+            -13945.075887850468,
+            -16026.695685670262,
+            -8712.718336483933,
+            -15109.983167296461,
+            -18679.207155635064,
+            -15513.210607820365
+          ]
+        },
+        "recovered_payment_difference": {
+          "ci95": [
+            184.8177227775065,
+            237.38227722249349
+          ],
+          "mean": 211.1,
+          "median": 217.0,
+          "standard_deviation": 42.4040092444099,
+          "values_by_seed": [
+            251.0,
+            246.0,
+            131.0,
+            224.0,
+            174.0,
+            210.0,
+            192.0,
+            176.0,
+            264.0,
+            243.0
+          ]
+        },
+        "recovery_rate_difference": {
+          "ci95": [
+            0.06946551602529874,
+            0.08548875256567981
+          ],
+          "mean": 0.07747713429548927,
+          "median": 0.07967626336084885,
+          "standard_deviation": 0.012926000753887931,
+          "values_by_seed": [
+            0.08581196581196582,
+            0.08410256410256411,
+            0.05887640449438203,
+            0.07845884413309984,
+            0.06504672897196262,
+            0.08089368258859786,
+            0.07258979206049149,
+            0.06046032291308828,
+            0.09445438282647584,
+            0.09407665505226481
+          ]
+        },
+        "retry_difference": {
+          "ci95": [
+            582.5733644348574,
+            662.8266355651427
+          ],
+          "mean": 622.7,
+          "median": 627.0,
+          "standard_deviation": 64.74059348233104,
+          "values_by_seed": [
+            651.0,
+            674.0,
+            512.0,
+            673.0,
+            575.0,
+            557.0,
+            603.0,
+            703.0,
+            692.0,
+            587.0
+          ]
+        }
+      },
+      "failure_reason_method_rule": {
+        "contact_difference": {
+          "ci95": [
+            -151.30661958740825,
+            -120.49338041259178
+          ],
+          "mean": -135.9,
+          "median": -127.0,
+          "standard_deviation": 24.857147418353897,
+          "values_by_seed": [
+            -139.0,
+            -199.0,
+            -148.0,
+            -117.0,
+            -130.0,
+            -123.0,
+            -114.0,
+            -122.0,
+            -143.0,
+            -124.0
+          ]
+        },
+        "gross_recovered_minor_difference": {
+          "ci95": [
+            -1936227.5877823187,
+            10204247.58778232
+          ],
+          "mean": 4134010.0,
+          "median": 3531950.0,
+          "standard_deviation": 9793763.63048899,
+          "values_by_seed": [
+            5097100.0,
+            10010500.0,
+            1570600.0,
+            21341500.0,
+            1966800.0,
+            6065000.0,
+            907500.0,
+            -14845800.0,
+            -3918900.0,
+            13145800.0
+          ]
+        },
+        "human_review_difference": {
+          "ci95": [
+            13.039369500177562,
+            24.16063049982244
+          ],
+          "mean": 18.6,
+          "median": 19.0,
+          "standard_deviation": 8.971560003081342,
+          "values_by_seed": [
+            23.0,
+            33.0,
+            22.0,
+            26.0,
+            16.0,
+            13.0,
+            10.0,
+            26.0,
+            14.0,
+            3.0
+          ]
+        },
+        "net_recovery_value_minor_difference": {
+          "ci95": [
+            -1962812.813746592,
+            10180212.813746592
+          ],
+          "mean": 4108700.0,
+          "median": 3505275.0,
+          "standard_deviation": 9795821.088947402,
+          "values_by_seed": [
+            5059850.0,
+            9964150.0,
+            1541600.0,
+            21276350.0,
+            1950700.0,
+            6052400.0,
+            904000.0,
+            -14908300.0,
+            -3927700.0,
+            13173950.0
+          ]
+        },
+        "oracle_erv_regret_minor_difference": {
+          "ci95": [
+            -2017.3077064116492,
+            -669.4689092308125
+          ],
+          "mean": -1343.388307821231,
+          "median": -975.9926943046576,
+          "standard_deviation": 1087.3062545492805,
+          "values_by_seed": [
+            -676.6499145299149,
+            -1017.4403418803431,
+            -2778.028764044944,
+            -620.2042031523633,
+            -934.545046728972,
+            -343.0096302003094,
+            -1245.1122873345935,
+            -620.2947440742009,
+            -1447.5423971377468,
+            -3751.055749128921
+          ]
+        },
+        "recovered_payment_difference": {
+          "ci95": [
+            7.553729981893223,
+            43.04627001810678
+          ],
+          "mean": 25.3,
+          "median": 26.0,
+          "standard_deviation": 28.631955729374983,
+          "values_by_seed": [
+            47.0,
+            32.0,
+            20.0,
+            46.0,
+            3.0,
+            54.0,
+            6.0,
+            -24.0,
+            2.0,
+            67.0
+          ]
+        },
+        "recovery_rate_difference": {
+          "ci95": [
+            0.002932233135295884,
+            0.016009838653936754
+          ],
+          "mean": 0.00947103589461632,
+          "median": 0.009964467492557416,
+          "standard_deviation": 0.01054974994390121,
+          "values_by_seed": [
+            0.016068376068376078,
+            0.010940170940170968,
+            0.008988764044943864,
+            0.01611208406304726,
+            0.0011214953271028172,
+            0.020801232665639435,
+            0.0022684310018903364,
+            -0.00824458948814838,
+            0.0007155635062611743,
+            0.025938830816879643
+          ]
+        },
+        "retry_difference": {
+          "ci95": [
+            95.71766273006064,
+            121.88233726993936
+          ],
+          "mean": 108.8,
+          "median": 104.5,
+          "standard_deviation": 21.107134128325217,
+          "values_by_seed": [
+            105.0,
+            157.0,
+            122.0,
+            85.0,
+            104.0,
+            106.0,
+            92.0,
+            90.0,
+            124.0,
+            103.0
+          ]
+        }
+      },
+      "failure_reason_rule": {
+        "contact_difference": {
+          "ci95": [
+            -90.80922735243301,
+            -64.590772647567
+          ],
+          "mean": -77.7,
+          "median": -78.0,
+          "standard_deviation": 21.150518774830193,
+          "values_by_seed": [
+            -80.0,
+            -120.0,
+            -88.0,
+            -72.0,
+            -79.0,
+            -59.0,
+            -50.0,
+            -54.0,
+            -98.0,
+            -77.0
+          ]
+        },
+        "gross_recovered_minor_difference": {
+          "ci95": [
+            -4441534.133271662,
+            7595134.133271662
+          ],
+          "mean": 1576800.0,
+          "median": 485800.0,
+          "standard_deviation": 9710022.235241735,
+          "values_by_seed": [
+            136000.0,
+            11594900.0,
+            -4381600.0,
+            17506700.0,
+            835600.0,
+            5304200.0,
+            -693600.0,
+            -14587400.0,
+            -9224700.0,
+            9277900.0
+          ]
+        },
+        "human_review_difference": {
+          "ci95": [
+            13.039369500177562,
+            24.16063049982244
+          ],
+          "mean": 18.6,
+          "median": 19.0,
+          "standard_deviation": 8.971560003081342,
+          "values_by_seed": [
+            23.0,
+            33.0,
+            22.0,
+            26.0,
+            16.0,
+            13.0,
+            10.0,
+            26.0,
+            14.0,
+            3.0
+          ]
+        },
+        "net_recovery_value_minor_difference": {
+          "ci95": [
+            -4505102.483074222,
+            7532862.483074222
+          ],
+          "mean": 1513880.0,
+          "median": 422975.0,
+          "standard_deviation": 9711068.287331844,
+          "values_by_seed": [
+            60300.0,
+            11497300.0,
+            -4450200.0,
+            17412700.0,
+            785650.0,
+            5251300.0,
+            -736300.0,
+            -14692800.0,
+            -9264150.0,
+            9275000.0
+          ]
+        },
+        "oracle_erv_regret_minor_difference": {
+          "ci95": [
+            -754.5760318998202,
+            700.851267974843
+          ],
+          "mean": -26.862381962488552,
+          "median": 326.4884158219038,
+          "standard_deviation": 1174.0982745900083,
+          "values_by_seed": [
+            421.71350427350353,
+            450.7145299145286,
+            -298.74696629213395,
+            1434.490367775832,
+            -276.5128971962622,
+            978.2800462249606,
+            -838.9599243856333,
+            440.0590862246654,
+            231.26332737030407,
+            -2810.9248935346504
+          ]
+        },
+        "recovered_payment_difference": {
+          "ci95": [
+            -4.517333333333335,
+            29.717333333333336
+          ],
+          "mean": 12.6,
+          "median": 10.0,
+          "standard_deviation": 27.617224898803848,
+          "values_by_seed": [
+            35.0,
+            20.0,
+            0.0,
+            36.0,
+            -2.0,
+            38.0,
+            -9.0,
+            -32.0,
+            -13.0,
+            53.0
+          ]
+        },
+        "recovery_rate_difference": {
+          "ci95": [
+            -0.0015891568234768392,
+            0.010944216453848039
+          ],
+          "mean": 0.004677529815185599,
+          "median": 0.0034188034188034344,
+          "standard_deviation": 0.010110715898325462,
+          "values_by_seed": [
+            0.011965811965811979,
+            0.006837606837606869,
+            0.0,
+            0.012609457092819576,
+            -0.0007476635514018781,
+            0.014637904468412954,
+            -0.00340264650283556,
+            -0.01099278598419784,
+            -0.004651162790697716,
+            0.02051877661633761
+          ]
+        },
+        "retry_difference": {
+          "ci95": [
+            38.80665468250091,
+            62.39334531749909
+          ],
+          "mean": 50.6,
+          "median": 49.5,
+          "standard_deviation": 19.027465528662624,
+          "values_by_seed": [
+            46.0,
+            78.0,
+            62.0,
+            40.0,
+            53.0,
+            42.0,
+            28.0,
+            22.0,
+            79.0,
+            56.0
+          ]
+        }
+      },
+      "fixed_retry_first": {
+        "contact_difference": {
+          "ci95": [
+            749.5438991090106,
+            824.2561008909894
+          ],
+          "mean": 786.9,
+          "median": 798.0,
+          "standard_deviation": 60.27059352988358,
+          "values_by_seed": [
+            804.0,
+            831.0,
+            626.0,
+            799.0,
+            790.0,
+            779.0,
+            782.0,
+            816.0,
+            845.0,
+            797.0
+          ]
+        },
+        "gross_recovered_minor_difference": {
+          "ci95": [
+            82348261.38938853,
+            124353918.61061147
+          ],
+          "mean": 103351090.0,
+          "median": 102798100.0,
+          "standard_deviation": 33886110.0590214,
+          "values_by_seed": [
+            96101300.0,
+            132448900.0,
+            134429400.0,
+            162480800.0,
+            86051600.0,
+            110860100.0,
+            46521700.0,
+            74417900.0,
+            109494900.0,
+            80704300.0
+          ]
+        },
+        "human_review_difference": {
+          "ci95": [
+            13.039369500177562,
+            24.16063049982244
+          ],
+          "mean": 18.6,
+          "median": 19.0,
+          "standard_deviation": 8.971560003081342,
+          "values_by_seed": [
+            23.0,
+            33.0,
+            22.0,
+            26.0,
+            16.0,
+            13.0,
+            10.0,
+            26.0,
+            14.0,
+            3.0
+          ]
+        },
+        "net_recovery_value_minor_difference": {
+          "ci95": [
+            81964196.55460171,
+            123953483.44539829
+          ],
+          "mean": 102958840.0,
+          "median": 102392700.0,
+          "standard_deviation": 33872904.05642015,
+          "values_by_seed": [
+            95688000.0,
+            131989950.0,
+            134089200.0,
+            162054550.0,
+            85668700.0,
+            110488900.0,
+            46161300.0,
+            73981100.0,
+            109097400.0,
+            80369300.0
+          ]
+        },
+        "oracle_erv_regret_minor_difference": {
+          "ci95": [
+            -44950.56961205226,
+            -31812.815643711354
+          ],
+          "mean": -38381.69262788181,
+          "median": -37332.334614588166,
+          "standard_deviation": 10598.271907875745,
+          "values_by_seed": [
+            -31672.458119658117,
+            -41519.555213675216,
+            -51742.01483146068,
+            -56734.48056042031,
+            -33843.211588785045,
+            -42122.65909090909,
+            -19509.615879017012,
+            -32008.26176571625,
+            -39223.94991055456,
+            -35440.71931862176
+          ]
+        },
+        "recovered_payment_difference": {
+          "ci95": [
+            468.28789123671373,
+            528.1121087632862
+          ],
+          "mean": 498.2,
+          "median": 493.5,
+          "standard_deviation": 48.26040475034028,
+          "values_by_seed": [
+            585.0,
+            519.0,
+            420.0,
+            475.0,
+            518.0,
+            475.0,
+            450.0,
+            489.0,
+            553.0,
+            498.0
+          ]
+        },
+        "recovery_rate_difference": {
+          "ci95": [
+            0.17594454264459486,
+            0.19164777844053443
+          ],
+          "mean": 0.18379616054256465,
+          "median": 0.18586892539949101,
+          "standard_deviation": 0.012667855038228584,
+          "values_by_seed": [
+            0.2,
+            0.17743589743589744,
+            0.18876404494382024,
+            0.16637478108581433,
+            0.1936448598130841,
+            0.1829738058551618,
+            0.17013232514177692,
+            0.16798351082102375,
+            0.19785330948121643,
+            0.19279907084785136
+          ]
+        },
+        "retry_difference": {
+          "ci95": [
+            -852.4801686297991,
+            -775.5198313702009
+          ],
+          "mean": -814.0,
+          "median": -824.5,
+          "standard_deviation": 62.08417225383974,
+          "values_by_seed": [
+            -838.0,
+            -873.0,
+            -652.0,
+            -831.0,
+            -816.0,
+            -796.0,
+            -804.0,
+            -848.0,
+            -864.0,
+            -818.0
+          ]
+        }
+      },
+      "generic_reminder_first": {
+        "contact_difference": {
+          "ci95": [
+            -861.0673875807208,
+            -766.3326124192793
+          ],
+          "mean": -813.7,
+          "median": -817.5,
+          "standard_deviation": 76.42287324849515,
+          "values_by_seed": [
+            -853.0,
+            -900.0,
+            -690.0,
+            -869.0,
+            -782.0,
+            -726.0,
+            -776.0,
+            -917.0,
+            -859.0,
+            -765.0
+          ]
+        },
+        "gross_recovered_minor_difference": {
+          "ci95": [
+            168631431.6558104,
+            247083848.3441896
+          ],
+          "mean": 207857640.0,
+          "median": 195202200.0,
+          "standard_deviation": 63287837.92854148,
+          "values_by_seed": [
+            187176500.0,
+            265818400.0,
+            235640000.0,
+            332456200.0,
+            181609300.0,
+            203227900.0,
+            100505600.0,
+            183584200.0,
+            231504900.0,
+            157053400.0
+          ]
+        },
+        "human_review_difference": {
+          "ci95": [
+            13.039369500177562,
+            24.16063049982244
+          ],
+          "mean": 18.6,
+          "median": 19.0,
+          "standard_deviation": 8.971560003081342,
+          "values_by_seed": [
+            23.0,
+            33.0,
+            22.0,
+            26.0,
+            16.0,
+            13.0,
+            10.0,
+            26.0,
+            14.0,
+            3.0
+          ]
+        },
+        "net_recovery_value_minor_difference": {
+          "ci95": [
+            168104573.26352957,
+            246527356.73647043
+          ],
+          "mean": 207315965.0,
+          "median": 194634275.0,
+          "standard_deviation": 63263932.710383385,
+          "values_by_seed": [
+            186567950.0,
+            265201200.0,
+            235179050.0,
+            331864700.0,
+            181076150.0,
+            202700600.0,
+            99998450.0,
+            182995050.0,
+            230981150.0,
+            156595350.0
+          ]
+        },
+        "oracle_erv_regret_minor_difference": {
+          "ci95": [
+            -89981.56506588386,
+            -62440.184184742124
+          ],
+          "mean": -76210.874625313,
+          "median": -72646.63487467705,
+          "standard_deviation": 22217.727931281388,
+          "values_by_seed": [
+            -61935.91555555555,
+            -85590.85641025641,
+            -101764.45348314608,
+            -116232.6584938704,
+            -66137.49831775701,
+            -77720.44838212636,
+            -37790.05179584121,
+            -67572.82136722776,
+            -84378.80357781753,
+            -62985.23886953155
+          ]
+        },
+        "recovered_payment_difference": {
+          "ci95": [
+            946.5958443564548,
+            1053.4041556435452
+          ],
+          "mean": 1000.0,
+          "median": 1022.0,
+          "standard_deviation": 86.16263691415206,
+          "values_by_seed": [
+            1129.0,
+            1053.0,
+            836.0,
+            1024.0,
+            1020.0,
+            926.0,
+            952.0,
+            1071.0,
+            1052.0,
+            937.0
+          ]
+        },
+        "recovery_rate_difference": {
+          "ci95": [
+            0.3620070947082643,
+            0.375067976488793
+          ],
+          "mean": 0.36853753559852864,
+          "median": 0.36533564530816337,
+          "standard_deviation": 0.010536258846088256,
+          "values_by_seed": [
+            0.385982905982906,
+            0.36,
+            0.3757303370786517,
+            0.35866900175131344,
+            0.38130841121495324,
+            0.35670261941448383,
+            0.3599243856332703,
+            0.36791480590862247,
+            0.376386404293381,
+            0.3627564847077043
+          ]
+        },
+        "retry_difference": {
+          "ci95": [
+            1798.0138614829043,
+            2000.9861385170957
+          ],
+          "mean": 1899.5,
+          "median": 1895.0,
+          "standard_deviation": 163.73844318845155,
+          "values_by_seed": [
+            2087.0,
+            2052.0,
+            1573.0,
+            2024.0,
+            1859.0,
+            1800.0,
+            1841.0,
+            2063.0,
+            1931.0,
+            1765.0
+          ]
+        }
+      },
+      "model_probability_policy": {
+        "contact_difference": {
+          "ci95": [
+            -13.647886137055577,
+            -8.152113862944423
+          ],
+          "mean": -10.9,
+          "median": -11.5,
+          "standard_deviation": 4.433458644845529,
+          "values_by_seed": [
+            -16.0,
+            -9.0,
+            -11.0,
+            -4.0,
+            -15.0,
+            -3.0,
+            -11.0,
+            -14.0,
+            -14.0,
+            -12.0
+          ]
+        },
+        "gross_recovered_minor_difference": {
+          "ci95": [
+            -58955.886649076536,
+            102975.88664907654
+          ],
+          "mean": 22010.0,
+          "median": 750.0,
+          "standard_deviation": 130630.92580923469,
+          "values_by_seed": [
+            -19200.0,
+            -219500.0,
+            44600.0,
+            0.0,
+            136000.0,
+            1500.0,
+            -61200.0,
+            287000.0,
+            -6000.0,
+            56900.0
+          ]
+        },
+        "human_review_difference": {
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0,
+          "median": 0.0,
+          "standard_deviation": 0.0,
+          "values_by_seed": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "net_recovery_value_minor_difference": {
+          "ci95": [
+            -51482.030775702326,
+            111082.03077570233
+          ],
+          "mean": 29800.0,
+          "median": 3925.0,
+          "standard_deviation": 131140.99494649092,
+          "values_by_seed": [
+            -8350.0,
+            -212400.0,
+            50850.0,
+            3500.0,
+            145550.0,
+            4350.0,
+            -51750.0,
+            295400.0,
+            2050.0,
+            68800.0
+          ]
+        },
+        "oracle_erv_regret_minor_difference": {
+          "ci95": [
+            -17.84529481547345,
+            3.626909462270695
+          ],
+          "mean": -7.109192676601379,
+          "median": -4.601088525410887,
+          "standard_deviation": 17.321702015837307,
+          "values_by_seed": [
+            2.3271794871789098,
+            -7.425982905982892,
+            -7.8400000000001455,
+            -15.222416812608571,
+            -50.44224299065445,
+            -1.7761941448388825,
+            10.981852551984957,
+            1.8584678804536452,
+            7.553488372092943,
+            -11.1060782036393
+          ]
+        },
+        "recovered_payment_difference": {
+          "ci95": [
+            -0.4862244511283683,
+            1.2862244511283683
+          ],
+          "mean": 0.4,
+          "median": 0.0,
+          "standard_deviation": 1.429840705968481,
+          "values_by_seed": [
+            1.0,
+            -2.0,
+            3.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0,
+            1.0,
+            2.0
+          ]
+        },
+        "recovery_rate_difference": {
+          "ci95": [
+            -0.00018077427212016492,
+            0.0005314345646972635
+          ],
+          "mean": 0.00017533014628854927,
+          "median": 0.0,
+          "standard_deviation": 0.0005745413505209849,
+          "values_by_seed": [
+            0.00034188034188037397,
+            -0.0006837606837606924,
+            0.0013483146067416185,
+            0.0,
+            0.0,
+            -0.00038520801232666546,
+            0.0,
+            0.0,
+            0.0003577817531305594,
+            0.0007742934572202986
+          ]
+        },
+        "retry_difference": {
+          "ci95": [
+            -0.722359221984413,
+            5.522359221984413
+          ],
+          "mean": 2.4,
+          "median": 2.5,
+          "standard_deviation": 5.037636129950016,
+          "values_by_seed": [
+            5.0,
+            0.0,
+            7.0,
+            -2.0,
+            5.0,
+            -1.0,
+            -1.0,
+            8.0,
+            9.0,
+            -6.0
+          ]
+        }
+      },
+      "recoveriq_no_health_research": {
+        "contact_difference": {
+          "ci95": [
+            -15.509333333333332,
+            9.709333333333332
+          ],
+          "mean": -2.9,
+          "median": -5.0,
+          "standard_deviation": 20.343986280416573,
+          "values_by_seed": [
+            -14.0,
+            -18.0,
+            -32.0,
+            -7.0,
+            35.0,
+            0.0,
+            10.0,
+            21.0,
+            -21.0,
+            -3.0
+          ]
+        },
+        "gross_recovered_minor_difference": {
+          "ci95": [
+            -7322268.110113855,
+            -895391.8898861445
+          ],
+          "mean": -4108830.0,
+          "median": -4027900.0,
+          "standard_deviation": 5184583.44282997,
+          "values_by_seed": [
+            -9330800.0,
+            6104000.0,
+            -11052800.0,
+            -187400.0,
+            -7567000.0,
+            -5555200.0,
+            -1012000.0,
+            -1914300.0,
+            -8072200.0,
+            -2500600.0
+          ]
+        },
+        "human_review_difference": {
+          "ci95": [
+            9.939301760955642,
+            20.060698239044356
+          ],
+          "mean": 15.0,
+          "median": 13.5,
+          "standard_deviation": 8.16496580927726,
+          "values_by_seed": [
+            18.0,
+            29.0,
+            15.0,
+            23.0,
+            12.0,
+            10.0,
+            7.0,
+            23.0,
+            10.0,
+            3.0
+          ]
+        },
+        "net_recovery_value_minor_difference": {
+          "ci95": [
+            -7368740.500940865,
+            -959519.4990591351
+          ],
+          "mean": -4164130.0,
+          "median": -4052150.0,
+          "standard_deviation": 5170340.916666478,
+          "values_by_seed": [
+            -9391950.0,
+            6005250.0,
+            -11096250.0,
+            -272900.0,
+            -7625050.0,
+            -5595750.0,
+            -1042550.0,
+            -2011850.0,
+            -8101700.0,
+            -2508550.0
+          ]
+        },
+        "oracle_erv_regret_minor_difference": {
+          "ci95": [
+            1023.8229700488646,
+            2236.9697409934033
+          ],
+          "mean": 1630.396355521134,
+          "median": 1439.413280724926,
+          "standard_deviation": 978.6497276181941,
+          "values_by_seed": [
+            1210.0485470085468,
+            1635.771965811965,
+            2658.845842696629,
+            3726.2928196147113,
+            1449.9353271028035,
+            1978.872881355931,
+            266.32022684310004,
+            1170.522844383374,
+            1428.8912343470483,
+            778.4618660472315
+          ]
+        },
+        "recovered_payment_difference": {
+          "ci95": [
+            -26.642408014688083,
+            -17.157591985311914
+          ],
+          "mean": -21.9,
+          "median": -22.0,
+          "standard_deviation": 7.651434142985512,
+          "values_by_seed": [
+            -35.0,
+            -22.0,
+            -26.0,
+            -8.0,
+            -21.0,
+            -20.0,
+            -22.0,
+            -27.0,
+            -26.0,
+            -12.0
+          ]
+        },
+        "recovery_rate_difference": {
+          "ci95": [
+            -0.009850645387941974,
+            -0.006363380951496031
+          ],
+          "mean": -0.008107013169719002,
+          "median": -0.00808402381499218,
+          "standard_deviation": 0.0028131883730797636,
+          "values_by_seed": [
+            -0.011965811965811923,
+            -0.007521367521367506,
+            -0.011685393258426935,
+            -0.002802101576182159,
+            -0.007850467289719665,
+            -0.007704160246533143,
+            -0.008317580340264696,
+            -0.009275163174166934,
+            -0.009302325581395376,
+            -0.004645760743321681
+          ]
+        },
+        "retry_difference": {
+          "ci95": [
+            -32.1663761231931,
+            -5.433623876806898
+          ],
+          "mean": -18.8,
+          "median": -16.0,
+          "standard_deviation": 21.565404393766112,
+          "values_by_seed": [
+            -11.0,
+            -19.0,
+            15.0,
+            -22.0,
+            -55.0,
+            -13.0,
+            -27.0,
+            -49.0,
+            6.0,
+            -13.0
+          ]
+        }
+      }
+    },
+    "runtime_seconds": {
+      "dataset_generation": 99.19480119999935,
+      "strategy_evaluation": 941.6775884999988,
+      "total": 1041.9646620000021
+    },
+    "strategy_results": {
+      "best_global_action": {
+        "alternate_method_actions": 14367,
+        "autonomous_decisions": 27135,
+        "average_actions_per_failure": 1.0,
+        "customer_contacts": 14367,
+        "deterministic_policy_violations": 0,
+        "failed_payments_evaluated": 27135,
+        "friction_cost_minor": 7023600,
+        "human_review_decisions": 0,
+        "intervention_cost_minor": 10375500,
+        "mean_recovery_time_hours": 10.888283378746594,
+        "median_recovery_time_hours": 0.0,
+        "method_update_actions": 0,
+        "oracle_erv_regret_minor": {
+          "mean": 23827.198083655796,
+          "median": 2822.0,
+          "p90": 67349.0
+        },
+        "oracle_probability_regret": {
+          "mean": 0.11543484954645238,
+          "median": 0.04977628428358771,
+          "p90": 0.44141963373917636
+        },
+        "payment_links": 0,
+        "recovered_payments": 9542,
+        "recovery_rate": 0.35164916159941034,
+        "retry_count": 12768,
+        "selected_action_distribution": {
+          "OFFER_ALTERNATE_METHOD": 14367,
+          "RETRY_LATER_24H": 12768
+        },
+        "simulated_gross_recovered_minor": 1971023200,
+        "simulated_net_recovery_value_minor": 1953624100,
+        "stop_decisions": 0,
+        "top_1_oracle_agreement": 0.15901971623364658,
+        "top_2_oracle_coverage": 0.44621337755666113
+      },
+      "failure_reason_method_rule": {
+        "alternate_method_actions": 1307,
+        "autonomous_decisions": 27135,
+        "average_actions_per_failure": 1.0,
+        "customer_contacts": 9228,
+        "deterministic_policy_violations": 0,
+        "failed_payments_evaluated": 27135,
+        "friction_cost_minor": 5481900,
+        "human_review_decisions": 0,
+        "intervention_cost_minor": 7684750,
+        "mean_recovery_time_hours": 15.776842105263158,
+        "median_recovery_time_hours": 24.0,
+        "method_update_actions": 1782,
+        "oracle_erv_regret_minor": {
+          "mean": 8611.44160678091,
+          "median": 0.0,
+          "p90": 16644.0
+        },
+        "oracle_probability_regret": {
+          "mean": 0.04152901117316825,
+          "median": 0.0,
+          "p90": 0.175449596161125
+        },
+        "payment_links": 6139,
+        "recovered_payments": 11400,
+        "recovery_rate": 0.4201216141514649,
+        "retry_count": 17907,
+        "selected_action_distribution": {
+          "CREATE_PAYMENT_LINK": 6139,
+          "OFFER_ALTERNATE_METHOD": 1307,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 1782,
+          "RETRY_LATER_24H": 17907
+        },
+        "simulated_gross_recovered_minor": 2381406100,
+        "simulated_net_recovery_value_minor": 2368239450,
+        "stop_decisions": 0,
+        "top_1_oracle_agreement": 0.4223327805417358,
+        "top_2_oracle_coverage": 0.6507462686567164
+      },
+      "failure_reason_rule": {
+        "alternate_method_actions": 165,
+        "autonomous_decisions": 27135,
+        "average_actions_per_failure": 1.0,
+        "customer_contacts": 8646,
+        "deterministic_policy_violations": 0,
+        "failed_payments_evaluated": 27135,
+        "friction_cost_minor": 5307300,
+        "human_review_decisions": 0,
+        "intervention_cost_minor": 7483250,
+        "mean_recovery_time_hours": 16.190162227812962,
+        "median_recovery_time_hours": 24.0,
+        "method_update_actions": 2342,
+        "oracle_erv_regret_minor": {
+          "mean": 7308.271973466003,
+          "median": 0.0,
+          "p90": 9262.0
+        },
+        "oracle_probability_regret": {
+          "mean": 0.0359272404324038,
+          "median": 0.0,
+          "p90": 0.13145627527290898
+        },
+        "payment_links": 6139,
+        "recovered_payments": 11527,
+        "recovery_rate": 0.4248019163442049,
+        "retry_count": 18489,
+        "selected_action_distribution": {
+          "CREATE_PAYMENT_LINK": 6139,
+          "OFFER_ALTERNATE_METHOD": 165,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 2342,
+          "RETRY_LATER_24H": 18489
+        },
+        "simulated_gross_recovered_minor": 2406978200,
+        "simulated_net_recovery_value_minor": 2394187650,
+        "stop_decisions": 0,
+        "top_1_oracle_agreement": 0.4498986548737792,
+        "top_2_oracle_coverage": 0.6643080891837111
+      },
+      "fixed_retry_first": {
+        "alternate_method_actions": 0,
+        "autonomous_decisions": 27135,
+        "average_actions_per_failure": 1.0,
+        "customer_contacts": 0,
+        "deterministic_policy_violations": 0,
+        "failed_payments_evaluated": 27135,
+        "friction_cost_minor": 2713500,
+        "human_review_decisions": 0,
+        "intervention_cost_minor": 6783750,
+        "mean_recovery_time_hours": 6.0,
+        "median_recovery_time_hours": 6.0,
+        "method_update_actions": 0,
+        "oracle_erv_regret_minor": {
+          "mean": 45533.96417910448,
+          "median": 11304.0,
+          "p90": 134304.0
+        },
+        "oracle_probability_regret": {
+          "mean": 0.22183702706843536,
+          "median": 0.18,
+          "p90": 0.5577026431437943
+        },
+        "payment_links": 0,
+        "recovered_payments": 6671,
+        "recovery_rate": 0.24584484982494934,
+        "retry_count": 27135,
+        "selected_action_distribution": {
+          "RETRY_LATER_6H": 27135
+        },
+        "simulated_gross_recovered_minor": 1389235300,
+        "simulated_net_recovery_value_minor": 1379738050,
+        "stop_decisions": 0,
+        "top_1_oracle_agreement": 0.0057490326147042565,
+        "top_2_oracle_coverage": 0.006301824212271974
+      },
+      "generic_reminder_first": {
+        "alternate_method_actions": 0,
+        "autonomous_decisions": 16006,
+        "average_actions_per_failure": 0.5898654873779252,
+        "customer_contacts": 16006,
+        "deterministic_policy_violations": 0,
+        "failed_payments_evaluated": 27135,
+        "friction_cost_minor": 6402400,
+        "human_review_decisions": 0,
+        "intervention_cost_minor": 1600600,
+        "mean_recovery_time_hours": 0.0,
+        "median_recovery_time_hours": 0.0,
+        "method_update_actions": 0,
+        "oracle_erv_regret_minor": {
+          "mean": 83368.16233646582,
+          "median": 36160.0,
+          "p90": 229853.0
+        },
+        "oracle_probability_regret": {
+          "mean": 0.4037040133106495,
+          "median": 0.4836500230239794,
+          "p90": 0.6786798751618737
+        },
+        "payment_links": 0,
+        "recovered_payments": 1653,
+        "recovery_rate": 0.06091763405196241,
+        "retry_count": 0,
+        "selected_action_distribution": {
+          "SEND_NUDGE": 16006,
+          "STOP": 11129
+        },
+        "simulated_gross_recovered_minor": 344169800,
+        "simulated_net_recovery_value_minor": 336166800,
+        "stop_decisions": 11129,
+        "top_1_oracle_agreement": 0.009065782200110558,
+        "top_2_oracle_coverage": 0.053694490510410905
+      },
+      "model_probability_policy": {
+        "alternate_method_actions": 1020,
+        "autonomous_decisions": 26949,
+        "average_actions_per_failure": 0.9931453841901603,
+        "customer_contacts": 7978,
+        "deterministic_policy_violations": 0,
+        "failed_payments_evaluated": 27135,
+        "friction_cost_minor": 5088300,
+        "human_review_decisions": 186,
+        "intervention_cost_minor": 8409350,
+        "mean_recovery_time_hours": 11.898875439951928,
+        "median_recovery_time_hours": 12.0,
+        "method_update_actions": 3266,
+        "oracle_erv_regret_minor": {
+          "mean": 7323.70436705362,
+          "median": 0.0,
+          "p90": 10581.0
+        },
+        "oracle_probability_regret": {
+          "mean": 0.03420503289106492,
+          "median": 0.0,
+          "p90": 0.10463581060704374
+        },
+        "payment_links": 3685,
+        "recovered_payments": 11649,
+        "recovery_rate": 0.429297954671089,
+        "retry_count": 18971,
+        "selected_action_distribution": {
+          "CREATE_PAYMENT_LINK": 3685,
+          "HUMAN_REVIEW": 186,
+          "OFFER_ALTERNATE_METHOD": 1020,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 3266,
+          "RETRY_LATER_12H": 6053,
+          "RETRY_LATER_24H": 9922,
+          "RETRY_LATER_2H": 2433,
+          "RETRY_LATER_6H": 553,
+          "RETRY_NOW": 10,
+          "SEND_NUDGE": 7
+        },
+        "simulated_gross_recovered_minor": 2422526100,
+        "simulated_net_recovery_value_minor": 2409028450,
+        "stop_decisions": 0,
+        "top_1_oracle_agreement": 0.5557766721945826,
+        "top_2_oracle_coverage": 0.7546710889994472
+      },
+      "oracle_erv_upper_bound": {
+        "alternate_method_actions": 545,
+        "autonomous_decisions": 26460,
+        "average_actions_per_failure": 0.9751243781094527,
+        "customer_contacts": 8172,
+        "deterministic_policy_violations": 0,
+        "failed_payments_evaluated": 27135,
+        "friction_cost_minor": 5097600,
+        "human_review_decisions": 0,
+        "intervention_cost_minor": 7439000,
+        "mean_recovery_time_hours": 10.43700412567439,
+        "median_recovery_time_hours": 12.0,
+        "method_update_actions": 3556,
+        "oracle_erv_regret_minor": {
+          "mean": 0.0,
+          "median": 0.0,
+          "p90": 0.0
+        },
+        "oracle_probability_regret": {
+          "mean": 0.0001520745478513944,
+          "median": 0.0,
+          "p90": 0.0
+        },
+        "payment_links": 3825,
+        "recovered_payments": 12604,
+        "recovery_rate": 0.464492353049567,
+        "retry_count": 18288,
+        "selected_action_distribution": {
+          "CREATE_PAYMENT_LINK": 3825,
+          "OFFER_ALTERNATE_METHOD": 545,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 3556,
+          "RETRY_LATER_12H": 5522,
+          "RETRY_LATER_24H": 7527,
+          "RETRY_LATER_2H": 8,
+          "RETRY_LATER_6H": 156,
+          "RETRY_NOW": 5075,
+          "SEND_NUDGE": 246,
+          "STOP": 675
+        },
+        "simulated_gross_recovered_minor": 2634761700,
+        "simulated_net_recovery_value_minor": 2622225100,
+        "stop_decisions": 675,
+        "top_1_oracle_agreement": 0.9751243781094527,
+        "top_2_oracle_coverage": 0.9751243781094527
+      },
+      "recoveriq_erv_policy_v1": {
+        "alternate_method_actions": 972,
+        "autonomous_decisions": 26864,
+        "average_actions_per_failure": 0.9900128984706099,
+        "customer_contacts": 7869,
+        "deterministic_policy_violations": 0,
+        "failed_payments_evaluated": 27135,
+        "friction_cost_minor": 5047100,
+        "human_review_decisions": 186,
+        "intervention_cost_minor": 8372650,
+        "mean_recovery_time_hours": 11.97974770445379,
+        "median_recovery_time_hours": 12.0,
+        "method_update_actions": 3266,
+        "oracle_erv_regret_minor": {
+          "mean": 7316.758356366317,
+          "median": 0.0,
+          "p90": 10533.0
+        },
+        "oracle_probability_regret": {
+          "mean": 0.03405750632085353,
+          "median": 0.0,
+          "p90": 0.10240225324266239
+        },
+        "payment_links": 3622,
+        "recovered_payments": 11653,
+        "recovery_rate": 0.42944536576377373,
+        "retry_count": 18995,
+        "selected_action_distribution": {
+          "CREATE_PAYMENT_LINK": 3622,
+          "HUMAN_REVIEW": 186,
+          "OFFER_ALTERNATE_METHOD": 972,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 3266,
+          "RETRY_LATER_12H": 6078,
+          "RETRY_LATER_24H": 10005,
+          "RETRY_LATER_2H": 2354,
+          "RETRY_LATER_6H": 554,
+          "RETRY_NOW": 4,
+          "SEND_NUDGE": 9,
+          "STOP": 85
+        },
+        "simulated_gross_recovered_minor": 2422746200,
+        "simulated_net_recovery_value_minor": 2409326450,
+        "stop_decisions": 85,
+        "top_1_oracle_agreement": 0.555850377740925,
+        "top_2_oracle_coverage": 0.7523493642896628
+      },
+      "recoveriq_no_health_research": {
+        "alternate_method_actions": 718,
+        "autonomous_decisions": 27081,
+        "average_actions_per_failure": 0.9980099502487563,
+        "customer_contacts": 7898,
+        "deterministic_policy_violations": 0,
+        "failed_payments_evaluated": 27135,
+        "friction_cost_minor": 5077500,
+        "human_review_decisions": 36,
+        "intervention_cost_minor": 7789250,
+        "mean_recovery_time_hours": 12.055256064690028,
+        "median_recovery_time_hours": 12.0,
+        "method_update_actions": 3379,
+        "oracle_erv_regret_minor": {
+          "mean": 5694.846397641422,
+          "median": 0.0,
+          "p90": 3630.0
+        },
+        "oracle_probability_regret": {
+          "mean": 0.026352512245048785,
+          "median": 0.0,
+          "p90": 0.03805225973963006
+        },
+        "payment_links": 3794,
+        "recovered_payments": 11872,
+        "recovery_rate": 0.4375161230882624,
+        "retry_count": 19183,
+        "selected_action_distribution": {
+          "CREATE_PAYMENT_LINK": 3794,
+          "HUMAN_REVIEW": 36,
+          "OFFER_ALTERNATE_METHOD": 718,
+          "REQUEST_PAYMENT_METHOD_UPDATE": 3379,
+          "RETRY_LATER_12H": 4157,
+          "RETRY_LATER_24H": 11043,
+          "RETRY_LATER_2H": 2405,
+          "RETRY_LATER_6H": 1578,
+          "SEND_NUDGE": 7,
+          "STOP": 18
+        },
+        "simulated_gross_recovered_minor": 2463834500,
+        "simulated_net_recovery_value_minor": 2450967750,
+        "stop_decisions": 18,
+        "top_1_oracle_agreement": 0.5661691542288557,
+        "top_2_oracle_coverage": 0.7437995209139487
+      }
+    }
+  }
+}
