@@ -27,7 +27,7 @@ Phase 0–2.5 foundation, deterministic simulator, and robustness validation are
 - pre-registered development/validation/final seed groups and multi-seed confidence intervals;
 - heterogeneous incident severity/duration/volume, causal nudge audits, cost regimes, sensitivity analysis, and machine-checkable leakage boundaries.
 
-Not implemented yet: statistical degradation detection, recovery ML, intelligent RecoverIQ action selection, executable production recovery, Razorpay APIs, production Gemini prompts, and operational dashboards. The UI intentionally shows no recovery metrics.
+Implemented through Phase 3: the hardened deterministic simulator, paired recovery baselines, and an observable-only statistical degradation detector with frozen development/validation methodology. Not implemented yet: recovery ML, intelligent RecoverIQ action selection, executable production recovery, Razorpay APIs, production Gemini prompts, and operational dashboards. The UI intentionally shows no recovery metrics.
 
 ## Architecture
 

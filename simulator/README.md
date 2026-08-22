@@ -1,6 +1,6 @@
 # RecoverIQ Simulator
 
-This standalone Python package contains the deterministic Phase 2/2.5 payment environment, validation reports, and fixed-policy baselines. It intentionally has no dependency on the API, Gemini, Razorpay, or future recovery ML.
+This standalone Python package contains the deterministic Phase 2/2.5 payment environment, validation reports, fixed-policy baselines, and the Phase 3 observable-only statistical degradation detector. It intentionally has no dependency on the API, Gemini, Razorpay, or future recovery ML.
 
 From the repository root:
 

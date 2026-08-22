@@ -47,7 +47,7 @@ No predictive metric is calculated in Phase 2 because no model exists. A future 
 
 ## Degradation quality
 
-Incident evaluation uses simulator ground truth to measure precision, recall, false-positive rate, and detection delay at the payment-method and issuer scope. Thresholds and minimum sample sizes are chosen on validation incidents, not the held-out test interval.
+Phase 3 pre-registers incident observability and detector selection before held-out evaluation. Eligibility requires five scope-matching events observed during an incident and 50 matching-scope observations in the prior 30 days. Development seeds alone select statistical thresholds under a false-incident constraint. The frozen configuration is then run once on validation. Incident ground truth is joined only after observable replay. Reports always retain all incidents and separately report eligible incidents, exact-scope episode precision/recall, false incidents per scope-day, detection delay, delay after the fifth observable attempt, resolution delay, severity/volume slices, and false-positive causes. Final seeds remain reserved.
 
 ## Statistical reporting
 

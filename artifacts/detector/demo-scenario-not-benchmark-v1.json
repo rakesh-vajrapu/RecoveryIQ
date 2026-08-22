@@ -1,0 +1,276 @@
+{
+  "benchmark_data": false,
+  "degradation_started_at": "2026-07-03T00:00:00+00:00",
+  "events": 996,
+  "final_health_context": {
+    "global_health": {
+      "active_incident_id": null,
+      "baseline_source": "GLOBAL",
+      "dominant_failure_shifts": [],
+      "ewma_drop": -0.0713929287404873,
+      "ewma_success_rate": 0.912227421090974,
+      "health_score": 100.0,
+      "historical_attempts": 707,
+      "historical_posterior_mean": 0.8408344923504867,
+      "historical_success_rate": 0.8401697312588402,
+      "posterior_degradation_probability": 6.235209373534056e-05,
+      "rate_delta": -0.059988078680707546,
+      "scope": {
+        "issuer": null,
+        "level": "GLOBAL",
+        "payment_method": null
+      },
+      "selected_window_minutes": 360,
+      "severity": null,
+      "status": "HEALTHY",
+      "timestamp": "2026-07-04T07:55:00Z",
+      "windows": [
+        {
+          "attempts": 2,
+          "posterior_mean": 0.8971428571428571,
+          "success_rate": 1.0,
+          "successes": 2,
+          "window_minutes": 5
+        },
+        {
+          "attempts": 4,
+          "posterior_mean": 0.91,
+          "success_rate": 1.0,
+          "successes": 4,
+          "window_minutes": 15
+        },
+        {
+          "attempts": 13,
+          "posterior_mean": 0.9024000000000001,
+          "success_rate": 0.9230769230769231,
+          "successes": 12,
+          "window_minutes": 60
+        },
+        {
+          "attempts": 73,
+          "posterior_mean": 0.9007058823529412,
+          "success_rate": 0.9041095890410958,
+          "successes": 66,
+          "window_minutes": 360
+        },
+        {
+          "attempts": 289,
+          "posterior_mean": 0.8988704318936878,
+          "success_rate": 0.8996539792387543,
+          "successes": 260,
+          "window_minutes": 1440
+        }
+      ]
+    },
+    "issuer_health": {
+      "active_incident_id": null,
+      "baseline_source": "ISSUER",
+      "dominant_failure_shifts": [],
+      "ewma_drop": -0.0713929287404873,
+      "ewma_success_rate": 0.912227421090974,
+      "health_score": 100.0,
+      "historical_attempts": 707,
+      "historical_posterior_mean": 0.8408344923504867,
+      "historical_success_rate": 0.8401697312588402,
+      "posterior_degradation_probability": 0.02185530900519206,
+      "rate_delta": -0.06289127055551014,
+      "scope": {
+        "issuer": "ISSUER_DEMO",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "selected_window_minutes": 60,
+      "severity": null,
+      "status": "HEALTHY",
+      "timestamp": "2026-07-04T07:55:00Z",
+      "windows": [
+        {
+          "attempts": 2,
+          "posterior_mean": 0.8971428571428571,
+          "success_rate": 1.0,
+          "successes": 2,
+          "window_minutes": 5
+        },
+        {
+          "attempts": 4,
+          "posterior_mean": 0.91,
+          "success_rate": 1.0,
+          "successes": 4,
+          "window_minutes": 15
+        },
+        {
+          "attempts": 13,
+          "posterior_mean": 0.9024000000000001,
+          "success_rate": 0.9230769230769231,
+          "successes": 12,
+          "window_minutes": 60
+        },
+        {
+          "attempts": 73,
+          "posterior_mean": 0.9007058823529412,
+          "success_rate": 0.9041095890410958,
+          "successes": 66,
+          "window_minutes": 360
+        },
+        {
+          "attempts": 289,
+          "posterior_mean": 0.8988704318936878,
+          "success_rate": 0.8996539792387543,
+          "successes": 260,
+          "window_minutes": 1440
+        }
+      ]
+    },
+    "method_health": {
+      "active_incident_id": null,
+      "baseline_source": "PAYMENT_METHOD",
+      "dominant_failure_shifts": [],
+      "ewma_drop": -0.0713929287404873,
+      "ewma_success_rate": 0.912227421090974,
+      "health_score": 100.0,
+      "historical_attempts": 707,
+      "historical_posterior_mean": 0.8408344923504867,
+      "historical_success_rate": 0.8401697312588402,
+      "posterior_degradation_probability": 6.235209373534056e-05,
+      "rate_delta": -0.059988078680707546,
+      "scope": {
+        "issuer": null,
+        "level": "PAYMENT_METHOD",
+        "payment_method": "UPI"
+      },
+      "selected_window_minutes": 360,
+      "severity": null,
+      "status": "HEALTHY",
+      "timestamp": "2026-07-04T07:55:00Z",
+      "windows": [
+        {
+          "attempts": 2,
+          "posterior_mean": 0.8971428571428571,
+          "success_rate": 1.0,
+          "successes": 2,
+          "window_minutes": 5
+        },
+        {
+          "attempts": 4,
+          "posterior_mean": 0.91,
+          "success_rate": 1.0,
+          "successes": 4,
+          "window_minutes": 15
+        },
+        {
+          "attempts": 13,
+          "posterior_mean": 0.9024000000000001,
+          "success_rate": 0.9230769230769231,
+          "successes": 12,
+          "window_minutes": 60
+        },
+        {
+          "attempts": 73,
+          "posterior_mean": 0.9007058823529412,
+          "success_rate": 0.9041095890410958,
+          "successes": 66,
+          "window_minutes": 360
+        },
+        {
+          "attempts": 289,
+          "posterior_mean": 0.8988704318936878,
+          "success_rate": 0.8996539792387543,
+          "successes": 260,
+          "window_minutes": 1440
+        }
+      ]
+    },
+    "requested_issuer": "ISSUER_DEMO",
+    "requested_payment_method": "UPI",
+    "timestamp": "2026-07-04T07:55:00Z"
+  },
+  "label": "DEMO SCENARIO — NOT BENCHMARK DATA",
+  "predicted_incidents": [
+    {
+      "baseline_attempts": 581,
+      "baseline_success_rate": 0.8932874354561101,
+      "current_attempts": 322,
+      "current_severity": "MILD",
+      "current_success_rate": 0.7795031055900621,
+      "detected_at": "2026-07-03T00:10:00Z",
+      "dominant_failure_shifts": [
+        {
+          "absolute_change": 0.5403532304940755,
+          "baseline_share": 0.07936507936507936,
+          "current_share": 0.6197183098591549,
+          "reason": "ISSUER_UNAVAILABLE",
+          "relative_lift": 7.808450704225352,
+          "support_count": 44
+        }
+      ],
+      "evidence_window_minutes": 1440,
+      "incident_id": "DEG-500d7ede1645",
+      "opened_at": "2026-07-03T00:04:00Z",
+      "posterior_degradation_probability": 0.8903096347821429,
+      "resolved_at": "2026-07-04T01:05:00Z",
+      "scope": {
+        "issuer": "ISSUER_DEMO",
+        "level": "ISSUER",
+        "payment_method": "UPI"
+      },
+      "transitions": [
+        {
+          "severity": "MODERATE",
+          "status": "SUSPECTED",
+          "timestamp": "2026-07-03T00:04:00Z"
+        },
+        {
+          "severity": "MODERATE",
+          "status": "OPEN",
+          "timestamp": "2026-07-03T00:10:00Z"
+        },
+        {
+          "severity": "SEVERE",
+          "status": "OPEN",
+          "timestamp": "2026-07-03T00:12:00Z"
+        },
+        {
+          "severity": "MODERATE",
+          "status": "OPEN",
+          "timestamp": "2026-07-03T00:14:00Z"
+        },
+        {
+          "severity": "SEVERE",
+          "status": "OPEN",
+          "timestamp": "2026-07-03T00:20:00Z"
+        },
+        {
+          "severity": "CRITICAL",
+          "status": "OPEN",
+          "timestamp": "2026-07-03T00:24:00Z"
+        },
+        {
+          "severity": "SEVERE",
+          "status": "OPEN",
+          "timestamp": "2026-07-03T02:05:00Z"
+        },
+        {
+          "severity": "MODERATE",
+          "status": "OPEN",
+          "timestamp": "2026-07-03T07:20:00Z"
+        },
+        {
+          "severity": "MILD",
+          "status": "OPEN",
+          "timestamp": "2026-07-04T00:05:00Z"
+        },
+        {
+          "severity": "MILD",
+          "status": "RECOVERING",
+          "timestamp": "2026-07-04T00:45:00Z"
+        },
+        {
+          "severity": "MILD",
+          "status": "RESOLVED",
+          "timestamp": "2026-07-04T01:05:00Z"
+        }
+      ]
+    }
+  ],
+  "recovery_started_at": "2026-07-03T02:00:00+00:00"
+}

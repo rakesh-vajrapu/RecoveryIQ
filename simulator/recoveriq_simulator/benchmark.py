@@ -5,9 +5,10 @@ from __future__ import annotations
 from recoveriq_simulator import SIMULATOR_VERSION
 from recoveriq_simulator.config import SimulatorConfig
 from recoveriq_simulator.environment import RecoveryEnvironment
+from recoveriq_simulator.ground_truth import GeneratedScenario
 from recoveriq_simulator.policies import FixedRetryPolicy, ReminderThenRetryPolicy
 from recoveriq_simulator.results import BenchmarkResult
-from recoveriq_simulator.scenario import GeneratedScenario, ScenarioGenerator
+from recoveriq_simulator.scenario import ScenarioGenerator
 
 
 def run_benchmark(

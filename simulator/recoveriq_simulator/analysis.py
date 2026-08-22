@@ -12,9 +12,9 @@ import numpy as np
 
 from recoveriq_simulator.config import SimulatorConfig
 from recoveriq_simulator.enums import ActionType, TrueFailureCause
+from recoveriq_simulator.ground_truth import GeneratedScenario
 from recoveriq_simulator.observation import ObservedPaymentEvent
 from recoveriq_simulator.results import BenchmarkResult, PaymentPolicyOutcome
-from recoveriq_simulator.scenario import GeneratedScenario
 
 
 def _rate(numerator: int, denominator: int) -> float | None:

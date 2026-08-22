@@ -1,0 +1,50 @@
+{
+  "artifact_type": "phase3_degradation_detection_summary",
+  "detector_version": "1.0.0",
+  "configuration_hash": "886c9eb4c45b7b3a2f88b30ff3d6b0356190a039135d989ee65497504e48fbcb",
+  "eligibility_rule": {
+    "min_incident_attempts": 5,
+    "min_prior_baseline_attempts": 50,
+    "baseline_lookback_days": 30
+  },
+  "development": {
+    "seeds": "20260901-20260910",
+    "all_incident_count": 180,
+    "eligible_incident_count": 66,
+    "all_incident_recall": 0.05555555555555555,
+    "eligible_incident_recall": 0.12121212121212122,
+    "predicted_incident_precision": 0.028328611898016998,
+    "false_incidents_per_scope_day": 0.017747819801857547,
+    "mean_detection_delay_minutes": 704.876302165,
+    "median_detection_delay_minutes": 590.1034651749999,
+    "p90_detection_delay_minutes": 1455.3757446000002,
+    "throughput_events_per_second": 7178.0308527342395,
+    "mean_update_latency_ms": 0.13931397349999997
+  },
+  "validation": {
+    "execution_count": 1,
+    "seeds": "20261001-20261010",
+    "all_incident_count": 180,
+    "eligible_incident_count": 53,
+    "all_incident_recall": 0.044444444444444446,
+    "eligible_incident_recall": 0.1320754716981132,
+    "predicted_incident_precision": 0.028469750889679714,
+    "false_incidents_per_scope_day": 0.014123135397586717,
+    "mean_detection_delay_minutes": 692.3505370749999,
+    "median_detection_delay_minutes": 547.5767329916666,
+    "p90_detection_delay_minutes": 952.5915826833333,
+    "throughput_events_per_second": 7349.328549175278,
+    "mean_update_latency_ms": 0.13606685199999902
+  },
+  "final_evaluation": {
+    "seeds": "20261101-20261120",
+    "executed": false
+  },
+  "demo": {
+    "label": "DEMO SCENARIO — NOT BENCHMARK DATA",
+    "events": 996,
+    "predicted_incidents": 1,
+    "resolved": true,
+    "final_status": "HEALTHY"
+  }
+}

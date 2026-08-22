@@ -21,6 +21,12 @@ artifacts/smoke/*
 artifacts/smoke-v030/*
 artifacts/benchmark_suites/*
 artifacts/sensitivity/*
+artifacts/detector/*
+!artifacts/detector/degradation-detector-v1.json
+!artifacts/detector/phase3-summary-v1.json
+!artifacts/detector/development-report-v1.md
+!artifacts/detector/validation-report-v1.md
+!artifacts/detector/demo-scenario-not-benchmark-v1.json
 
 # JavaScript
 node_modules/

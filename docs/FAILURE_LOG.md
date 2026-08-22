@@ -73,3 +73,33 @@ This file records failures actually observed while building or running RecoverIQ
 - **Fix/adaptation:** gate incident mechanics on the mean hidden initial probability while continuing to report realized rates, and represent unavailable coverage rates explicitly as `null` in small reports. Full 20,000-attempt suites retain populated realized-rate aggregates.
 - **Regression coverage:** tests cover severity/duration diversity, incident probability deterioration, small multi-seed execution, and optional coverage metrics.
 - **Lesson:** simulator integrity assertions should test the response mechanism; empirical realization belongs in adequately powered reports with explicit denominators.
+
+## 2026-08-22 — Detector selection: first replay exhausted practical memory and time
+
+- **Context:** first Phase 3 six-candidate replay over all ten development seeds.
+- **Symptom:** the process exceeded five minutes, retained about 1.1 GB, and had not completed, so it was interrupted before producing a frozen configuration.
+- **Root cause:** selection retained ten complete Pydantic scenarios simultaneously, and dominant failure-distribution shifts were recomputed for almost every otherwise healthy event rather than only for opening or active incidents.
+- **Investigation:** a single-seed trace separated replay from episode evaluation, showed replay as the dominant cost, and measured roughly 2.9k events/second before the change. Process working-set inspection confirmed retained-scenario memory growth.
+- **Fix/adaptation:** process one seed at a time, retain only compact replay/evaluation results, and calculate reason shifts only when an incident is opening or active. Replay increased to roughly 7.2k–7.3k events/second with bounded memory.
+- **Regression coverage:** detector tests exercise deterministic replay and supported failure-shift creation; final reports persist throughput and mean update latency.
+- **Lesson:** diagnostic enrichment belongs on exceptional lifecycle paths, and multi-seed harnesses should stream large immutable scenarios when cross-seed random access is unnecessary.
+
+## 2026-08-22 — Detector lifecycle: neutral evidence bypassed configured recovery threshold
+
+- **Context:** inspection of the first completed development-selection artifact before validation.
+- **Symptom:** incident resolution was using any non-suspected evidence, even though `recovery_drop` existed in configuration; this could fragment ongoing episodes and shorten resolution delay artificially.
+- **Root cause:** the state-machine implementation branched on strong/weak evidence but treated the remaining middle band as recovered without applying the separate recovery threshold.
+- **Investigation:** code-path review showed `recovery_drop` was never referenced by lifecycle advancement. Development predicted-episode output contained avoidable fragmentation. Validation had not been invoked.
+- **Fix/adaptation:** require rate drop at or below the recovery threshold, EWMA drop at or below half its opening threshold, posterior evidence below suspected, and four consecutive recovery evaluations. Ambiguous middle-band evidence now holds state. Development selection was rerun and the same configuration hash was frozen; validation remained valid for a single later run.
+- **Regression coverage:** tests require one healthy observation not to resolve an incident, sustained recovery to resolve it, and continued degradation to update rather than duplicate the active episode.
+- **Lesson:** opening, neutral, and recovery bands must be explicit; merely configuring hysteresis is insufficient unless every lifecycle transition consumes it.
+
+## 2026-08-22 — Detector demo: warm-up could not supply frozen historical baseline
+
+- **Context:** first execution of the separate controlled demo after the one-time validation run.
+- **Symptom:** all 600 demo events completed with no incident and final status `INSUFFICIENT_EVIDENCE`.
+- **Root cause:** the ten-hour warm-up was entirely inside the frozen detector's 24-hour baseline-exclusion interval, leaving no eligible historical observations.
+- **Investigation:** the demo output reported no historical baseline and no predicted incidents while benchmark artifacts remained unchanged.
+- **Fix/adaptation:** extend only the labelled non-benchmark demo to a two-day healthy warm-up, a two-hour degradation, and more than 24 hours of recovery. The frozen detector then opened, escalated, recovered, and resolved without threshold changes.
+- **Regression coverage:** the controlled-demo test requires the non-benchmark label, one deduplicated incident, a resolved lifecycle, and a final healthy state.
+- **Lesson:** demos must respect production-style warm-up requirements and should visibly show insufficient evidence when they do not.

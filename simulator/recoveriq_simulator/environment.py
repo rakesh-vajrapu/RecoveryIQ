@@ -17,6 +17,7 @@ from recoveriq_simulator.events import EventQueue
 from recoveriq_simulator.ground_truth import (
     CustomerGroundTruth,
     DegradationIncidentGroundTruth,
+    GeneratedScenario,
     PaymentGroundTruth,
 )
 from recoveriq_simulator.observation import PaymentObservation, RecoveryAction
@@ -28,7 +29,6 @@ from recoveriq_simulator.results import (
     PolicyEvaluation,
     RecoveryAttribution,
 )
-from recoveriq_simulator.scenario import GeneratedScenario
 
 RETRY_ACTIONS = frozenset({ActionType.RETRY_NOW, ActionType.RETRY_LATER})
 CONTACT_ACTIONS = frozenset(

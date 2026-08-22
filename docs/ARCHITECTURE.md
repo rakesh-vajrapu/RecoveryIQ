@@ -24,7 +24,7 @@ flowchart LR
     L -. explanation only .-> A
 ```
 
-The foundation and standalone simulator/baselines are implemented through Phase 2. Detection, ML, intelligent policy, execution adapters, and operational UI remain future commitments.
+The foundation, standalone simulator/baselines, robustness methodology, and statistical degradation detector are implemented through Phase 3. Recovery ML, intelligent policy, execution adapters, and operational UI remain future commitments.
 
 ## Simulator/environment boundary
 
@@ -104,13 +104,17 @@ Celery remains the background-job boundary in every environment. Local developme
 
 FastAPI exposes typed JSON under an HTTP boundary. The Next.js App Router frontend consumes the API using `NEXT_PUBLIC_API_BASE_URL`; its build does not require a running backend. Runtime connectivity is shown explicitly as connected, unavailable, or not yet checked. The UI must not synthesize financial metrics when the API has no data.
 
+## Payment-health detection boundary
+
+`simulator/recoveriq_detector/detector.py` contains the reusable online statistical component. Its update interface accepts only narrow observable payment-result events and exposes health snapshots and future-facing `PaymentHealthContext` values. Simulator-specific replay and evaluation adapters are separate modules. Only evaluation imports hidden incident truth, and it does so after detector predictions have been generated. Issuer, payment-method, and global lifecycles remain distinct; broader alerts cannot create narrower incidents.
+
 ## Gemini boundary
 
 Application code depends on an `LLMProvider` protocol. `GeminiLLMProvider` contains SDK-specific behavior, `FakeLLMProvider` provides deterministic tests, and `DeterministicFallbackProvider` keeps explanations available without network access. Providers return Pydantic-validated structures. They cannot mutate payment state, authorize actions, or determine outcomes. Gemini is never called automatically during startup.
 
 ## Future Razorpay adapter
 
-A future adapter will operate in Razorpay Test Mode only. It will validate webhook HMAC signatures over raw request bytes, persist provider event IDs, acknowledge quickly, and dispatch idempotent background processing. Duplicate or out-of-order events must not duplicate recovery cases, links, retries, contacts, or attribution. No Razorpay API call exists through Phase 2.
+A future adapter will operate in Razorpay Test Mode only. It will validate webhook HMAC signatures over raw request bytes, persist provider event IDs, acknowledge quickly, and dispatch idempotent background processing. Duplicate or out-of-order events must not duplicate recovery cases, links, retries, contacts, or attribution. No Razorpay API call exists through Phase 3.
 
 ## Audit architecture
 

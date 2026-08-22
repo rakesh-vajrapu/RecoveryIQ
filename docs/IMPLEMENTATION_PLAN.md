@@ -32,12 +32,14 @@ Exit: same seed/config produces the same dataset and baseline outcomes.
 
 Exit: development and validation findings reproduce without using final seeds.
 
-## 3. Degradation detection
+## 3. Degradation detection — complete
 
-- [ ] Implement rolling health aggregates, historical baselines, scope selection, and incident lifecycle.
-- [ ] Evaluate precision, recall, and delay against simulator ground truth.
+- [x] Implement rolling health aggregates, historical baselines, scope selection, and incident lifecycle.
+- [x] Pre-register observability eligibility and tune only on development seeds.
+- [x] Freeze detector configuration and run one validation evaluation.
+- [x] Evaluate episode precision, recall, false incidents, delay, severity, volume, and diagnostics against simulator ground truth.
 
-Exit: held-out incident metrics and threshold rationale are reproducible.
+Exit: held-out incident metrics and threshold rationale are reproducible; final seeds remain untouched.
 
 ## 4. Recovery ML
 
