@@ -2,13 +2,13 @@
 
 ## Product thesis
 
-RecoverIQ is a bounded control plane for recovering failed recurring payments. It determines whether a failure is an isolated customer event or part of broader payment-system degradation before choosing a recovery action. It then predicts the economic value of allowed actions, applies deterministic safety policy, executes only approved actions, observes authoritative outcomes, and attributes recovered revenue once.
+RecoverIQ is a bounded control plane for safe adaptive multi-step recovery of failed recurring payments. It summarizes observable payment and episode state, predicts the incremental value of allowed actions, applies deterministic safety policy, executes only approved bounded interventions, replans after observed failure, and attributes recovered revenue once.
 
 RecoverIQ is being built for Razorpay Buildathon 2026, Track 03: AI Revenue Recovery. Its evidence must come from reproducible simulation and Razorpay Test Mode—not fabricated dashboard values or live customer money.
 
 ## Problem and target user
 
-Recurring payments fail for materially different reasons: insufficient balance, expired instruments, authentication requirements, issuer outages, network degradation, and mandate problems. A fixed retry schedule treats those situations as equivalent. During issuer or payment-method degradation it can repeatedly send traffic into a failing route, waste retry capacity, annoy customers, and make eventual recovery less likely.
+Recurring payments fail for materially different reasons: insufficient balance, expired instruments, authentication requirements, issuer outages, network instability, and mandate problems. A fixed sequence treats those situations and the outcome of each prior intervention as equivalent. A safe adaptive controller can change its next bounded action after observing failure while limiting retries, contacts, cost, and customer friction.
 
 The primary users are merchant revenue-operations and payment-operations teams responsible for subscription renewal performance. Secondary users are engineers and risk reviewers who need a defensible decision trace and an audit trail.
 
@@ -20,15 +20,17 @@ RecoverIQ aims to increase net recovered revenue while reducing unnecessary retr
 
 1. Ingest and durably identify a payment event.
 2. Normalize the customer, subscription, payment method, issuer, and failure context.
-3. Compare individual failure evidence with aggregate payment-health evidence.
-4. Detect whether a matching degradation incident is active.
-5. Score permitted candidate actions and estimate expected recovery value (ERV).
-6. Apply deterministic policy, confidence gates, retry/contact limits, and stopping rules.
-7. Execute, wait, abstain, or send the case to human review.
-8. Observe an authoritative outcome and attribute revenue at most once.
-9. Record every meaningful decision and action in an append-oriented audit trail.
+3. Construct observable customer, subscription, and current recovery-episode state.
+4. Generate feasible bounded actions for the current decision index.
+5. Score permitted candidates and estimate incremental expected recovery value (ERV).
+6. Apply deterministic support, retry/contact, horizon, feasibility, and stopping rules.
+7. Execute one action, observe its attributable outcome, and replan only if unresolved.
+8. Stop after recovery, review, STOP, horizon, or three autonomous interventions.
+9. Attribute revenue at most once and record every decision/action in an audit trail.
 
-The product's differentiator is step 3: aggregate health changes the appropriate intervention for an individual payment. A normally healthy UPI/issuer route dropping sharply across a credible sample should suppress immediate retries even when a customer-level model might otherwise recommend one.
+The product differentiator is safe, evidence-based adaptation across a short recovery episode rather than blindly replaying one fixed workflow. Phase 4 and Phase 5 found that Detector V2/payment-health features did not improve primary recovery prediction or policy outcomes, so they are no longer a headline revenue claim. Detector V2 remains advisory operational observability for dashboards, investigations, and later incident explanation; it cannot authorize or block recovery.
+
+Phase 6 supplies the first apples-to-apples full-horizon evidence for that thesis. On its sealed synthetic validation, bounded RecoverIQ exceeded Fixed Retry, Reminder + Retry, the simple observable sequential rule, and the best-global sequence on recovery and net value with zero violations. It did not exceed the probability-only policy: ERV/support decisions traded a small amount of gross recovery for fewer contacts. Product claims must preserve both findings and must never generalize simulator value into live revenue.
 
 ## V1 scope
 
@@ -55,11 +57,10 @@ V1 is not a chatbot, fraud engine, abandoned-cart system, general customer-suppo
 
 ## Success metrics
 
-Future held-out evaluation will compare RecoverIQ against fixed retry and retry-plus-reminder baselines on identical scenarios. Primary measures are recovery rate, SIMULATED gross recovered amount, net recovery value, and policy violations. Guardrail measures include unnecessary retries, contact count, actions per case, human-review and abstention rates, degradation precision/recall/delay, Brier score, calibration error, latency, throughput, Gemini calls, and fallback rate.
+Held-out evaluation compares RecoverIQ against fixed retry, Reminder + Retry, strong transparent sequential rules, probability-only selection, and an evaluation-only bounded oracle on identical full-horizon scenarios. Primary measures are recovery rate, SIMULATED gross recovered amount, net recovery value, and policy violations. Guardrails include unnecessary retries, contacts, action count, friction efficiency, human review/STOP, Model V2 quality by decision index, calibration, latency, and throughput.
 
 No target number is asserted before the simulator and evaluation harness exist.
 
 ## Definition of done
 
 A reviewer can clone the repository, install locked dependencies, run a seeded benchmark, start the API and UI without external credentials, inspect a degradation-aware decision trace, run the tests, and reproduce reported results. Optional credentials unlock explicit Gemini smoke tests and Razorpay Test Mode only. Core recovery continues when Gemini, Redis, or an external payment API is unavailable, according to documented fallbacks and policy.
-

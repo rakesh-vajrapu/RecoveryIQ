@@ -1,0 +1,6 @@
+"""Trajectory-aware no-health Recovery Model V2."""
+
+RECOVERY_MODEL_V2_VERSION = "2.0.0"
+FEATURE_SCHEMA_V2_VERSION = "2.0"
+
+__all__ = ["FEATURE_SCHEMA_V2_VERSION", "RECOVERY_MODEL_V2_VERSION"]

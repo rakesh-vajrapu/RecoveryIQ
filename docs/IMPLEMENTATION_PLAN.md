@@ -73,7 +73,18 @@ Exit: held-out Brier/calibration and action-level performance are reported hones
 
 Detector V2 cannot provide a degradation-aware hard block in V1 because its safety gate failed; its fields remain advisory model inputs only. Policy V1 passed all four frozen validation gates with zero violations, but the no-health comparator again outperformed the primary and the legacy multi-action Reminder + Retry workflow remained stronger than the first-action policy. Exit: invariant tests prove the registered deterministic rules cannot be bypassed, policy validation is reported without retuning, and final seeds remain untouched.
 
-## 6. Gemini enrichment
+## 6. Bounded sequential recovery and Recovery Model V2 — complete
+
+- [x] Pre-register trajectory/model/policy seed groups, target, feature boundary, limits, and validation claims.
+- [x] Generate observable randomized maximum-three-intervention trajectories with exact propensities and action-level attribution.
+- [x] Train/freeze no-health tabular Model V2, calibrate once, and execute its held-out group once.
+- [x] Implement bounded greedy Sequential Policy V2 and strong transparent full-horizon comparators.
+- [x] Freeze policy rules/baselines on development and execute sequential validation once.
+- [x] Report friction efficiency, sequences/transitions, personalization, bounded-oracle regret, and success/failure traces.
+
+Exit achieved: Model V2 passed its frozen quality gate; all Phase 6 strategies received identical initial cohorts and 48-hour semantics; RecoverIQ passed every registered claim with zero violations; no episode exceeded three interventions; the probability-only comparator's small advantage remained visible; final seeds remain untouched.
+
+## 7. Gemini enrichment
 
 - [ ] Add versioned prompts and remaining structured schemas.
 - [ ] Implement allowlisting, retries/backoff, concurrency, circuit breaking, caching, and metrics.
@@ -81,40 +92,40 @@ Detector V2 cannot provide a degradation-aware hard block in V1 because its safe
 
 Exit: all core decisions complete with Gemini disabled or failing.
 
-## 7. Recovery execution
+## 8. Recovery execution
 
 - [ ] Implement idempotent scheduling, simulated retries/nudges, observation, stopping rules, and attribution.
 
 Exit: duplicate delivery and worker retry cannot duplicate side effects or revenue.
 
-## 8. Razorpay Test Mode
+## 9. Razorpay Test Mode
 
 - [ ] Validate webhook signatures and event idempotency.
 - [ ] Add Test Mode payment/subscription handling and Payment Links where policy permits.
 
 Exit: a credential-gated Test Mode demonstration succeeds; Live Mode is impossible.
 
-## 9. Operational UI
+## 10. Operational UI
 
 - [ ] Implement Command Center, Payment Health, Recovery Queue, Decision Trace, and Evaluation Lab.
 - [ ] Distinguish model evidence, policy decision, Gemini explanation, and authoritative outcome.
 
 Exit: UI renders only persisted or reproducible data and clearly labels its mode.
 
-## 10. Reliability
+## 11. Reliability
 
 - [ ] Execute duplicate/out-of-order/provider/worker/Gemini/low-confidence/outage scenarios.
 - [ ] Add regression tests and record real failures.
 
 Exit: injected failures stop safely and leave complete audit evidence.
 
-## 11. Final evaluation
+## 12. Final evaluation
 
 - [ ] Freeze strategies and test interval, run multi-seed held-out benchmark, and publish immutable artifacts.
 
 Exit: every displayed result traces to a reproducible artifact.
 
-## 12. Submission
+## 13. Submission
 
 - [ ] Finalize README, diagrams, limitations, safety review, screenshots, demo script, and approximately five-minute video.
 

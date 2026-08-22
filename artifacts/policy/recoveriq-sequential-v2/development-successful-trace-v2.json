@@ -1,0 +1,231 @@
+{
+  "decisions": [
+    {
+      "candidates": [
+        {
+          "action_stage_support": 6443,
+          "calibration_bin": 1,
+          "calibration_bin_support": 6756,
+          "incremental_erv_minor": 2585,
+          "label": "RETRY_NOW",
+          "probability": 0.10950413223140495,
+          "supported": true
+        },
+        {
+          "action_stage_support": 6357,
+          "calibration_bin": 1,
+          "calibration_bin_support": 6756,
+          "incremental_erv_minor": 3290,
+          "label": "RETRY_LATER_2H",
+          "probability": 0.13583441138421734,
+          "supported": true
+        },
+        {
+          "action_stage_support": 6510,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5329,
+          "label": "RETRY_LATER_6H",
+          "probability": 0.21188811188811185,
+          "supported": true
+        },
+        {
+          "action_stage_support": 6446,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5770,
+          "label": "RETRY_LATER_12H",
+          "probability": 0.2283640424343942,
+          "supported": true
+        },
+        {
+          "action_stage_support": 6422,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 6518,
+          "label": "RETRY_LATER_24H",
+          "probability": 0.2562500000000001,
+          "supported": true
+        },
+        {
+          "action_stage_support": 5791,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5619,
+          "label": "SEND_NUDGE",
+          "probability": 0.22832260507383567,
+          "supported": true
+        },
+        {
+          "action_stage_support": 5709,
+          "calibration_bin": 3,
+          "calibration_bin_support": 8548,
+          "incremental_erv_minor": 9002,
+          "label": "CREATE_PAYMENT_LINK",
+          "probability": 0.3620296465222349,
+          "supported": true
+        },
+        {
+          "action_stage_support": 5859,
+          "calibration_bin": 0,
+          "calibration_bin_support": 18039,
+          "incremental_erv_minor": 1108,
+          "label": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "probability": 0.07119741100323625,
+          "supported": true
+        },
+        {
+          "action_stage_support": 5248,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5916,
+          "label": "OFFER_ALTERNATE_METHOD",
+          "probability": 0.25432692307692295,
+          "supported": true
+        }
+      ],
+      "decision_at": "2026-01-01T09:58:38.804421+00:00",
+      "decision_index": 1,
+      "observable_context": {
+        "amount_minor": 26800,
+        "contacts": 0,
+        "elapsed_hours": 0.0,
+        "failure_reason": "AUTHENTICATION_FAILURE",
+        "last_action": "NONE",
+        "payment_method": "UPI",
+        "previous_result": "NONE",
+        "prior_interventions": 0,
+        "retries": 0
+      },
+      "outcome": {
+        "observed_at": "2026-01-01T09:58:38.804421+00:00",
+        "recovered": false,
+        "recovered_amount_minor": 0
+      },
+      "policy_checks": {
+        "decision_kind": "ACTION",
+        "normalized_margin": 0.09268656716417911,
+        "reason": "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV"
+      },
+      "selected_action": "CREATE_PAYMENT_LINK"
+    },
+    {
+      "candidates": [
+        {
+          "action_stage_support": 5156,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5329,
+          "label": "RETRY_NOW",
+          "probability": 0.21188811188811185,
+          "supported": true
+        },
+        {
+          "action_stage_support": 5146,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5770,
+          "label": "RETRY_LATER_2H",
+          "probability": 0.2283640424343942,
+          "supported": true
+        },
+        {
+          "action_stage_support": 5071,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5956,
+          "label": "RETRY_LATER_6H",
+          "probability": 0.23529411764705882,
+          "supported": true
+        },
+        {
+          "action_stage_support": 5054,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 6466,
+          "label": "RETRY_LATER_12H",
+          "probability": 0.25432692307692295,
+          "supported": true
+        },
+        {
+          "action_stage_support": 4637,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 6466,
+          "label": "RETRY_LATER_24H",
+          "probability": 0.25432692307692295,
+          "supported": true
+        },
+        {
+          "action_stage_support": 4678,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5299,
+          "label": "SEND_NUDGE",
+          "probability": 0.22832260507383567,
+          "supported": true
+        },
+        {
+          "action_stage_support": 4052,
+          "calibration_bin": 0,
+          "calibration_bin_support": 18039,
+          "incremental_erv_minor": 1300,
+          "label": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "probability": 0.09030249110320285,
+          "supported": true
+        },
+        {
+          "action_stage_support": 3816,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5648,
+          "label": "OFFER_ALTERNATE_METHOD",
+          "probability": 0.2562500000000001,
+          "supported": true
+        }
+      ],
+      "decision_at": "2026-01-01T15:58:38.804421+00:00",
+      "decision_index": 2,
+      "observable_context": {
+        "amount_minor": 26800,
+        "contacts": 1,
+        "elapsed_hours": 6.0,
+        "failure_reason": "AUTHENTICATION_FAILURE",
+        "last_action": "CREATE_PAYMENT_LINK",
+        "payment_method": "UPI",
+        "previous_result": "FAILED",
+        "prior_interventions": 1,
+        "retries": 0
+      },
+      "outcome": {
+        "observed_at": "2026-01-02T03:58:38.804421+00:00",
+        "recovered": true,
+        "recovered_amount_minor": 26800
+      },
+      "policy_checks": {
+        "decision_kind": "ACTION",
+        "normalized_margin": 0.0,
+        "reason": "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV"
+      },
+      "selected_action": "RETRY_LATER_12H"
+    }
+  ],
+  "episode_id": "seq_a801b7ca72e6e7fc3d172d576682a735",
+  "final": {
+    "action_count": 2,
+    "no_fourth_autonomous_action": true,
+    "recovered": true,
+    "recovered_amount_minor": 26800,
+    "simulated_net_recovery_value_minor": 25750,
+    "termination": "RECOVERED",
+    "total_friction_cost_minor": 500,
+    "total_intervention_cost_minor": 550
+  },
+  "initial_failure": {
+    "amount_minor": 26800,
+    "failure_reason": "AUTHENTICATION_FAILURE",
+    "observed_at": "2026-01-01T09:58:38.804421+00:00",
+    "payment_method": "UPI"
+  },
+  "trace_type": "SUCCESSFUL_ADAPTIVE"
+}

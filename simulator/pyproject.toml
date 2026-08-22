@@ -20,6 +20,8 @@ degradation = "recoveriq_detector.cli:main"
 degradation-v2 = "recoveriq_detector_v2.cli:main"
 recovery-model = "recoveriq_ml.cli:main"
 recovery-policy = "recoveriq_policy.cli:main"
+recovery-sequential = "recoveriq_ml_v2.cli:main"
+recovery-sequential-policy = "recoveriq_sequential_policy.cli:main"
 
 [dependency-groups]
 dev = [
@@ -41,6 +43,9 @@ packages = [
   "recoveriq_ml",
   "recoveriq_policy",
   "recoveriq_policy_evaluation",
+  "recoveriq_sequential",
+  "recoveriq_ml_v2",
+  "recoveriq_sequential_policy",
 ]
 
 [tool.pytest.ini_options]

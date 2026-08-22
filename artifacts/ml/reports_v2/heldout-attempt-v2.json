@@ -1,0 +1,18 @@
+{
+  "artifact_type": "model_v2_registered_heldout_attempt",
+  "heldout_seeds": [
+    20271101,
+    20271102,
+    20271103,
+    20271104,
+    20271105,
+    20271106,
+    20271107,
+    20271108,
+    20271109,
+    20271110
+  ],
+  "quality_gate": "PASS",
+  "result_sha256": "ac771ba1f280c0f103bfe6cd7be7863532c2e29ed93bf68ed38a91148a075c86",
+  "status": "COMPLETED"
+}

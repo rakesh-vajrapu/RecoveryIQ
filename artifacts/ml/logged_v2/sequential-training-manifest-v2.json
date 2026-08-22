@@ -1,0 +1,152 @@
+{
+  "action_counts": {
+    "CREATE_PAYMENT_LINK": 13544,
+    "OFFER_ALTERNATE_METHOD": 12559,
+    "REQUEST_PAYMENT_METHOD_UPDATE": 13814,
+    "RETRY_LATER_12H": 14297,
+    "RETRY_LATER_24H": 13527,
+    "RETRY_LATER_2H": 14348,
+    "RETRY_LATER_6H": 14490,
+    "RETRY_NOW": 14569,
+    "SEND_NUDGE": 14794
+  },
+  "artifact_type": "sequential_randomized_trajectory_dataset",
+  "candidate_truth_row_count": 0,
+  "dataset_sha256": "103e514fd5e567bbc2545bd2c47d3a61e0c4cc6122fa8792fdec906ba9fc0b69",
+  "decision_count": 125942,
+  "decisions_by_index": {
+    "1": 54785,
+    "2": 41670,
+    "3": 29487
+  },
+  "episode_count": 54785,
+  "feature_schema_hash": "d3e87a20f104fac0b860ae71a2c583a3a922209b5ef10b0eac5c7f1213601cc5",
+  "feature_schema_version": "2.0",
+  "group": "training",
+  "positive_count": 31959,
+  "positive_rate": 0.2537596671483699,
+  "propensity_distribution": {
+    "0.1111111111111111": 68473,
+    "0.125": 31992,
+    "0.14285714285714285": 4810,
+    "0.16666666666666666": 634,
+    "0.2": 9880,
+    "0.25": 8652,
+    "0.3333333333333333": 1461,
+    "0.5": 40
+  },
+  "runtime_seconds": 44.452103600000555,
+  "seed_counts": {
+    "20270801": {
+      "decisions": 5305,
+      "episodes": 2313
+    },
+    "20270802": {
+      "decisions": 6255,
+      "episodes": 2698
+    },
+    "20270803": {
+      "decisions": 6148,
+      "episodes": 2666
+    },
+    "20270804": {
+      "decisions": 6310,
+      "episodes": 2748
+    },
+    "20270805": {
+      "decisions": 6983,
+      "episodes": 3019
+    },
+    "20270806": {
+      "decisions": 6847,
+      "episodes": 2985
+    },
+    "20270807": {
+      "decisions": 6099,
+      "episodes": 2684
+    },
+    "20270808": {
+      "decisions": 7108,
+      "episodes": 3093
+    },
+    "20270809": {
+      "decisions": 6316,
+      "episodes": 2776
+    },
+    "20270810": {
+      "decisions": 6171,
+      "episodes": 2660
+    },
+    "20270811": {
+      "decisions": 6026,
+      "episodes": 2602
+    },
+    "20270812": {
+      "decisions": 6338,
+      "episodes": 2748
+    },
+    "20270813": {
+      "decisions": 6835,
+      "episodes": 2977
+    },
+    "20270814": {
+      "decisions": 6480,
+      "episodes": 2813
+    },
+    "20270815": {
+      "decisions": 5495,
+      "episodes": 2418
+    },
+    "20270816": {
+      "decisions": 6123,
+      "episodes": 2658
+    },
+    "20270817": {
+      "decisions": 6001,
+      "episodes": 2602
+    },
+    "20270818": {
+      "decisions": 6487,
+      "episodes": 2813
+    },
+    "20270819": {
+      "decisions": 6142,
+      "episodes": 2688
+    },
+    "20270820": {
+      "decisions": 6473,
+      "episodes": 2824
+    }
+  },
+  "seeds": [
+    20270801,
+    20270802,
+    20270803,
+    20270804,
+    20270805,
+    20270806,
+    20270807,
+    20270808,
+    20270809,
+    20270810,
+    20270811,
+    20270812,
+    20270813,
+    20270814,
+    20270815,
+    20270816,
+    20270817,
+    20270818,
+    20270819,
+    20270820
+  ],
+  "software_versions": {
+    "joblib": "1.5.3",
+    "lightgbm": "4.7.0",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "recoveriq-simulator": "0.3.0",
+    "scikit-learn": "1.9.0",
+    "shap": "0.52.0"
+  }
+}

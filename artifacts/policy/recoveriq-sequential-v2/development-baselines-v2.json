@@ -1,0 +1,1344 @@
+{
+  "artifact_type": "frozen_sequential_observable_baselines",
+  "cell_diagnostics": {
+    "simple_cells": {
+      "AUTHENTICATION_FAILURE|1": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.0831758034026465,
+          "support": 529
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.13377926421404682,
+          "support": 598
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.1658119658119658,
+          "support": 585
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.15703971119133575,
+          "support": 554
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.20272572402044292,
+          "support": 587
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.21032504780114722,
+          "support": 523
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.3924050632911392,
+          "support": 553
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.2129817444219067,
+          "support": 493
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.33874239350912777,
+          "support": 493
+        }
+      ],
+      "AUTHENTICATION_FAILURE|2": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.13934426229508196,
+          "support": 488
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.17058823529411765,
+          "support": 510
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.16122004357298475,
+          "support": 459
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.19421487603305784,
+          "support": 484
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.16624685138539042,
+          "support": 397
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.18584070796460178,
+          "support": 452
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.3983050847457627,
+          "support": 354
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.23940149625935161,
+          "support": 401
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.3313953488372093,
+          "support": 344
+        }
+      ],
+      "AUTHENTICATION_FAILURE|3": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.1482889733840304,
+          "support": 263
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.16279069767441862,
+          "support": 258
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.16049382716049382,
+          "support": 243
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.12653061224489795,
+          "support": 245
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.17857142857142858,
+          "support": 196
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.19874476987447698,
+          "support": 478
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.38388625592417064,
+          "support": 422
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.25609756097560976,
+          "support": 410
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.393048128342246,
+          "support": 374
+        }
+      ],
+      "CUSTOMER_ACTION_REQUIRED|1": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.07713884992987377,
+          "support": 713
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.1043115438108484,
+          "support": 719
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.12447552447552447,
+          "support": 715
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.2178932178932179,
+          "support": 693
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.2894736842105263,
+          "support": 722
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.19439868204283361,
+          "support": 607
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.2987012987012987,
+          "support": 616
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.13237639553429026,
+          "support": 627
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.26559714795008915,
+          "support": 561
+        }
+      ],
+      "CUSTOMER_ACTION_REQUIRED|2": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.12323943661971831,
+          "support": 568
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.17792421746293247,
+          "support": 607
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.2020033388981636,
+          "support": 599
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.23519736842105263,
+          "support": 608
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.2653846153846154,
+          "support": 520
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.1884328358208955,
+          "support": 536
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.33471933471933474,
+          "support": 481
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.13900414937759337,
+          "support": 482
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.2636165577342048,
+          "support": 459
+        }
+      ],
+      "CUSTOMER_ACTION_REQUIRED|3": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.18787878787878787,
+          "support": 330
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.199438202247191,
+          "support": 356
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.2591549295774648,
+          "support": 355
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.29607250755287007,
+          "support": 331
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.3345070422535211,
+          "support": 284
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.19014084507042253,
+          "support": 568
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.3622881355932203,
+          "support": 472
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.13717693836978131,
+          "support": 503
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.30324074074074076,
+          "support": 432
+        }
+      ],
+      "INSTRUMENT_EXPIRED|1": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.015723270440251572,
+          "support": 318
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.007017543859649123,
+          "support": 285
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.003676470588235294,
+          "support": 272
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.0038910505836575876,
+          "support": 257
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.009404388714733543,
+          "support": 319
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.03676470588235294,
+          "support": 272
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.3723404255319149,
+          "support": 282
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.6287878787878788,
+          "support": 264
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.544,
+          "support": 250
+        }
+      ],
+      "INSTRUMENT_EXPIRED|2": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.012048192771084338,
+          "support": 249
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.00392156862745098,
+          "support": 255
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.003787878787878788,
+          "support": 264
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.004132231404958678,
+          "support": 242
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.004694835680751174,
+          "support": 213
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.0398406374501992,
+          "support": 251
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.3842364532019704,
+          "support": 203
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.6590909090909091,
+          "support": 220
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.5129533678756477,
+          "support": 193
+        }
+      ],
+      "INSTRUMENT_EXPIRED|3": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.0,
+          "support": 128
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.0,
+          "support": 141
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.008064516129032258,
+          "support": 124
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.0,
+          "support": 113
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.010869565217391304,
+          "support": 92
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.01834862385321101,
+          "support": 327
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.41434262948207173,
+          "support": 251
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.5975103734439834,
+          "support": 241
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.5675675675675675,
+          "support": 222
+        }
+      ],
+      "INSUFFICIENT_FUNDS|1": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.05973025048169557,
+          "support": 519
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.10685483870967742,
+          "support": 496
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.17558886509635974,
+          "support": 467
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.32454361054766734,
+          "support": 493
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.5138339920948617,
+          "support": 506
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.06858407079646017,
+          "support": 452
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.2157676348547718,
+          "support": 482
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.0611353711790393,
+          "support": 458
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.09930715935334873,
+          "support": 433
+        }
+      ],
+      "INSUFFICIENT_FUNDS|2": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.21577726218097448,
+          "support": 431
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.2751196172248804,
+          "support": 418
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.3411764705882353,
+          "support": 425
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.47268408551068886,
+          "support": 421
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.6456310679611651,
+          "support": 412
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.09069212410501193,
+          "support": 419
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.22922636103151864,
+          "support": 349
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.08100558659217877,
+          "support": 358
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.10676156583629894,
+          "support": 281
+        }
+      ],
+      "INSUFFICIENT_FUNDS|3": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.324,
+          "support": 250
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.3851851851851852,
+          "support": 270
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.4265232974910394,
+          "support": 279
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.5763358778625954,
+          "support": 262
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.6065573770491803,
+          "support": 244
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.08132530120481928,
+          "support": 332
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.2206896551724138,
+          "support": 290
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.0846774193548387,
+          "support": 248
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.10699588477366255,
+          "support": 243
+        }
+      ],
+      "ISSUER_UNAVAILABLE|1": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.44272445820433437,
+          "support": 323
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.5033783783783784,
+          "support": 296
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.6322188449848024,
+          "support": 329
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.6025641025641025,
+          "support": 312
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.6411042944785276,
+          "support": 326
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.0,
+          "support": 286
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.24836601307189543,
+          "support": 306
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.06109324758842444,
+          "support": 311
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.5157894736842106,
+          "support": 285
+        }
+      ],
+      "ISSUER_UNAVAILABLE|2": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.5364583333333334,
+          "support": 192
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.5841584158415841,
+          "support": 202
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.5560975609756098,
+          "support": 205
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.4945054945054945,
+          "support": 182
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.6379310344827587,
+          "support": 174
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.0,
+          "support": 204
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.17177914110429449,
+          "support": 163
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.07407407407407407,
+          "support": 162
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.5231788079470199,
+          "support": 151
+        }
+      ],
+      "ISSUER_UNAVAILABLE|3": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.58,
+          "support": 150
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.5333333333333333,
+          "support": 105
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.5772357723577236,
+          "support": 123
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.6276595744680851,
+          "support": 94
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.5185185185185185,
+          "support": 108
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.0,
+          "support": 103
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.26136363636363635,
+          "support": 88
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.07216494845360824,
+          "support": 97
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.5340909090909091,
+          "support": 88
+        }
+      ],
+      "MANDATE_INACTIVE|1": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.016129032258064516,
+          "support": 124
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.04424778761061947,
+          "support": 113
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.007518796992481203,
+          "support": 133
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.008928571428571428,
+          "support": 112
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.022388059701492536,
+          "support": 134
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.03571428571428571,
+          "support": 140
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.4188034188034188,
+          "support": 117
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.6388888888888888,
+          "support": 108
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.5543478260869565,
+          "support": 92
+        }
+      ],
+      "MANDATE_INACTIVE|2": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.0,
+          "support": 107
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.0,
+          "support": 97
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.017241379310344827,
+          "support": 116
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.00980392156862745,
+          "support": 102
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.0,
+          "support": 95
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.020202020202020204,
+          "support": 99
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.4383561643835616,
+          "support": 73
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.6,
+          "support": 110
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.5454545454545454,
+          "support": 88
+        }
+      ],
+      "MANDATE_INACTIVE|3": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.020833333333333332,
+          "support": 48
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.03278688524590164,
+          "support": 61
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.0,
+          "support": 48
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.0,
+          "support": 47
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.0,
+          "support": 45
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.06666666666666667,
+          "support": 120
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.4411764705882353,
+          "support": 102
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.638095238095238,
+          "support": 105
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.5,
+          "support": 112
+        }
+      ],
+      "TEMPORARY_NETWORK_ERROR|1": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.36,
+          "support": 475
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.3900862068965517,
+          "support": 464
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.5596707818930041,
+          "support": 486
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.5905349794238683,
+          "support": 486
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.6321353065539113,
+          "support": 473
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.014184397163120567,
+          "support": 423
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.2354368932038835,
+          "support": 412
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.08928571428571429,
+          "support": 392
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.5072886297376094,
+          "support": 343
+        }
+      ],
+      "TEMPORARY_NETWORK_ERROR|2": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.4953271028037383,
+          "support": 321
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.48639455782312924,
+          "support": 294
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.5529801324503312,
+          "support": 302
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.5693430656934306,
+          "support": 274
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.549645390070922,
+          "support": 282
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.03146853146853147,
+          "support": 286
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.2301255230125523,
+          "support": 239
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.07352941176470588,
+          "support": 204
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.48695652173913045,
+          "support": 230
+        }
+      ],
+      "TEMPORARY_NETWORK_ERROR|3": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.5680473372781065,
+          "support": 169
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.5056179775280899,
+          "support": 178
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.4875,
+          "support": 160
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.5375,
+          "support": 160
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.5244755244755245,
+          "support": 143
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.022099447513812154,
+          "support": 181
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.2206896551724138,
+          "support": 145
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.08870967741935484,
+          "support": 124
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.4489795918367347,
+          "support": 147
+        }
+      ],
+      "UNKNOWN_TRANSIENT_ERROR|1": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.13414634146341464,
+          "support": 246
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.211864406779661,
+          "support": 236
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.22767857142857142,
+          "support": 224
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.35064935064935066,
+          "support": 231
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.3333333333333333,
+          "support": 222
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.1201923076923077,
+          "support": 208
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.19662921348314608,
+          "support": 178
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.12440191387559808,
+          "support": 209
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.34183673469387754,
+          "support": 196
+        }
+      ],
+      "UNKNOWN_TRANSIENT_ERROR|2": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.2358490566037736,
+          "support": 212
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.31794871794871793,
+          "support": 195
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.3383084577114428,
+          "support": 201
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.34177215189873417,
+          "support": 158
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.375,
+          "support": 168
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.08670520231213873,
+          "support": 173
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.2642857142857143,
+          "support": 140
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.09271523178807947,
+          "support": 151
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.32727272727272727,
+          "support": 110
+        }
+      ],
+      "UNKNOWN_TRANSIENT_ERROR|3": [
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.37815126050420167,
+          "support": 119
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.422680412371134,
+          "support": 97
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.4392523364485981,
+          "support": 107
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.3963963963963964,
+          "support": 111
+        },
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.39080459770114945,
+          "support": 87
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.1111111111111111,
+          "support": 144
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.27906976744186046,
+          "support": 129
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.11678832116788321,
+          "support": 137
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.3333333333333333,
+          "support": 120
+        }
+      ]
+    },
+    "stage_actions": {
+      "1": [
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.3575554879902706,
+          "support": 3289
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.3520542781756502,
+          "support": 2653
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.30465264499681327,
+          "support": 3138
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.29429735234215887,
+          "support": 2946
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.24945499844285268,
+          "support": 3211
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.18553459119496854,
+          "support": 2862
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.18553164951668225,
+          "support": 3207
+        },
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.14906067138897444,
+          "support": 3247
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.10477499141188595,
+          "support": 2911
+        }
+      ],
+      "2": [
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.35382574082264484,
+          "support": 2261
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.3442887931034483,
+          "support": 1856
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.30569430569430567,
+          "support": 2002
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.29866450829623636,
+          "support": 2471
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.2691559704395177,
+          "support": 2571
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.24592707525213345,
+          "support": 2578
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.21264367816091953,
+          "support": 2088
+        },
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.21261682242990654,
+          "support": 2568
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.10702479338842975,
+          "support": 2420
+        }
+      ],
+      "3": [
+        {
+          "action": "RETRY_LATER_24H",
+          "recovery_rate": 0.3703085904920767,
+          "support": 1199
+        },
+        {
+          "action": "OFFER_ALTERNATE_METHOD",
+          "recovery_rate": 0.3676639815880322,
+          "support": 1738
+        },
+        {
+          "action": "RETRY_LATER_12H",
+          "recovery_rate": 0.34409391049156274,
+          "support": 1363
+        },
+        {
+          "action": "CREATE_PAYMENT_LINK",
+          "recovery_rate": 0.33543970510795157,
+          "support": 1899
+        },
+        {
+          "action": "RETRY_LATER_6H",
+          "recovery_rate": 0.310632383599722,
+          "support": 1439
+        },
+        {
+          "action": "RETRY_NOW",
+          "recovery_rate": 0.28208647906657514,
+          "support": 1457
+        },
+        {
+          "action": "RETRY_LATER_2H",
+          "recovery_rate": 0.27694406548431105,
+          "support": 1466
+        },
+        {
+          "action": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "recovery_rate": 0.2359249329758713,
+          "support": 1865
+        },
+        {
+          "action": "SEND_NUDGE",
+          "recovery_rate": 0.11717709720372836,
+          "support": 2253
+        }
+      ]
+    }
+  },
+  "development_seeds": [
+    20271201,
+    20271202,
+    20271203,
+    20271204,
+    20271205,
+    20271206,
+    20271207,
+    20271208,
+    20271209,
+    20271210
+  ],
+  "global_min_support": 500,
+  "simple_mapping": {
+    "AUTHENTICATION_FAILURE|1": "CREATE_PAYMENT_LINK",
+    "AUTHENTICATION_FAILURE|2": "CREATE_PAYMENT_LINK",
+    "AUTHENTICATION_FAILURE|3": "OFFER_ALTERNATE_METHOD",
+    "CUSTOMER_ACTION_REQUIRED|1": "CREATE_PAYMENT_LINK",
+    "CUSTOMER_ACTION_REQUIRED|2": "CREATE_PAYMENT_LINK",
+    "CUSTOMER_ACTION_REQUIRED|3": "CREATE_PAYMENT_LINK",
+    "INSTRUMENT_EXPIRED|1": "RETRY_NOW",
+    "INSTRUMENT_EXPIRED|3": "SEND_NUDGE",
+    "INSUFFICIENT_FUNDS|1": "RETRY_LATER_24H",
+    "INSUFFICIENT_FUNDS|2": "RETRY_LATER_24H",
+    "INSUFFICIENT_FUNDS|3": "SEND_NUDGE",
+    "ISSUER_UNAVAILABLE|1": "RETRY_LATER_24H",
+    "TEMPORARY_NETWORK_ERROR|1": "RETRY_LATER_24H",
+    "TEMPORARY_NETWORK_ERROR|2": "RETRY_LATER_6H"
+  },
+  "simple_min_support": 300,
+  "stage_rankings": {
+    "1": [
+      "RETRY_LATER_24H",
+      "OFFER_ALTERNATE_METHOD",
+      "RETRY_LATER_12H",
+      "CREATE_PAYMENT_LINK",
+      "RETRY_LATER_6H",
+      "REQUEST_PAYMENT_METHOD_UPDATE",
+      "RETRY_LATER_2H",
+      "RETRY_NOW",
+      "SEND_NUDGE"
+    ],
+    "2": [
+      "RETRY_LATER_24H",
+      "OFFER_ALTERNATE_METHOD",
+      "CREATE_PAYMENT_LINK",
+      "RETRY_LATER_12H",
+      "RETRY_LATER_6H",
+      "RETRY_LATER_2H",
+      "REQUEST_PAYMENT_METHOD_UPDATE",
+      "RETRY_NOW",
+      "SEND_NUDGE"
+    ],
+    "3": [
+      "RETRY_LATER_24H",
+      "OFFER_ALTERNATE_METHOD",
+      "RETRY_LATER_12H",
+      "CREATE_PAYMENT_LINK",
+      "RETRY_LATER_6H",
+      "RETRY_NOW",
+      "RETRY_LATER_2H",
+      "REQUEST_PAYMENT_METHOD_UPDATE",
+      "SEND_NUDGE"
+    ]
+  },
+  "target": "action_recovered_before_next_decision"
+}

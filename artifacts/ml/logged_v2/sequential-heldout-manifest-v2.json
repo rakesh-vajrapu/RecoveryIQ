@@ -1,0 +1,102 @@
+{
+  "action_counts": {
+    "CREATE_PAYMENT_LINK": 6765,
+    "OFFER_ALTERNATE_METHOD": 6180,
+    "REQUEST_PAYMENT_METHOD_UPDATE": 6942,
+    "RETRY_LATER_12H": 7105,
+    "RETRY_LATER_24H": 6804,
+    "RETRY_LATER_2H": 7244,
+    "RETRY_LATER_6H": 7273,
+    "RETRY_NOW": 7105,
+    "SEND_NUDGE": 7500
+  },
+  "artifact_type": "sequential_randomized_trajectory_dataset",
+  "candidate_truth_row_count": 499189,
+  "dataset_sha256": "d8ca310f7722e45daf1e81cc2ea1c7d65f633f1c04a827dadf36dd568e1f8ecd",
+  "decision_count": 62918,
+  "decisions_by_index": {
+    "1": 27451,
+    "2": 20763,
+    "3": 14704
+  },
+  "episode_count": 27451,
+  "feature_schema_hash": "d3e87a20f104fac0b860ae71a2c583a3a922209b5ef10b0eac5c7f1213601cc5",
+  "feature_schema_version": "2.0",
+  "group": "heldout",
+  "positive_count": 16139,
+  "positive_rate": 0.2565084713436536,
+  "propensity_distribution": {
+    "0.1111111111111111": 34345,
+    "0.125": 15972,
+    "0.14285714285714285": 2392,
+    "0.16666666666666666": 356,
+    "0.2": 4809,
+    "0.25": 4277,
+    "0.3333333333333333": 741,
+    "0.5": 26
+  },
+  "runtime_seconds": 37.86444329999722,
+  "seed_counts": {
+    "20271101": {
+      "decisions": 6767,
+      "episodes": 2918
+    },
+    "20271102": {
+      "decisions": 6426,
+      "episodes": 2816
+    },
+    "20271103": {
+      "decisions": 5686,
+      "episodes": 2466
+    },
+    "20271104": {
+      "decisions": 6247,
+      "episodes": 2712
+    },
+    "20271105": {
+      "decisions": 5939,
+      "episodes": 2611
+    },
+    "20271106": {
+      "decisions": 7164,
+      "episodes": 3118
+    },
+    "20271107": {
+      "decisions": 6221,
+      "episodes": 2742
+    },
+    "20271108": {
+      "decisions": 6506,
+      "episodes": 2836
+    },
+    "20271109": {
+      "decisions": 5920,
+      "episodes": 2573
+    },
+    "20271110": {
+      "decisions": 6042,
+      "episodes": 2659
+    }
+  },
+  "seeds": [
+    20271101,
+    20271102,
+    20271103,
+    20271104,
+    20271105,
+    20271106,
+    20271107,
+    20271108,
+    20271109,
+    20271110
+  ],
+  "software_versions": {
+    "joblib": "1.5.3",
+    "lightgbm": "4.7.0",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "recoveriq-simulator": "0.3.0",
+    "scikit-learn": "1.9.0",
+    "shap": "0.52.0"
+  }
+}

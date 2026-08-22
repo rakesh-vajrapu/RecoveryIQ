@@ -2,7 +2,7 @@
 
 ## System shape
 
-RecoverIQ separates evidence production, authorization, execution, and explanation. Statistical and ML components will produce evidence; a deterministic policy engine will authorize bounded actions; executors will perform those actions; Gemini may explain already-computed evidence. The database and verified payment-provider events remain the financial system of record.
+RecoverIQ separates evidence production, bounded sequential authorization, execution, and explanation. Statistical and ML components produce action-level evidence; a deterministic policy engine authorizes at most three adaptive interventions; executors perform those actions; Gemini may later explain already-computed evidence. The database and verified payment-provider events remain the financial system of record.
 
 ```mermaid
 flowchart LR
@@ -125,6 +125,16 @@ Phase 5 adds a separate typed first-intervention policy package. Observable cont
 The policy package cannot import the evaluation oracle or simulator ground truth. The evaluation adapter alone joins hidden action outcomes after decisions, applies single-attribution semantics, and compares paired strategies. Policy V1 has no executor: ACTION is a simulated first intervention, while HUMAN_REVIEW and STOP have no autonomous side effect. Existing multi-action Phase 2 workflows are retained as a distinct secondary comparison rather than mixed into the equivalent first-action headline.
 
 The one-time Policy V1 validation passed its frozen safety/value gates, but architecture does not infer production readiness. The exact no-health research policy outperformed the frozen primary again, and the existing multi-action Reminder + Retry workflow outperformed the first-action policy. Those results constrain future model and repeated-decision work; they do not authorize a post-validation model switch or broader action loop.
+
+## Bounded sequential-recovery boundary
+
+Phase 6 adds a new simulator-adapter environment rather than modifying Simulator `0.3.0`. An episode has a fixed 48-hour horizon and terminates on recovery, STOP, HUMAN_REVIEW, horizon, or three autonomous interventions. Every decision receives only prior observable episode state; one feasible action is executed and its outcome is finalized before state advances. Recovery attribution belongs to exactly one current action.
+
+Recovery Model V2 is a new tabular action-conditioned model for these trajectory states. Its primary feature schema explicitly excludes every Detector V2/payment-health field as well as hidden state, raw IDs, and seeds. Detector V2 remains a separate advisory operational-observability component. Sequential Policy V2 uses calibrated action-level probability, exact incremental ERV, and deterministic limits in a bounded greedy replanning loop. Reinforcement learning and neural sequence models are intentionally outside this phase.
+
+The implementation keeps four concrete authority boundaries: `recoveriq_sequential` owns observable episode state, feasibility, timing, and attribution; `recoveriq_ml_v2` owns logging, the frozen feature boundary, model/calibration, and held-out scoring; `recoveriq_sequential_policy` owns deterministic scoring/rules and baseline selection; only its evaluation module may instantiate the hidden simulator oracle. Model and policy artifacts bind schema/model/calibrator/baseline hashes. Registered held-out and validation entry points write attempt markers before world generation and refuse rerun.
+
+The sealed Phase 6 evaluation confirmed that later-state model quality remained supported and that all seven strategies saw the same per-seed initial-cohort digest. This is simulator evidence, not production authority: no executor, Gemini call, Razorpay adapter, frontend control, or external side effect was added.
 
 ## Gemini boundary
 

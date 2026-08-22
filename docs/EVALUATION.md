@@ -42,6 +42,20 @@ Policy V1 froze at config hash `ddf875ea3406f62236b4a9fe91f9e40c0ad129ee60d6482c
 
 The no-health research comparator recovered 11,872 payments and produced 2,450,967,750 net minor, again outperforming the frozen primary. Payment-health features therefore have not shown downstream value. Under separate original multi-action semantics, Reminder + Retry recovered 12,885 payments and produced 2,623,000,700 net minor; RecoverIQ did not beat it. No retuning followed either result, and overall-final seeds remain untouched. Full paired intervals, strategy metrics, diagnostic slices, block analysis, and abstention evidence are in `artifacts/policy/recoveriq-policy-v1/validation-evaluation-v1.json`.
 
+### Recovery Model V2 and sequential-policy protocol
+
+Before any sequential trajectory generation, Phase 6 registers logged training `20270801`-`20270820`, Model V2 development `20270901`-`20270910`, calibration `20271001`-`20271010`, one-time held-out test `20271101`-`20271110`, sequential-policy development `20271201`-`20271210`, one-time sequential-policy validation `20280101`-`20280110`, and optional stress `20280201`-`20280205`. Overall-final `20261101`-`20261120` remains untouched and forbidden.
+
+Primary Model V2 is tabular LightGBM without payment-health features, with a same-schema logistic baseline. It predicts action-level recovery before the next decision from past/observable trajectory state. Development selects modest frozen hyperparameters; calibration seeds choose sigmoid or isotonic once; only then may the held-out attempt execute. Sequential Policy V2 may begin only after that held-out artifact is sealed. Policy development freezes BALANCED costs, maximum three interventions, retry/contact caps, support/margin rules, stopping logic, and transparent baselines before validation runs once.
+
+All Phase 6 policy comparators use equivalent full 48-hour episodes and keyed outcomes. Preregistered claims require zero violations, positive paired recovery/value over Reminder + Retry for a recovery claim, a net-value 95% interval excluding zero for a strong claim, and held-out value/regret over the simple sequential rule for an ML-personalization claim. Full semantics and gates are in `docs/SEQUENTIAL_RECOVERY.md` and `docs/RECOVERY_MODEL_V2.md`.
+
+The registered stages completed in order. Training logged 125,942 decisions across 54,785 episodes, including 54,785/41,670/29,487 rows at decision indexes 1/2/3. Model V2 froze LightGBM candidate 1 and isotonic calibration. Its one-time held-out group contained 62,918 decisions across 27,451 episodes and passed every registered gate: calibrated Brier 0.151320, log loss 0.456991, ECE 0.004226, ROC-AUC 0.793268, and PR-AUC 0.531004. Decision-index Brier was 0.144929/0.149324/0.166069 and pairwise ranking accuracy was 0.897927/0.864327/0.851827. The optional health comparator was not run.
+
+Sequential Policy V2 then froze at config hash `ce7712b1ee4e800d54a875eb65a7bc826680e59faa465b54cbc1db7472010b25`, with BALANCED costs, a zero normalized margin, two-retry/two-contact caps, and at most three interventions. The one-time validation covered 27,406 paired episodes. RecoverIQ recovered 20,821 (75.97%) with 4,747,032,700 simulated gross minor and 4,719,632,070 simulated net minor, 28,829 retries, 19,519 contacts, 35 reviews, 6,550 unresolved STOP/terminal outcomes, and zero violations. Reminder + Retry recovered 14,549 (53.09%) with 3,278,888,000 net minor. The paired mean RecoverIQ net gain was 144,074,407 minor per seed, with 95% CI 120,300,796 to 167,848,018; the recovery-rate gain was 0.22934, with CI 0.21771 to 0.24096. All registered claims passed.
+
+The probability-only policy recovered 20,878 (76.18%) and produced 4,726,961,640 net minor. RecoverIQ's paired mean difference was -0.00210 recovery rate and -732,957 net minor per seed, while using 49.1 fewer contacts per seed. This is a preserved negative economic-selection result, not a reason to retune after validation. Overall-final seeds remain untouched.
+
 ## Strategies
 
 Phase 2 strategies receive identical cases and paired outcome randomness:

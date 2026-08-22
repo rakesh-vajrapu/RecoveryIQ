@@ -58,6 +58,23 @@ artifacts/ml/reports/*
 !artifacts/ml/reports/heldout-report-v1.md
 !artifacts/ml/reports/shap-report-v1.json
 !artifacts/ml/phase4-summary-v1.json
+!artifacts/ml/logged_v2/
+artifacts/ml/logged_v2/*
+!artifacts/ml/logged_v2/*-manifest-v2.json
+!artifacts/ml/models/recovery-model-v2/
+artifacts/ml/models/recovery-model-v2/*
+!artifacts/ml/models/recovery-model-v2/model-manifest-v2.json
+!artifacts/ml/models/recovery-model-v2/*.joblib
+!artifacts/ml/calibration/recovery-model-v2/
+artifacts/ml/calibration/recovery-model-v2/*
+!artifacts/ml/calibration/recovery-model-v2/calibration-manifest-v2.json
+!artifacts/ml/calibration/recovery-model-v2/*.joblib
+!artifacts/ml/reports_v2/
+artifacts/ml/reports_v2/*
+!artifacts/ml/reports_v2/development-selection-v2.json
+!artifacts/ml/reports_v2/heldout-attempt-v2.json
+!artifacts/ml/reports_v2/heldout-evaluation-v2.json
+!artifacts/ml/reports_v2/heldout-report-v2.md
 artifacts/policy/*
 !artifacts/policy/recoveriq-policy-v1/
 artifacts/policy/recoveriq-policy-v1/*
@@ -72,6 +89,19 @@ artifacts/policy/recoveriq-policy-v1/*
 !artifacts/policy/recoveriq-policy-v1/validation-report-v1.md
 !artifacts/policy/recoveriq-policy-v1/decision-trace-example-v1.json
 !artifacts/policy/recoveriq-policy-v1/phase5-summary-v1.json
+!artifacts/policy/recoveriq-sequential-v2/
+artifacts/policy/recoveriq-sequential-v2/*
+!artifacts/policy/recoveriq-sequential-v2/development-baselines-v2.json
+!artifacts/policy/recoveriq-sequential-v2/development-policy-v2.json
+!artifacts/policy/recoveriq-sequential-v2/development-successful-trace-v2.json
+!artifacts/policy/recoveriq-sequential-v2/development-failure-trace-v2.json
+!artifacts/policy/recoveriq-sequential-v2/recoveriq-sequential-policy-v2.json
+!artifacts/policy/recoveriq-sequential-v2/policy-freeze-manifest-v2.json
+!artifacts/policy/recoveriq-sequential-v2/validation-attempt-v2.json
+!artifacts/policy/recoveriq-sequential-v2/validation-evaluation-v2.json
+!artifacts/policy/recoveriq-sequential-v2/validation-report-v2.md
+!artifacts/policy/recoveriq-sequential-v2/successful-adaptive-trace-v2.json
+!artifacts/policy/recoveriq-sequential-v2/bounded-failure-trace-v2.json
 
 # JavaScript
 node_modules/

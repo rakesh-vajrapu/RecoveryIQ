@@ -1,0 +1,8 @@
+{
+  "artifact_type": "sequential_policy_v2_freeze",
+  "global_baseline_min_support": 500,
+  "policy_config_hash": "ce7712b1ee4e800d54a875eb65a7bc826680e59faa465b54cbc1db7472010b25",
+  "policy_version": "2.0.0",
+  "simple_baseline_min_support": 300,
+  "validation_status": "FROZEN_NOT_RUN"
+}

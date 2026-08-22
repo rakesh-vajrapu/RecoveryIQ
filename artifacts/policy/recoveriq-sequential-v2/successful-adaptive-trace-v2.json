@@ -1,0 +1,322 @@
+{
+  "decisions": [
+    {
+      "candidates": [
+        {
+          "action_stage_support": 6443,
+          "calibration_bin": 0,
+          "calibration_bin_support": 18039,
+          "incremental_erv_minor": 2269,
+          "label": "RETRY_NOW",
+          "probability": 0.09030249110320285,
+          "supported": true
+        },
+        {
+          "action_stage_support": 6357,
+          "calibration_bin": 1,
+          "calibration_bin_support": 6756,
+          "incremental_erv_minor": 3358,
+          "label": "RETRY_LATER_2H",
+          "probability": 0.12786259541984737,
+          "supported": true
+        },
+        {
+          "action_stage_support": 6510,
+          "calibration_bin": 1,
+          "calibration_bin_support": 6756,
+          "incremental_erv_minor": 5136,
+          "label": "RETRY_LATER_6H",
+          "probability": 0.1891891891891892,
+          "supported": true
+        },
+        {
+          "action_stage_support": 6446,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 6273,
+          "label": "RETRY_LATER_12H",
+          "probability": 0.2283640424343942,
+          "supported": true
+        },
+        {
+          "action_stage_support": 6422,
+          "calibration_bin": 3,
+          "calibration_bin_support": 8548,
+          "incremental_erv_minor": 8416,
+          "label": "RETRY_LATER_24H",
+          "probability": 0.30227882037533504,
+          "supported": true
+        },
+        {
+          "action_stage_support": 5791,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 6121,
+          "label": "SEND_NUDGE",
+          "probability": 0.22832260507383567,
+          "supported": true
+        },
+        {
+          "action_stage_support": 5709,
+          "calibration_bin": 3,
+          "calibration_bin_support": 8548,
+          "incremental_erv_minor": 8066,
+          "label": "CREATE_PAYMENT_LINK",
+          "probability": 0.30227882037533504,
+          "supported": true
+        },
+        {
+          "action_stage_support": 5859,
+          "calibration_bin": 0,
+          "calibration_bin_support": 18039,
+          "incremental_erv_minor": 1578,
+          "label": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "probability": 0.08200455580865604,
+          "supported": true
+        },
+        {
+          "action_stage_support": 5248,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5723,
+          "label": "OFFER_ALTERNATE_METHOD",
+          "probability": 0.2283640424343942,
+          "supported": true
+        }
+      ],
+      "decision_at": "2026-01-01T17:28:57.601598+00:00",
+      "decision_index": 1,
+      "observable_context": {
+        "amount_minor": 29000,
+        "contacts": 0,
+        "elapsed_hours": 0.0,
+        "failure_reason": "CUSTOMER_ACTION_REQUIRED",
+        "last_action": "NONE",
+        "payment_method": "NETBANKING",
+        "previous_result": "NONE",
+        "prior_interventions": 0,
+        "retries": 0
+      },
+      "outcome": {
+        "observed_at": "2026-01-02T17:28:57.601598+00:00",
+        "recovered": false,
+        "recovered_amount_minor": 0
+      },
+      "policy_checks": {
+        "decision_kind": "ACTION",
+        "normalized_margin": 0.012068965517241403,
+        "reason": "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV"
+      },
+      "selected_action": "RETRY_LATER_24H"
+    },
+    {
+      "candidates": [
+        {
+          "action_stage_support": 5156,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5695,
+          "label": "RETRY_NOW",
+          "probability": 0.21188811188811185,
+          "supported": true
+        },
+        {
+          "action_stage_support": 5146,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5695,
+          "label": "RETRY_LATER_2H",
+          "probability": 0.21188811188811185,
+          "supported": true
+        },
+        {
+          "action_stage_support": 5071,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5695,
+          "label": "RETRY_LATER_6H",
+          "probability": 0.21188811188811185,
+          "supported": true
+        },
+        {
+          "action_stage_support": 5054,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5695,
+          "label": "RETRY_LATER_12H",
+          "probability": 0.21188811188811185,
+          "supported": true
+        },
+        {
+          "action_stage_support": 4678,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 6123,
+          "label": "SEND_NUDGE",
+          "probability": 0.2283640424343942,
+          "supported": true
+        },
+        {
+          "action_stage_support": 4060,
+          "calibration_bin": 3,
+          "calibration_bin_support": 8548,
+          "incremental_erv_minor": 8066,
+          "label": "CREATE_PAYMENT_LINK",
+          "probability": 0.30227882037533504,
+          "supported": true
+        },
+        {
+          "action_stage_support": 4052,
+          "calibration_bin": 0,
+          "calibration_bin_support": 18039,
+          "incremental_erv_minor": 1819,
+          "label": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "probability": 0.09030249110320285,
+          "supported": true
+        },
+        {
+          "action_stage_support": 3816,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5723,
+          "label": "OFFER_ALTERNATE_METHOD",
+          "probability": 0.2283640424343942,
+          "supported": true
+        }
+      ],
+      "decision_at": "2026-01-02T19:28:57.601598+00:00",
+      "decision_index": 2,
+      "observable_context": {
+        "amount_minor": 29000,
+        "contacts": 0,
+        "elapsed_hours": 26.0,
+        "failure_reason": "CUSTOMER_ACTION_REQUIRED",
+        "last_action": "RETRY_LATER_24H",
+        "payment_method": "NETBANKING",
+        "previous_result": "FAILED",
+        "prior_interventions": 1,
+        "retries": 1
+      },
+      "outcome": {
+        "observed_at": "2026-01-02T19:28:57.601598+00:00",
+        "recovered": false,
+        "recovered_amount_minor": 0
+      },
+      "policy_checks": {
+        "decision_kind": "ACTION",
+        "normalized_margin": 0.067,
+        "reason": "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV"
+      },
+      "selected_action": "CREATE_PAYMENT_LINK"
+    },
+    {
+      "candidates": [
+        {
+          "action_stage_support": 2970,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 6173,
+          "label": "RETRY_NOW",
+          "probability": 0.2283640424343942,
+          "supported": true
+        },
+        {
+          "action_stage_support": 2845,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 6925,
+          "label": "RETRY_LATER_2H",
+          "probability": 0.25432692307692295,
+          "supported": true
+        },
+        {
+          "action_stage_support": 2909,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 6925,
+          "label": "RETRY_LATER_6H",
+          "probability": 0.25432692307692295,
+          "supported": true
+        },
+        {
+          "action_stage_support": 2797,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 6925,
+          "label": "RETRY_LATER_12H",
+          "probability": 0.25432692307692295,
+          "supported": true
+        },
+        {
+          "action_stage_support": 4325,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 5803,
+          "label": "SEND_NUDGE",
+          "probability": 0.2283640424343942,
+          "supported": true
+        },
+        {
+          "action_stage_support": 3903,
+          "calibration_bin": 0,
+          "calibration_bin_support": 18039,
+          "incremental_erv_minor": 1499,
+          "label": "REQUEST_PAYMENT_METHOD_UPDATE",
+          "probability": 0.09030249110320285,
+          "supported": true
+        },
+        {
+          "action_stage_support": 3495,
+          "calibration_bin": 2,
+          "calibration_bin_support": 14287,
+          "incremental_erv_minor": 6155,
+          "label": "OFFER_ALTERNATE_METHOD",
+          "probability": 0.25432692307692295,
+          "supported": true
+        }
+      ],
+      "decision_at": "2026-01-03T01:28:57.601598+00:00",
+      "decision_index": 3,
+      "observable_context": {
+        "amount_minor": 29000,
+        "contacts": 1,
+        "elapsed_hours": 32.0,
+        "failure_reason": "CUSTOMER_ACTION_REQUIRED",
+        "last_action": "CREATE_PAYMENT_LINK",
+        "payment_method": "NETBANKING",
+        "previous_result": "FAILED",
+        "prior_interventions": 2,
+        "retries": 1
+      },
+      "outcome": {
+        "observed_at": "2026-01-03T03:28:57.601598+00:00",
+        "recovered": true,
+        "recovered_amount_minor": 29000
+      },
+      "policy_checks": {
+        "decision_kind": "ACTION",
+        "normalized_margin": 0.0,
+        "reason": "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV"
+      },
+      "selected_action": "RETRY_LATER_2H"
+    }
+  ],
+  "episode_id": "seq_a60e2a86793299fce20ef7d0f0ef13b4",
+  "final": {
+    "action_count": 3,
+    "no_fourth_autonomous_action": true,
+    "recovered": true,
+    "recovered_amount_minor": 29000,
+    "simulated_net_recovery_value_minor": 27500,
+    "termination": "RECOVERED",
+    "total_friction_cost_minor": 700,
+    "total_intervention_cost_minor": 800
+  },
+  "initial_failure": {
+    "amount_minor": 29000,
+    "failure_reason": "CUSTOMER_ACTION_REQUIRED",
+    "observed_at": "2026-01-01T17:28:57.601598+00:00",
+    "payment_method": "NETBANKING"
+  },
+  "trace_type": "SUCCESSFUL_ADAPTIVE"
+}

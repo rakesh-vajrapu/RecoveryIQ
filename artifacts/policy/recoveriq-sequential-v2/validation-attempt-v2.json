@@ -1,0 +1,19 @@
+{
+  "artifact_type": "sequential_policy_v2_registered_validation_attempt",
+  "policy_config_hash": "ce7712b1ee4e800d54a875eb65a7bc826680e59faa465b54cbc1db7472010b25",
+  "result_sha256": "7d550034aae1020dc48c62e0a7442eeb38379e45f86b1198df0e4df36b6c5959",
+  "safety_claim": "PASS",
+  "status": "COMPLETED",
+  "validation_seeds": [
+    20280101,
+    20280102,
+    20280103,
+    20280104,
+    20280105,
+    20280106,
+    20280107,
+    20280108,
+    20280109,
+    20280110
+  ]
+}

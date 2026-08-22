@@ -1,14 +1,14 @@
 # RecoverIQ
 
-**Degradation-Aware Autonomous Revenue Recovery for Recurring Payments**
+**Safe Adaptive Revenue Recovery for Recurring Payments**
 
-RecoverIQ is a bounded recovery control plane for Razorpay Buildathon 2026, Track 03: AI Revenue Recovery. It is designed to detect failed recurring payments, determine whether a failure is customer-specific or part of wider payment-system degradation, compare policy-permitted recovery actions, and measure attributable recovery against fixed retry strategies.
+RecoverIQ is a bounded recovery control plane for Razorpay Buildathon 2026, Track 03: AI Revenue Recovery. It is designed to compare policy-permitted actions, adapt after observed intervention failure, limit autonomous retries and contacts, and measure exactly attributed recovery against transparent workflows.
 
-The central product insight is simple: **before retrying one failed payment, determine whether its payment method or issuer is broadly degraded.** A retry that is sensible for an isolated transient failure may waste capacity and harm recovery during a systemic outage.
+The central product insight is simple: **recovery should adapt to observable episode state without becoming unbounded or opaque.** Payment health remains useful operational evidence, but two held-out phases found no primary recovery benefit from using it as a model feature.
 
 ## Current status
 
-Phase 0–5 foundation, deterministic simulator, robustness validation, tiered degradation detection, action-conditioned recovery prediction, and first-intervention ERV policy are implemented:
+Phase 0–6 foundation, deterministic simulator, robustness validation, tiered degradation detection, action-conditioned recovery prediction, and bounded sequential ERV policy are implemented:
 
 - FastAPI health API with typed, secret-safe configuration;
 - portable SQLAlchemy 2 domain foundation and initial Alembic migration;
@@ -29,8 +29,11 @@ Phase 0–5 foundation, deterministic simulator, robustness validation, tiered d
 - one-action randomized exploration logs with explicit propensities and no unselected training counterfactuals;
 - leakage-safe `RecoveryFeatureSnapshot` V1, deterministic logistic/LightGBM pipelines, isotonic calibration, held-out ranking, ablation, and structured SHAP evidence.
 - exact-minor-unit ERV scoring, nine deterministic action candidates, structured safety/support rules, STOP/HUMAN_REVIEW, paired policy validation, and decision traces.
+- randomized maximum-three-action trajectory logging with exact propensities and current-action attribution;
+- no-health trajectory-aware Recovery Model V2 with frozen isotonic calibration and a passing one-time held-out gate;
+- full 48-hour Sequential Policy V2 evaluation against Fixed Retry, Reminder + Retry, strong observable rules, probability-only selection, and a greedy hidden oracle.
 
-Implemented through Phase 5: RecoverIQ ERV Policy V1 converts frozen calibrated 48-hour Model V1 predictions into bounded first-intervention ACTION, HUMAN_REVIEW, or STOP decisions. Its one-time policy validation passed all frozen gates with zero policy violations. The exact no-health comparator again outperformed the primary, and the legacy multi-action Reminder + Retry workflow remained stronger; both limitations are preserved without retuning. Detector V2 WATCH and CONFIRMED remain advisory-only. Not implemented yet: executable production recovery, Razorpay APIs, production Gemini prompts, sequential replanning, or operational dashboards. The UI intentionally shows no recovery metrics.
+Implemented through Phase 6: Recovery Model V2 predicts action-level recovery from past observable trajectory state, and RecoverIQ Sequential Policy V2 replans for at most three interventions inside 48 hours. Its sealed validation recovered 75.97% of 27,406 episodes versus 53.09% for equivalent Reminder + Retry and 64.60% for the simple observable rule, with zero violations. The pure probability policy recovered slightly more than ERV Policy V2 (76.18%), so Phase 6 does not claim that economic selection improved gross recovery over probability-only selection. Detector V2 remains advisory-only and absent from primary Model V2. Not implemented yet: production recovery execution, Razorpay APIs, production Gemini prompts, or final operational dashboards. The overall-final seeds remain untouched, and the UI intentionally shows no recovery metrics.
 
 ## Architecture
 
@@ -39,10 +42,10 @@ payment event → normalized evidence → aggregate payment health
                                       ↓
                               degradation evidence
                                       ↓
-candidate actions → calibrated probabilities → expected recovery value
+candidate actions → trajectory-aware probabilities → incremental expected recovery value
                                       ↓
-                           deterministic policy
-                         ↙ execute  ↓ wait  ↘ abstain
+                       deterministic bounded policy
+                    ↙ execute  ↓ replan  ↘ abstain
                                       ↓
                          authoritative outcome + audit
 
@@ -60,6 +63,8 @@ apps/api/       FastAPI, SQLAlchemy, Alembic, Celery, Gemini providers, tests
 apps/web/       Next.js operational shell
 docs/           Product, architecture, evaluation, safety, and delivery records
 simulator/recoveriq_ml/  Leakage-safe recovery logging, models, calibration, and evaluation
+simulator/recoveriq_ml_v2/  Trajectory-aware no-health Model V2
+simulator/recoveriq_sequential*/  Episode environment and bounded Policy V2
 simulator/      Deterministic payment environment, baseline policies, CLI, and tests
 artifacts/      Ignored generated simulation experiments (with tracked placeholders)
 infra/          Reserved for deployment-specific assets
