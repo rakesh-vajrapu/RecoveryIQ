@@ -1,50 +1,100 @@
 # RecoverIQ
 
-# What does RecoverIQ mean?
+**AI Revenue Recovery Agent for safe, adaptive recurring-payment recovery**
+
+> "RecoverIQ is an AI-powered revenue recovery agent that detects revenue leakage, diagnoses failure causes, selects optimal recovery actions using ML and policy intelligence, executes bounded recovery workflows through payment integrations, and maintains measurable recovery attribution with explainable AI."
+
+RecoverIQ addresses the full path from a revenue-loss signal to a verified, attributable outcome. It combines machine-learning predictions, Expected Recovery Value (ERV), deterministic policy controls, payment-provider integration, and explanation-only generative AI in one auditable recovery platform.
+
+The agent is intentionally bounded: machine learning estimates what may work, deterministic policy decides what is allowed, Razorpay reports what actually happened, and an optional LLM explains only the resulting evidence. Models and LLMs cannot independently move money, bypass policy, or mark revenue as recovered.
+
+For judges, recruiters, and interviews:
+
+> "RecoverIQ combines revenue recovery automation with AI-driven decision intelligence to help businesses recover lost revenue while maintaining safety, auditability, and policy boundaries."
+
+## What does RecoverIQ mean?
 
 RecoverIQ combines two ideas:
 
-## Recover
+### Recover
 
-Recover represents the main purpose of the system:
-recovering lost business revenue.
+**Recover** represents the system's purpose: recovering business revenue that would otherwise be lost.
 
-Examples:
+Examples include:
 
-- Failed payments
-- Subscription renewal failures
-- Checkout abandonment
-- Overdue invoices
+- failed payments;
+- subscription renewal failures;
+- checkout abandonment;
+- overdue invoices.
 
-The goal is to identify revenue that is at risk of being lost and help recover it.
+The system identifies revenue at risk and determines whether a safe recovery opportunity exists.
 
-## IQ
+### IQ
 
-IQ represents the intelligence layer behind the recovery process.
+**IQ** represents the intelligence layer behind the recovery process:
 
-It represents:
+- machine-learning-based prediction;
+- intelligent recovery decisions;
+- Expected Recovery Value analysis;
+- policy-driven action selection;
+- AI-generated explanations.
 
-- Machine learning based prediction
-- Intelligent recovery decisions
-- Expected Recovery Value (ERV) analysis
-- Policy-driven action selection
-- AI-generated explanations
+RecoverIQ does not blindly retry every payment. It analyzes observable signals, compares permitted interventions, and applies deterministic safety boundaries before any execution.
 
-The system does not blindly retry payments. It analyzes signals and selects the most appropriate recovery approach.
+## An end-to-end revenue recovery platform
 
-"RecoverIQ is an intelligent revenue recovery system that uses AI and machine learning to identify lost revenue opportunities, decide the best recovery action, and help businesses recover money that would otherwise be lost."
+RecoverIQ is not only a payment failure prediction system. It is an end-to-end revenue recovery platform that:
 
-For interviews and judging:
+- detects revenue at risk;
+- identifies why revenue is being lost;
+- uses machine learning to estimate recovery probability;
+- uses Expected Recovery Value (ERV) policy intelligence to select the best intervention;
+- executes safe and bounded recovery workflows;
+- tracks recovered revenue and maintains audit trails;
+- provides explainable AI summaries without allowing LLMs to override business decisions.
 
-"RecoverIQ combines revenue recovery automation with AI-driven decision intelligence to help businesses recover lost revenue while maintaining safety, auditability, and policy boundaries."
+This separation of responsibilities is central to the design: prediction informs the decision, policy authorizes the intervention, an explicit capability boundary controls execution, provider evidence verifies the outcome, and attribution measures the recovered value exactly once.
 
-**Safe, adaptive revenue recovery for recurring payments**
+## How RecoverIQ Works
 
-RecoverIQ is an AI-assisted revenue recovery platform that detects recoverable payment failures, compares safe recovery actions, executes only explicitly permitted workflows, and measures recovered revenue from verified payment outcomes.
+```text
+Customer payment failure
+          |
+          v
+Revenue risk detection
+          |
+          v
+Root-cause analysis
+          |
+          v
+ML recovery prediction
+          |
+          v
+ERV decision engine
+          |
+          v
+Recovery action execution
+          |
+          v
+Outcome tracking and attribution
+          |
+          v
+Explainable AI summary
+```
 
-The important word is **assisted**: machine learning estimates what may work, a deterministic policy decides what is allowed, Razorpay reports what actually happened, and an optional LLM only explains the resulting evidence.
+Each stage has a distinct authority boundary. Detection and ML produce evidence, the deterministic policy selects only supported and permitted actions, the execution layer exposes only explicit capabilities, signed payment events verify outcomes, and the AI explanation layer remains downstream and non-authoritative.
 
-> **Current scope:** RecoverIQ V1 focuses on failed recurring and subscription payments. Checkout abandonment and overdue invoices are related revenue-recovery opportunities, but they are future extensions rather than implemented claims.
+## Razorpay Track Alignment
+
+RecoverIQ aligns with the Razorpay AI Revenue Recovery track by addressing the complete revenue recovery lifecycle:
+
+1. **Detect revenue leakage** — recognize failed recurring payments and advisory payment-health degradation signals.
+2. **Diagnose failure causes** — organize observable failure reason, timing, payment, and recovery-episode context without using hidden or future data.
+3. **Decide the optimal intervention** — estimate action-conditioned recovery probability, calculate ERV, and apply deterministic support and safety rules.
+4. **Execute bounded recovery workflows** — map an authorized decision to explicit capabilities, including Razorpay Test Mode Payment Link execution, while enforcing retry, contact, horizon, and idempotency limits.
+5. **Measure recovered revenue with auditability** — verify signed provider outcomes, record attribution exactly once, preserve a redacted audit trail, and generate human-readable explanations.
+
+> **Current scope:** RecoverIQ V1 focuses on failed recurring and subscription payments. Razorpay integration is deliberately restricted to Test Mode, and the currently implemented real provider capability is a non-partial Payment Link. Checkout abandonment and overdue invoices are related future extensions rather than implemented claims.
 
 ## 1. Project Overview
 
