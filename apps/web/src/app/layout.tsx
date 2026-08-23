@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import type * as React from "react";
 
 import { AppShell } from "@/components/app-shell";
 
@@ -19,7 +20,7 @@ export const viewport: Viewport = {
 
 const themeScript = `(() => { try { const saved = localStorage.getItem("recoveriq-theme"); const theme = saved === "light" || saved === "dark" ? saved : window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; document.documentElement.classList.toggle("dark", theme === "dark"); document.documentElement.dataset.theme = theme; } catch (_) {} })();`;
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head><script dangerouslySetInnerHTML={{ __html: themeScript }} /></head>
