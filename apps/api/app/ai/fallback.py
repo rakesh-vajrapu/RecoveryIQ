@@ -10,8 +10,10 @@ class DeterministicFallbackProvider:
     async def health_check(self) -> bool:
         return True
 
-    async def explain_decision(self, evidence: Mapping[str, Any]) -> DecisionExplanation:
-        selected_action = str(evidence.get("selected_action", "not selected"))
+    async def _explain(self, evidence: Mapping[str, Any]) -> DecisionExplanation:
+        selected_action = str(
+            evidence.get("selected_action", evidence.get("candidate_action", "not selected"))
+        )
         policy_result = str(evidence.get("policy_result", "not provided"))
         failure_reason = str(evidence.get("failure_reason", "not provided"))
 
@@ -24,13 +26,27 @@ class DeterministicFallbackProvider:
             factors.append(f"Degradation active: {bool(evidence['degradation_active'])}")
 
         return DecisionExplanation(
-            headline="Deterministic recovery explanation",
             summary=(
                 "RecoverIQ used the supplied decision evidence and deterministic policy result. "
                 "No generative AI response was required."
             ),
-            key_factors=factors,
-            uncertainty=(
+            factors=factors,
+            confidence=1.0,
+            limitations=[
                 "This fallback reports only supplied evidence and does not infer payment outcomes."
-            ),
+            ],
         )
+
+    async def explain_decision_trace(
+        self, evidence: Mapping[str, Any]
+    ) -> DecisionExplanation:
+        return await self._explain(evidence)
+
+    async def explain_recovery_case(
+        self, evidence: Mapping[str, Any]
+    ) -> DecisionExplanation:
+        return await self._explain(evidence)
+
+    async def explain_decision(self, evidence: Mapping[str, Any]) -> DecisionExplanation:
+        """Compatibility alias for the original Phase 1 method."""
+        return await self.explain_decision_trace(evidence)

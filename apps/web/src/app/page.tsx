@@ -71,7 +71,7 @@ export default function Home() {
                 <span>Bounded autonomy</span>
               </div>
               <p className="mt-2 text-[11px] leading-5 text-slate-600">
-                Policy remains authoritative. Gemini explains; it never moves money.
+                Deterministic policy authorizes. Optional LLMs only explain validated evidence.
               </p>
             </div>
           </div>
@@ -83,7 +83,7 @@ export default function Home() {
               <p className="text-[10px] font-semibold tracking-[0.16em] text-emerald-400 uppercase">
                 Operations / Command Center
               </p>
-              <h1 className="mt-1 text-base font-semibold text-white">Foundation status</h1>
+              <h1 className="mt-1 text-base font-semibold text-white">Submission status</h1>
             </div>
             <div className="hidden items-center gap-3 sm:flex">
               <span className="text-xs text-slate-500">Mode</span>
@@ -98,19 +98,20 @@ export default function Home() {
               <div>
                 <div className="mb-4 flex items-center gap-2 text-xs text-slate-500">
                   <span className="size-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.7)]" />
-                  Phase 1 foundation
+                  Phase 7.5 verified
                 </div>
                 <h2 className="max-w-3xl text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
-                  Recovery intelligence starts with trustworthy infrastructure.
+                  Bounded recovery intelligence with verified execution safety.
                 </h2>
                 <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-400">
-                  The API, database boundary, task execution, and AI provider interfaces are being
-                  established before any recovery performance is measured.
+                  RecoverIQ combines reproducible action-level evidence, deterministic sequential
+                  policy, Razorpay Test Mode execution, exactly-once attribution, and optional
+                  explanation-only LLM enrichment.
                 </p>
               </div>
               <div className="flex items-center gap-2 self-start rounded-lg border border-amber-300/15 bg-amber-300/[0.06] px-3 py-2 text-xs text-amber-200/80">
                 <CircleDollarSign className="size-4" />
-                No financial metrics generated yet
+                Synthetic evaluation · Razorpay Test Mode
               </div>
             </section>
 
@@ -138,7 +139,7 @@ export default function Home() {
                   </div>
                   <div className="flex items-center justify-between">
                     <dt className="text-slate-500">External credentials</dt>
-                    <dd className="font-mono text-xs text-emerald-300">Not required</dd>
+                    <dd className="font-mono text-xs text-emerald-300">Optional · Test only</dd>
                   </div>
                 </dl>
               </article>
@@ -148,18 +149,18 @@ export default function Home() {
               {[
                 {
                   step: "01",
-                  title: "Observe payment health",
-                  body: "Rolling issuer and method health will establish whether a failure is isolated or systemic.",
+                  title: "Observe safely",
+                  body: "Leakage-safe evidence and advisory degradation signals preserve the boundary between observation and hidden truth.",
                 },
                 {
                   step: "02",
                   title: "Score bounded actions",
-                  body: "Calibrated recovery probabilities and expected value will become policy evidence.",
+                  body: "Calibrated trajectory-aware probabilities feed deterministic ERV, support, budget, and abstention rules.",
                 },
                 {
                   step: "03",
-                  title: "Explain every outcome",
-                  body: "A deterministic audit trail will distinguish prediction, authorization, and explanation.",
+                  title: "Verify and attribute",
+                  body: "Signed Test Mode outcomes are matched, deduplicated, audited, and attributed exactly once.",
                 },
               ].map((item) => (
                 <article
@@ -177,8 +178,7 @@ export default function Home() {
             </section>
 
             <p className="mt-8 text-center text-[11px] text-slate-700">
-              RecoverIQ Phase 1 · No simulator, model, recovery action, or live payment integration
-              is active.
+              RecoverIQ Phase 7.5 · Synthetic evidence · Razorpay Test Mode · No Live Mode
             </p>
           </div>
         </main>
@@ -186,4 +186,3 @@ export default function Home() {
     </div>
   );
 }
-

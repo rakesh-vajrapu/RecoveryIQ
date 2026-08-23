@@ -38,16 +38,24 @@ class Settings(BaseSettings):
     gemini_max_retries: int = Field(default=3, ge=0, le=10)
     gemini_thinking_level: Literal["minimal", "low", "medium", "high"] = "low"
 
+    explanation_provider: Literal["fallback", "gemini", "groq"] = "fallback"
+    groq_api_key: SecretStr | None = None
+    groq_model: str = "openai/gpt-oss-120b"
+    groq_timeout_seconds: float = Field(default=20.0, gt=0, le=120)
+    groq_max_retries: int = Field(default=2, ge=0, le=10)
+
     cors_origins: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
     @field_validator(
         "razorpay_key_id",
         "razorpay_key_secret",
         "razorpay_webhook_secret",
+        "gemini_api_key",
+        "groq_api_key",
         mode="before",
     )
     @classmethod
-    def empty_razorpay_secret_is_unconfigured(cls, value: object) -> object:
+    def empty_secret_is_unconfigured(cls, value: object) -> object:
         return None if value == "" else value
 
     @model_validator(mode="after")

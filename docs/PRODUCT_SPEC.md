@@ -32,7 +32,7 @@ The product differentiator is safe, evidence-based adaptation across a short rec
 
 Phase 6 supplies the first apples-to-apples full-horizon evidence for that thesis. On its sealed synthetic validation, bounded RecoverIQ exceeded Fixed Retry, Reminder + Retry, the simple observable sequential rule, and the best-global sequence on recovery and net value with zero violations. It did not exceed the probability-only policy: ERV/support decisions traded a small amount of gross recovery for fewer contacts. Product claims must preserve both findings and must never generalize simulator value into live revenue.
 
-Phase 7 separately supplies an offline-verified Razorpay Test Mode integration: secure webhook ingestion, provider-object normalization, execution capability resolution, operator-initiated Payment Links, and exact Test Mode attribution. A genuine Test Mode payment proves the integration path only. It neither validates the simulated recovery-rate claim nor predicts production performance. Live Test Mode is reported as not run until real credentials and events are explicitly exercised.
+Phase 7.5 supplies an offline-reproducible and live-Test-verified Razorpay Test Mode integration: secure webhook ingestion, provider-object normalization, execution capability resolution, operator-initiated Payment Links, and exact Test Mode attribution. One genuine synthetic INR 1.00 Payment Link completed create/fetch, signed paid webhook receipt, exactly-once attribution, recovery, and duplicate replay. This proves the integration path only; it neither validates the simulated recovery-rate claim nor predicts production performance.
 
 ## V1 scope
 
@@ -55,7 +55,7 @@ An action is a candidate, not an authorization. The policy engine remains author
 
 ## Non-goals
 
-V1 is not a chatbot, fraud engine, abandoned-cart system, general customer-support platform, B2B collections product, reconciliation system, or live-mode payment processor. It will not collect PAN, CVV, OTP, or raw bank credentials. It will not use Gemini to set payment state, determine whether money moved, approve policy, or execute actions.
+V1 is not a chatbot, fraud engine, abandoned-cart system, general customer-support platform, B2B collections product, reconciliation system, or live-mode payment processor. It will not collect PAN, CVV, OTP, or raw bank credentials. It will not use Groq, Gemini, or any LLM to set payment state, determine whether money moved, approve policy, or execute actions.
 
 ## Success metrics
 
@@ -65,4 +65,4 @@ No target number is asserted before the simulator and evaluation harness exist.
 
 ## Definition of done
 
-A reviewer can clone the repository, install locked dependencies, run a seeded benchmark, start the API and UI without external credentials, inspect a degradation-aware decision trace, run the tests, and reproduce reported results. Optional credentials unlock only explicitly opted-in provider smoke tests. The Razorpay Level A contract is reproducible offline; Level B is claimed only after genuine Test Mode activity. Core recovery continues when Gemini, Redis, or an external payment API is unavailable, according to documented fallbacks and policy.
+A reviewer can clone the repository, install locked dependencies, run a seeded benchmark, start the API and UI without external credentials, inspect a degradation-aware decision trace, run the tests, and reproduce reported results. Optional credentials unlock only explicitly opted-in provider validation. The Razorpay Level A contract is reproducible offline, and the sanitized Phase 7.5 report records one genuine Level B Test Mode Payment Link E2E. Core recovery continues when optional Groq/Gemini enrichment, Redis, or an external payment API is unavailable, according to documented fallbacks and policy.

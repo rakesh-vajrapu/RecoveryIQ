@@ -2,7 +2,7 @@
 
 ## System shape
 
-RecoverIQ separates evidence production, bounded sequential authorization, execution, and explanation. Statistical and ML components produce action-level evidence; a deterministic policy engine authorizes at most three adaptive interventions; executors perform those actions; Gemini may later explain already-computed evidence. The database and verified payment-provider events remain the financial system of record.
+RecoverIQ separates evidence production, bounded sequential authorization, execution, and explanation. Statistical and ML components produce action-level evidence; a deterministic policy engine authorizes at most three adaptive interventions; executors perform those actions; optional Groq or Gemini providers explain only already-computed evidence. The database and verified payment-provider events remain the financial system of record.
 
 ```mermaid
 flowchart LR
@@ -20,15 +20,15 @@ flowchart LR
     P -->|abstain| R[Human review]
     X --> O[Authoritative outcome]
     O --> A[Attribution and audit]
-    P -. structured evidence .-> L[Gemini provider]
+    P -. structured evidence .-> L[Optional explanation provider]
     L -. explanation only .-> A
 ```
 
-The foundation, standalone simulator/baselines, robustness methodology, both detector/model generations, bounded Sequential Policy V2, and the offline-verified Razorpay Test Mode adapter are implemented through Phase 7. Gemini enrichment, broader autonomous execution, and the operational UI remain future commitments.
+The foundation, standalone simulator/baselines, robustness methodology, both detector/model generations, bounded Sequential Policy V2, explanation-provider layer, and Razorpay Test Mode adapter are implemented through Phase 7.5. One synthetic INR 1.00 Payment Link completed a genuine Test Mode create/fetch, signed paid webhook, exactly-once attribution, recovery, and duplicate replay. Broader autonomous provider execution, Live Mode, and the operational UI remain future commitments.
 
 ## Simulator/environment boundary
 
-The Phase 2 simulator is a standalone uv package. It does not import the API, frontend, Gemini provider, Razorpay code, or future ML code.
+The Phase 2 simulator is a standalone uv package. It does not import the API, frontend, explanation providers, Razorpay code, or future ML code.
 
 ```mermaid
 flowchart LR
@@ -61,7 +61,7 @@ Generated evidence is rooted under `observable/`; incident and outcome truth is 
 - **AI enrichment:** owns optional structured explanations and investigations; it owns no financial state.
 - **Audit:** records actor, correlation, event type, entity, timestamp, and safe structured metadata.
 
-Domain services will not depend on FastAPI request objects, Celery task objects, or Gemini SDK types.
+Domain services will not depend on FastAPI request objects, Celery task objects, or remote-provider SDK types.
 
 ## Foundation data model
 
@@ -136,9 +136,9 @@ The implementation keeps four concrete authority boundaries: `recoveriq_sequenti
 
 The sealed Phase 6 evaluation confirmed that later-state model quality remained supported and that all seven strategies saw the same per-seed initial-cohort digest. This is simulator evidence, not production authority: no executor, Gemini call, Razorpay adapter, frontend control, or external side effect was added.
 
-## Gemini boundary
+## Explanation-provider boundary
 
-Application code depends on an `LLMProvider` protocol. `GeminiLLMProvider` contains SDK-specific behavior, `FakeLLMProvider` provides deterministic tests, and `DeterministicFallbackProvider` keeps explanations available without network access. Providers return Pydantic-validated structures. They cannot mutate payment state, authorize actions, or determine outcomes. Gemini is never called automatically during startup.
+Application code depends on an `ExplanationProvider` protocol. `GroqExplanationProvider` is the optional primary OpenAI-compatible adapter, `GeminiLLMProvider` remains optional and disabled by default, `FakeLLMProvider` provides deterministic tests, and `DeterministicFallbackProvider` keeps explanations available without network access. Providers return Pydantic-validated structures with no authority fields. They cannot mutate payment state, authorize actions, call Razorpay, or determine outcomes, and no remote provider is called automatically during startup.
 
 ## Razorpay Test Mode execution boundary
 
@@ -152,4 +152,4 @@ A first Razorpay failure does not contain provably complete historical inputs fo
 
 ## Audit architecture
 
-`AuditEvent` is append-oriented and stores a correlation UUID, entity reference, actor, event type, UTC timestamp, and redacted JSON metadata. Domain services—not UI prose and not Gemini—will emit audit events at transaction boundaries. Secrets, request headers, raw payment payloads, PAN, CVV, OTP, and unnecessary PII are forbidden from metadata. A later milestone will add transactionally consistent audit creation and retention rules.
+`AuditEvent` is append-oriented and stores a correlation UUID, entity reference, actor, event type, UTC timestamp, and redacted JSON metadata. Domain services—not UI prose and not an explanation provider—emit audit events at transaction boundaries. Secrets, request headers, raw payment payloads, PAN, CVV, OTP, and unnecessary PII are forbidden from metadata. A later milestone will add retention rules for longer-lived environments.

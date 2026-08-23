@@ -10,7 +10,6 @@ type HealthResponse = {
   status: "healthy";
   environment: string;
   database: "sqlite" | "postgresql" | "other";
-  gemini_enabled: boolean;
   celery_eager: boolean;
 };
 
@@ -104,8 +103,8 @@ export function ApiStatus() {
               />
               <StatusDatum
                 icon={Server}
-                label="Gemini"
-                value={state.health.gemini_enabled ? "enabled" : "disabled"}
+                label="Explanation"
+                value="non-authoritative"
               />
             </dl>
           </div>

@@ -10,7 +10,7 @@ The application must never collect, store, log, prompt with, or request PAN, CVV
 
 ## Secret handling
 
-Secrets enter through environment variables or a deployment secret store. `.env*` files are ignored except `.env.example`, which contains placeholders only. Pydantic secret types prevent accidental representation. Health endpoints, exceptions, audit metadata, CI logs, screenshots, fixtures, and Gemini prompts may not include secret values. Git history will be scanned before submission.
+Secrets enter through environment variables or a deployment secret store. `.env*` files are ignored except `.env.example`, which contains placeholders only. Pydantic secret types prevent accidental representation. Health endpoints, exceptions, audit metadata, CI logs, screenshots, fixtures, and explanation prompts may not include secret values. Git history is scanned before submission.
 
 ## Authorization boundary
 
@@ -18,7 +18,7 @@ Predictive models estimate outcomes; they do not prove provider capability. Sequ
 
 ## LLM trust boundary
 
-Gemini receives allowlisted structured evidence and returns validated enrichment. It cannot set payment state, decide that funds moved, change amounts, approve policy, bypass abstention, or invoke executors. External strings are untrusted data even when they contain instruction-like text. Provider failure selects a deterministic fallback and leaves the core workflow operating.
+Optional Groq or Gemini providers receive minimized structured evidence and return validated enrichment. They cannot set payment state, decide that funds moved, change amounts, approve policy, bypass abstention, or invoke executors. External strings are untrusted data even when they contain instruction-like text. Provider failure selects a deterministic fallback and leaves the core workflow operating. The current provider abstraction is not connected to an authoritative recovery route; any future caller must enforce the documented evidence allowlist before remote egress.
 
 ## Idempotency and concurrency
 
@@ -34,4 +34,4 @@ Unknown events are retained and safely ignored. Signatures are HMAC-SHA256 verif
 
 ## Current limitations
 
-Phase 7 is Level A offline complete; genuine credential/API/webhook evidence remains unverified until the opt-in runbook is executed. SQLite does not prove concurrent-worker locking. The context adapter deliberately abstains on a first provider event because complete frozen-V2 history/category semantics are unavailable. Payment Links recover an alternate Test Mode payment only; they do not repair the original subscription. Gemini, Live Mode, messaging, provider retry operations, and the final operational UI are not part of this phase.
+Phase 7.5 has one genuine synthetic Payment Link Test Mode E2E proof, including signed webhook validation, exactly-once attribution, recovery, and duplicate replay. It is not a Live Mode or production-readiness claim. SQLite does not prove concurrent-worker locking. The context adapter deliberately abstains on a first provider event because complete frozen-V2 history/category semantics are unavailable. Payment Links recover an alternate Test Mode payment only; they do not repair the original subscription. Live Mode, messaging, provider retry operations, and the final operational UI are not implemented.

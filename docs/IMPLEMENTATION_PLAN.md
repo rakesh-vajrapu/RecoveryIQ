@@ -4,10 +4,10 @@ Each milestone ends with runnable verification and a review checkpoint. A later 
 
 ## 1. Foundation — complete
 
-- [x] Define product, architecture, safety, Gemini, and evaluation boundaries.
+- [x] Define product, architecture, safety, explanation-provider, and evaluation boundaries.
 - [x] Scaffold FastAPI, typed settings, SQLAlchemy, Alembic, Celery, and structured logging.
 - [x] Add initial domain models and migration.
-- [x] Prove fake/fallback/Gemini provider abstraction.
+- [x] Prove fake, fallback, Groq, and optional Gemini provider abstraction.
 - [x] Build a Next.js operational shell and runtime health connection.
 - [x] Configure Docker Compose, CI, lint, types, and tests.
 
@@ -91,17 +91,18 @@ Exit achieved: Model V2 passed its frozen quality gate; all Phase 6 strategies r
 - [x] Add explicit action capabilities and separate decisions, plans, executions, outcomes, and attribution.
 - [x] Add an idempotent operator Test Payment Link with unknown-outcome reconciliation.
 - [x] Add sanitized contract fixtures, fake gateway, failure/security/replay tests, migrations, APIs, and runbooks.
-- [ ] Execute the credential-gated real Test Mode smoke and complete webhook E2E (Level B; optional and not claimed by offline evidence).
+- [x] Execute one credential-gated Test Mode Payment Link and complete the paid-webhook E2E (Level B; separately sanitized evidence).
 
-Exit achieved for Level A: all integration behavior is reproducible without credentials, Live Mode is impossible, duplicate/reordered delivery cannot duplicate a case/link/attribution, and unavailable frozen-V2 context safely abstains. Level B remains separately reported.
+Exit achieved for Level A and the bounded Level B demonstration: all integration behavior is reproducible without credentials, Live Mode is impossible, duplicate/reordered delivery cannot duplicate a case/link/attribution, unavailable frozen-V2 context safely abstains, and one real Test Mode Payment Link passed exact outcome/attribution/replay verification. Subscription E2E and Live Mode remain out of scope.
 
-## 8. Gemini enrichment
+## 8. Explanation enrichment — provider layer complete
 
-- [ ] Add versioned prompts and remaining structured schemas.
-- [ ] Implement allowlisting, retries/backoff, concurrency, circuit breaking, caching, and metrics.
-- [ ] Add injection, invalid-output, timeout, 429, and fallback tests.
+- [x] Add an explanation-only provider protocol and strict `DecisionExplanation` schema.
+- [x] Add Groq, optional Gemini, fake, deterministic fallback, lazy initialization, timeouts, bounded retries, and invalid-output handling.
+- [x] Add authority-shape rejection, invalid-output, timeout, network, missing-key, and fallback tests.
+- [ ] Add a code-enforced evidence allowlist, circuit breaking, caching, metrics, and product API/workflow integration before production use.
 
-Exit: all core decisions complete with Gemini disabled or failing.
+Current exit achieved: all core decisions complete with remote explanations disabled or failing, and providers cannot authorize or execute recovery.
 
 ## 9. Broader recovery execution
 
@@ -112,13 +113,13 @@ Exit: duplicate delivery and worker retry cannot duplicate side effects or reven
 ## 10. Operational UI
 
 - [ ] Implement Command Center, Payment Health, Recovery Queue, Decision Trace, and Evaluation Lab.
-- [ ] Distinguish model evidence, policy decision, Gemini explanation, and authoritative outcome.
+- [ ] Distinguish model evidence, policy decision, optional explanation, and authoritative outcome.
 
 Exit: UI renders only persisted or reproducible data and clearly labels its mode.
 
 ## 11. Reliability
 
-- [ ] Execute duplicate/out-of-order/provider/worker/Gemini/low-confidence/outage scenarios.
+- [ ] Execute duplicate/out-of-order/provider/worker/LLM/low-confidence/outage scenarios.
 - [ ] Add regression tests and record real failures.
 
 Exit: injected failures stop safely and leave complete audit evidence.

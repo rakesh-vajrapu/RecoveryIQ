@@ -15,7 +15,7 @@ Phase 0–7 foundation, deterministic simulator, robustness validation, tiered d
 - SQLite local development with PostgreSQL configuration support;
 - Celery with eager local/test execution and Redis full-environment configuration;
 - structured JSON logging;
-- isolated Gemini, fake, and deterministic fallback providers;
+- isolated Groq, optional Gemini, fake, and deterministic explanation providers;
 - a Pydantic-validated `DecisionExplanation` proof;
 - Next.js App Router shell with strict TypeScript, Tailwind, shadcn/ui, and runtime API health status;
 - backend/frontend CI, linting, types, and tests;
@@ -36,7 +36,7 @@ Phase 0–7 foundation, deterministic simulator, robustness validation, tiered d
 - explicit execution capabilities plus separate decisions, plans, provider executions, outcomes, and exactly-once Test Mode attribution;
 - idempotent operator-initiated Standard Payment Links with timeout-unknown reconciliation, offline fake-gateway contracts, and a manual Test Mode runbook.
 
-Implemented through Phase 7: Recovery Model V2 predicts action-level recovery from past observable trajectory state, and RecoverIQ Sequential Policy V2 replans for at most three interventions inside 48 hours. Its sealed validation recovered 75.97% of 27,406 episodes versus 53.09% for equivalent Reminder + Retry and 64.60% for the simple observable rule, with zero violations. The pure probability policy recovered slightly more than ERV Policy V2 (76.18%), so Phase 6 does not claim that economic selection improved gross recovery over probability-only selection. Detector V2 remains advisory-only and absent from primary Model V2. Phase 7 is **Level A offline integration complete**; genuine credential/API/webhook activity is not claimed until explicitly run. Not implemented yet: Live Mode, broader production recovery execution, production Gemini prompts, or final operational dashboards. The overall-final seeds remain untouched, and the UI intentionally shows no recovery metrics.
+Implemented through Phase 7.5: Recovery Model V2 predicts action-level recovery from past observable trajectory state, and RecoverIQ Sequential Policy V2 replans for at most three interventions inside 48 hours. Its sealed validation recovered 75.97% of 27,406 episodes versus 53.09% for equivalent Reminder + Retry and 64.60% for the simple observable rule, with zero violations. The pure probability policy recovered slightly more than ERV Policy V2 (76.18%), so Phase 6 does not claim that economic selection improved gross recovery over probability-only selection. Detector V2 remains advisory-only and absent from primary Model V2. Razorpay Test Mode has completed one genuine synthetic INR 1.00 Payment Link E2E: create/fetch, signed `payment_link.paid`, exact matching, durable outcome, exactly-once attribution, recovery transition, and duplicate replay all passed. Groq is the optional primary remote explanation provider, Gemini remains optional, and deterministic explanations are the credential-free default. Not implemented: Live Mode, broader production recovery execution, a complete provider-history adapter for autonomous Model V2 scoring, or final operational dashboards. Overall-final seeds remain untouched.
 
 ## Architecture
 
@@ -52,17 +52,17 @@ candidate actions → trajectory-aware probabilities → incremental expected re
                                       ↓
                          authoritative outcome + audit
 
-Gemini: structured explanation beside this flow; never financial authority.
+Groq/Gemini: structured explanation beside this flow; never financial authority.
 ```
 
 The API uses synchronous SQLAlchemy sessions consistently across FastAPI, Alembic, and Celery. Local development defaults to SQLite so it requires no container daemon. Full environments select PostgreSQL through `DATABASE_URL`. Celery remains the task boundary in both modes: eager execution uses memory transport locally; non-eager execution uses Redis.
 
-Detailed decisions are in [Architecture](docs/ARCHITECTURE.md), [Razorpay Integration](docs/RAZORPAY_INTEGRATION.md), [Razorpay Test Demo](docs/RAZORPAY_TEST_DEMO.md), [Gemini Design](docs/GEMINI_DESIGN.md), [Safety](docs/SAFETY.md), and [Evaluation](docs/EVALUATION.md).
+Detailed decisions are in [Architecture](docs/ARCHITECTURE.md), [Razorpay Integration](docs/RAZORPAY_INTEGRATION.md), [Razorpay Test Demo](docs/RAZORPAY_TEST_DEMO.md), [Explanation Provider Design](docs/GEMINI_DESIGN.md), [Safety](docs/SAFETY.md), and [Evaluation](docs/EVALUATION.md). The sanitized real Test Mode proof is in [Phase 7.5 Evidence](docs/RAZORPAY_PHASE_7_5_TEST_MODE_EVIDENCE.md).
 
 ## Repository layout
 
 ```text
-apps/api/       FastAPI, SQLAlchemy, Alembic, Celery, Gemini providers, tests
+apps/api/       FastAPI, SQLAlchemy, Alembic, Celery, explanation providers, tests
 apps/web/       Next.js operational shell
 docs/           Product, architecture, evaluation, safety, and delivery records
 simulator/recoveriq_ml/  Leakage-safe recovery logging, models, calibration, and evaluation
@@ -82,7 +82,7 @@ scripts/        Reserved for reproducible developer and evaluation commands
 - Git
 - optional Docker Engine with Compose for PostgreSQL/Redis
 
-Gemini and Razorpay credentials are not required. Never use Razorpay Live Mode credentials.
+Explanation-provider and Razorpay credentials are not required. Never use Razorpay Live Mode credentials.
 
 ## Local development without Docker
 
@@ -92,7 +92,7 @@ From the repository root, create a local environment file if you need to change 
 Copy-Item .env.example .env
 ```
 
-The checked-in defaults already select SQLite, eager Celery, and disabled Gemini.
+The checked-in defaults already select SQLite, eager Celery, and deterministic explanations.
 
 ### Backend
 
@@ -104,6 +104,18 @@ uv run uvicorn app.main:app --reload
 ```
 
 Visit `http://127.0.0.1:8000/health`. The response reports only safe operational state.
+
+### Optional explanation enrichment
+
+The deterministic fallback is enabled by default and requires no network or credentials. To use Groq for explicitly invoked, explanation-only enrichment, set these values only in ignored local `.env`:
+
+```env
+EXPLANATION_PROVIDER=groq
+GROQ_API_KEY=<local-secret>
+GROQ_MODEL=openai/gpt-oss-120b
+```
+
+Gemini remains available as an optional disabled-by-default provider. Every remote response is validated against `DecisionExplanation`; provider failures fall back locally. An explanation provider cannot select an action, change a probability or policy result, call Razorpay, mark recovery, or mutate financial state.
 
 ### Razorpay Test Mode (optional)
 
@@ -233,7 +245,7 @@ uv run --project simulator mypy simulator/recoveriq_simulator simulator/tests
 uv run --project simulator pytest simulator/tests
 ```
 
-CI runs the same checks without Docker, Redis, PostgreSQL, Gemini, or Razorpay credentials.
+CI runs the same checks without Docker, Redis, PostgreSQL, LLM, or Razorpay credentials.
 
 ## Safety and evidence
 
@@ -241,10 +253,10 @@ CI runs the same checks without Docker, Redis, PostgreSQL, Gemini, or Razorpay c
 - Live Mode is absent from configuration and only `rzp_test_` Razorpay Key IDs are accepted.
 - PAN, CVV, OTP, real customer PII, and live credentials are prohibited.
 - Models produce evidence; deterministic policy authorizes actions.
-- Gemini returns validated explanations and cannot mutate financial state.
+- Optional LLMs return validated explanations and cannot mutate financial state.
 - Razorpay Test Payment Links and Test Mode attribution are idempotent and auditable; ambiguous creates stay `UNKNOWN` until reconciled.
 - Benchmark results will be generated reproducibly and will not be fabricated.
 
 ## Current limitations
 
-Razorpay Phase 7 has passed offline integration only; no real Test Mode call or webhook E2E is claimed in this checkpoint. SQLite is suitable for local development and tests, not production worker concurrency, and PostgreSQL still requires CI or a supported host to exercise against a real service. The first external failure lacks complete frozen-V2 history/category semantics and intentionally routes to human review. A Payment Link can prove alternate Test Mode revenue recovery but does not repair the original Subscription. The simulator remains hand-designed synthetic evidence, not a claim about real customers, issuers, Razorpay performance, or achievable production lift.
+Razorpay Phase 7.5 has one genuine Test Mode Payment Link E2E proof, not a Live Mode or production-readiness claim. SQLite is suitable for local development and tests, not production worker concurrency, and PostgreSQL still requires CI or a supported host to exercise against a real service. The first external failure lacks complete frozen-V2 history/category semantics and intentionally routes to human review. A Payment Link proves alternate Test Mode revenue recovery but does not repair the original Subscription. The simulator remains hand-designed synthetic evidence, not a claim about real customers, issuers, Razorpay performance, or achievable production lift. The explanation provider is not wired into an authoritative recovery route and its input must remain minimized structured evidence.

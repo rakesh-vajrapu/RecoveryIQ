@@ -1,7 +1,7 @@
 [project]
 name = "recoveriq-api"
 version = "0.1.0"
-description = "RecoverIQ Phase 1 API foundation"
+description = "RecoverIQ bounded recovery API and safe Test Mode integration"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
@@ -10,6 +10,7 @@ dependencies = [
   "fastapi>=0.116,<1",
   "google-genai>=1.0,<2",
   "httpx>=0.28,<1",
+  "openai>=1.0,<3",
   "psycopg[binary]>=3.2,<4",
   "pydantic-settings>=2.10,<3",
   "redis>=6,<8",
@@ -57,4 +58,3 @@ exclude = ["alembic/versions/"]
 [[tool.mypy.overrides]]
 module = ["celery.*"]
 ignore_missing_imports = true
-

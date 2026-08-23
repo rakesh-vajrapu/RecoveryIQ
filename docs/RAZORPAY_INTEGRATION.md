@@ -9,6 +9,8 @@ Completion has two distinct levels:
 - **Level A — offline integration:** fixtures, fake gateway, signature/security tests, idempotency, state transitions, migration, and all regression checks pass without credentials or internet.
 - **Level B — live Razorpay Test Mode:** claimed only after an explicitly opted-in real Test Mode call or the complete manual webhook flow actually occurs. Mocks never satisfy Level B.
 
+Level B is complete for one synthetic INR 1.00 Payment Link. The sanitized evidence records create/fetch, a real signed `payment_link.paid` webhook, exact reference/amount/currency validation, one outcome, one attribution, one recovery transition, and a no-side-effect duplicate replay. It does not claim Subscription E2E or Live Mode. See [Phase 7.5 Test Mode Evidence](RAZORPAY_PHASE_7_5_TEST_MODE_EVIDENCE.md).
+
 ## Official contracts reviewed
 
 Razorpay's current official documentation is the source of truth. The implementation uses these narrowly summarized contracts:

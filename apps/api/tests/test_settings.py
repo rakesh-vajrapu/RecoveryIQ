@@ -9,6 +9,9 @@ def test_application_settings_do_not_require_external_credentials() -> None:
 
     assert settings.gemini_enabled is False
     assert settings.gemini_api_key is None
+    assert settings.explanation_provider == "fallback"
+    assert settings.groq_api_key is None
+    assert settings.groq_model == "openai/gpt-oss-120b"
     assert settings.razorpay_key_secret is None
     assert settings.execution_environment == "SIMULATION"
     assert settings.razorpay_mode == "test"
@@ -20,6 +23,7 @@ def test_settings_mask_secrets_in_representations() -> None:
     settings = Settings(
         _env_file=None,
         gemini_api_key=SecretStr(raw_secret),
+        groq_api_key=SecretStr(raw_secret),
         razorpay_key_secret=SecretStr(raw_secret),
         razorpay_webhook_secret=SecretStr(raw_secret),
     )
@@ -47,8 +51,12 @@ def test_empty_razorpay_placeholders_are_unconfigured() -> None:
         razorpay_key_id="",
         razorpay_key_secret="",
         razorpay_webhook_secret="",
+        gemini_api_key="",
+        groq_api_key="",
     )
 
     assert settings.razorpay_key_id is None
     assert settings.razorpay_api_configured is False
     assert settings.razorpay_webhook_configured is False
+    assert settings.gemini_api_key is None
+    assert settings.groq_api_key is None

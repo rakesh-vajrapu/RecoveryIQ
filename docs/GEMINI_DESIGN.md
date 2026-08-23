@@ -1,52 +1,57 @@
-# Gemini Design
+# Explanation Provider Design
 
 ## Purpose and authority boundary
 
-Gemini makes structured recovery evidence easier for humans to understand and operate. It will support four bounded capabilities in later phases: decision explanations, degradation-incident summaries, customer-nudge drafts, and exception investigations. Phase 1 proves only the provider boundary and a `DecisionExplanation` schema.
+The explanation layer makes structured recovery evidence easier for humans to understand and operate. Phase 7 supports bounded decision-trace and recovery-case explanations through Groq, optional Gemini, fake, and deterministic providers.
 
-Gemini is not a financial authority. It may not determine payment or subscription status, infer that money moved, set transaction amounts, approve policy, bypass stopping rules, choose authoritative retry counts, execute actions, or attribute revenue. Those facts come from verified provider events, application state, deterministic calculations, and policy.
+An explanation provider is not a financial authority. It may not determine payment or subscription status, infer that money moved, set transaction amounts, approve policy, bypass stopping rules, choose authoritative retry counts, execute actions, or attribute revenue. Those facts come from verified provider events, application state, deterministic calculations, and policy.
 
 ## Configuration
 
-The official `google-genai` SDK is isolated in the Gemini provider. Configuration is environment-driven:
+Groq uses the OpenAI-compatible client with `https://api.groq.com/openai/v1`. Configuration is environment-driven:
 
+- `EXPLANATION_PROVIDER` defaults to `fallback` and may select `groq`, `gemini`, or `fallback`;
+- `GROQ_API_KEY` is optional at application startup;
+- `GROQ_MODEL` defaults to `openai/gpt-oss-120b`; model, timeout, and maximum retries are typed settings;
 - `GEMINI_ENABLED` defaults to false;
 - `GEMINI_API_KEY` is optional at application startup;
 - `GEMINI_MODEL` defaults to `gemini-3.7-flash` but is configurable;
 - `GEMINI_API_VERSION`, timeout, maximum retries, and thinking level are typed settings.
 
-No call occurs during import or application startup. An explicit health check or feature invocation raises a clear configuration error if Gemini is enabled without a key. The key is represented as a secret type and never included in health responses, logs, prompts, or exceptions.
+No call occurs during import or application startup. Keys are represented as secret types and never included in health responses, logs, prompts, or exceptions. Missing keys, provider failures, timeouts, network errors, and invalid responses resolve to deterministic explanations.
 
 ## Provider abstraction
 
 ```text
-LLMProvider protocol
-├── GeminiLLMProvider              networked, SDK-specific implementation
+ExplanationProvider protocol
+├── GroqExplanationProvider        primary OpenAI-compatible adapter
+├── GeminiLLMProvider              optional Google SDK adapter
 ├── FakeLLMProvider                deterministic fixtures and tests
+├── ResilientExplanationProvider   failure isolation
 └── DeterministicFallbackProvider  evidence-derived local explanation
 ```
 
-Business code accepts the protocol and Pydantic input/output models. It does not import Google SDK types. `FakeLLMProvider` proves consumers can use a valid structured response without network access. The fallback uses only supplied evidence and never generates missing numerical facts.
+Business code accepts the protocol and Pydantic input/output models. It does not import provider SDK types. `FakeLLMProvider` proves consumers can use a valid structured response without network access. The fallback uses only supplied evidence and never generates missing numerical facts.
 
 ## Structured output
 
-Machine-consumed responses are validated, never scraped from arbitrary prose. The Phase 1 schema is:
+Machine-consumed responses are validated, never scraped from arbitrary prose. The Phase 7 schema is:
 
 ```text
 DecisionExplanation
-  headline: string
   summary: string
-  key_factors: list[string]
-  uncertainty: string | null
+  factors: list[string]
+  confidence: number [0, 1]
+  limitations: list[string]
 ```
 
-The Gemini implementation requests JSON with the Pydantic response schema and validates the parsed response again. A later phase will add versioned prompts and `IncidentSummary`, `CustomerNudgeDraft`, and `ExceptionInvestigation` schemas.
+Groq uses JSON Object Mode and includes the Pydantic JSON schema in the prompt. Every response is validated locally with `DecisionExplanation`, including `extra="forbid"`. Gemini retains its schema request and local Pydantic validation. Neither provider can return an action, policy result, execution command, or recovery outcome field.
 
 ## Reliability and rate limits
 
-Production behavior will use bounded timeouts, exponential backoff with jitter, a concurrency limit, short-lived circuit breaking after repeated failures, and caching keyed by use case, prompt version, requested model, and normalized input. HTTP 429 and retryable 5xx responses may be retried up to the configured maximum. Invalid structured output may be retried once. Exhaustion returns a deterministic fallback and records a safe enrichment failure; it never stops ingestion, scoring, policy, scheduling, or attribution.
+Provider calls use bounded timeouts and bounded SDK retries. Missing configuration, authentication failures, timeouts, network failures, and invalid structured output return a deterministic fallback. Explanation failure never stops ingestion, scoring, policy, scheduling, execution, or attribution.
 
-No silent model substitution is allowed. Any future fallback model must record requested model, actual model, and reason.
+No silent model substitution is allowed. Provider failure selects the deterministic local explanation, not another remote model.
 
 ## Data minimization
 
@@ -58,9 +63,8 @@ Safe metrics record use case, prompt version, model, latency, token counts when 
 
 All provider, payment, and customer text is untrusted data. Prompts will state that embedded instructions must not be followed and that the model cannot authorize recovery or request secrets. Structured inputs will be serialized as delimited data, and externally supplied message values such as payment links will be deterministic placeholders filled by application code only after validation.
 
-Regression tests will include fields containing instructions such as “ignore previous instructions” and assert that secret fields never reach the provider payload.
+Regression tests include authority-field rejection and assert that secret fields never reach the provider payload.
 
 ## Testing strategy
 
-Normal tests use fake or fallback providers and require neither credentials nor network. Tests cover schema validity, disabled configuration, missing-key errors on explicit invocation, invalid structured output fallback, timeouts/429/5xx, prompt injection strings treated as data, allowlist redaction, and the invariant that provider output cannot mutate financial state or bypass policy. Live Gemini smoke tests are explicit, opt-in, and skipped unless a developer deliberately supplies a key.
-
+Normal tests use fake clients or fallback providers and require neither credentials nor network. Tests cover schema validity, disabled configuration, missing keys, invalid credentials, invalid structured output, timeouts, network errors, secret isolation, and the invariant that provider output cannot mutate financial state or bypass policy. Live provider validation is explicit and never runs during startup or the ordinary test suite.
