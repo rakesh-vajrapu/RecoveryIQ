@@ -1,0 +1,11 @@
+# RecoverIQ Python compatibility requirements
+#
+# Canonical environments are locked by:
+#   apps/api/uv.lock
+#   simulator/uv.lock
+#
+# This root file is provided for developers and scanners that expect
+# requirements.txt. Python 3.12 is required. For the strongest reproducibility,
+# prefer the documented uv sync --locked commands.
+-r requirements/backend.txt
+-r requirements/simulator.txt

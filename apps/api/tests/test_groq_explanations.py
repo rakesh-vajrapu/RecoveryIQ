@@ -149,6 +149,26 @@ async def test_groq_rejects_invalid_or_authoritative_response_shape() -> None:
 
 
 @pytest.mark.asyncio
+async def test_empty_groq_response_uses_deterministic_fallback() -> None:
+    primary = GroqExplanationProvider(
+        Settings(_env_file=None, groq_api_key="test-secret")
+    )
+    primary._client_instance = SimpleNamespace(  # type: ignore[assignment]
+        chat=SimpleNamespace(completions=StubCompletions(None))
+    )
+    provider = ResilientExplanationProvider(primary, DeterministicFallbackProvider())
+
+    result = await provider.explain_recovery_case(
+        {"case_status": "HUMAN_REVIEW", "attribution_present": False}
+    )
+
+    assert isinstance(result, DecisionExplanation)
+    assert "No generative AI response was required" in result.summary
+    assert any("not selected" in factor for factor in result.factors)
+    assert result.limitations
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize(
     "provider_error",
     [

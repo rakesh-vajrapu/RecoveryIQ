@@ -11,6 +11,8 @@ from pydantic import BaseModel, ConfigDict
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.ai.factory import create_explanation_provider
+from app.ai.schemas import DecisionExplanation
 from app.core.config import Settings, get_settings
 from app.db.session import get_db_session
 from app.integrations.razorpay.capabilities import ACTION_CAPABILITIES
@@ -270,6 +272,62 @@ def get_recovery_case_audit(
         .order_by(AuditEvent.created_at, AuditEvent.id)
     ).all()
     return [AuditResponse.model_validate(row) for row in rows]
+
+
+@router.post(
+    "/api/recovery-cases/{recovery_case_id}/explanation",
+    response_model=DecisionExplanation,
+    tags=["recovery"],
+)
+async def explain_recovery_case(
+    recovery_case_id: uuid.UUID,
+    session: Annotated[Session, Depends(get_db_session)],
+    settings: Annotated[Settings, Depends(get_settings)],
+) -> DecisionExplanation:
+    """Explain allowlisted, already-computed evidence without granting decision authority."""
+
+    recovery_case = session.get(RecoveryCase, recovery_case_id)
+    if recovery_case is None:
+        raise HTTPException(status_code=404, detail="recovery case not found")
+
+    latest_decision = session.scalar(
+        select(RecoveryDecisionRecord)
+        .where(RecoveryDecisionRecord.recovery_case_id == recovery_case.id)
+        .order_by(RecoveryDecisionRecord.created_at.desc())
+        .limit(1)
+    )
+    executions = session.scalars(
+        select(ExternalExecution)
+        .where(ExternalExecution.recovery_case_id == recovery_case.id)
+        .order_by(ExternalExecution.created_at)
+    ).all()
+    outcomes = session.scalars(
+        select(ExternalOutcome)
+        .where(ExternalOutcome.recovery_case_id == recovery_case.id)
+        .order_by(ExternalOutcome.occurred_at)
+    ).all()
+    attribution = session.scalar(
+        select(RecoveryAttribution).where(
+            RecoveryAttribution.recovery_case_id == recovery_case.id
+        )
+    )
+
+    evidence: dict[str, Any] = {
+        "case_status": recovery_case.status.value,
+        "amount_minor": recovery_case.payment.amount_minor,
+        "currency": recovery_case.payment.currency,
+        "subscription_status": recovery_case.payment.subscription.status,
+        "selected_action": latest_decision.selected_action if latest_decision else None,
+        "decision_kind": latest_decision.kind.value if latest_decision else "not recorded",
+        "decision_reason": latest_decision.reason if latest_decision else "not recorded",
+        "model_version": latest_decision.model_version if latest_decision else "not recorded",
+        "policy_version": latest_decision.policy_version if latest_decision else "not recorded",
+        "execution_states": [execution.state.value for execution in executions],
+        "outcome_statuses": [outcome.status.value for outcome in outcomes],
+        "attribution_present": attribution is not None,
+    }
+    provider = create_explanation_provider(settings)
+    return await provider.explain_recovery_case(evidence)
 
 
 @router.post(

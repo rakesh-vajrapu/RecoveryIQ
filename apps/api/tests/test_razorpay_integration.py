@@ -160,6 +160,91 @@ async def test_status_is_safe_and_explicitly_test_only(
 
 
 @pytest.mark.asyncio
+async def test_recovery_case_explanation_is_allowlisted_and_non_authoritative(
+    razorpay_harness: RazorpayHarness,
+) -> None:
+    recovery_case = await _open_case(razorpay_harness, "evt_explanation_case")
+
+    response = await razorpay_harness.client.post(
+        f"/api/recovery-cases/{recovery_case.id}/explanation"
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert set(body) == {"summary", "factors", "confidence", "limitations"}
+    assert body["summary"]
+    assert body["factors"]
+    assert body["limitations"]
+    assert 0 <= body["confidence"] <= 1
+    forbidden = {
+        "selected_action",
+        "policy_result",
+        "execute",
+        "payment_link",
+        "recovery_outcome",
+    }
+    assert not forbidden.intersection(body)
+
+
+@pytest.mark.asyncio
+async def test_invalid_request_shapes_and_unknown_case_ids_are_safe(
+    razorpay_harness: RazorpayHarness,
+) -> None:
+    invalid_limit = await razorpay_harness.client.get("/api/recovery-cases?limit=0")
+    invalid_uuid = await razorpay_harness.client.get("/api/recovery-cases/not-a-uuid")
+    missing_case = await razorpay_harness.client.get(
+        "/api/recovery-cases/00000000-0000-0000-0000-000000000001"
+    )
+    missing_execution = await razorpay_harness.client.post(
+        "/api/recovery-cases/00000000-0000-0000-0000-000000000001/test-payment-link"
+    )
+
+    assert invalid_limit.status_code == 422
+    assert invalid_uuid.status_code == 422
+    assert missing_case.status_code == 404
+    assert missing_case.json() == {"detail": "recovery case not found"}
+    assert missing_execution.status_code == 404
+    assert missing_execution.json() == {"detail": "recovery case not found"}
+    assert razorpay_harness.gateway.create_calls == 0
+
+
+@pytest.mark.asyncio
+async def test_malformed_non_object_and_oversized_webhooks_are_rejected(
+    razorpay_harness: RazorpayHarness,
+) -> None:
+    malformed = await _post_event(
+        razorpay_harness,
+        {},
+        "evt_malformed_json",
+        raw_body=b"{not-json",
+    )
+    non_object = await _post_event(
+        razorpay_harness,
+        {},
+        "evt_non_object_json",
+        raw_body=b"[]",
+    )
+    oversized = await razorpay_harness.client.post(
+        "/webhooks/razorpay",
+        content=b"x" * 1_048_577,
+        headers={
+            "x-razorpay-event-id": "evt_oversized",
+            "x-razorpay-signature": "not-evaluated-before-size-rejection",
+            "content-type": "application/json",
+        },
+    )
+
+    assert malformed.status_code == 400
+    assert malformed.json() == {"detail": "invalid JSON webhook body"}
+    assert non_object.status_code == 400
+    assert non_object.json() == {"detail": "webhook body must be a JSON object"}
+    assert oversized.status_code == 413
+    assert oversized.json() == {"detail": "webhook body exceeds size limit"}
+    with razorpay_harness.sessions() as session:
+        assert session.scalar(select(func.count()).select_from(ExternalWebhookEvent)) == 0
+
+
+@pytest.mark.asyncio
 async def test_missing_and_invalid_webhook_signatures_are_rejected(
     razorpay_harness: RazorpayHarness,
     capsys: pytest.CaptureFixture[str],

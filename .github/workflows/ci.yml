@@ -23,7 +23,18 @@ jobs:
           python-version: "3.12"
       - run: uv sync --dev --locked
       - run: uv run ruff check .
-      - run: uv run mypy recoveriq_simulator tests
+      - run: >-
+          uv run mypy
+          recoveriq_simulator
+          recoveriq_detector
+          recoveriq_detector_v2
+          recoveriq_ml
+          recoveriq_ml_v2
+          recoveriq_policy
+          recoveriq_policy_evaluation
+          recoveriq_sequential
+          recoveriq_sequential_policy
+          tests
       - run: uv run pytest
 
   backend:

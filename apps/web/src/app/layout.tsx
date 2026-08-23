@@ -1,15 +1,29 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+
+import { AppShell } from "@/components/app-shell";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "RecoverIQ Command Center",
-  description: "Degradation-aware recurring-payment recovery operations",
+  title: { default: "RecoverIQ Command Center", template: "%s · RecoverIQ" },
+  description: "Bounded, auditable revenue recovery operations",
 };
+
+export const viewport: Viewport = {
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f4f7fb" },
+    { media: "(prefers-color-scheme: dark)", color: "#080d13" },
+  ],
+};
+
+const themeScript = `(() => { try { const saved = localStorage.getItem("recoveriq-theme"); const theme = saved === "light" || saved === "dark" ? saved : window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; document.documentElement.classList.toggle("dark", theme === "dark"); document.documentElement.dataset.theme = theme; } catch (_) {} })();`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className="flex min-h-full flex-col">{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: themeScript }} /></head>
+      <body className="min-h-screen antialiased"><AppShell>{children}</AppShell></body>
     </html>
   );
 }

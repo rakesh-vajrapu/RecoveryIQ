@@ -1,0 +1,5 @@
+export function formatMoney(amountMinor: number, currency = "INR"): string { return new Intl.NumberFormat("en-IN", { style: "currency", currency, minimumFractionDigits: 2 }).format(amountMinor / 100); }
+export function formatDate(value: string, includeTime = true): string { const date = new Date(value); if (Number.isNaN(date.getTime())) return "Invalid date"; return new Intl.DateTimeFormat("en-IN", { dateStyle: "medium", ...(includeTime ? { timeStyle: "short" } : {}) }).format(date); }
+export function shortId(value: string, size = 8): string { return value.length <= size ? value : `${value.slice(0, size)}…`; }
+export function titleCase(value: string): string { return value.toLowerCase().replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase()); }
+

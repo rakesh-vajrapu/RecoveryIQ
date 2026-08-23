@@ -1,188 +1,84 @@
-import {
-  Activity,
-  ArrowRight,
-  BarChart3,
-  CircleDollarSign,
-  FileSearch,
-  HeartPulse,
-  ListChecks,
-  ShieldCheck,
-} from "lucide-react";
+"use client";
 
-import { ApiStatus } from "@/components/api-status";
+import { Activity, ArrowRight, CircleDollarSign, Clock3, CreditCard, RefreshCw, ShieldCheck, Target, TriangleAlert, WalletCards } from "lucide-react";
+import Link from "next/link";
+import { useCallback } from "react";
 
-const navigation = [
-  { label: "Command Center", icon: Activity, current: true },
-  { label: "Payment Health", icon: HeartPulse },
-  { label: "Recovery Queue", icon: ListChecks },
-  { label: "Decision Trace", icon: FileSearch },
-  { label: "Evaluation Lab", icon: BarChart3 },
-];
+import { RecoveryDonut, RecoveryTrendChart } from "@/components/charts";
+import { MetricCard } from "@/components/metric-card";
+import { PageHeader } from "@/components/page-header";
+import { Button } from "@/components/ui/button";
+import { StatusBadge } from "@/components/ui/status-badge";
+import { ErrorPanel, LoadingPanel } from "@/components/ui/state-panel";
+import { useApiResource } from "@/hooks/use-api-resource";
+import { getHealth, getRazorpayStatus, getRecoveryCases, type HealthResponse, type RazorpayStatus, type RecoveryCaseSummary } from "@/lib/api";
+import { formatDate, formatMoney, shortId } from "@/lib/format";
 
-export default function Home() {
+type DashboardData = { health: HealthResponse; integration: RazorpayStatus; cases: RecoveryCaseSummary[] };
+const terminalStates = new Set(["RECOVERED", "FAILED", "STOPPED"]);
+
+export default function CommandCenterPage() {
+  const load = useCallback(async (signal: AbortSignal): Promise<DashboardData> => {
+    const [health, integration, cases] = await Promise.all([getHealth(signal), getRazorpayStatus(signal), getRecoveryCases(signal)]);
+    return { health, integration, cases };
+  }, []);
+  const resource = useApiResource(load);
+
   return (
-    <div className="min-h-screen bg-[#090d12] text-slate-100">
-      <div className="mx-auto grid min-h-screen max-w-[1680px] lg:grid-cols-[252px_1fr]">
-        <aside className="border-b border-white/[0.07] bg-[#0c1118] lg:border-r lg:border-b-0">
-          <div className="flex h-[74px] items-center justify-between px-5 lg:justify-start lg:gap-3 lg:px-6">
-            <div className="grid size-9 place-items-center rounded-lg border border-emerald-400/20 bg-emerald-400/10 font-mono text-sm font-bold text-emerald-300">
-              RQ
-            </div>
-            <div>
-              <p className="text-sm font-semibold tracking-wide text-white">RecoverIQ</p>
-              <p className="text-[11px] text-slate-500">Revenue recovery control plane</p>
-            </div>
-            <span className="rounded-full border border-cyan-400/20 bg-cyan-400/[0.08] px-2.5 py-1 text-[10px] font-semibold tracking-[0.12em] text-cyan-300 lg:hidden">
-              SIMULATION
-            </span>
-          </div>
+    <>
+      <PageHeader eyebrow="Recovery command center" title="Revenue recovery, with every boundary visible." description="Monitor current opportunities, verified outcomes, execution readiness, and the deterministic controls that keep recovery safe." icon={Activity} actions={<Button variant="outline" onClick={resource.retry} disabled={resource.loading}><RefreshCw className={resource.loading ? "animate-spin" : ""} />Refresh data</Button>} />
+      {resource.loading && <LoadingPanel label="Loading the recovery command center" />}
+      {resource.error && <ErrorPanel message={resource.error} onRetry={resource.retry} />}
+      {resource.data && <DashboardContent data={resource.data} />}
+    </>
+  );
+}
+function DashboardContent({ data }: { data: DashboardData }) {
+  const recovered = data.cases.filter((item) => item.status === "RECOVERED");
+  const active = data.cases.filter((item) => !terminalStates.has(item.status));
+  const terminal = data.cases.filter((item) => item.status === "FAILED" || item.status === "STOPPED");
+  const recoveredValue = recovered.reduce((sum, item) => sum + item.amount_minor, 0);
+  const successRate = data.cases.length ? (recovered.length / data.cases.length) * 100 : 0;
+  const latest = data.cases.slice(0, 5);
 
-          <nav aria-label="Product navigation" className="hidden px-3 py-5 lg:block">
-            <p className="mb-3 px-3 text-[10px] font-semibold tracking-[0.16em] text-slate-600 uppercase">
-              Operations
-            </p>
-            <ul className="space-y-1">
-              {navigation.map(({ label, icon: Icon, current }) => (
-                <li key={label}>
-                  <div
-                    aria-current={current ? "page" : undefined}
-                    aria-disabled={!current}
-                    className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm ${
-                      current
-                        ? "border border-white/[0.06] bg-white/[0.055] text-white shadow-sm"
-                        : "text-slate-500"
-                    }`}
-                  >
-                    <Icon className={`size-4 ${current ? "text-emerald-300" : ""}`} />
-                    <span>{label}</span>
-                    {!current && (
-                      <span className="ml-auto text-[9px] tracking-wider uppercase">Soon</span>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </nav>
+  return (
+    <div className="space-y-5">
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
+        <MetricCard label="Opportunities" value={String(data.cases.length)} detail="Persisted recovery cases" icon={Target} tone="cyan" progress={100} />
+        <MetricCard label="Recovered revenue" value={formatMoney(recoveredValue)} detail="Verified attributed value" icon={CircleDollarSign} tone="emerald" progress={successRate} />
+        <MetricCard label="Active cases" value={String(active.length)} detail="Still inside recovery flow" icon={Activity} tone="blue" progress={data.cases.length ? (active.length / data.cases.length) * 100 : 0} />
+        <MetricCard label="Success rate" value={`${successRate.toFixed(1)}%`} detail="Recovered / opportunities" icon={WalletCards} tone="violet" progress={successRate} />
+        <MetricCard label="Payment failures" value={String(data.cases.length)} detail="Each case begins with failure" icon={TriangleAlert} tone="rose" progress={100} />
+        <MetricCard label="Pending actions" value={String(active.length)} detail="Active or review states" icon={Clock3} tone="amber" progress={data.cases.length ? (active.length / data.cases.length) * 100 : 0} />
+      </section>
 
-          <div className="hidden px-6 lg:absolute lg:bottom-6 lg:block lg:w-[252px]">
-            <div className="border-t border-white/[0.07] pt-5">
-              <div className="flex items-center gap-2 text-xs text-slate-500">
-                <ShieldCheck className="size-4 text-emerald-400" />
-                <span>Bounded autonomy</span>
-              </div>
-              <p className="mt-2 text-[11px] leading-5 text-slate-600">
-                Deterministic policy authorizes. Optional LLMs only explain validated evidence.
-              </p>
-            </div>
-          </div>
-        </aside>
+      <section className="grid gap-5 xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.55fr)]">
+        <RecoveryTrendChart cases={data.cases} />
+        <RecoveryDonut recovered={recovered.length} active={active.length} terminal={terminal.length} />
+      </section>
 
-        <main className="min-w-0">
-          <header className="flex h-[74px] items-center justify-between border-b border-white/[0.07] px-5 sm:px-8">
-            <div>
-              <p className="text-[10px] font-semibold tracking-[0.16em] text-emerald-400 uppercase">
-                Operations / Command Center
-              </p>
-              <h1 className="mt-1 text-base font-semibold text-white">Submission status</h1>
-            </div>
-            <div className="hidden items-center gap-3 sm:flex">
-              <span className="text-xs text-slate-500">Mode</span>
-              <span className="rounded-full border border-cyan-400/20 bg-cyan-400/[0.08] px-3 py-1.5 text-[10px] font-semibold tracking-[0.12em] text-cyan-300">
-                SIMULATION
-              </span>
-            </div>
-          </header>
+      <section className="grid gap-5 xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)]">
+        <article className="surface-panel overflow-hidden rounded-2xl">
+          <div className="flex items-center justify-between border-b px-5 py-4 sm:px-6"><div><p className="eyebrow">Latest activity</p><h2 className="mt-1.5 text-base font-semibold">Recovery queue</h2></div><Link href="/recovery-cases" className="focus-ring group flex items-center gap-1.5 rounded-lg px-2 py-1 text-xs font-semibold text-primary">View all<ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" /></Link></div>
+          {latest.length === 0 ? <p className="p-8 text-center text-sm text-muted-foreground">No recovery cases have been recorded.</p> : <div className="divide-y">{latest.map((item) => <Link key={item.id} href={`/recovery-cases/${item.id}`} className="group grid gap-3 px-5 py-4 transition-colors hover:bg-muted/45 sm:grid-cols-[1fr_auto_auto] sm:items-center sm:px-6"><div className="min-w-0"><p className="truncate font-mono text-xs font-semibold">Case {shortId(item.id)}</p><p className="mt-1 truncate text-[11px] text-muted-foreground">Ref {shortId(item.correlation_id, 12)} · {formatDate(item.created_at)}</p></div><StatusBadge status={item.status} /><p className="text-sm font-semibold sm:text-right">{formatMoney(item.amount_minor, item.currency)}</p></Link>)}</div>}
+        </article>
 
-          <div className="px-5 py-8 sm:px-8 lg:px-10 lg:py-10">
-            <section className="mb-8 flex flex-col justify-between gap-5 xl:flex-row xl:items-end">
-              <div>
-                <div className="mb-4 flex items-center gap-2 text-xs text-slate-500">
-                  <span className="size-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.7)]" />
-                  Phase 7.5 verified
-                </div>
-                <h2 className="max-w-3xl text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
-                  Bounded recovery intelligence with verified execution safety.
-                </h2>
-                <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-400">
-                  RecoverIQ combines reproducible action-level evidence, deterministic sequential
-                  policy, Razorpay Test Mode execution, exactly-once attribution, and optional
-                  explanation-only LLM enrichment.
-                </p>
-              </div>
-              <div className="flex items-center gap-2 self-start rounded-lg border border-amber-300/15 bg-amber-300/[0.06] px-3 py-2 text-xs text-amber-200/80">
-                <CircleDollarSign className="size-4" />
-                Synthetic evaluation · Razorpay Test Mode
-              </div>
-            </section>
-
-            <section className="grid gap-4 xl:grid-cols-[1.15fr_0.85fr]">
-              <ApiStatus />
-
-              <article className="rounded-xl border border-white/[0.08] bg-[#0d131b] p-5 sm:p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-xs font-semibold tracking-[0.12em] text-slate-500 uppercase">
-                      Environment
-                    </p>
-                    <h3 className="mt-2 text-lg font-medium text-white">Safe local development</h3>
-                  </div>
-                  <ShieldCheck className="size-5 text-emerald-400" />
-                </div>
-                <dl className="mt-6 space-y-4 text-sm">
-                  <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
-                    <dt className="text-slate-500">Database</dt>
-                    <dd className="font-mono text-xs text-slate-300">SQLite fallback</dd>
-                  </div>
-                  <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
-                    <dt className="text-slate-500">Background tasks</dt>
-                    <dd className="font-mono text-xs text-slate-300">Celery eager</dd>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <dt className="text-slate-500">External credentials</dt>
-                    <dd className="font-mono text-xs text-emerald-300">Optional · Test only</dd>
-                  </div>
-                </dl>
-              </article>
-            </section>
-
-            <section className="mt-4 grid gap-4 md:grid-cols-3">
-              {[
-                {
-                  step: "01",
-                  title: "Observe safely",
-                  body: "Leakage-safe evidence and advisory degradation signals preserve the boundary between observation and hidden truth.",
-                },
-                {
-                  step: "02",
-                  title: "Score bounded actions",
-                  body: "Calibrated trajectory-aware probabilities feed deterministic ERV, support, budget, and abstention rules.",
-                },
-                {
-                  step: "03",
-                  title: "Verify and attribute",
-                  body: "Signed Test Mode outcomes are matched, deduplicated, audited, and attributed exactly once.",
-                },
-              ].map((item) => (
-                <article
-                  key={item.step}
-                  className="group rounded-xl border border-white/[0.07] bg-[#0b1017] p-5 transition-colors hover:border-white/[0.12]"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-[11px] text-emerald-400">{item.step}</span>
-                    <ArrowRight className="size-4 text-slate-700 transition-colors group-hover:text-slate-500" />
-                  </div>
-                  <h3 className="mt-8 text-sm font-medium text-slate-200">{item.title}</h3>
-                  <p className="mt-2 text-xs leading-5 text-slate-500">{item.body}</p>
-                </article>
-              ))}
-            </section>
-
-            <p className="mt-8 text-center text-[11px] text-slate-700">
-              RecoverIQ Phase 7.5 · Synthetic evidence · Razorpay Test Mode · No Live Mode
-            </p>
-          </div>
-        </main>
-      </div>
+        <article className="surface-panel rounded-2xl p-5 sm:p-6">
+          <div className="flex items-start justify-between gap-3"><div><p className="eyebrow">Control plane</p><h2 className="mt-2 text-base font-semibold">Environment readiness</h2></div><ShieldCheck className="size-5 text-primary" /></div>
+          <dl className="mt-6 space-y-3">
+            <ReadinessRow label="Backend API" value={data.health.status === "healthy" ? "Healthy" : data.health.status} ok={data.health.status === "healthy"} />
+            <ReadinessRow label="Database" value={data.health.database} ok />
+            <ReadinessRow label="Razorpay mode" value={data.integration.provider_mode.toUpperCase()} ok={data.integration.provider_mode === "test"} />
+            <ReadinessRow label="Webhook" value={data.integration.webhook_configured ? "Configured" : "Missing"} ok={data.integration.webhook_configured} />
+            <ReadinessRow label="Live Mode" value="Unavailable" ok />
+          </dl>
+          <Link href="/integrations/razorpay" className="focus-ring mt-5 flex items-center justify-between rounded-xl border bg-[var(--surface-soft)] px-4 py-3 text-xs font-semibold transition-all hover:border-primary/30 hover:text-primary"><span className="flex items-center gap-2"><CreditCard className="size-4" />Inspect integration</span><ArrowRight className="size-3.5" /></Link>
+        </article>
+      </section>
     </div>
   );
+}
+
+function ReadinessRow({ label, value, ok }: { label: string; value: string; ok: boolean }) {
+  return <div className="flex items-center gap-3 rounded-xl border bg-card/50 px-3.5 py-3"><span className={`size-2 rounded-full ${ok ? "bg-emerald-500 shadow-[0_0_9px_rgb(16_185_129_/_0.45)]" : "bg-amber-500"}`} /><dt className="text-xs text-muted-foreground">{label}</dt><dd className="ml-auto font-mono text-[11px] font-semibold uppercase">{value}</dd></div>;
 }
