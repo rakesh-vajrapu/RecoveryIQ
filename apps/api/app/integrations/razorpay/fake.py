@@ -41,6 +41,7 @@ class FakeRazorpayGateway:
         provider_id = f"plink_test_{hashlib.sha256(request.reference_id.encode()).hexdigest()[:14]}"
         result = PaymentLinkResult(
             id=provider_id,
+            order_id=f"order_test_{hashlib.sha256(request.reference_id.encode()).hexdigest()[:14]}",
             amount_minor=request.amount_minor,
             currency=request.currency,
             reference_id=request.reference_id,

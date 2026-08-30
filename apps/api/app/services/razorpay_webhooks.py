@@ -238,7 +238,7 @@ def _process_failure_event(session: Session, event: ExternalWebhookEvent) -> Non
         subscription_entity.get("id") or payment_entity.get("subscription_id") or ""
     )
     if not subscription_external_id:
-        _mark_ignored(session, event, "MISSING_SUBSCRIPTION_ID")
+        _process_payment_link_failure(session, event, payment_entity)
         return
 
     mapping = _mapping(session, "subscription", subscription_external_id)
@@ -358,6 +358,92 @@ def _process_failure_event(session: Session, event: ExternalWebhookEvent) -> Non
         attempt=attempt,
         subscription=subscription,
         event=event,
+    )
+
+
+def _process_payment_link_failure(
+    session: Session,
+    event: ExternalWebhookEvent,
+    payment_entity: dict[str, Any],
+) -> None:
+    order_external_id = str(payment_entity.get("order_id") or "")
+    if not order_external_id:
+        _mark_ignored(session, event, "MISSING_SUBSCRIPTION_AND_ORDER_ID")
+        return
+    mapping = _mapping(session, "order", order_external_id)
+    if mapping is None:
+        _mark_ignored(session, event, "UNMATCHED_PAYMENT_ORDER")
+        return
+    if mapping.local_entity_type != "ExternalExecution":
+        _mark_ignored(session, event, "BROKEN_PAYMENT_ORDER_MAPPING")
+        return
+    execution = session.get(ExternalExecution, mapping.local_entity_id)
+    if execution is None:
+        _mark_ignored(session, event, "EXTERNAL_EXECUTION_MISSING")
+        return
+    if (
+        execution.provider != "RAZORPAY"
+        or execution.execution_mode is not ExecutionMode.RAZORPAY_TEST
+        or execution.action != "CREATE_PAYMENT_LINK"
+    ):
+        _mark_ignored(session, event, "INVALID_PAYMENT_ORDER_EXECUTION")
+        return
+    recovery_case = session.get(RecoveryCase, execution.recovery_case_id)
+    if recovery_case is None:
+        _mark_ignored(session, event, "RECOVERY_CASE_MISSING")
+        return
+    _correlate_event(session, event, recovery_case)
+    if recovery_case.status is not RecoveryCaseStatus.EXECUTING:
+        _mark_ignored(session, event, "RECOVERY_CASE_NOT_EXECUTING")
+        return
+    amount_minor = _safe_int(payment_entity.get("amount"))
+    currency = str(payment_entity.get("currency") or "").upper()
+    if amount_minor != execution.amount_minor:
+        _mark_ignored(session, event, "PAYMENT_FAILURE_AMOUNT_MISMATCH")
+        return
+    if currency != execution.currency:
+        _mark_ignored(session, event, "PAYMENT_FAILURE_CURRENCY_MISMATCH")
+        return
+    payment = session.get(Payment, recovery_case.payment_id)
+    if payment is None:
+        _mark_ignored(session, event, "RECOVERY_PAYMENT_MISSING")
+        return
+    attempt_external_id = str(payment_entity.get("id") or event.provider_event_id)
+    attempt = _get_or_create_attempt(
+        session,
+        payment,
+        payment_entity,
+        external_payment_id=attempt_external_id,
+    )
+    existing_failure = session.scalar(
+        select(FailureEvent).where(FailureEvent.webhook_event_id == event.id)
+    )
+    if existing_failure is None:
+        session.add(
+            FailureEvent(
+                recovery_case_id=recovery_case.id,
+                webhook_event_id=event.id,
+                reason=str(payment_entity.get("error_reason") or "unknown"),
+                source=str(payment_entity.get("error_source") or "unknown"),
+                step=str(payment_entity.get("error_step") or "unknown"),
+                observed_at=event.provider_created_at or event.received_at,
+            )
+        )
+    add_audit_event(
+        session,
+        correlation_id=recovery_case.correlation_id,
+        entity_type="ExternalExecution",
+        entity_id=execution.id,
+        actor="RAZORPAY_WEBHOOK_PROCESSOR",
+        event_type="RECOVERY_PAYMENT_ATTEMPT_FAILED",
+        metadata={
+            "amount_minor": execution.amount_minor,
+            "currency": execution.currency,
+            "failure_reason": attempt.failure_code or "unknown",
+            "payment_method": attempt.payment_method or "unknown",
+            "case_status": recovery_case.status.value,
+            "execution_mode": execution.execution_mode.value,
+        },
     )
 
 
@@ -513,8 +599,12 @@ def _process_payment_link_event(session: Session, event: ExternalWebhookEvent) -
             return
         payment_entity = _entity(event.redacted_payload, "payment")
         external_payment_id = str(payment_entity.get("id") or "") or None
+        payment_completed_at = payment_link_completion_datetime(
+            event.redacted_payload,
+            fallback=event.received_at,
+        )
         execution.payment_link_status = PaymentLinkStatus.PAID
-        execution.completed_at = event.provider_created_at or event.received_at
+        execution.completed_at = payment_completed_at
         outcome = _record_external_outcome(
             session,
             event=event,
@@ -525,7 +615,7 @@ def _process_payment_link_event(session: Session, event: ExternalWebhookEvent) -
             external_payment_link_id=link_id,
             amount_minor=execution.amount_minor,
             currency=execution.currency,
-            occurred_at=execution.completed_at,
+            occurred_at=payment_completed_at,
         )
         _attribute_recovery_once(
             session,
@@ -534,7 +624,7 @@ def _process_payment_link_event(session: Session, event: ExternalWebhookEvent) -
             outcome=outcome,
             external_payment_id=external_payment_id,
             external_payment_link_id=link_id,
-            occurred_at=execution.completed_at,
+            occurred_at=payment_completed_at,
             source=AttributionSource.PAYMENT_LINK_PAID,
         )
         logger.info("razorpay_payment_links_paid")
@@ -829,9 +919,13 @@ def _get_or_create_payment(
 
 
 def _get_or_create_attempt(
-    session: Session, payment: Payment, payment_entity: dict[str, Any]
+    session: Session,
+    payment: Payment,
+    payment_entity: dict[str, Any],
+    *,
+    external_payment_id: str | None = None,
 ) -> PaymentAttempt:
-    external_id = f"razorpay-attempt:{payment.external_id}"
+    external_id = f"razorpay-attempt:{external_payment_id or payment.external_id}"
     attempt = session.scalar(
         select(PaymentAttempt).where(PaymentAttempt.external_id == external_id)
     )
@@ -933,6 +1027,22 @@ def _provider_datetime(value: Any) -> datetime | None:
         except (OSError, OverflowError, ValueError):
             return None
     return None
+
+
+def payment_link_completion_datetime(
+    payload: dict[str, Any],
+    *,
+    fallback: datetime,
+) -> datetime:
+    """Resolve when a paid Payment Link completed, never when the link was created."""
+
+    payment_link = _entity(payload, "payment_link")
+    payment = _entity(payload, "payment")
+    return (
+        _provider_datetime(payment_link.get("updated_at"))
+        or _provider_datetime(payment.get("created_at"))
+        or fallback
+    )
 
 
 def _is_stale(candidate: datetime | None, current: datetime | None) -> bool:

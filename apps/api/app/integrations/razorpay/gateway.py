@@ -23,6 +23,7 @@ class PaymentLinkRequest(GatewayModel):
 
 class PaymentLinkResult(GatewayModel):
     id: str
+    order_id: str | None = None
     amount_minor: int
     amount_paid_minor: int = 0
     currency: str
@@ -210,6 +211,7 @@ class HttpRazorpayGateway:
         try:
             return PaymentLinkResult(
                 id=str(payload["id"]),
+                order_id=str(payload["order_id"]) if payload.get("order_id") else None,
                 amount_minor=int(payload["amount"]),
                 amount_paid_minor=int(payload.get("amount_paid", 0)),
                 currency=str(payload["currency"] or "INR"),

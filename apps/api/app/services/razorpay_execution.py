@@ -241,6 +241,40 @@ def reconcile_unknown_execution(
     return _apply_payment_link_result(session, recovery_case, execution, result)
 
 
+def reconcile_payment_link_order_mapping(
+    session: Session,
+    *,
+    execution: ExternalExecution,
+    gateway: RazorpayGateway,
+) -> bool:
+    """Backfill an order mapping for an already-issued RecoverIQ Payment Link."""
+
+    if execution.provider_entity_id is None:
+        return False
+    recovery_case = session.get(RecoveryCase, execution.recovery_case_id)
+    if recovery_case is None:
+        return False
+    try:
+        result = gateway.fetch_payment_link(execution.provider_entity_id)
+    except RazorpayGatewayError:
+        return False
+    if (
+        result.id != execution.provider_entity_id
+        or result.order_id is None
+        or not _result_matches_execution(result, execution)
+    ):
+        return False
+    _ensure_execution_mapping(
+        session,
+        recovery_case=recovery_case,
+        execution=execution,
+        entity_type="order",
+        external_id=result.order_id,
+    )
+    session.commit()
+    return True
+
+
 def _apply_payment_link_result(
     session: Session,
     recovery_case: RecoveryCase,
@@ -253,23 +287,20 @@ def _apply_payment_link_result(
     execution.payment_link_status = _payment_link_status(result.status)
     execution.failure_category = None
     execution.failure_reason = None
-    mapping = session.scalar(
-        select(ExternalEntityMapping).where(
-            ExternalEntityMapping.provider == "RAZORPAY",
-            ExternalEntityMapping.external_entity_type == "payment_link",
-            ExternalEntityMapping.external_entity_id == result.id,
-        )
+    _ensure_execution_mapping(
+        session,
+        recovery_case=recovery_case,
+        execution=execution,
+        entity_type="payment_link",
+        external_id=result.id,
     )
-    if mapping is None:
-        session.add(
-            ExternalEntityMapping(
-                provider="RAZORPAY",
-                external_entity_type="payment_link",
-                external_entity_id=result.id,
-                local_entity_type="ExternalExecution",
-                local_entity_id=execution.id,
-                correlation_id=recovery_case.correlation_id,
-            )
+    if result.order_id is not None:
+        _ensure_execution_mapping(
+            session,
+            recovery_case=recovery_case,
+            execution=execution,
+            entity_type="order",
+            external_id=result.order_id,
         )
     add_audit_event(
         session,
@@ -287,6 +318,37 @@ def _apply_payment_link_result(
     session.commit()
     logger.info("razorpay_payment_links_created")
     return execution
+
+
+def _ensure_execution_mapping(
+    session: Session,
+    *,
+    recovery_case: RecoveryCase,
+    execution: ExternalExecution,
+    entity_type: str,
+    external_id: str,
+) -> None:
+    mapping = session.scalar(
+        select(ExternalEntityMapping).where(
+            ExternalEntityMapping.provider == "RAZORPAY",
+            ExternalEntityMapping.external_entity_type == entity_type,
+            ExternalEntityMapping.external_entity_id == external_id,
+        )
+    )
+    if mapping is None:
+        session.add(
+            ExternalEntityMapping(
+                provider="RAZORPAY",
+                external_entity_type=entity_type,
+                external_entity_id=external_id,
+                local_entity_type="ExternalExecution",
+                local_entity_id=execution.id,
+                correlation_id=recovery_case.correlation_id,
+            )
+        )
+        return
+    if mapping.local_entity_type != "ExternalExecution" or mapping.local_entity_id != execution.id:
+        raise OperatorExecutionError(f"Razorpay {entity_type} mapping belongs to another entity")
 
 
 def _audit_execution_failure(

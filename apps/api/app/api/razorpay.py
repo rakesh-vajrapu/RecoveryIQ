@@ -8,7 +8,7 @@ from typing import Annotated, Any, Literal
 import structlog
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response, status
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.ai.factory import create_explanation_provider
@@ -25,6 +25,7 @@ from app.models import (
     AuditEvent,
     ExternalExecution,
     ExternalOutcome,
+    ExternalWebhookEvent,
     RecoveryAttribution,
     RecoveryCase,
     RecoveryDecisionRecord,
@@ -34,7 +35,11 @@ from app.services.razorpay_execution import (
     OperatorExecutionError,
     create_operator_test_payment_link,
 )
-from app.services.razorpay_webhooks import persist_webhook_event, process_webhook_event
+from app.services.razorpay_webhooks import (
+    payment_link_completion_datetime,
+    persist_webhook_event,
+    process_webhook_event,
+)
 from app.tasks.razorpay import process_razorpay_webhook
 
 router = APIRouter()
@@ -96,6 +101,7 @@ class AttributionResponse(ApiModel):
     amount_minor: int
     currency: str
     occurred_at: datetime
+    created_at: datetime
     attribution_source: str
 
 
@@ -106,6 +112,7 @@ class OutcomeResponse(ApiModel):
     amount_minor: int
     currency: str
     occurred_at: datetime
+    created_at: datetime
 
 
 class RecoveryCaseResponse(ApiModel):
@@ -129,6 +136,7 @@ class RecoveryCaseSummary(ApiModel):
     amount_minor: int
     currency: str
     created_at: datetime
+    last_activity_at: datetime
 
 
 class AuditResponse(ApiModel):
@@ -234,6 +242,15 @@ def list_recovery_cases(
             amount_minor=row.payment.amount_minor,
             currency=row.payment.currency,
             created_at=row.created_at,
+            last_activity_at=(
+                session.scalar(
+                    select(func.max(AuditEvent.created_at)).where(
+                        AuditEvent.correlation_id == row.correlation_id
+                    )
+                )
+                or row.updated_at
+                or row.created_at
+            ),
         )
         for row in rows
     ]
@@ -390,8 +407,27 @@ def _recovery_case_response(session: Session, recovery_case: RecoveryCase) -> Re
         decisions=[DecisionResponse.model_validate(row) for row in decisions],
         plans=[PlanResponse.model_validate(row) for row in plans],
         executions=[ExecutionResponse.model_validate(row) for row in executions],
-        outcomes=[OutcomeResponse.model_validate(row) for row in outcomes],
+        outcomes=[_outcome_response(session, row) for row in outcomes],
         attribution=(
             AttributionResponse.model_validate(attribution) if attribution is not None else None
         ),
+    )
+
+
+def _outcome_response(session: Session, outcome: ExternalOutcome) -> OutcomeResponse:
+    occurred_at = outcome.occurred_at
+    webhook_event = session.get(ExternalWebhookEvent, outcome.webhook_event_id)
+    if webhook_event is not None and webhook_event.event_type == "payment_link.paid":
+        occurred_at = payment_link_completion_datetime(
+            webhook_event.redacted_payload,
+            fallback=outcome.occurred_at,
+        )
+    return OutcomeResponse(
+        id=outcome.id,
+        status=outcome.status.value,
+        verified=outcome.verified,
+        amount_minor=outcome.amount_minor,
+        currency=outcome.currency,
+        occurred_at=occurred_at,
+        created_at=outcome.created_at,
     )

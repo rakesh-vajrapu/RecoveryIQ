@@ -57,6 +57,7 @@ def test_http_gateway_creates_non_partial_test_payment_link_contract() -> None:
             200,
             json={
                 "id": "plink_test_001",
+                "order_id": "order_test_001",
                 "amount": 49900,
                 "amount_paid": 0,
                 "currency": "INR",
@@ -82,6 +83,7 @@ def test_http_gateway_creates_non_partial_test_payment_link_contract() -> None:
         "reminder_enable": False,
     }
     assert result.id == "plink_test_001"
+    assert result.order_id == "order_test_001"
 
 
 def test_http_gateway_does_not_retry_permanent_create_failure() -> None:

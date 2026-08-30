@@ -6,6 +6,7 @@ import hmac
 import json
 from collections.abc import AsyncGenerator, Generator
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, cast
 
@@ -24,11 +25,14 @@ from app.integrations.razorpay.fake import FakeRazorpayGateway
 from app.main import app
 from app.models import (
     AuditEvent,
+    ExternalEntityMapping,
     ExternalExecution,
     ExternalExecutionState,
     ExternalOutcome,
     ExternalOutcomeStatus,
     ExternalWebhookEvent,
+    FailureEvent,
+    PaymentAttempt,
     PaymentLinkStatus,
     RecoveryAttribution,
     RecoveryCase,
@@ -139,6 +143,29 @@ def _link_event(
     entity["currency"] = execution.currency
     entity["notes"]["recoveriq_case"] = str(recovery_case.id)
     entity["notes"]["recoveriq_correlation"] = str(recovery_case.correlation_id)
+    return payload
+
+
+def _order_failure_event(
+    *,
+    order_id: str | None,
+    amount_minor: int,
+    currency: str,
+    payment_id: str = "pay_test_recovery_attempt_failed",
+) -> dict[str, Any]:
+    payload = copy.deepcopy(_fixture("subscription_pending.json"))
+    payload["event"] = "payment.failed"
+    payload["contains"] = ["payment"]
+    payload["payload"].pop("subscription", None)
+    payment = payload["payload"]["payment"]["entity"]
+    payment["id"] = payment_id
+    payment["amount"] = amount_minor
+    payment["currency"] = currency
+    payment.pop("subscription_id", None)
+    if order_id is None:
+        payment.pop("order_id", None)
+    else:
+        payment["order_id"] = order_id
     return payload
 
 
@@ -332,6 +359,27 @@ async def test_pending_opens_one_case_and_redacts_unneeded_pii(
 
 
 @pytest.mark.asyncio
+async def test_subscription_payment_failed_still_opens_one_case(
+    razorpay_harness: RazorpayHarness,
+) -> None:
+    payload = _fixture("subscription_pending.json")
+    payload["event"] = "payment.failed"
+
+    response = await _post_event(razorpay_harness, payload, "evt_subscription_failed")
+
+    assert response.status_code == 202
+    with razorpay_harness.sessions() as session:
+        event = session.scalar(select(ExternalWebhookEvent))
+        recovery_case = session.scalar(select(RecoveryCase))
+        assert event is not None and recovery_case is not None
+        assert event.processing_status is WebhookProcessingStatus.PROCESSED
+        assert event.failure_reason is None
+        assert recovery_case.status is RecoveryCaseStatus.HUMAN_REVIEW
+        assert session.scalar(select(func.count()).select_from(RecoveryCase)) == 1
+        assert session.scalar(select(func.count()).select_from(FailureEvent)) == 1
+
+
+@pytest.mark.asyncio
 async def test_duplicate_event_id_is_acknowledged_without_duplicate_side_effects(
     razorpay_harness: RazorpayHarness,
 ) -> None:
@@ -375,6 +423,199 @@ async def test_operator_payment_link_is_idempotent_and_auditable(
         audit_types = set(session.scalars(select(AuditEvent.event_type)).all())
         assert "OPERATOR_APPROVED_EXECUTION_FALLBACK" in audit_types
         assert "PAYMENT_LINK_RETURNED" in audit_types
+
+
+@pytest.mark.asyncio
+async def test_mapped_order_failure_attaches_to_existing_executing_case_once(
+    razorpay_harness: RazorpayHarness,
+) -> None:
+    recovery_case = await _open_case(razorpay_harness, "evt_order_failure_case")
+    link_response = await razorpay_harness.client.post(
+        f"/api/recovery-cases/{recovery_case.id}/test-payment-link"
+    )
+    assert link_response.status_code == 200
+    with razorpay_harness.sessions() as session:
+        execution = session.scalar(select(ExternalExecution))
+        order_mapping = session.scalar(
+            select(ExternalEntityMapping).where(
+                ExternalEntityMapping.external_entity_type == "order"
+            )
+        )
+        assert execution is not None and order_mapping is not None
+        assert order_mapping.local_entity_type == "ExternalExecution"
+        assert order_mapping.local_entity_id == execution.id
+        payload = _order_failure_event(
+            order_id=order_mapping.external_entity_id,
+            amount_minor=execution.amount_minor,
+            currency=execution.currency,
+        )
+
+    first = await _post_event(razorpay_harness, payload, "evt_order_failure")
+    duplicate = await _post_event(razorpay_harness, payload, "evt_order_failure")
+
+    assert first.status_code == 202
+    assert duplicate.status_code == 200
+    assert duplicate.json() == {"status": "duplicate"}
+    assert razorpay_harness.gateway.create_calls == 1
+    with razorpay_harness.sessions() as session:
+        stored_case = session.get(RecoveryCase, recovery_case.id)
+        event = session.scalar(
+            select(ExternalWebhookEvent).where(
+                ExternalWebhookEvent.provider_event_id == "evt_order_failure"
+            )
+        )
+        assert stored_case is not None and event is not None
+        assert stored_case.status is RecoveryCaseStatus.EXECUTING
+        assert event.processing_status is WebhookProcessingStatus.PROCESSED
+        assert event.correlation_id == stored_case.correlation_id
+        assert session.scalar(select(func.count()).select_from(RecoveryCase)) == 1
+        assert session.scalar(select(func.count()).select_from(ExternalExecution)) == 1
+        assert session.scalar(select(func.count()).select_from(ExternalOutcome)) == 0
+        assert session.scalar(select(func.count()).select_from(RecoveryAttribution)) == 0
+        assert (
+            session.scalar(
+                select(func.count())
+                .select_from(FailureEvent)
+                .where(FailureEvent.webhook_event_id == event.id)
+            )
+            == 1
+        )
+        assert (
+            session.scalar(
+                select(func.count())
+                .select_from(PaymentAttempt)
+                .where(
+                    PaymentAttempt.external_id
+                    == "razorpay-attempt:pay_test_recovery_attempt_failed"
+                )
+            )
+            == 1
+        )
+        assert (
+            session.scalar(
+                select(func.count())
+                .select_from(AuditEvent)
+                .where(
+                    AuditEvent.correlation_id == stored_case.correlation_id,
+                    AuditEvent.event_type == "RECOVERY_PAYMENT_ATTEMPT_FAILED",
+                )
+            )
+            == 1
+        )
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    ("order_id", "expected_reason"),
+    [
+        (None, "MISSING_SUBSCRIPTION_AND_ORDER_ID"),
+        ("order_unknown", "UNMATCHED_PAYMENT_ORDER"),
+    ],
+)
+async def test_unmapped_order_failures_are_safely_ignored(
+    razorpay_harness: RazorpayHarness,
+    order_id: str | None,
+    expected_reason: str,
+) -> None:
+    recovery_case = await _open_case(razorpay_harness, f"evt_unmapped_case_{expected_reason}")
+    await razorpay_harness.client.post(f"/api/recovery-cases/{recovery_case.id}/test-payment-link")
+    with razorpay_harness.sessions() as session:
+        execution = session.scalar(select(ExternalExecution))
+        assert execution is not None
+        payload = _order_failure_event(
+            order_id=order_id,
+            amount_minor=execution.amount_minor,
+            currency=execution.currency,
+        )
+
+    response = await _post_event(
+        razorpay_harness, payload, f"evt_unmapped_failure_{expected_reason}"
+    )
+
+    assert response.status_code == 202
+    assert razorpay_harness.gateway.create_calls == 1
+    with razorpay_harness.sessions() as session:
+        event = session.scalar(
+            select(ExternalWebhookEvent).where(
+                ExternalWebhookEvent.provider_event_id == f"evt_unmapped_failure_{expected_reason}"
+            )
+        )
+        stored_case = session.get(RecoveryCase, recovery_case.id)
+        assert event is not None and stored_case is not None
+        assert event.processing_status is WebhookProcessingStatus.IGNORED
+        assert event.failure_reason == expected_reason
+        assert stored_case.status is RecoveryCaseStatus.EXECUTING
+        assert session.scalar(select(func.count()).select_from(RecoveryCase)) == 1
+        assert session.scalar(select(func.count()).select_from(ExternalExecution)) == 1
+        assert session.scalar(select(func.count()).select_from(ExternalOutcome)) == 0
+        assert session.scalar(select(func.count()).select_from(RecoveryAttribution)) == 0
+        assert (
+            session.scalar(
+                select(func.count())
+                .select_from(AuditEvent)
+                .where(AuditEvent.event_type == "RECOVERY_PAYMENT_ATTEMPT_FAILED")
+            )
+            == 0
+        )
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    ("mismatch", "expected_reason"),
+    [
+        ("amount", "PAYMENT_FAILURE_AMOUNT_MISMATCH"),
+        ("currency", "PAYMENT_FAILURE_CURRENCY_MISMATCH"),
+    ],
+)
+async def test_mapped_order_failure_mismatches_are_rejected(
+    razorpay_harness: RazorpayHarness,
+    mismatch: str,
+    expected_reason: str,
+) -> None:
+    recovery_case = await _open_case(razorpay_harness, f"evt_mismatch_case_{mismatch}")
+    await razorpay_harness.client.post(f"/api/recovery-cases/{recovery_case.id}/test-payment-link")
+    with razorpay_harness.sessions() as session:
+        execution = session.scalar(select(ExternalExecution))
+        order_mapping = session.scalar(
+            select(ExternalEntityMapping).where(
+                ExternalEntityMapping.external_entity_type == "order"
+            )
+        )
+        assert execution is not None and order_mapping is not None
+        payload = _order_failure_event(
+            order_id=order_mapping.external_entity_id,
+            amount_minor=(
+                execution.amount_minor + 1 if mismatch == "amount" else execution.amount_minor
+            ),
+            currency="USD" if mismatch == "currency" else execution.currency,
+        )
+
+    response = await _post_event(razorpay_harness, payload, f"evt_mismatch_{mismatch}")
+
+    assert response.status_code == 202
+    with razorpay_harness.sessions() as session:
+        event = session.scalar(
+            select(ExternalWebhookEvent).where(
+                ExternalWebhookEvent.provider_event_id == f"evt_mismatch_{mismatch}"
+            )
+        )
+        stored_case = session.get(RecoveryCase, recovery_case.id)
+        assert event is not None and stored_case is not None
+        assert event.processing_status is WebhookProcessingStatus.IGNORED
+        assert event.failure_reason == expected_reason
+        assert stored_case.status is RecoveryCaseStatus.EXECUTING
+        assert session.scalar(select(func.count()).select_from(RecoveryCase)) == 1
+        assert session.scalar(select(func.count()).select_from(ExternalExecution)) == 1
+        assert session.scalar(select(func.count()).select_from(ExternalOutcome)) == 0
+        assert session.scalar(select(func.count()).select_from(RecoveryAttribution)) == 0
+        assert (
+            session.scalar(
+                select(func.count())
+                .select_from(FailureEvent)
+                .where(FailureEvent.webhook_event_id == event.id)
+            )
+            == 0
+        )
 
 
 @pytest.mark.asyncio
@@ -451,6 +692,66 @@ async def test_paid_payment_link_recovers_once_and_preserves_subscription_state(
             "RAZORPAY_TEST_RECOVERY_ATTRIBUTED",
             "RECOVERY_CASE_TRANSITIONED_RECOVERED",
         }.issubset(audit_types)
+
+
+@pytest.mark.asyncio
+async def test_paid_link_uses_completion_time_and_exposes_real_last_activity(
+    razorpay_harness: RazorpayHarness,
+) -> None:
+    recovery_case = await _open_case(razorpay_harness, "evt_timestamp_case")
+    await razorpay_harness.client.post(
+        f"/api/recovery-cases/{recovery_case.id}/test-payment-link"
+    )
+    link_created_at = 1_690_000_000
+    payment_created_at = 1_700_000_100
+    link_paid_at = 1_700_000_200
+    with razorpay_harness.sessions() as session:
+        execution = session.scalar(select(ExternalExecution))
+        stored_case = session.get(RecoveryCase, recovery_case.id)
+        assert execution is not None and stored_case is not None
+        payload = _link_event("payment_link_paid.json", execution, stored_case)
+    payload["created_at"] = link_created_at
+    link_entity = payload["payload"]["payment_link"]["entity"]
+    link_entity["created_at"] = link_created_at
+    link_entity["updated_at"] = link_paid_at
+    payload["payload"]["payment"]["entity"]["created_at"] = payment_created_at
+
+    response = await _post_event(razorpay_harness, payload, "evt_paid_later_than_link")
+
+    assert response.status_code == 202
+    expected_completion_utc = datetime.fromtimestamp(link_paid_at, UTC)
+    expected_completion = expected_completion_utc.replace(tzinfo=None)
+    old_link_creation = datetime.fromtimestamp(link_created_at, UTC).replace(tzinfo=None)
+    with razorpay_harness.sessions() as session:
+        execution = session.scalar(select(ExternalExecution))
+        outcome = session.scalar(select(ExternalOutcome))
+        attribution = session.scalar(select(RecoveryAttribution))
+        assert execution is not None and outcome is not None and attribution is not None
+        assert execution.completed_at == expected_completion
+        assert outcome.occurred_at == expected_completion
+        assert attribution.created_at > old_link_creation
+
+        # Simulate the pre-hardening row without rewriting provider payload evidence.
+        outcome.occurred_at = old_link_creation
+        session.commit()
+
+    detail = await razorpay_harness.client.get(f"/api/recovery-cases/{recovery_case.id}")
+    summary = await razorpay_harness.client.get("/api/recovery-cases")
+
+    assert detail.status_code == 200
+    detail_body = detail.json()
+    assert (
+        datetime.fromisoformat(detail_body["outcomes"][0]["occurred_at"])
+        == expected_completion_utc
+    )
+    assert detail_body["outcomes"][0]["occurred_at"] != old_link_creation.isoformat()
+    assert detail_body["outcomes"][0]["created_at"]
+    assert detail_body["attribution"]["created_at"]
+    assert summary.status_code == 200
+    summary_body = summary.json()[0]
+    assert datetime.fromisoformat(summary_body["last_activity_at"]) > datetime.fromisoformat(
+        summary_body["created_at"]
+    )
 
 
 @pytest.mark.asyncio
