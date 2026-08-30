@@ -9,7 +9,7 @@ Each milestone ends with runnable verification and a review checkpoint. A later 
 - [x] Add initial domain models and migration.
 - [x] Prove fake, fallback, Groq, and optional Gemini provider abstraction.
 - [x] Build a Next.js operational shell and runtime health connection.
-- [x] Configure Docker Compose, CI, lint, types, and tests.
+- [x] Configure reproducible local runtime, CI, lint, types, and tests.
 
 Exit: all feasible local checks pass without Docker or external credentials.
 

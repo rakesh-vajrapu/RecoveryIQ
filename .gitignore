@@ -127,3 +127,8 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+# Local release/demo verification output
+FINAL_RELEASE_VERIFICATION_REPORT.md
+docs/LIVE_BROWSER_DEMO_GUIDE.md
+docs/release-verification-screenshots/

@@ -20,7 +20,7 @@ This file records failures actually observed while building or running RecoverIQ
 - **Symptom:** Docker CLI and Compose were installable, but `docker info` could not connect to `//./pipe/docker_engine`.
 - **Root cause:** the workspace runs on Windows Server in an Azure VM without exposed nested virtualization. Docker Desktop is unsupported on Windows Server, and no Linux container daemon is present.
 - **Investigation:** checked Windows optional features, WSL status, `VirtualizationFirmwareEnabled`, Docker client output, and current Docker/Microsoft support documentation.
-- **Fix/adaptation:** retained PostgreSQL and Redis in Docker Compose for supported full environments; selected portable SQLAlchemy models with SQLite as the default local database; retained Celery with configurable eager execution and in-memory transport when Redis is unavailable. Docker Compose syntax is validated without starting containers.
+- **Fix/adaptation:** selected portable SQLAlchemy models with SQLite as the verified local database and retained Celery with configurable eager execution and in-memory transport when Redis is unavailable. The unused Docker Compose manifest was later removed from the final submission so the shipped runtime matches the verified demo.
 - **Regression coverage:** backend tests must run with SQLite, eager Celery, and no external services; CI has no Docker dependency.
 - **Lesson:** development fallbacks should preserve architectural boundaries rather than replacing production technologies or blocking foundation work.
 

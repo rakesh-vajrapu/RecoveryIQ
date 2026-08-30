@@ -244,11 +244,9 @@ Open `http://localhost:3000`.
 
 Razorpay and Groq are optional integrations. Their credentials must remain only in ignored local configuration.
 
-### Optional portability configuration
+### Runtime scope
 
-PostgreSQL, Redis, Celery worker, and Docker Compose configuration exists for broader environments. These services were **not** the runtime used for the verified demo.
-
-Container configuration is included for portability, but the verified demo was run directly on the local Windows Server environment.
+The verified demo runs directly on the local Windows Server environment with SQLite and eager task execution. No container runtime or container orchestration is required or included in the submission.
 
 ## Repository Structure
 

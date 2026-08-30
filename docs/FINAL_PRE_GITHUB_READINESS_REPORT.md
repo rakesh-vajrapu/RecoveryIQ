@@ -31,7 +31,7 @@ Additional tests now make malformed request, unknown-ID, oversized webhook, and 
 - API: `apps/api/pyproject.toml` + `apps/api/uv.lock`
 - Simulator/ML/policy: `simulator/pyproject.toml` + `simulator/uv.lock`
 - Frontend: `apps/web/package.json` + `apps/web/package-lock.json`
-- Infrastructure: `docker-compose.yml`
+- Runtime: direct local processes with SQLite and eager task execution
 
 ### Compatibility documentation added
 
@@ -52,7 +52,7 @@ Additional tests now make malformed request, unknown-ID, oversized webhook, and 
 | ML | LightGBM 4.7.0; scikit-learn 1.9.0; NumPy 2.5.2; pandas 3.0.5; SHAP 0.52.0 |
 | AI | google-genai 1.75.0 optional; OpenAI-compatible client 2.54.0 for Groq |
 | Frontend | Next.js 16.3.2; React 19.2.8; TypeScript 5.9.3; ESLint 9.39.5; Tailwind CSS 4.3.3 |
-| Infrastructure | Docker 29.7.2; Compose 5.5.0; PostgreSQL 17 Alpine; Redis 7.4 Alpine |
+| Runtime | SQLite local persistence; eager task execution; no container runtime used |
 
 ### Reproducibility results
 
@@ -63,7 +63,6 @@ Additional tests now make malformed request, unknown-ID, oversized webhook, and 
 | API `uv sync --dev --locked --dry-run` | PASS — no changes |
 | Simulator `uv sync --dev --locked --dry-run` | PASS — no changes |
 | Frontend `npm ci --dry-run --ignore-scripts` | PASS |
-| Docker Compose configuration | PASS |
 
 ## Full Validation Results
 
