@@ -19,6 +19,47 @@ Payment failures have different causes and should not all receive the same retry
 
 RecoverIQ uses observable evidence to compare supported interventions. It stops or requests human review when context is incomplete, and it records recovery only after authenticated provider evidence confirms the outcome.
 
+## Core Use Cases
+
+RecoverIQ has massive applicability in the SaaS, subscription, and recurring billing industries:
+
+*   **Revenue Leakage Prevention:** Businesses lose significant revenue to "involuntary churn" (when a customer wants to pay, but their card fails due to expiration, insufficient funds, or network errors).
+*   **Cost Optimization:** Payment gateways charge for retries. RecoverIQ prevents wasteful retries by predicting which ones are likely to fail again.
+*   **Customer Experience:** Instead of spamming a customer with "payment failed" emails, RecoverIQ can intelligently wait out temporary network errors, or send a distinct payment link only when necessary.
+*   **Auditability:** Finance teams need to know why money arrived. RecoverIQ's strict attribution links a recovered dollar directly back to the specific ML-driven intervention that caused it.
+
+## Industry Standard vs. Unique Approach
+
+**The core concept is already heavily implemented in the real world by multi-billion dollar companies, but this specific project takes a very unique architectural approach to "AI Safety."**
+
+Here is the breakdown of what is industry-standard vs. what makes this project unique:
+
+### 1. What is already implemented in the real world? (Not Unique)
+The business problem this solves is called **"Involuntary Churn"** (when a customer wants to stay subscribed, but their payment fails). This is a massive problem for subscription companies like Netflix, Spotify, or any SaaS business.
+
+Using Machine Learning to recover these payments is already a standard practice in the real world, often referred to as **"Smart Retries"** or **"Dunning Management."**
+*   **Stripe** has a feature called "Smart Retries" that uses machine learning to figure out the optimal time of day and day of the week to retry a failed card to maximize the chance of success.
+*   **Chargebee, Recurly, and Paddle** (subscription management platforms) all have built-in revenue recovery tools that use data to determine when to retry a card, when to send a reminder email, and when to cancel the subscription.
+*   There are even dedicated startups (like ProfitWell, now owned by Paddle) whose entire business model is plugging into a company's billing system to do exactly what RecoverIQ does: recover failed payments using data.
+
+So, the idea of "using data and ML to retry failed payments" is highly validated and heavily utilized in real-time by real companies today.
+
+### 2. What makes *this* specific project (RecoverIQ) Unique?
+If the concept already exists, why did the author build this? 
+
+RecoverIQ is unique in **how it handles Artificial Intelligence and Safety**. 
+
+Right now, there is a massive trend of building "AI Agents" using Large Language Models (LLMs) like GPT-4, Claude, or Gemini. Many developers try to give these LLMs the ability to make decisions and execute actions directly (e.g., "Hey ChatGPT, look at this failed payment and decide what to do, then call the Razorpay API"). 
+
+**That is incredibly dangerous in fintech.** LLMs hallucinate, they are unpredictable, and they cannot be strictly audited. 
+
+RecoverIQ is unique because it proves a safe architecture for an AI financial agent:
+*   **It strips power away from the LLM.** The LLM (Groq/Gemini) in this project is explicitly *banned* from making decisions or triggering payments. 
+*   **Math makes the decisions.** It uses traditional, deterministic Machine Learning (LightGBM) and hard-coded mathematical policies (Expected Recovery Value) to decide whether to retry a payment. This means the decision is 100% predictable, testable, and auditable.
+*   **The LLM is only an explainer.** Once the math makes the safe decision, the LLM is only used to translate that complex data into a human-readable summary for the dashboard.
+
+**In summary:** The business use-case (recovering money with ML) is a proven, real-world industry standard. The uniqueness of RecoverIQ lies in its software architecture—showing how to build a modern AI Agent for finance that is actually safe, deterministic, and auditable enough that a real bank or enterprise could trust it.
+
 ## Core Flow
 
 ```text
