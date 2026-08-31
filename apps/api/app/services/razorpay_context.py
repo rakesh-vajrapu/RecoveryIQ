@@ -75,10 +75,53 @@ def record_safe_v2_decision(
     subscription: Subscription,
     event: ExternalWebhookEvent,
 ) -> RecoveryDecisionRecord:
+    return _record_safe_v2_decision(
+        session,
+        recovery_case=recovery_case,
+        payment=payment,
+        attempt=attempt,
+        subscription=subscription,
+        decision_key=f"{event.provider_event_id}:v2",
+        context_actor="RAZORPAY_CONTEXT_ADAPTER",
+    )
+
+
+def record_safe_v2_demo_decision(
+    session: Session,
+    *,
+    recovery_case: RecoveryCase,
+    payment: Payment,
+    attempt: PaymentAttempt,
+    subscription: Subscription,
+    source: str,
+) -> RecoveryDecisionRecord:
+    """Apply the existing abstention boundary to explicit synthetic demo evidence."""
+
+    return _record_safe_v2_decision(
+        session,
+        recovery_case=recovery_case,
+        payment=payment,
+        attempt=attempt,
+        subscription=subscription,
+        decision_key=f"demo:{payment.external_id}:v2",
+        context_actor="DEMO_SYNTHETIC_CONTEXT_ADAPTER",
+        evidence_source=source,
+    )
+
+
+def _record_safe_v2_decision(
+    session: Session,
+    *,
+    recovery_case: RecoveryCase,
+    payment: Payment,
+    attempt: PaymentAttempt,
+    subscription: Subscription,
+    decision_key: str,
+    context_actor: str,
+    evidence_source: str | None = None,
+) -> RecoveryDecisionRecord:
     existing = (
-        session.query(RecoveryDecisionRecord)
-        .filter_by(decision_key=f"{event.provider_event_id}:v2")
-        .one_or_none()
+        session.query(RecoveryDecisionRecord).filter_by(decision_key=decision_key).one_or_none()
     )
     if existing is not None:
         return existing
@@ -86,33 +129,39 @@ def record_safe_v2_decision(
     adaptation = RazorpayContextAdapter().adapt(
         payment=payment, attempt=attempt, subscription=subscription
     )
+    adaptation_metadata: dict[str, Any] = {
+        "feature_schema_version": adaptation.feature_schema_version,
+        "inference_permitted": adaptation.inference_permitted,
+        "missing_requirements": list(adaptation.missing_requirements),
+    }
+    if evidence_source is not None:
+        adaptation_metadata.update({"source": evidence_source, "synthetic": True})
     add_audit_event(
         session,
         correlation_id=recovery_case.correlation_id,
         entity_type="RecoveryCase",
         entity_id=recovery_case.id,
-        actor="RAZORPAY_CONTEXT_ADAPTER",
+        actor=context_actor,
         event_type="FEATURE_CONTEXT_ADAPTED",
-        metadata={
-            "feature_schema_version": adaptation.feature_schema_version,
-            "inference_permitted": adaptation.inference_permitted,
-            "missing_requirements": list(adaptation.missing_requirements),
-        },
+        metadata=adaptation_metadata,
     )
+    context_metadata: dict[str, Any] = {
+        "inference_permitted": False,
+        "missing_requirements": list(adaptation.missing_requirements),
+        "observable_fields": adaptation.observable_fields,
+    }
+    if evidence_source is not None:
+        context_metadata.update({"source": evidence_source, "synthetic": True})
     decision = RecoveryDecisionRecord(
         recovery_case_id=recovery_case.id,
-        decision_key=f"{event.provider_event_id}:v2",
+        decision_key=decision_key,
         kind=DecisionKind.HUMAN_REVIEW,
         selected_action=None,
         reason="INSUFFICIENT_CONTEXT",
         model_version="2.0.0",
         policy_version="2.0.0",
         feature_schema_version=adaptation.feature_schema_version,
-        context_metadata={
-            "inference_permitted": False,
-            "missing_requirements": list(adaptation.missing_requirements),
-            "observable_fields": adaptation.observable_fields,
-        },
+        context_metadata=context_metadata,
     )
     session.add(decision)
     session.flush()

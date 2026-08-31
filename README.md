@@ -91,6 +91,32 @@ Detect → Diagnose → Decide → Execute → Recover → Audit
 - Groq-backed, schema-validated explanations with deterministic fallback;
 - a responsive local Next.js operations dashboard.
 
+## Evidence Categories
+
+RecoverIQ keeps three presentation evidence categories explicitly separate:
+
+| Category | Purpose | What it does **not** claim |
+|---|---|---|
+| **Synthetic Demo Opportunities** | Clearly labeled high-value revenue-risk cases for the local UI | Razorpay transactions or recovered money |
+| **Simulated Batch Evaluation** | Frozen, reproducible model/policy performance across deterministic trajectories | Live or provider-verified revenue |
+| **Razorpay Test Mode Evidence** | Signed webhook, Payment Link, outcome, and exactly-once attribution proof | Production payments or real funds |
+
+Synthetic Demo Opportunities ≠ Simulated Batch Evaluation ≠ Razorpay Test Mode Evidence.
+
+## Optional Demo Dataset
+
+The optional development-only demo seed creates clearly labeled synthetic high-value revenue-risk opportunities for presentation purposes. They are not Razorpay transactions and are not counted as provider-verified recovery. The CLI refuses to run unless both `APP_ENV=development` and `ENABLE_DEMO_SEED=true` are set; it is not exposed through an HTTP route or frontend button.
+
+From `apps/api`:
+
+```powershell
+$env:APP_ENV="development"
+$env:ENABLE_DEMO_SEED="true"
+uv run python -m app.dev.seed_demo_cases
+```
+
+Use `uv run python -m app.dev.seed_demo_cases --reset` to remove only records created by this demo seeder. Provider evidence, outcomes, attribution, and Razorpay cases are protected from reset.
+
 ## Verified Local Demo
 
 The demonstrated application ran directly on the local Windows Server environment:

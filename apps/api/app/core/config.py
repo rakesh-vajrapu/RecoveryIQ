@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     database_url: str = "sqlite:///./recoveriq.db"
     redis_url: str = "redis://localhost:6379/0"
     celery_task_always_eager: bool = True
+    enable_demo_seed: bool = False
 
     execution_environment: Literal["SIMULATION", "RAZORPAY_TEST"] = "SIMULATION"
     razorpay_mode: Literal["test"] = "test"

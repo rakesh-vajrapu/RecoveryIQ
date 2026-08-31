@@ -18,16 +18,16 @@ export function RecoveryTrendChart({ cases }: { cases: RecoveryCaseSummary[] }) 
     return date;
   });
   const values = days.map((date) => cases.filter((item) => {
-    const created = new Date(item.created_at);
-    return item.status === "RECOVERED" && created.toDateString() === date.toDateString();
-  }).reduce((sum, item) => sum + item.amount_minor, 0));
+    const recoveredAt = item.verified_recovery_at ? new Date(item.verified_recovery_at) : null;
+    return item.verified_recovery_minor > 0 && recoveredAt?.toDateString() === date.toDateString();
+  }).reduce((sum, item) => sum + item.verified_recovery_minor, 0));
   const points = chartPoints(values, 620, 176);
   const total = values.reduce((sum, value) => sum + value, 0);
 
   return (
     <article className="surface-panel rounded-2xl p-5 sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
-        <div><p className="eyebrow">Recovery trend</p><h2 className="mt-2 text-lg font-semibold">Recovered value by case date</h2></div>
+        <div><p className="eyebrow">Provider-verified trend</p><h2 className="mt-2 text-lg font-semibold">Razorpay Test recovery by attribution date</h2></div>
         <div className="text-right"><p className="text-xs text-muted-foreground">7-day total</p><p className="mt-1 font-mono text-sm font-semibold text-primary">{formatMoney(total)}</p></div>
       </div>
       <div className="mt-6 overflow-hidden rounded-xl border bg-[var(--surface-soft)] p-3">
@@ -43,7 +43,7 @@ export function RecoveryTrendChart({ cases }: { cases: RecoveryCaseSummary[] }) 
           {days.map((day, index) => <text key={day.toISOString()} x={(index / 6) * 620} y="207" textAnchor={index === 0 ? "start" : index === 6 ? "end" : "middle"} fill="var(--muted-foreground)" fontSize="10">{day.toLocaleDateString("en-IN", { weekday: "short" })}</text>)}
         </svg>
       </div>
-      <p className="mt-3 text-[11px] leading-5 text-muted-foreground">Uses persisted recovered cases grouped by their creation date; it is not a forecast.</p>
+      <p className="mt-3 text-[11px] leading-5 text-muted-foreground">Uses exactly-once Razorpay Test Mode attribution only. Synthetic opportunity amounts are excluded.</p>
     </article>
   );
 }
@@ -77,4 +77,3 @@ export function RecoveryDonut({ recovered, active, terminal }: { recovered: numb
 function Legend({ color, label, value }: { color: string; label: string; value: number }) {
   return <div className="flex items-center rounded-xl border bg-card/50 px-3 py-2.5"><span className={`mr-2.5 size-2 rounded-full ${color}`} /><dt className="text-xs text-muted-foreground">{label}</dt><dd className="ml-auto font-mono text-xs font-semibold">{value}</dd></div>;
 }
-

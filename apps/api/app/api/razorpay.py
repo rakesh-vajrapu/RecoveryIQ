@@ -40,6 +40,7 @@ from app.services.razorpay_webhooks import (
     persist_webhook_event,
     process_webhook_event,
 )
+from app.services.recovery_evidence import recovery_evidence
 from app.tasks.razorpay import process_razorpay_webhook
 
 router = APIRouter()
@@ -122,6 +123,11 @@ class RecoveryCaseResponse(ApiModel):
     amount_minor: int
     currency: str
     subscription_status: str
+    source: str
+    synthetic: bool
+    failure_type: str
+    payment_method: str
+    failure_description: str | None
     decisions: list[DecisionResponse]
     plans: list[PlanResponse]
     executions: list[ExecutionResponse]
@@ -135,6 +141,14 @@ class RecoveryCaseSummary(ApiModel):
     correlation_id: uuid.UUID
     amount_minor: int
     currency: str
+    source: str
+    synthetic: bool
+    failure_type: str
+    payment_method: str
+    decision_kind: str | None
+    decision_reason: str | None
+    verified_recovery_minor: int
+    verified_recovery_at: datetime | None
     created_at: datetime
     last_activity_at: datetime
 
@@ -234,26 +248,37 @@ def list_recovery_cases(
     rows = session.scalars(
         select(RecoveryCase).order_by(RecoveryCase.created_at.desc()).limit(limit)
     ).all()
-    return [
-        RecoveryCaseSummary(
-            id=row.id,
-            status=row.status.value,
-            correlation_id=row.correlation_id,
-            amount_minor=row.payment.amount_minor,
-            currency=row.payment.currency,
-            created_at=row.created_at,
-            last_activity_at=(
-                session.scalar(
-                    select(func.max(AuditEvent.created_at)).where(
-                        AuditEvent.correlation_id == row.correlation_id
+    response: list[RecoveryCaseSummary] = []
+    for row in rows:
+        evidence = recovery_evidence(session, row)
+        response.append(
+            RecoveryCaseSummary(
+                id=row.id,
+                status=row.status.value,
+                correlation_id=row.correlation_id,
+                amount_minor=row.payment.amount_minor,
+                currency=row.payment.currency,
+                source=evidence.source.value,
+                synthetic=evidence.synthetic,
+                failure_type=evidence.failure_type,
+                payment_method=evidence.payment_method,
+                decision_kind=evidence.decision_kind,
+                decision_reason=evidence.decision_reason,
+                verified_recovery_minor=evidence.verified_recovery_minor,
+                verified_recovery_at=evidence.verified_recovery_at,
+                created_at=row.created_at,
+                last_activity_at=(
+                    session.scalar(
+                        select(func.max(AuditEvent.created_at)).where(
+                            AuditEvent.correlation_id == row.correlation_id
+                        )
                     )
-                )
-                or row.updated_at
-                or row.created_at
-            ),
+                    or row.updated_at
+                    or row.created_at
+                ),
+            )
         )
-        for row in rows
-    ]
+    return response
 
 
 @router.get(
@@ -324,9 +349,7 @@ async def explain_recovery_case(
         .order_by(ExternalOutcome.occurred_at)
     ).all()
     attribution = session.scalar(
-        select(RecoveryAttribution).where(
-            RecoveryAttribution.recovery_case_id == recovery_case.id
-        )
+        select(RecoveryAttribution).where(RecoveryAttribution.recovery_case_id == recovery_case.id)
     )
 
     evidence: dict[str, Any] = {
@@ -374,6 +397,7 @@ def create_test_payment_link(
 
 def _recovery_case_response(session: Session, recovery_case: RecoveryCase) -> RecoveryCaseResponse:
     payment = recovery_case.payment
+    evidence = recovery_evidence(session, recovery_case)
     decisions = session.scalars(
         select(RecoveryDecisionRecord)
         .where(RecoveryDecisionRecord.recovery_case_id == recovery_case.id)
@@ -404,6 +428,11 @@ def _recovery_case_response(session: Session, recovery_case: RecoveryCase) -> Re
         amount_minor=payment.amount_minor,
         currency=payment.currency,
         subscription_status=payment.subscription.status,
+        source=evidence.source.value,
+        synthetic=evidence.synthetic,
+        failure_type=evidence.failure_type,
+        payment_method=evidence.payment_method,
+        failure_description=evidence.failure_description,
         decisions=[DecisionResponse.model_validate(row) for row in decisions],
         plans=[PlanResponse.model_validate(row) for row in plans],
         executions=[ExecutionResponse.model_validate(row) for row in executions],

@@ -1,6 +1,6 @@
 "use client";
 
-import { Activity, ArrowRight, CircleDollarSign, Clock3, CreditCard, RefreshCw, ShieldCheck, Target, TriangleAlert, WalletCards } from "lucide-react";
+import { Activity, ArrowRight, Beaker, CircleDollarSign, CreditCard, RefreshCw, ShieldAlert, ShieldCheck, Target } from "lucide-react";
 import Link from "next/link";
 import { useCallback } from "react";
 
@@ -37,19 +37,26 @@ function DashboardContent({ data }: { data: DashboardData }) {
   const recovered = data.cases.filter((item) => item.status === "RECOVERED");
   const active = data.cases.filter((item) => !terminalStates.has(item.status));
   const terminal = data.cases.filter((item) => item.status === "FAILED" || item.status === "STOPPED");
-  const recoveredValue = recovered.reduce((sum, item) => sum + item.amount_minor, 0);
-  const successRate = data.cases.length ? (recovered.length / data.cases.length) * 100 : 0;
-  const latest = data.cases.slice(0, 5);
+  const demoActive = active.filter((item) => item.source === "DEMO_SYNTHETIC");
+  const revenueAtRisk = demoActive.reduce((sum, item) => sum + item.amount_minor, 0);
+  const verifiedRecovery = data.cases.reduce((sum, item) => sum + item.verified_recovery_minor, 0);
+  const reviews = active.filter((item) => item.status === "HUMAN_REVIEW").length;
+  const latest = [...data.cases].sort((left, right) => new Date(right.last_activity_at).getTime() - new Date(left.last_activity_at).getTime()).slice(0, 5);
 
   return (
     <div className="space-y-5">
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
-        <MetricCard label="Opportunities" value={String(data.cases.length)} detail="Persisted recovery cases" icon={Target} tone="cyan" progress={100} />
-        <MetricCard label="Recovered revenue" value={formatMoney(recoveredValue)} detail="Verified attributed value" icon={CircleDollarSign} tone="emerald" progress={successRate} />
-        <MetricCard label="Active cases" value={String(active.length)} detail="Still inside recovery flow" icon={Activity} tone="blue" progress={data.cases.length ? (active.length / data.cases.length) * 100 : 0} />
-        <MetricCard label="Success rate" value={`${successRate.toFixed(1)}%`} detail="Recovered / opportunities" icon={WalletCards} tone="violet" progress={successRate} />
-        <MetricCard label="Payment failures" value={String(data.cases.length)} detail="Each case begins with failure" icon={TriangleAlert} tone="rose" progress={100} />
-        <MetricCard label="Pending actions" value={String(active.length)} detail="Active or review states" icon={Clock3} tone="amber" progress={data.cases.length ? (active.length / data.cases.length) * 100 : 0} />
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+        <MetricCard label="Revenue at risk" value={formatMoney(revenueAtRisk)} detail="Clearly labeled synthetic opportunities" icon={Target} tone="rose" progress={100} />
+        <MetricCard label="Active opportunities" value={String(active.length)} detail={`${demoActive.length} synthetic demo cases`} icon={Activity} tone="blue" progress={data.cases.length ? (active.length / data.cases.length) * 100 : 0} />
+        <MetricCard label="Verified Razorpay Test recovery" value={formatMoney(verifiedRecovery)} detail="Test Mode · no real money" icon={CircleDollarSign} tone="emerald" progress={verifiedRecovery > 0 ? 100 : 0} />
+        <MetricCard label="Batch recovery performance" value="75.97%" detail="SIMULATED · 27,406 sealed episodes" icon={Beaker} tone="violet" progress={75.97} />
+        <MetricCard label="Safe escalations" value={String(reviews)} detail="Human Review · insufficient context" icon={ShieldAlert} tone="amber" progress={active.length ? (reviews / active.length) * 100 : 0} />
+      </section>
+
+      <section className="grid gap-3 md:grid-cols-3">
+        <EvidenceLane title="Synthetic demo opportunities" detail="Presentation-only revenue at risk. Not provider transactions." href="/recovery-cases" tone="cyan" />
+        <EvidenceLane title="Simulated batch evaluation" detail="Frozen performance evidence. Monetary values are simulated." href="/evaluation" tone="violet" />
+        <EvidenceLane title="Razorpay Test Mode evidence" detail="Signed provider lifecycle and exactly-once attribution." href="/integrations/razorpay" tone="emerald" />
       </section>
 
       <section className="grid gap-5 xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.55fr)]">
@@ -60,7 +67,7 @@ function DashboardContent({ data }: { data: DashboardData }) {
       <section className="grid gap-5 xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)]">
         <article className="surface-panel overflow-hidden rounded-2xl">
           <div className="flex items-center justify-between border-b px-5 py-4 sm:px-6"><div><p className="eyebrow">Latest activity</p><h2 className="mt-1.5 text-base font-semibold">Recovery queue</h2></div><Link href="/recovery-cases" className="focus-ring group flex items-center gap-1.5 rounded-lg px-2 py-1 text-xs font-semibold text-primary">View all<ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" /></Link></div>
-          {latest.length === 0 ? <p className="p-8 text-center text-sm text-muted-foreground">No recovery cases have been recorded.</p> : <div className="divide-y">{latest.map((item) => <Link key={item.id} href={`/recovery-cases/${item.id}`} className="group grid gap-3 px-5 py-4 transition-colors hover:bg-muted/45 sm:grid-cols-[1fr_auto_auto] sm:items-center sm:px-6"><div className="min-w-0"><p className="truncate font-mono text-xs font-semibold">Case {shortId(item.id)}</p><p className="mt-1 truncate text-[11px] text-muted-foreground">Ref {shortId(item.correlation_id, 12)} · {formatDate(item.created_at)}</p></div><StatusBadge status={item.status} /><p className="text-sm font-semibold sm:text-right">{formatMoney(item.amount_minor, item.currency)}</p></Link>)}</div>}
+          {latest.length === 0 ? <p className="p-8 text-center text-sm text-muted-foreground">No recovery cases have been recorded.</p> : <div className="divide-y">{latest.map((item) => <Link key={item.id} href={`/recovery-cases/${item.id}`} className="group grid gap-3 px-5 py-4 transition-colors hover:bg-muted/45 sm:grid-cols-[1fr_auto_auto_auto] sm:items-center sm:px-6"><div className="min-w-0"><p className="truncate font-mono text-xs font-semibold">Case {shortId(item.id)}</p><p className="mt-1 truncate text-[11px] text-muted-foreground">Ref {shortId(item.correlation_id, 12)} · activity {formatDate(item.last_activity_at)}</p></div><SourceBadge source={item.source} /><StatusBadge status={item.status} /><p className="text-sm font-semibold sm:text-right">{formatMoney(item.amount_minor, item.currency)}</p></Link>)}</div>}
         </article>
 
         <article className="surface-panel rounded-2xl p-5 sm:p-6">
@@ -77,6 +84,17 @@ function DashboardContent({ data }: { data: DashboardData }) {
       </section>
     </div>
   );
+}
+
+function EvidenceLane({ title, detail, href, tone }: { title: string; detail: string; href: string; tone: "cyan" | "violet" | "emerald" }) {
+  const tones = { cyan: "border-cyan-500/20 bg-cyan-500/[0.055]", violet: "border-violet-500/20 bg-violet-500/[0.055]", emerald: "border-emerald-500/20 bg-emerald-500/[0.055]" };
+  return <Link href={href} className={`focus-ring group rounded-2xl border p-4 transition-transform hover:-translate-y-0.5 ${tones[tone]}`}><p className="text-xs font-bold">{title}</p><p className="mt-2 text-[11px] leading-5 text-muted-foreground">{detail}</p><span className="mt-3 flex items-center gap-1 text-[10px] font-bold tracking-wider text-primary uppercase">Inspect evidence<ArrowRight className="size-3 transition-transform group-hover:translate-x-1" /></span></Link>;
+}
+
+function SourceBadge({ source }: { source: string }) {
+  if (source === "DEMO_SYNTHETIC") return <span className="rounded-full border border-cyan-500/25 bg-cyan-500/10 px-2.5 py-1 text-[9px] font-bold tracking-wider text-cyan-700 uppercase dark:text-cyan-300">Demo · Synthetic</span>;
+  if (source === "RAZORPAY_TEST_MODE") return <span className="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-[9px] font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Razorpay · Test</span>;
+  return <span className="rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-[9px] font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">Local · Unverified</span>;
 }
 
 function ReadinessRow({ label, value, ok }: { label: string; value: string; ok: boolean }) {

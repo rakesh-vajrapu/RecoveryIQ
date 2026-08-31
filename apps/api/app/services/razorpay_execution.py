@@ -32,6 +32,7 @@ from app.models import (
 )
 from app.models.entities import utc_now
 from app.services.audit import add_audit_event
+from app.services.recovery_evidence import is_demo_payment_external_id
 
 logger = structlog.get_logger()
 
@@ -69,6 +70,8 @@ def create_operator_test_payment_link(
     payment = session.get(Payment, recovery_case.payment_id)
     if payment is None:
         raise LookupError("recovery payment not found")
+    if is_demo_payment_external_id(payment.external_id):
+        raise OperatorExecutionError("synthetic demo cases cannot execute provider actions")
     if payment.currency != "INR":
         raise OperatorExecutionError("Phase 7 Test Payment Links support INR only")
 

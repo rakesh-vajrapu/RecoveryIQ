@@ -699,9 +699,7 @@ async def test_paid_link_uses_completion_time_and_exposes_real_last_activity(
     razorpay_harness: RazorpayHarness,
 ) -> None:
     recovery_case = await _open_case(razorpay_harness, "evt_timestamp_case")
-    await razorpay_harness.client.post(
-        f"/api/recovery-cases/{recovery_case.id}/test-payment-link"
-    )
+    await razorpay_harness.client.post(f"/api/recovery-cases/{recovery_case.id}/test-payment-link")
     link_created_at = 1_690_000_000
     payment_created_at = 1_700_000_100
     link_paid_at = 1_700_000_200
@@ -710,6 +708,7 @@ async def test_paid_link_uses_completion_time_and_exposes_real_last_activity(
         stored_case = session.get(RecoveryCase, recovery_case.id)
         assert execution is not None and stored_case is not None
         payload = _link_event("payment_link_paid.json", execution, stored_case)
+        expected_amount_minor = execution.amount_minor
     payload["created_at"] = link_created_at
     link_entity = payload["payload"]["payment_link"]["entity"]
     link_entity["created_at"] = link_created_at
@@ -730,6 +729,7 @@ async def test_paid_link_uses_completion_time_and_exposes_real_last_activity(
         assert execution.completed_at == expected_completion
         assert outcome.occurred_at == expected_completion
         assert attribution.created_at > old_link_creation
+        expected_attribution_created_at = attribution.created_at
 
         # Simulate the pre-hardening row without rewriting provider payload evidence.
         outcome.occurred_at = old_link_creation
@@ -741,14 +741,18 @@ async def test_paid_link_uses_completion_time_and_exposes_real_last_activity(
     assert detail.status_code == 200
     detail_body = detail.json()
     assert (
-        datetime.fromisoformat(detail_body["outcomes"][0]["occurred_at"])
-        == expected_completion_utc
+        datetime.fromisoformat(detail_body["outcomes"][0]["occurred_at"]) == expected_completion_utc
     )
     assert detail_body["outcomes"][0]["occurred_at"] != old_link_creation.isoformat()
     assert detail_body["outcomes"][0]["created_at"]
     assert detail_body["attribution"]["created_at"]
     assert summary.status_code == 200
     summary_body = summary.json()[0]
+    assert summary_body["verified_recovery_minor"] == expected_amount_minor
+    assert (
+        datetime.fromisoformat(summary_body["verified_recovery_at"])
+        == expected_attribution_created_at
+    )
     assert datetime.fromisoformat(summary_body["last_activity_at"]) > datetime.fromisoformat(
         summary_body["created_at"]
     )

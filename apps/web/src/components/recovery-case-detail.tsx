@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, ArrowLeft, Bot, BrainCircuit, CheckCircle2, CircleDollarSign, Clock3, ExternalLink, FileClock, Link2, LoaderCircle, LockKeyhole, RefreshCw, ShieldCheck, Sparkles, X } from "lucide-react";
+import { AlertTriangle, ArrowLeft, Ban, Bot, BrainCircuit, CheckCircle2, CircleDollarSign, Clock3, ExternalLink, FileClock, Link2, LoaderCircle, LockKeyhole, RefreshCw, ShieldCheck, Sparkles, X } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useState } from "react";
 
@@ -33,11 +33,17 @@ function CaseContent({ recoveryCase, onRefresh }: { recoveryCase: RecoveryCaseDe
   const evidenceFactors = latestDecision ? readEvidenceFactors(latestDecision.context_metadata) : [];
   return (
     <div className="space-y-5">
+      <EvidenceBanner recoveryCase={recoveryCase} />
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <SummaryCard label="Recovery state" value={<StatusBadge status={recoveryCase.status} />} detail={titleCase(recoveryCase.status)} icon={ShieldCheck} />
         <SummaryCard label="Opportunity value" value={formatMoney(recoveryCase.amount_minor, recoveryCase.currency)} detail={`${recoveryCase.currency} · minor-unit safe`} icon={CircleDollarSign} />
         <SummaryCard label="Recovery stage" value={latestExecution?.payment_link_status ? titleCase(latestExecution.payment_link_status) : titleCase(recoveryCase.status)} detail={latestExecution ? `Execution ${titleCase(latestExecution.state)}` : "No external execution yet"} icon={Clock3} />
         <SummaryCard label="Reference" value={shortId(recoveryCase.correlation_id, 12)} detail="Anonymous correlation ID" icon={LockKeyhole} mono />
+      </section>
+
+      <section className="grid gap-5 xl:grid-cols-2">
+        <article className="surface-panel rounded-2xl p-5 sm:p-6"><div className="flex items-start justify-between"><div><p className="eyebrow">Why revenue is at risk</p><h2 className="mt-2 text-lg font-semibold">Failure evidence</h2></div><AlertTriangle className="size-5 text-amber-500" /></div><div className="mt-5 grid gap-3 sm:grid-cols-2"><InfoDatum label="Failure type" value={titleCase(recoveryCase.failure_type)} /><InfoDatum label="Payment method" value={titleCase(recoveryCase.payment_method)} /><InfoDatum label="Subscription state" value={titleCase(recoveryCase.subscription_status)} /><InfoDatum label="Evidence source" value={titleCase(recoveryCase.source)} /></div><p className="mt-4 rounded-xl border bg-[var(--surface-soft)] p-4 text-xs leading-5 text-muted-foreground">{recoveryCase.failure_description ?? "The persisted payment attempt supplies the observable failure context for this recovery case."}</p></article>
+        <article className="surface-panel rounded-2xl p-5 sm:p-6"><div className="flex items-start justify-between"><div><p className="eyebrow">What RecoverIQ determined</p><h2 className="mt-2 text-lg font-semibold">Safety response</h2></div><ShieldCheck className="size-5 text-primary" /></div><p className="mt-5 text-sm leading-6">{latestDecision?.reason === "INSUFFICIENT_CONTEXT" ? "RecoverIQ escalated to Human Review because the frozen ML feature contract cannot be completed from this evidence without inventing history." : "The persisted decision and policy record below remain the authoritative recovery result."}</p><div className="mt-4 rounded-xl border border-violet-500/20 bg-violet-500/[0.055] p-4 text-xs leading-5 text-muted-foreground"><strong className="text-foreground">Authority boundary:</strong> ML estimates when supported; ERV and deterministic policy authorize; the LLM only explains supplied evidence.</div></article>
       </section>
 
       <section className="grid gap-5 xl:grid-cols-[minmax(0,1.15fr)_minmax(340px,0.85fr)]">
@@ -50,7 +56,7 @@ function CaseContent({ recoveryCase, onRefresh }: { recoveryCase: RecoveryCaseDe
 
       <section className="grid gap-5 xl:grid-cols-2">
         <article className="surface-panel rounded-2xl p-5 sm:p-6"><div className="flex items-start justify-between"><div><p className="eyebrow">Execution boundary</p><h2 className="mt-2 text-lg font-semibold">Plans and external execution</h2></div><Link2 className="size-5 text-primary" /></div><div className="mt-5 space-y-3">{recoveryCase.plans.length === 0 && recoveryCase.executions.length === 0 ? <EmptyPanel title="No execution planned" description="The policy or an operator has not created an execution plan for this case." /> : <>{recoveryCase.plans.map((plan) => <div key={plan.id} className="rounded-xl border bg-card/50 p-4"><div className="flex flex-wrap items-center gap-2"><p className="text-sm font-semibold">{titleCase(plan.action)}</p><span className="rounded-full bg-muted px-2 py-1 text-[9px] font-bold tracking-wider text-muted-foreground uppercase">{titleCase(plan.initiator)}</span></div><p className="mt-2 text-xs leading-5 text-muted-foreground">{plan.rationale}</p><p className="mt-2 font-mono text-[10px] text-primary">{titleCase(plan.capability)}</p></div>)}{recoveryCase.executions.map((execution) => <ExecutionRow key={execution.id} execution={execution} />)}</>}</div></article>
-        <PaymentLinkCard recoveryCase={recoveryCase} onCreated={onRefresh} />
+        {recoveryCase.synthetic ? <SyntheticExecutionBoundaryCard /> : <PaymentLinkCard recoveryCase={recoveryCase} onCreated={onRefresh} />}
       </section>
 
       <section className="grid gap-5 xl:grid-cols-2">
@@ -59,6 +65,16 @@ function CaseContent({ recoveryCase, onRefresh }: { recoveryCase: RecoveryCaseDe
       </section>
     </div>
   );
+}
+
+function EvidenceBanner({ recoveryCase }: { recoveryCase: RecoveryCaseDetail }) {
+  if (recoveryCase.synthetic) return <section className="rounded-2xl border border-cyan-500/25 bg-cyan-500/[0.07] p-5"><div className="flex flex-wrap items-center gap-3"><span className="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-[10px] font-bold tracking-wider text-cyan-700 uppercase dark:text-cyan-300">Demo · Synthetic</span><h2 className="text-sm font-bold">Synthetic Demo Opportunity</h2></div><p className="mt-3 text-xs leading-5 text-muted-foreground">Presentation-only revenue-risk evidence. It is not a Razorpay transaction, has no fabricated provider event, and is never counted as provider-verified recovery.</p></section>;
+  if (recoveryCase.source === "RAZORPAY_TEST_MODE") return <section className="rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.07] p-5"><div className="flex flex-wrap items-center gap-3"><span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[10px] font-bold tracking-wider text-emerald-700 uppercase dark:text-emerald-300">Razorpay · Test Mode</span><h2 className="text-sm font-bold">Provider-backed test evidence</h2></div><p className="mt-3 text-xs leading-5 text-muted-foreground">Authenticated Test Mode evidence only. No real money moved.</p></section>;
+  return <section className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.07] p-5"><div className="flex flex-wrap items-center gap-3"><span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-[10px] font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">Local · Unverified</span><h2 className="text-sm font-bold">Local evidence only</h2></div><p className="mt-3 text-xs leading-5 text-muted-foreground">No authenticated Razorpay provider lifecycle is attached, so this case is not counted as provider-verified recovery.</p></section>;
+}
+
+function SyntheticExecutionBoundaryCard() {
+  return <article className="surface-panel rounded-2xl p-5 sm:p-6"><div className="flex items-start justify-between"><div><p className="eyebrow">Execution boundary</p><h2 className="mt-2 text-lg font-semibold">Provider actions disabled</h2></div><Ban className="size-5 text-cyan-600 dark:text-cyan-300" /></div><p className="mt-5 text-xs leading-5 text-muted-foreground">Synthetic demo opportunities can show risk, evidence, safe abstention, and auditability. They cannot create Razorpay Payment Links, provider outcomes, or recovery attribution.</p><div className="mt-4 rounded-xl border border-cyan-500/20 bg-cyan-500/[0.055] p-4 text-[11px] font-semibold text-cyan-800 dark:text-cyan-200">No provider side effect is available for this source.</div></article>;
 }
 
 function SummaryCard({ label, value, detail, icon: Icon, mono = false }: { label: string; value: React.ReactNode; detail: string; icon: typeof ShieldCheck; mono?: boolean }) {
