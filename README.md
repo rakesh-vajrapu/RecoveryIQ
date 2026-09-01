@@ -357,17 +357,6 @@ It demonstrates scale without contaminating operational demo data (no cross-dime
 
 ---
 
-## Suggested 5-Minute Demo
-
-1. **Command Center**: "Here are the three evidence types and headline impact."
-2. **Evaluation Lab / Batch Explorer**: "Here is sealed simulated recovery vs baselines at portfolio scale."
-3. **Decision Trace**: "Here is why RecoveryIQ chooses one action over another."
-4. **Payment Health**: "Here is why blindly retrying can be wrong during degradation."
-5. **Safety Lab**: "Here is 10-way concurrency collapsing to one logical effect."
-6. **Razorpay**: "Here is the authenticated provider lifecycle and exactly-once attribution."
-
----
-
 ## Installation
 
 RecoveryIQ is designed to run locally using SQLite for verified demo purposes.
