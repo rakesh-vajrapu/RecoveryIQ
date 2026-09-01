@@ -127,7 +127,7 @@ flowchart TD
     end
 
     LLM["LLM Explanation Layer"] -.->|Explanation only| Orchestrator
-    DB[("SQLite + UNIQUE Constraints")] --> Webhook
+    DB["SQLite + UNIQUE Constraints"] --> Webhook
     DB --> Outcome
     DB --> Attribution
 ```

@@ -6,22 +6,22 @@ RecoverIQ separates evidence production, bounded sequential authorization, execu
 
 ```mermaid
 flowchart LR
-    E[Payment event] --> I[Ingestion and normalization]
-    I --> H[Payment-health aggregation]
-    I --> D[Failure diagnosis]
-    H --> G[Degradation detector]
-    D --> F[Recovery features]
+    E["Payment event"] --> I["Ingestion and normalization"]
+    I --> H["Payment-health aggregation"]
+    I --> D["Failure diagnosis"]
+    H --> G["Degradation detector"]
+    D --> F["Recovery features"]
     G --> F
-    F --> M[Action-conditioned predictor]
-    M --> V[ERV scoring]
-    V --> P[Deterministic policy]
-    P -->|execute| X[Bounded executor]
-    P -->|wait| W[Scheduler]
-    P -->|abstain| R[Human review]
-    X --> O[Authoritative outcome]
-    O --> A[Attribution and audit]
-    P -. structured evidence .-> L[Optional explanation provider]
-    L -. explanation only .-> A
+    F --> M["Action-conditioned predictor"]
+    M --> V["ERV scoring"]
+    V --> P["Deterministic policy"]
+    P -->|execute| X["Bounded executor"]
+    P -->|wait| W["Scheduler"]
+    P -->|abstain| R["Human review"]
+    X --> O["Authoritative outcome"]
+    O --> A["Attribution and audit"]
+    P -.->|"structured evidence"| L["Optional explanation provider"]
+    L -.->|"explanation only"| A
 ```
 
 The foundation, standalone simulator/baselines, robustness methodology, both detector/model generations, bounded Sequential Policy V2, explanation-provider layer, and Razorpay Test Mode adapter are implemented through Phase 7.5. One synthetic INR 1.00 Payment Link completed a genuine Test Mode create/fetch, signed paid webhook, exactly-once attribution, recovery, and duplicate replay. Broader autonomous provider execution, Live Mode, and the operational UI remain future commitments.
@@ -32,30 +32,30 @@ The system is strictly divided into three layers: a probabilistic intelligence l
 
 ```mermaid
 flowchart TD
-    Incoming([Payment Event]) --> Orchestrator[FastAPI Orchestrator]
+    Incoming["Payment Event"] --> Orchestrator["FastAPI Orchestrator"]
 
-    subgraph Heuristic [Heuristic / Probabilistic Layer]
-        Orchestrator --> Health[Degradation Intelligence]
-        Health --> ML[LightGBM Model V2]
-        ML -->|P_recovery given action| ERV[ERV Optimizer]
-        Orchestrator -->|Context| LLM[LLM Explainer Agent]
-        LLM -. Structured Explanation .-> Orchestrator
+    subgraph Heuristic ["Heuristic / Probabilistic Layer"]
+        Orchestrator --> Health["Degradation Intelligence"]
+        Health --> ML["LightGBM Model V2"]
+        ML -->|"P_recovery given action"| ERV["ERV Optimizer"]
+        Orchestrator -->|"Context"| LLM["LLM Explainer Agent"]
+        LLM -.->|"Structured Explanation"| Orchestrator
     end
 
-    subgraph Deterministic [Deterministic Safety Boundary]
-        ERV -->|Proposed Action| Policy[Sequential Policy Engine]
-        Policy -->|Bounds Check| Policy
-        Policy -->|Execution Reservation| DB[(SQLite + UNIQUE Constraints)]
+    subgraph Deterministic ["Deterministic Safety Boundary"]
+        ERV -->|"Proposed Action"| Policy["Sequential Policy Engine"]
+        Policy -->|"Bounds Check"| Policy
+        Policy -->|"Execution Reservation"| DB["SQLite + UNIQUE Constraints"]
     end
 
-    subgraph Execution [Execution & Verification]
-        Policy -->|Final Approved Action| Executor[Execution Dispatcher]
-        Executor -->|Dispatch| RZP[Razorpay Test-Mode Executor]
-        RZP -->|Asynchronous Event| Webhook[Signed HMAC Webhook]
+    subgraph Execution ["Execution & Verification"]
+        Policy -->|"Final Approved Action"| Executor["Execution Dispatcher"]
+        Executor -->|"Dispatch"| RZP["Razorpay Test-Mode Executor"]
+        RZP -->|"Asynchronous Event"| Webhook["Signed HMAC Webhook"]
     end
 
-    Webhook -->|Primary Key Constraint| DB
-    Webhook -->|Exactly-Once Mapping| Attribution[Recovery Attribution]
+    Webhook -->|"Primary Key Constraint"| DB
+    Webhook -->|"Exactly-Once Mapping"| Attribution["Recovery Attribution"]
 ```
 
 **CRITICAL RULE**: The LLM acts exclusively in an **explanation only** capacity. It cannot authorize payment execution, change deterministic policy, or mark a payment as recovered.
