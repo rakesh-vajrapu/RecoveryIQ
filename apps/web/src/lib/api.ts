@@ -12,6 +12,8 @@ export type AuditEvent = { id: string; created_at: string; actor: string; event_
 export type RazorpayStatus = { integration_version: string; execution_environment: string; provider_mode: "test"; api_configured: boolean; webhook_configured: boolean; live_mode_available: false; capabilities: Record<string, string> };
 export type DecisionExplanation = { summary: string; factors: string[]; confidence: number; limitations: string[] };
 
+export type StrategyEvaluation = { id: string; name: string; recovered_count: number; recovery_rate: number; simulated_net_value_minor: number; contacts: number; retries: number; human_reviews: number; policy_violations: number };
+export type EvaluationSummary = { evidence_type: string; evaluation_name: string; episodes: number; recoveryiq: StrategyEvaluation; primary_baseline: StrategyEvaluation; incremental: { recovery_rate_pp: number; simulated_net_value_minor: number }; strategies: StrategyEvaluation[] };
 export class ApiError extends Error {
   constructor(public readonly status: number, message: string) { super(message); this.name = "ApiError"; }
 }
@@ -69,6 +71,11 @@ export async function getCaseExplanation(id: string): Promise<DecisionExplanatio
   if (!isDecisionExplanation(payload)) throw invalidData("decision explanation");
   return payload;
 }
+export async function getEvaluationSummary(signal?: AbortSignal): Promise<EvaluationSummary> {
+  const payload = await request(`/api/evaluation/summary`, { signal });
+  if (!isEvaluationSummary(payload)) throw invalidData("evaluation summary");
+  return payload;
+}
 export function errorMessage(error: unknown): string { return error instanceof Error ? error.message : "An unexpected error occurred."; }
 function invalidData(label: string): ApiError { return new ApiError(0, `The API returned invalid ${label} data.`); }
 function isRecord(value: unknown): value is Record<string, unknown> { return typeof value === "object" && value !== null && !Array.isArray(value); }
@@ -83,3 +90,5 @@ function isAttribution(value: unknown): value is RecoveryAttribution { return is
 function isRecoveryCaseDetail(value: unknown): value is RecoveryCaseDetail { return hasCoreCase(value) && hasEvidenceFields(value) && (typeof value.failure_description === "string" || value.failure_description === null) && typeof value.subscription_status === "string" && Array.isArray(value.decisions) && value.decisions.every(isDecision) && Array.isArray(value.plans) && value.plans.every(isPlan) && Array.isArray(value.executions) && value.executions.every(isExternalExecution) && Array.isArray(value.outcomes) && value.outcomes.every(isOutcome) && (value.attribution === null || isAttribution(value.attribution)); }
 function isAuditEvent(value: unknown): value is AuditEvent { return isRecord(value) && typeof value.id === "string" && typeof value.created_at === "string" && typeof value.actor === "string" && typeof value.event_type === "string" && typeof value.entity_type === "string" && isRecord(value.event_metadata); }
 function isDecisionExplanation(value: unknown): value is DecisionExplanation { return isRecord(value) && typeof value.summary === "string" && Array.isArray(value.factors) && value.factors.every((item) => typeof item === "string") && typeof value.confidence === "number" && value.confidence >= 0 && value.confidence <= 1 && Array.isArray(value.limitations) && value.limitations.every((item) => typeof item === "string"); }
+function isStrategyEvaluation(value: unknown): value is StrategyEvaluation { return isRecord(value) && typeof value.id === "string" && typeof value.name === "string" && typeof value.recovered_count === "number" && typeof value.recovery_rate === "number" && typeof value.simulated_net_value_minor === "number" && typeof value.contacts === "number" && typeof value.retries === "number" && typeof value.human_reviews === "number" && typeof value.policy_violations === "number"; }
+function isEvaluationSummary(value: unknown): value is EvaluationSummary { return isRecord(value) && typeof value.evidence_type === "string" && typeof value.evaluation_name === "string" && typeof value.episodes === "number" && isStrategyEvaluation(value.recoveryiq) && isStrategyEvaluation(value.primary_baseline) && isRecord(value.incremental) && typeof value.incremental.recovery_rate_pp === "number" && typeof value.incremental.simulated_net_value_minor === "number" && Array.isArray(value.strategies) && value.strategies.every(isStrategyEvaluation); }

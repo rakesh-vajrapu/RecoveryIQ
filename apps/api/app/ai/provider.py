@@ -23,15 +23,11 @@ class ExplanationProvider(Protocol):
         """Check provider availability without mutating application state."""
         ...
 
-    async def explain_decision_trace(
-        self, evidence: Mapping[str, Any]
-    ) -> DecisionExplanation:
+    async def explain_decision_trace(self, evidence: Mapping[str, Any]) -> DecisionExplanation:
         """Explain a precomputed decision trace without authorizing an action."""
         ...
 
-    async def explain_recovery_case(
-        self, evidence: Mapping[str, Any]
-    ) -> DecisionExplanation:
+    async def explain_recovery_case(self, evidence: Mapping[str, Any]) -> DecisionExplanation:
         """Explain a recovery case without mutating it or determining its outcome."""
         ...
 

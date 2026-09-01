@@ -22,17 +22,13 @@ class ResilientExplanationProvider:
         except Exception:
             return await self._fallback.health_check()
 
-    async def explain_decision_trace(
-        self, evidence: Mapping[str, Any]
-    ) -> DecisionExplanation:
+    async def explain_decision_trace(self, evidence: Mapping[str, Any]) -> DecisionExplanation:
         try:
             return await self._primary.explain_decision_trace(evidence)
         except Exception:
             return await self._fallback.explain_decision_trace(evidence)
 
-    async def explain_recovery_case(
-        self, evidence: Mapping[str, Any]
-    ) -> DecisionExplanation:
+    async def explain_recovery_case(self, evidence: Mapping[str, Any]) -> DecisionExplanation:
         try:
             return await self._primary.explain_recovery_case(evidence)
         except Exception:

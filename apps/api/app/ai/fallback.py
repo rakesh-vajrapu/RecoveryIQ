@@ -37,14 +37,10 @@ class DeterministicFallbackProvider:
             ],
         )
 
-    async def explain_decision_trace(
-        self, evidence: Mapping[str, Any]
-    ) -> DecisionExplanation:
+    async def explain_decision_trace(self, evidence: Mapping[str, Any]) -> DecisionExplanation:
         return await self._explain(evidence)
 
-    async def explain_recovery_case(
-        self, evidence: Mapping[str, Any]
-    ) -> DecisionExplanation:
+    async def explain_recovery_case(self, evidence: Mapping[str, Any]) -> DecisionExplanation:
         return await self._explain(evidence)
 
     async def explain_decision(self, evidence: Mapping[str, Any]) -> DecisionExplanation:

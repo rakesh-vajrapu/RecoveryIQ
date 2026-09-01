@@ -99,14 +99,10 @@ class GeminiLLMProvider:
             raise ValueError("Gemini returned no structured decision explanation")
         return DecisionExplanation.model_validate_json(response.text)
 
-    async def explain_decision_trace(
-        self, evidence: Mapping[str, Any]
-    ) -> DecisionExplanation:
+    async def explain_decision_trace(self, evidence: Mapping[str, Any]) -> DecisionExplanation:
         return await self._explain(evidence, "recovery decision trace")
 
-    async def explain_recovery_case(
-        self, evidence: Mapping[str, Any]
-    ) -> DecisionExplanation:
+    async def explain_recovery_case(self, evidence: Mapping[str, Any]) -> DecisionExplanation:
         return await self._explain(evidence, "recovery case")
 
     async def explain_decision(self, evidence: Mapping[str, Any]) -> DecisionExplanation:

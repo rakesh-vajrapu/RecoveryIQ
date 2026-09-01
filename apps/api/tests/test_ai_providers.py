@@ -131,7 +131,5 @@ async def test_gemini_model_diagnostic_filters_generate_content_models() -> None
     provider = GeminiLLMProvider(settings)
     provider._client_instance = SimpleNamespace(models=StubModels())  # type: ignore[assignment]
 
-    assert await provider.available_generate_content_models() == (
-        "models/gemini-3.6-flash",
-    )
+    assert await provider.available_generate_content_models() == ("models/gemini-3.6-flash",)
     assert await provider.health_check() is True

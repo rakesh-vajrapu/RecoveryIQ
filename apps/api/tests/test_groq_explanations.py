@@ -63,14 +63,10 @@ class FailingProvider:
     async def health_check(self) -> bool:
         raise self.error
 
-    async def explain_decision_trace(
-        self, evidence: Mapping[str, Any]
-    ) -> DecisionExplanation:
+    async def explain_decision_trace(self, evidence: Mapping[str, Any]) -> DecisionExplanation:
         raise self.error
 
-    async def explain_recovery_case(
-        self, evidence: Mapping[str, Any]
-    ) -> DecisionExplanation:
+    async def explain_recovery_case(self, evidence: Mapping[str, Any]) -> DecisionExplanation:
         raise self.error
 
 
@@ -137,9 +133,7 @@ async def test_groq_rejects_invalid_or_authoritative_response_shape() -> None:
             }
         )
     )
-    provider = GroqExplanationProvider(
-        Settings(_env_file=None, groq_api_key="test-secret")
-    )
+    provider = GroqExplanationProvider(Settings(_env_file=None, groq_api_key="test-secret"))
     provider._client_instance = SimpleNamespace(  # type: ignore[assignment]
         chat=SimpleNamespace(completions=completions)
     )
@@ -150,9 +144,7 @@ async def test_groq_rejects_invalid_or_authoritative_response_shape() -> None:
 
 @pytest.mark.asyncio
 async def test_empty_groq_response_uses_deterministic_fallback() -> None:
-    primary = GroqExplanationProvider(
-        Settings(_env_file=None, groq_api_key="test-secret")
-    )
+    primary = GroqExplanationProvider(Settings(_env_file=None, groq_api_key="test-secret"))
     primary._client_instance = SimpleNamespace(  # type: ignore[assignment]
         chat=SimpleNamespace(completions=StubCompletions(None))
     )

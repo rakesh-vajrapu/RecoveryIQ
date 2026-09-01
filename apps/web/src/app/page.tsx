@@ -11,16 +11,23 @@ import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { ErrorPanel, LoadingPanel } from "@/components/ui/state-panel";
 import { useApiResource } from "@/hooks/use-api-resource";
-import { getHealth, getRazorpayStatus, getRecoveryCases, type HealthResponse, type RazorpayStatus, type RecoveryCaseSummary } from "@/lib/api";
+import { getHealth, getRazorpayStatus, getRecoveryCases, getEvaluationSummary, type HealthResponse, type RazorpayStatus, type RecoveryCaseSummary, type EvaluationSummary } from "@/lib/api";
 import { formatDate, formatMoney, shortId } from "@/lib/format";
+import { RecoveryImpact } from "@/components/recovery-impact";
 
-type DashboardData = { health: HealthResponse; integration: RazorpayStatus; cases: RecoveryCaseSummary[] };
+type DashboardData = { health: HealthResponse; integration: RazorpayStatus; cases: RecoveryCaseSummary[]; evalSummary: EvaluationSummary | null };
 const terminalStates = new Set(["RECOVERED", "FAILED", "STOPPED"]);
 
 export default function CommandCenterPage() {
   const load = useCallback(async (signal: AbortSignal): Promise<DashboardData> => {
+    let evalSummary = null;
+    try {
+      evalSummary = await getEvaluationSummary(signal);
+    } catch (e) {
+      console.error("Failed to load evaluation summary", e);
+    }
     const [health, integration, cases] = await Promise.all([getHealth(signal), getRazorpayStatus(signal), getRecoveryCases(signal)]);
-    return { health, integration, cases };
+    return { health, integration, cases, evalSummary };
   }, []);
   const resource = useApiResource(load);
 
@@ -79,6 +86,8 @@ function DashboardContent({ data }: { data: DashboardData }) {
         <MetricCard label="Sealed batch recovery" value="75.97%" detail="20,821 recovered · 27,406 episodes" subtext="Sealed evaluation · not provider revenue" icon={Beaker} tone="violet" progress={75.97} badge="SIMULATED" />
         <MetricCard label="Safe escalations" value={String(operationalReviews)} detail="Human Review · insufficient context" icon={ShieldAlert} tone="amber" progress={demoActive.length ? (operationalReviews / demoActive.length) * 100 : 0} />
       </section>
+
+      <RecoveryImpact summary={data.evalSummary} />
 
       <section className="grid gap-5 xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.55fr)]">
         <RecoveryTrendChart cases={data.cases} />
