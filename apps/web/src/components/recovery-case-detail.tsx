@@ -181,7 +181,7 @@ function CaseContent({ recoveryCase, onRefresh, isSimulated }: { recoveryCase: R
                           {isSelected && <span className="px-1.5 py-0.5 rounded text-[10px] uppercase font-bold bg-emerald-500/20 text-emerald-400">Selected</span>}
                         </td>
                         <td className="px-4 py-3 text-xs text-muted-foreground whitespace-nowrap">
-                          {cand.label.includes("PAYMENT_LINK") ? "RAZORPAY TEST EXECUTION" : cand.label.includes("WAIT") ? "SIMULATION ONLY" : "INTERNAL POLICY ACTION"}
+                          {cand.label.includes("PAYMENT_LINK") ? (isSimulated ? "SUPPORTED IN RAZORPAY TEST MODE" : "RAZORPAY TEST EXECUTION") : cand.label.includes("WAIT") ? "SIMULATION ONLY" : "INTERNAL POLICY ACTION"}
                         </td>
                         <td className="px-4 py-3 text-right">{(cand.probability * 100).toFixed(1)}%</td>
                         <td className="px-4 py-3 text-right text-red-400/80">{cost > 0 ? `₹${(cost/100).toFixed(2)}` : "—"}</td>

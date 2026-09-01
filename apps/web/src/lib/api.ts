@@ -56,6 +56,11 @@ export async function getSimulatedDecisionExample(signal?: AbortSignal): Promise
   if (!isRecoveryCaseDetail(payload)) throw invalidData("simulated decision example");
   return payload;
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function getPaymentHealthSummary(signal?: AbortSignal): Promise<any> {
+  const payload = await request("/api/payment-health/summary", { signal });
+  return payload;
+}
 export async function getRecoveryCaseAudit(id: string, signal?: AbortSignal): Promise<AuditEvent[]> {
   const payload = await request(`/api/recovery-cases/${encodeURIComponent(id)}/audit`, { signal });
   if (!Array.isArray(payload) || !payload.every(isAuditEvent)) throw invalidData("audit trail");

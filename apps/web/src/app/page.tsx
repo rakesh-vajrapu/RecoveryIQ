@@ -11,23 +11,30 @@ import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { ErrorPanel, LoadingPanel } from "@/components/ui/state-panel";
 import { useApiResource } from "@/hooks/use-api-resource";
-import { getHealth, getRazorpayStatus, getRecoveryCases, getEvaluationSummary, type HealthResponse, type RazorpayStatus, type RecoveryCaseSummary, type EvaluationSummary } from "@/lib/api";
+import { getHealth, getRazorpayStatus, getRecoveryCases, getEvaluationSummary, getPaymentHealthSummary, type HealthResponse, type RazorpayStatus, type RecoveryCaseSummary, type EvaluationSummary } from "@/lib/api";
 import { formatDate, formatMoney, shortId } from "@/lib/format";
 import { RecoveryImpact } from "@/components/recovery-impact";
 
-type DashboardData = { health: HealthResponse; integration: RazorpayStatus; cases: RecoveryCaseSummary[]; evalSummary: EvaluationSummary | null };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type DashboardData = { health: HealthResponse; integration: RazorpayStatus; cases: RecoveryCaseSummary[]; evalSummary: EvaluationSummary | null; paymentHealth: any | null };
 const terminalStates = new Set(["RECOVERED", "FAILED", "STOPPED"]);
 
 export default function CommandCenterPage() {
   const load = useCallback(async (signal: AbortSignal): Promise<DashboardData> => {
     let evalSummary = null;
+    let paymentHealth = null;
     try {
       evalSummary = await getEvaluationSummary(signal);
     } catch (e) {
       console.error("Failed to load evaluation summary", e);
     }
+    try {
+      paymentHealth = await getPaymentHealthSummary(signal);
+    } catch (e) {
+      console.error("Failed to load payment health", e);
+    }
     const [health, integration, cases] = await Promise.all([getHealth(signal), getRazorpayStatus(signal), getRecoveryCases(signal)]);
-    return { health, integration, cases, evalSummary };
+    return { health, integration, cases, evalSummary, paymentHealth };
   }, []);
   const resource = useApiResource(load);
 
@@ -112,6 +119,27 @@ function DashboardContent({ data }: { data: DashboardData }) {
           <Link href="/integrations/razorpay" className="focus-ring mt-5 flex items-center justify-between rounded-xl border bg-[var(--surface-soft)] px-4 py-3 text-xs font-semibold transition-all hover:border-primary/30 hover:text-primary"><span className="flex items-center gap-2"><CreditCard className="size-4" />Inspect integration</span><ArrowRight className="size-3.5" /></Link>
         </article>
       </section>
+
+      {/* Payment Health Teaser (Simulated) */}
+      {data.paymentHealth && (
+        <section>
+          <div className="bg-gradient-to-r from-[#0c0e12] to-[#12161f] border border-white/10 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-6">
+            <div>
+              <div className="flex items-center gap-2">
+                <ShieldAlert className="w-4 h-4 text-rose-500" />
+                <h3 className="text-sm font-bold tracking-widest text-white/80 uppercase">Payment Health</h3>
+                <span className="text-[9px] bg-white/10 border border-white/20 text-white/60 px-2 py-0.5 rounded font-mono ml-2">SIMULATED EVIDENCE</span>
+              </div>
+              <p className="text-xs text-white/50 mt-1">
+                {data.paymentHealth.episodes?.length || 0} Incident{data.paymentHealth.episodes?.length !== 1 ? "s" : ""} • Detector V2 Advisory Only
+              </p>
+            </div>
+            <Link href="/payment-health" className="focus-ring flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-xs font-semibold hover:bg-white/20 transition-colors">
+              View Payment Health <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

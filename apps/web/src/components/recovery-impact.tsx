@@ -80,9 +80,9 @@ export function RecoveryImpact({ summary }: { summary: EvaluationSummary | null 
             <h3 className="text-sm font-bold tracking-widest text-white/50 uppercase mb-4">Decision Quality Audit</h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <MetricCard 
-                title="Economic Efficiency" 
+                title="% of Oracle Net Value" 
                 value={`${efficiency.toFixed(1)}%`} 
-                tooltip="Simulated Net Value vs Hidden Oracle optimal" 
+                tooltip="RecoveryIQ V2 Net Value / Hidden Oracle Net Value" 
               />
               <MetricCard 
                 title="Contacts per Recovery" 
