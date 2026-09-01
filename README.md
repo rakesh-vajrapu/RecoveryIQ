@@ -94,30 +94,30 @@ The architecture enforces the following verified invariants:
 
 ```mermaid
 flowchart TD
-    Incoming([Payment Event]) --> Orchestrator[FastAPI Orchestrator]
+    Incoming(["Payment Event"]) --> Orchestrator["FastAPI Orchestrator"]
 
-    subgraph Heuristic / Probabilistic Layer
-        Orchestrator --> Health[Degradation Intelligence]
-        Health --> ML[LightGBM Model V2]
-        ML -->|P(recovery \| action)| ERV[ERV Optimizer]
-        Orchestrator -->|Context| LLM[LLM Explainer Agent]
-        LLM -.->|Structured Explanation| Orchestrator
+    subgraph Heuristic ["Heuristic / Probabilistic Layer"]
+        Orchestrator --> Health["Degradation Intelligence"]
+        Health --> ML["LightGBM Model V2"]
+        ML -->|"P(recovery | action)"| ERV["ERV Optimizer"]
+        Orchestrator -->|"Context"| LLM["LLM Explainer Agent"]
+        LLM -. "Structured Explanation" .-> Orchestrator
     end
 
-    subgraph Deterministic Safety Boundary
-        ERV -->|Proposed Action| Policy[Sequential Policy Engine]
-        Policy -->|Bounds Check| Policy
-        Policy -->|Atomic Upsert Lock| DB[(SQLite WAL State Store)]
+    subgraph Deterministic ["Deterministic Safety Boundary"]
+        ERV -->|"Proposed Action"| Policy["Sequential Policy Engine"]
+        Policy -->|"Bounds Check"| Policy
+        Policy -->|"Atomic Upsert Lock"| DB[("SQLite WAL State Store")]
     end
 
-    subgraph Execution & Verification
-        Policy -->|Final Approved Action| Executor[Execution Dispatcher]
-        Executor -->|Dispatch| RZP[Razorpay Test-Mode Executor]
-        RZP -->|Asynchronous Event| Webhook[Signed HMAC Webhook]
+    subgraph Execution ["Execution & Verification"]
+        Policy -->|"Final Approved Action"| Executor["Execution Dispatcher"]
+        Executor -->|"Dispatch"| RZP["Razorpay Test-Mode Executor"]
+        RZP -->|"Asynchronous Event"| Webhook["Signed HMAC Webhook"]
     end
 
-    Webhook -->|Primary Key Constraint| DB
-    Webhook -->|Exactly-Once Mapping| Attribution[Recovery Attribution]
+    Webhook -->|"Primary Key Constraint"| DB
+    Webhook -->|"Exactly-Once Mapping"| Attribution["Recovery Attribution"]
 ```
 
 ---
@@ -126,13 +126,13 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A[ML / Model] -->|predicts| B[ERV / Decision Intelligence]
-    B -->|recommends| C[Deterministic Policy]
-    C -->|authorizes / blocks| D[Execution Layer]
-    D -->|performs supported action| E[Razorpay Test Mode]
-    E -->|authenticated provider evidence| F[Outcome + Attribution]
+    A["ML / Model"] -->|"predicts"| B["ERV / Decision Intelligence"]
+    B -->|"recommends"| C["Deterministic Policy"]
+    C -->|"authorizes / blocks"| D["Execution Layer"]
+    D -->|"performs supported action"| E["Razorpay Test Mode"]
+    E -->|"authenticated provider evidence"| F["Outcome + Attribution"]
     
-    LLM[LLM] -.->|explains only| B
+    LLM["LLM"] -. "explains only" .-> B
 ```
 
 **CRITICAL RULE**: The LLM acts exclusively in an **explanation only** capacity. It cannot authorize payment execution, change deterministic policy, or mark a payment as recovered.
@@ -309,13 +309,13 @@ RecoveryIQ uses Razorpay Test Mode to prove lifecycle handling:
 ### Evidence Diagram
 ```mermaid
 flowchart TD
-    RC[RecoveryCase] --> RD[RecoveryDecision]
-    RD -->|HUMAN_REVIEW if insufficient context| OP[Operator / Supported Execution]
-    OP --> EX[ExternalExecution]
-    EX -->|Razorpay Test Mode| SW[Signed Webhook]
-    SW --> EO[ExternalOutcome]
-    EO --> RA[RecoveryAttribution]
-    RA --> REC[RECOVERED]
+    RC["RecoveryCase"] --> RD["RecoveryDecision"]
+    RD -->|"HUMAN_REVIEW if insufficient context"| OP["Operator / Supported Execution"]
+    OP --> EX["ExternalExecution"]
+    EX -->|"Razorpay Test Mode"| SW["Signed Webhook"]
+    SW --> EO["ExternalOutcome"]
+    EO --> RA["RecoveryAttribution"]
+    RA --> REC["RECOVERED"]
 ```
 
 *Razorpay Test evidence proves integration correctness, not production-scale recovery.*
