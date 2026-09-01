@@ -89,7 +89,7 @@ flowchart TD
     subgraph Heuristic ["Heuristic / Probabilistic Layer"]
         Orchestrator --> Health["Degradation Intelligence"]
         Health --> ML["LightGBM Model V2"]
-        ML -->|"P(recovery | action)"| ERV["ERV Optimizer"]
+        ML -->|"P(recovery given action)"| ERV["ERV Optimizer"]
         Orchestrator -->|"Context"| LLM["LLM Explainer Agent"]
         LLM -. "Structured Explanation" .-> Orchestrator
     end
