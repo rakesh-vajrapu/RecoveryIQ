@@ -104,6 +104,8 @@ RecoveryIQ relies on three layers: **probabilistic intelligence**, **determinist
 
 ![RecoveryIQ Architecture](docs/assets/architecture.png)
 
+[Read the full Architecture Deep Dive →](docs/ARCHITECTURE.md)
+
 ### The Execution Flow
 
 1. **ML:** Predicts recovery probability for feasible candidate actions.
