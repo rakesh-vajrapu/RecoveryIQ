@@ -111,3 +111,56 @@ function isAuditEvent(value: unknown): value is AuditEvent { return isRecord(val
 function isDecisionExplanation(value: unknown): value is DecisionExplanation { return isRecord(value) && typeof value.summary === "string" && Array.isArray(value.factors) && value.factors.every((item) => typeof item === "string") && typeof value.confidence === "number" && value.confidence >= 0 && value.confidence <= 1 && Array.isArray(value.limitations) && value.limitations.every((item) => typeof item === "string"); }
 function isStrategyEvaluation(value: unknown): value is StrategyEvaluation { return isRecord(value) && typeof value.id === "string" && typeof value.name === "string" && typeof value.recovered_count === "number" && typeof value.recovery_rate === "number" && typeof value.simulated_net_value_minor === "number" && typeof value.contacts === "number" && typeof value.retries === "number" && typeof value.human_reviews === "number" && typeof value.policy_violations === "number"; }
 function isEvaluationSummary(value: unknown): value is EvaluationSummary { return isRecord(value) && typeof value.evidence_type === "string" && typeof value.evaluation_name === "string" && typeof value.episodes === "number" && isStrategyEvaluation(value.recoveryiq) && isStrategyEvaluation(value.primary_baseline) && isRecord(value.incremental) && typeof value.incremental.recovery_rate_pp === "number" && typeof value.incremental.simulated_net_value_minor === "number" && Array.isArray(value.strategies) && value.strategies.every(isStrategyEvaluation); }
+
+export type RazorpayEvidence = {
+  evidence_type: string;
+  no_real_money: boolean;
+  all_time_recovered_minor: number;
+  last_7_days_recovered_minor: number;
+  selected_case: {
+    case_id: string;
+    status: string;
+    amount_minor: number;
+    currency: string;
+    decision: string | null;
+    decision_reason: string | null;
+    execution_initiator: string;
+    executions: Array<{
+      id: string;
+      action: string;
+      state: string;
+      provider_url: string | null;
+      payment_link_status: string | null;
+    }>;
+    outcomes: Array<{
+      id: string;
+      status: string;
+      verified: boolean;
+      amount_minor: number;
+      created_at: string;
+    }>;
+    attribution: {
+      id: string;
+      amount_minor: number;
+      attribution_source: string;
+      created_at: string;
+    } | null;
+    webhooks: Array<{
+      id: string;
+      event_type: string;
+      provider_event_id: string;
+      processing_state: string;
+      created_at: string;
+    }>;
+    failed_attempts: Array<{
+      event_type: string;
+      provider_event_id: string;
+      created_at: string;
+    }>;
+  } | null;
+};
+
+export async function getRazorpayEvidence(signal?: AbortSignal): Promise<RazorpayEvidence> {
+  const data = await request("/api/integrations/razorpay/evidence", { signal });
+  return data as RazorpayEvidence;
+}

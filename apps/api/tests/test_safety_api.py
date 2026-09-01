@@ -1,8 +1,8 @@
 import json
 from pathlib import Path
-from pytest import MonkeyPatch
 
 from fastapi.testclient import TestClient
+from pytest import MonkeyPatch
 
 from app.main import app
 

@@ -1,8 +1,8 @@
 import json
 from pathlib import Path
-from pytest import MonkeyPatch
 
 from fastapi.testclient import TestClient
+from pytest import MonkeyPatch
 
 from app.main import app
 
@@ -74,7 +74,10 @@ def test_get_batch_explorer_success(monkeypatch: MonkeyPatch) -> None:
     assert data["portfolio"]["recovered_episodes"] <= data["episodes"]
     
     # Invariant: recovery_rate = recovered_episodes / episodes
-    assert data["portfolio"]["recovery_rate"] == data["portfolio"]["recovered_episodes"] / data["episodes"]
+    assert (
+        data["portfolio"]["recovery_rate"] == 
+        data["portfolio"]["recovered_episodes"] / data["episodes"]
+    )
     
     # Check cohort sums
     failure_reasons = data["cohorts"]["failure_reason"]

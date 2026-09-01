@@ -21,7 +21,9 @@ from tests.test_razorpay_integration import (
     FIXTURES,
     WEBHOOK_SECRET,
     RazorpayHarness,
-    razorpay_harness as razorpay_harness,  # noqa: F811  # pytest fixture re-export
+)
+from tests.test_razorpay_integration import (
+    razorpay_harness as razorpay_harness,  # pytest fixture re-export
 )
 
 pytestmark = pytest.mark.asyncio
