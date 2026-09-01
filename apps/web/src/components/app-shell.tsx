@@ -12,6 +12,7 @@ const navigation = [
   { label: "Payment Health", href: "/payment-health", icon: HeartPulse },
   { label: "Recovery Queue", href: "/recovery-cases", icon: ListChecks },
   { label: "Decision Trace", href: "/decision-trace", icon: BrainCircuit },
+  { label: "Safety Lab", href: "/safety-lab", icon: ShieldCheck },
   { label: "Razorpay", href: "/integrations/razorpay", icon: CreditCard },
   { label: "Evaluation Lab", href: "/evaluation", icon: BarChart3 },
 ];
