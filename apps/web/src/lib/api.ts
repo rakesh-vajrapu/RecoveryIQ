@@ -43,12 +43,17 @@ export async function getHealth(signal?: AbortSignal): Promise<HealthResponse> {
 }
 export async function getRecoveryCases(signal?: AbortSignal): Promise<RecoveryCaseSummary[]> {
   const payload = await request("/api/recovery-cases", { signal });
-  if (!Array.isArray(payload) || !payload.every(isRecoveryCaseSummary)) throw invalidData("recovery cases");
+  if (!Array.isArray(payload) || !payload.every(isRecoveryCaseSummary)) throw invalidData("recovery case list");
   return payload;
 }
 export async function getRecoveryCase(id: string, signal?: AbortSignal): Promise<RecoveryCaseDetail> {
   const payload = await request(`/api/recovery-cases/${encodeURIComponent(id)}`, { signal });
   if (!isRecoveryCaseDetail(payload)) throw invalidData("recovery case detail");
+  return payload;
+}
+export async function getSimulatedDecisionExample(signal?: AbortSignal): Promise<RecoveryCaseDetail> {
+  const payload = await request("/api/evaluation/simulated-decision-example", { signal });
+  if (!isRecoveryCaseDetail(payload)) throw invalidData("simulated decision example");
   return payload;
 }
 export async function getRecoveryCaseAudit(id: string, signal?: AbortSignal): Promise<AuditEvent[]> {

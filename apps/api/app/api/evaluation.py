@@ -1,8 +1,11 @@
 import json
+import uuid
 from pathlib import Path
 from typing import Any
 
 from fastapi import APIRouter, HTTPException
+
+from app.api.razorpay import DecisionResponse, RecoveryCaseResponse
 
 router = APIRouter(prefix="/api/evaluation", tags=["Evaluation"])
 
@@ -98,3 +101,58 @@ def format_strategy_name(name: str) -> str:
         "simple_sequential_observable_rule": "Simple Observable Rule",
     }
     return mapping.get(name, name.replace("_", " ").title())
+
+
+@router.get("/simulated-decision-example", response_model=RecoveryCaseResponse)
+async def get_simulated_decision_example() -> Any:
+    trace_path = ARTIFACT_PATH.parent / "successful-adaptive-trace-v2.json"
+    if not trace_path.exists():
+        raise HTTPException(status_code=404, detail="Simulated trace unavailable")
+    try:
+        with open(trace_path, encoding="utf-8") as f:
+            trace_data = json.load(f)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Invalid simulated trace") from e
+
+    initial = trace_data.get("initial_failure", {})
+    decisions = trace_data.get("decisions", [])
+    first_decision = decisions[0] if decisions else {}
+    candidates = first_decision.get("candidates", [])
+    
+    amount = initial.get("amount_minor", 0)
+
+    decision_res = DecisionResponse(
+        id=uuid.uuid4(),
+        kind="ACTION",
+        selected_action=first_decision.get("selected_action"),
+        reason=first_decision.get("policy_checks", {}).get(
+            "reason", "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV"
+        ),
+        model_version="2.0.0",
+        policy_version="2.0.0",
+        feature_schema_version="2.0",
+        context_metadata={
+            "candidates": candidates,
+            "policy_checks": first_decision.get("policy_checks", {}),
+            "observable_context": first_decision.get("observable_context", {})
+        }
+    )
+
+    return {
+        "id": uuid.uuid4(),
+        "status": "RECOVERED",
+        "correlation_id": uuid.uuid4(),
+        "amount_minor": amount,
+        "currency": "INR",
+        "subscription_status": "active",
+        "source": "SIMULATED",
+        "synthetic": True,
+        "failure_type": initial.get("failure_reason", "CUSTOMER_ACTION_REQUIRED"),
+        "payment_method": initial.get("payment_method", "CARD"),
+        "failure_description": "Simulated evaluation trajectory",
+        "decisions": [decision_res.model_dump()],
+        "plans": [],
+        "executions": [],
+        "outcomes": [],
+        "attribution": None,
+    }

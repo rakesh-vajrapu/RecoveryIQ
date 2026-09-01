@@ -69,6 +69,36 @@ export function RecoveryImpact({ summary }: { summary: EvaluationSummary | null 
         </div>
       </div>
 
+      {/* Decision Quality */}
+      {summary.strategies.find((s) => s.id === "greedy_hidden_oracle") && (() => {
+        const oracle = summary.strategies.find((s) => s.id === "greedy_hidden_oracle")!;
+        const efficiency = (riq.simulated_net_value_minor / oracle.simulated_net_value_minor) * 100;
+        const contactsPerRecovery = riq.recovered_count > 0 ? riq.contacts / riq.recovered_count : 0;
+        
+        return (
+          <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden mt-8 p-5">
+            <h3 className="text-sm font-bold tracking-widest text-white/50 uppercase mb-4">Decision Quality Audit</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <MetricCard 
+                title="Economic Efficiency" 
+                value={`${efficiency.toFixed(1)}%`} 
+                tooltip="Simulated Net Value vs Hidden Oracle optimal" 
+              />
+              <MetricCard 
+                title="Contacts per Recovery" 
+                value={contactsPerRecovery.toFixed(2)} 
+                tooltip="Average contacts spent per successfully recovered episode" 
+              />
+              <MetricCard 
+                title="Policy Violations" 
+                value={riq.policy_violations.toString()} 
+                tooltip="Deterministic safety bounds broken" 
+              />
+            </div>
+          </div>
+        );
+      })()}
+
       {/* Leaderboard */}
       <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden mt-8">
         <div className="p-5 border-b border-white/10 bg-white/[0.02]">
