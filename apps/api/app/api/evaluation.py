@@ -121,7 +121,7 @@ async def get_simulated_decision_example() -> Any:
     decisions = trace_data.get("decisions", [])
     first_decision = decisions[0] if decisions else {}
     candidates = first_decision.get("candidates", [])
-    
+
     amount = initial.get("amount_minor", 0)
 
     decision_res = DecisionResponse(
@@ -137,8 +137,8 @@ async def get_simulated_decision_example() -> Any:
         context_metadata={
             "candidates": candidates,
             "policy_checks": first_decision.get("policy_checks", {}),
-            "observable_context": first_decision.get("observable_context", {})
-        }
+            "observable_context": first_decision.get("observable_context", {}),
+        },
     )
 
     return {

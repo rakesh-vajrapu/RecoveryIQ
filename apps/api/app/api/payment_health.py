@@ -24,5 +24,5 @@ async def get_payment_health_summary() -> dict[str, Any]:
             data = dict(json.load(f))
     except Exception as e:
         raise HTTPException(status_code=500, detail="Invalid payment health artifact") from e
-    
+
     return data

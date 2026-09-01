@@ -17,6 +17,7 @@ async def test_get_evaluation_summary(client: AsyncClient) -> None:
     assert data["primary_baseline"]["recovery_rate"] > 0
     assert "incremental" in data
 
+
 async def test_get_simulated_decision_example(client: AsyncClient) -> None:
     response = await client.get("/api/evaluation/simulated-decision-example")
     assert response.status_code == 200
