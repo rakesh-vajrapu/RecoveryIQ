@@ -25,28 +25,36 @@ interface SafetyEvidence {
   scenarios: Record<string, Record<string, unknown>>;
 }
 
+function scenarioMeasured(scenarios: SafetyEvidence["scenarios"], key: string, field: string): number {
+  const s = scenarios[key];
+  if (!s || typeof s !== "object") return 0;
+  const measured = (s as Record<string, unknown>).measured;
+  if (!measured || typeof measured !== "object") return 0;
+  return ((measured as Record<string, unknown>)[field] as number) ?? 0;
+}
+
 export function SafetyLabContent() {
   const [data, setData] = useState<SafetyEvidence | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const fetchEvidence = async () => {
-    setError(false);
-    try {
-      const res = await fetch(`${apiBaseUrl}/api/safety/summary`);
-      if (!res.ok) throw new Error("Safety evidence unavailable");
-      const json = await res.json();
-      setData(json);
-    } catch {
-      setError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    void fetchEvidence();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    let cancelled = false;
+    fetch(`${apiBaseUrl}/api/safety/summary`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Safety evidence unavailable");
+        return res.json();
+      })
+      .then((json: SafetyEvidence) => {
+        if (!cancelled) setData(json);
+      })
+      .catch(() => {
+        if (!cancelled) setError(true);
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+    return () => { cancelled = true; };
   }, []);
 
   if (isLoading) {
@@ -80,16 +88,13 @@ export function SafetyLabContent() {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const verifiedCount = Object.values(data.scenarios).filter((s: any) => s.status === "PROVEN").length;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const totalScenarios = Object.keys(data.scenarios).length;
+  const provenCount = Object.entries(data.scenarios).filter(([, v]) => (v as Record<string, unknown>).status === "PROVEN").length;
   const duplicateFinancialEffects = 
-    ((data.scenarios.concurrent_webhook as any)?.measured?.financial_side_effects || 0) + 
-    ((data.scenarios.concurrent_executor as any)?.measured?.duplicate_provider_effects || 0);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const duplicateAttributions = (data.scenarios.duplicate_success as any)?.measured?.duplicate_attributed_amount || 0;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const fakeProviderCalls = (data.scenarios.concurrent_executor as any)?.measured?.fake_provider_calls || 0;
+    scenarioMeasured(data.scenarios, "concurrent_webhook", "financial_side_effects") + 
+    scenarioMeasured(data.scenarios, "concurrent_executor", "duplicate_provider_effects");
+  const duplicateAttributions = scenarioMeasured(data.scenarios, "duplicate_success", "duplicate_attributed_amount");
+  const fakeProviderCalls = scenarioMeasured(data.scenarios, "concurrent_executor", "fake_provider_calls");
 
   return (
     <div className="space-y-6">
@@ -106,7 +111,7 @@ export function SafetyLabContent() {
         </div>
         <button
           type="button"
-          onClick={fetchEvidence}
+          onClick={() => window.location.reload()}
           className="rounded-lg border bg-card px-4 py-2 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground"
         >
           Refresh evidence
@@ -116,9 +121,9 @@ export function SafetyLabContent() {
       {/* Top Metrics */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <MetricCard
-          label="Scenarios Verified"
-          value={verifiedCount.toString()}
-          detail={`${Object.keys(data.scenarios).length} total assertions`}
+          label="Proven Scenarios"
+          value={provenCount.toString()}
+          detail={`${totalScenarios} coverage checks`}
           icon={ShieldCheck}
           tone="emerald"
         />
