@@ -72,28 +72,12 @@ class DemoResetResult:
 
 DEMO_CASES: tuple[DemoCaseSpec, ...] = (
     DemoCaseSpec(
-        "demo_recoveriq_001",
-        850_000,
-        "CARD",
-        "INSUFFICIENT_FUNDS",
-        "CUSTOMER",
-        "Account balance is temporarily insufficient",
-    ),
-    DemoCaseSpec(
         "demo_recoveriq_002",
         1_299_900,
         "CARD",
         "ISSUER_UNAVAILABLE",
         "ISSUER",
         "Issuer is temporarily unavailable",
-    ),
-    DemoCaseSpec(
-        "demo_recoveriq_003",
-        1_875_000,
-        "CARD",
-        "AUTHENTICATION_FAILURE",
-        "CUSTOMER",
-        "Card authentication was not completed",
     ),
     DemoCaseSpec(
         "demo_recoveriq_004",
@@ -120,14 +104,6 @@ DEMO_CASES: tuple[DemoCaseSpec, ...] = (
         "Temporary network interruption affected the attempt",
     ),
     DemoCaseSpec(
-        "demo_recoveriq_007",
-        9_500_000,
-        "CARD",
-        "CUSTOMER_ACTION_REQUIRED",
-        "CUSTOMER",
-        "Customer confirmation is required before retry",
-    ),
-    DemoCaseSpec(
         "demo_recoveriq_008",
         12_500_000,
         "NETBANKING",
@@ -150,7 +126,7 @@ def seed_demo_cases(session: Session, *, settings: Settings) -> DemoSeedResult:
     merchant = _get_or_create_merchant(session)
     created = 0
     existing = 0
-    for index, spec in enumerate(DEMO_CASES, start=1):
+    for spec in DEMO_CASES:
         payment = session.scalar(select(Payment).where(Payment.external_id == spec.external_id))
         if payment is not None:
             case = session.scalar(select(RecoveryCase).where(RecoveryCase.payment_id == payment.id))
@@ -158,7 +134,7 @@ def seed_demo_cases(session: Session, *, settings: Settings) -> DemoSeedResult:
                 raise DemoSeedStateError(f"{spec.external_id} exists without a RecoveryCase")
             existing += 1
             continue
-        _create_demo_case(session, merchant=merchant, spec=spec, index=index)
+        _create_demo_case(session, merchant=merchant, spec=spec)
         created += 1
     session.flush()
     return DemoSeedResult(
@@ -236,9 +212,8 @@ def _create_demo_case(
     *,
     merchant: Merchant,
     spec: DemoCaseSpec,
-    index: int,
 ) -> RecoveryCase:
-    suffix = f"{index:03d}"
+    suffix = spec.external_id.rsplit("_", maxsplit=1)[-1]
     customer = Customer(
         merchant_id=merchant.id,
         external_id=f"{DEMO_EXTERNAL_ID_PREFIX}customer_{suffix}",

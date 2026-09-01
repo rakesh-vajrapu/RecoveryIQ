@@ -96,11 +96,11 @@ def test_demo_seed_is_labeled_idempotent_and_has_no_provider_side_effects(
     with demo_sessions.begin() as session:
         second = seed_demo_cases(session, settings=settings)
 
-    assert first.created == len(DEMO_CASES) == 8
+    assert first.created == len(DEMO_CASES) == 5
     assert first.existing == 0
-    assert first.total_amount_minor == 39_824_900
+    assert first.total_amount_minor == 27_599_900
     assert second.created == 0
-    assert second.existing == 8
+    assert second.existing == 5
 
     with demo_sessions() as session:
         cases = session.scalars(select(RecoveryCase).order_by(RecoveryCase.created_at)).all()
@@ -111,12 +111,19 @@ def test_demo_seed_is_labeled_idempotent_and_has_no_provider_side_effects(
         decisions = session.scalars(select(RecoveryDecisionRecord)).all()
         audits = session.scalars(select(AuditEvent)).all()
 
-        assert len(cases) == len(payments) == len(attempts) == 8
+        assert len(cases) == len(payments) == len(attempts) == 5
         assert [payment.external_id for payment in payments] == [
             spec.external_id for spec in DEMO_CASES
         ]
+        assert [payment.external_id for payment in payments] == [
+            "demo_recoveriq_002",
+            "demo_recoveriq_004",
+            "demo_recoveriq_005",
+            "demo_recoveriq_006",
+            "demo_recoveriq_008",
+        ]
         assert all(case.status is RecoveryCaseStatus.HUMAN_REVIEW for case in cases)
-        assert len(decisions) == 8
+        assert len(decisions) == 5
         assert all(decision.kind.value == "HUMAN_REVIEW" for decision in decisions)
         assert all(decision.reason == "INSUFFICIENT_CONTEXT" for decision in decisions)
         assert all(decision.context_metadata["source"] == DEMO_SOURCE for decision in decisions)
@@ -129,7 +136,7 @@ def test_demo_seed_is_labeled_idempotent_and_has_no_provider_side_effects(
             if event.actor == "DEMO_SEED_CLI"
         )
         assert all(recovery_evidence(session, case).synthetic for case in cases)
-        assert session.scalar(select(func.count()).select_from(RecoveryExecutionPlan)) == 8
+        assert session.scalar(select(func.count()).select_from(RecoveryExecutionPlan)) == 5
         assert session.scalar(select(func.count()).select_from(ExternalWebhookEvent)) == 0
         assert session.scalar(select(func.count()).select_from(FailureEvent)) == 0
         assert session.scalar(select(func.count()).select_from(ExternalEntityMapping)) == 0
@@ -178,7 +185,7 @@ def test_demo_reset_removes_only_demo_records(
     with demo_sessions.begin() as session:
         result = reset_demo_cases(session, settings=settings)
 
-    assert result.removed_cases == 8
+    assert result.removed_cases == 5
     with demo_sessions() as session:
         assert session.scalar(select(func.count()).select_from(RecoveryCase)) == 1
         assert session.get(RecoveryCase, provider_case_id) is not None

@@ -14,7 +14,7 @@ const tones = {
 export function MetricCard({ label, value, detail, icon: Icon, tone = "emerald", progress }: { label: string; value: string; detail: string; icon: LucideIcon; tone?: keyof typeof tones; progress?: number }) {
   const boundedProgress = Math.max(0, Math.min(100, progress ?? 0));
   return (
-    <article className="surface-panel interactive-panel group rounded-2xl p-5">
+    <article className="surface-panel interactive-panel group flex min-h-[190px] flex-col rounded-2xl p-5">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="eyebrow">{label}</p>
@@ -22,9 +22,7 @@ export function MetricCard({ label, value, detail, icon: Icon, tone = "emerald",
         </div>
         <span className={cn("grid size-10 place-items-center rounded-xl transition-transform duration-300 group-hover:rotate-3 group-hover:scale-105", tones[tone])}><Icon className="size-4.5" /></span>
       </div>
-      <div className="mt-5 h-1 overflow-hidden rounded-full bg-muted"><div className="h-full rounded-full bg-primary transition-[width] duration-700" style={{ width: `${progress === undefined ? 32 : boundedProgress}%` }} /></div>
-      <p className="mt-3 text-[11px] leading-5 text-muted-foreground">{detail}</p>
+      <div className="mt-auto pt-5"><div className="h-1 overflow-hidden rounded-full bg-muted"><div className="h-full rounded-full bg-primary transition-[width] duration-700" style={{ width: `${progress === undefined ? 32 : boundedProgress}%` }} /></div><p className="mt-3 text-[11px] leading-5 text-muted-foreground">{detail}</p></div>
     </article>
   );
 }
-

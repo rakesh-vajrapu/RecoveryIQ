@@ -45,7 +45,7 @@ function DashboardContent({ data }: { data: DashboardData }) {
 
   return (
     <div className="space-y-5">
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         <MetricCard label="Revenue at risk" value={formatMoney(revenueAtRisk)} detail="Clearly labeled synthetic opportunities" icon={Target} tone="rose" progress={100} />
         <MetricCard label="Active opportunities" value={String(active.length)} detail={`${demoActive.length} synthetic demo cases`} icon={Activity} tone="blue" progress={data.cases.length ? (active.length / data.cases.length) * 100 : 0} />
         <MetricCard label="Verified Razorpay Test recovery" value={formatMoney(verifiedRecovery)} detail="Test Mode · no real money" icon={CircleDollarSign} tone="emerald" progress={verifiedRecovery > 0 ? 100 : 0} />
