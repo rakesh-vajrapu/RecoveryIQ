@@ -46,19 +46,7 @@ flowchart TD
 
 The Phase 2 simulator is a standalone uv package. It does not import the API, frontend, explanation providers, Razorpay code, or future ML code.
 
-```mermaid
-flowchart LR
-    Q[Seed + versioned config] --> S[Scenario event queue]
-    S --> O[Immutable observations]
-    S --> H[Hidden ground truth]
-    O --> A[Fixed Retry]
-    O --> B[Reminder + Fixed Retry]
-    A --> E[Recovery environment]
-    B --> E
-    H --> E
-    E --> R[Attributed outcomes + costs]
-    R --> X[Manifest, Parquet, JSON]
-```
+![Simulator / Environment Boundary (Phase 2)](assets/simulator_boundary.png)
 
 `PaymentObservation` contains only information already delivered by the simulation clock. An exact field allowlist rejects unreviewed schema growth. Hidden customer characteristics, instrument state, true cause, incident state, and response probabilities remain behind `RecoveryEnvironment`. Policy protocols accept observations, not the combined scenario.
 
