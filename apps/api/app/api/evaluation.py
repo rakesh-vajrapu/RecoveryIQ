@@ -49,6 +49,8 @@ async def get_evaluation_summary() -> dict[str, Any]:
         "evaluation_name": "Sequential ERV V2",
         "episodes": riq.get("episodes", 0),
         "recoveryiq": {
+            "id": "recoveriq_sequential_erv_v2",
+            "name": "RecoveryIQ V2",
             "recovered_count": riq.get("recovered_episodes", 0),
             "recovery_rate": riq.get("recovery_rate", 0.0),
             "simulated_net_value_minor": riq.get("simulated_net_recovery_value_minor", 0),
@@ -58,6 +60,7 @@ async def get_evaluation_summary() -> dict[str, Any]:
             "policy_violations": riq.get("policy_violations", 0),
         },
         "primary_baseline": {
+            "id": "reminder_retry_workflow",
             "name": "Reminder + Retry",
             "recovered_count": baseline.get("recovered_episodes", 0),
             "recovery_rate": baseline.get("recovery_rate", 0.0),

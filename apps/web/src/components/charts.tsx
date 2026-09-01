@@ -28,7 +28,7 @@ export function RecoveryTrendChart({ cases }: { cases: RecoveryCaseSummary[] }) 
     <article className="surface-panel rounded-2xl p-5 sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div><p className="eyebrow">Provider-verified trend</p><h2 className="mt-2 text-lg font-semibold">Razorpay Test recovery by attribution date</h2></div>
-        <div className="text-right"><p className="text-xs text-muted-foreground">7-day total</p><p className="mt-1 font-mono text-sm font-semibold text-primary">{formatMoney(total)}</p></div>
+        <div className="text-right"><p className="text-xs text-muted-foreground uppercase">Last 7 Days Verified Test Recovery</p><p className="mt-1 font-mono text-sm font-semibold text-primary">{formatMoney(total)}</p></div>
       </div>
       <div className="mt-6 overflow-hidden rounded-xl border bg-[var(--surface-soft)] p-3">
         <svg viewBox="0 0 620 210" role="img" aria-label="Seven day recovered value chart" className="h-48 w-full overflow-visible">

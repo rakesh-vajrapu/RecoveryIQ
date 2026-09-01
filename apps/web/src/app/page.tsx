@@ -85,7 +85,7 @@ function DashboardContent({ data }: { data: DashboardData }) {
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <MetricCard label="Revenue at risk" value={formatMoney(revenueAtRisk)} detail="Featured recovery opportunities" icon={Target} tone="cyan" progress={100} badge="DEMO · SYNTHETIC" />
         <MetricCard label="Active opportunities" value={String(demoActive.length)} detail="Non-terminal synthetic cases" icon={Activity} tone="blue" progress={data.cases.length ? (demoActive.length / data.cases.length) * 100 : 0} />
-        <MetricCard label="Verified Razorpay Test recovery" value={formatMoney(verifiedRecovery)} detail="Exactly-once attribution" subtext="No real money moved" icon={CircleDollarSign} tone="emerald" progress={verifiedRecovery > 0 ? 100 : 0} badge="RAZORPAY · TEST MODE" />
+        <MetricCard label="ALL-TIME VERIFIED TEST RECOVERY" value={formatMoney(verifiedRecovery)} detail="Exactly-once attribution" subtext="No real money moved" icon={CircleDollarSign} tone="emerald" progress={verifiedRecovery > 0 ? 100 : 0} badge="RAZORPAY · TEST MODE" />
       </section>
 
       {/* Row 2 Metrics */}
