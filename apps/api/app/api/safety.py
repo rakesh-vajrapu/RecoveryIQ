@@ -23,6 +23,7 @@ async def get_safety_summary() -> dict[str, Any]:
     try:
         content = ARTIFACT_PATH.read_text(encoding="utf-8")
         import typing
+
         data = typing.cast(dict[str, Any], json.loads(content))
     except Exception as e:
         raise HTTPException(status_code=500, detail="Invalid safety artifact") from e

@@ -8,6 +8,7 @@ from app.main import app
 
 client = TestClient(app)
 
+
 def test_get_batch_explorer_success(monkeypatch: MonkeyPatch) -> None:
     import app.api.batch_explorer
 
@@ -36,26 +37,24 @@ def test_get_batch_explorer_success(monkeypatch: MonkeyPatch) -> None:
                     "method_updates": 10,
                     "mean_actions_per_episode": 1.5,
                     "mean_recovery_time_hours": 12.5,
-                    "friction_efficiency": {
-                        "contacts_per_recovered_payment": 0.5
-                    }
+                    "friction_efficiency": {"contacts_per_recovered_payment": 0.5},
                 },
                 "reminder_retry_workflow": {
                     "recovery_rate": 0.5,
-                    "simulated_net_recovery_value_minor": 500
-                }
+                    "simulated_net_recovery_value_minor": 500,
+                },
             },
             "personalization_analysis": {
                 "failure_reason": [
                     {"value": "AUTH_FAILURE", "episodes": 40, "recovery_rate": 0.8},
-                    {"value": "INSUFFICIENT_FUNDS", "episodes": 60, "recovery_rate": 0.7}
+                    {"value": "INSUFFICIENT_FUNDS", "episodes": 60, "recovery_rate": 0.7},
                 ],
                 "payment_method": [],
                 "amount_bucket": [],
                 "prior_success_bucket": [],
-                "subscription_tenure_bucket": []
-            }
-        }
+                "subscription_tenure_bucket": [],
+            },
+        },
     }
     fake_artifact.write_text(json.dumps(fake_data), encoding="utf-8")
 
@@ -64,26 +63,26 @@ def test_get_batch_explorer_success(monkeypatch: MonkeyPatch) -> None:
     response = client.get("/api/evaluation/batch-explorer")
     assert response.status_code == 200
     data = response.json()
-    
+
     assert data["evidence_type"] == "SEALED_SIMULATED"
     assert data["episodes"] == 100
     assert data["portfolio"]["recovered_episodes"] == 75
     assert data["portfolio"]["recovery_rate"] == 0.75
-    
+
     # Invariant: recovered_episodes <= episodes
     assert data["portfolio"]["recovered_episodes"] <= data["episodes"]
-    
+
     # Invariant: recovery_rate = recovered_episodes / episodes
     assert (
-        data["portfolio"]["recovery_rate"] == 
-        data["portfolio"]["recovered_episodes"] / data["episodes"]
+        data["portfolio"]["recovery_rate"]
+        == data["portfolio"]["recovered_episodes"] / data["episodes"]
     )
-    
+
     # Check cohort sums
     failure_reasons = data["cohorts"]["failure_reason"]
     total_cohort_episodes = sum(c["episodes"] for c in failure_reasons)
     assert total_cohort_episodes == data["episodes"]
-    
+
     assert data["baseline_comparison"]["incremental_recovery_rate_pp"] == 25.0
     assert data["baseline_comparison"]["incremental_net_value_minor"] == 400
 

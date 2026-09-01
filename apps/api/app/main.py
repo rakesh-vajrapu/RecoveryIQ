@@ -10,8 +10,8 @@ from app.api.evaluation import router as evaluation_router
 from app.api.health import router as health_router
 from app.api.payment_health import router as payment_health_router
 from app.api.razorpay import router as razorpay_router
-from app.api.safety import router as safety_router
 from app.api.razorpay_evidence import router as razorpay_evidence_router
+from app.api.safety import router as safety_router
 from app.core.config import get_settings
 from app.core.logging import configure_logging
 
