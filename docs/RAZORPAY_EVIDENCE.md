@@ -1,8 +1,50 @@
-# RecoverIQ Payment Link Recovery E2E Verification
+# Razorpay Provider Evidence
 
-## Status
+[Back to README](../README.md)
 
-**PASS.** The timestamp-quality observation discovered during verification was remediated without rewriting provider evidence or database history, as documented below.
+> **Razorpay Test Mode Verified Recovery: ₹2.00**
+> **No real money moved.**
+
+This document provides canonical provider integration evidence for RecoveryIQ. It distinguishes the real verified Test Mode lifecycle from simulated recovery performance. 
+
+## The Test Mode Lifecycle
+
+RecoveryIQ proves its provider API integration through the following strict exactly-once lifecycle:
+
+1. **Failure observed**
+2. **`RecoveryCase`** created and correlated
+3. **`HUMAN_REVIEW`** decision (due to intentional missing context)
+4. **`OPERATOR_INITIATED`** execution
+5. **Payment Link** creation via Razorpay Test Mode API
+6. **Mapped failed recovery attempt** (authenticated webhook)
+7. **Successful payment** against the Payment Link
+8. **Authenticated webhook** received with HMAC SHA-256 signature
+9. **`ExternalOutcome`** recorded exactly once
+10. **`RecoveryAttribution`** mapped exactly once
+11. **Case state** transitioned to **`RECOVERED`**
+
+## What This Evidence Proves
+
+This lifecycle evidence proves:
+- Real provider API integration
+- Payment Link execution where supported
+- Signed webhook authenticity (raw-body HMAC validation)
+- Correlation logic
+- External outcome recording and recovery attribution
+- Exactly-once local accounting
+
+## What This Evidence DOES NOT Prove
+
+This lifecycle evidence does **NOT** prove:
+- Production revenue
+- Production-scale recovery performance (see Evaluation Results)
+- Live-mode safety
+
+---
+
+## Historical E2E Verification & Timestamp Remediation
+
+**Status:** **PASS.** The timestamp-quality observation discovered during verification was remediated without rewriting provider evidence or database history, as documented below.
 
 On 30 Aug 2026, a real Razorpay Test Mode failure and a later successful retry were processed against the same RecoverIQ-created Payment Link and the same existing RecoveryCase. The failure remained non-terminal. The success produced one verified outcome, one recovery attribution, and one transition to `RECOVERED`.
 
