@@ -94,25 +94,30 @@ The architecture enforces the following verified invariants:
 
 ```mermaid
 flowchart TD
-    A[PAYMENT EVENT] --> B[Revenue Risk / Case]
-    B --> C[Payment Health / Degradation]
-    C --> D[Recovery Model V2]
-    
-    subgraph AI Layer
-    D -.->|P(recovery \| action, context)| E[Expected Recovery Value]
+    Incoming([Payment Event]) --> Orchestrator[FastAPI Orchestrator]
+
+    subgraph Heuristic / Probabilistic Layer
+        Orchestrator --> Health[Degradation Intelligence]
+        Health --> ML[LightGBM Model V2]
+        ML -->|P(recovery \| action)| ERV[ERV Optimizer]
+        Orchestrator -->|Context| LLM[LLM Explainer Agent]
+        LLM -.->|Structured Explanation| Orchestrator
     end
-    
-    E --> F[Sequential Policy V2 + Deterministic Guards]
-    
-    F --> G[Internal Action]
-    F --> H[Razorpay Test Execution]
-    F --> I[Human Review]
-    
-    H --> J[External Provider Event]
-    J --> K[Signature Verification]
-    K --> L[ExternalOutcome]
-    L --> M[RecoveryAttribution]
-    M --> N[Audit Trail]
+
+    subgraph Deterministic Safety Boundary
+        ERV -->|Proposed Action| Policy[Sequential Policy Engine]
+        Policy -->|Bounds Check| Policy
+        Policy -->|Atomic Upsert Lock| DB[(SQLite WAL State Store)]
+    end
+
+    subgraph Execution & Verification
+        Policy -->|Final Approved Action| Executor[Execution Dispatcher]
+        Executor -->|Dispatch| RZP[Razorpay Test-Mode Executor]
+        RZP -->|Asynchronous Event| Webhook[Signed HMAC Webhook]
+    end
+
+    Webhook -->|Primary Key Constraint| DB
+    Webhook -->|Exactly-Once Mapping| Attribution[Recovery Attribution]
 ```
 
 ---
