@@ -53,8 +53,9 @@ function DashboardContent({ data }: { data: DashboardData }) {
   const demoActive = active.filter((item) => item.source === "DEMO_SYNTHETIC");
   const revenueAtRisk = demoActive.reduce((sum, item) => sum + item.amount_minor, 0);
   const verifiedRecovery = data.cases.reduce((sum, item) => sum + item.verified_recovery_minor, 0);
-  // Actual relevant Human Review count for the operational context (not batch 35)
-  const operationalReviews = active.filter((item) => item.status === "HUMAN_REVIEW").length;
+  
+  // Actual relevant Human Review count for the operational demo context (not batch 35)
+  const operationalReviews = demoActive.filter((item) => item.status === "HUMAN_REVIEW").length;
   const latest = [...data.cases].sort((left, right) => new Date(right.last_activity_at).getTime() - new Date(left.last_activity_at).getTime()).slice(0, 5);
 
   return (
@@ -69,14 +70,14 @@ function DashboardContent({ data }: { data: DashboardData }) {
       {/* Row 1 Metrics */}
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <MetricCard label="Revenue at risk" value={formatMoney(revenueAtRisk)} detail="Featured recovery opportunities" icon={Target} tone="cyan" progress={100} badge="DEMO · SYNTHETIC" />
-        <MetricCard label="Active opportunities" value={String(active.length)} detail={`${demoActive.length} synthetic demo cases`} icon={Activity} tone="blue" progress={data.cases.length ? (active.length / data.cases.length) * 100 : 0} />
+        <MetricCard label="Active opportunities" value={String(demoActive.length)} detail="Non-terminal synthetic cases" icon={Activity} tone="blue" progress={data.cases.length ? (demoActive.length / data.cases.length) * 100 : 0} />
         <MetricCard label="Verified Razorpay Test recovery" value={formatMoney(verifiedRecovery)} detail="Exactly-once attribution" subtext="No real money moved" icon={CircleDollarSign} tone="emerald" progress={verifiedRecovery > 0 ? 100 : 0} badge="RAZORPAY · TEST MODE" />
       </section>
 
       {/* Row 2 Metrics */}
       <section className="grid gap-4 sm:grid-cols-2">
         <MetricCard label="Sealed batch recovery" value="75.97%" detail="20,821 recovered · 27,406 episodes" subtext="Sealed evaluation · not provider revenue" icon={Beaker} tone="violet" progress={75.97} badge="SIMULATED" />
-        <MetricCard label="Safe escalations" value={String(operationalReviews)} detail="Human Review · insufficient context" icon={ShieldAlert} tone="amber" progress={active.length ? (operationalReviews / active.length) * 100 : 0} />
+        <MetricCard label="Safe escalations" value={String(operationalReviews)} detail="Human Review · insufficient context" icon={ShieldAlert} tone="amber" progress={demoActive.length ? (operationalReviews / demoActive.length) * 100 : 0} />
       </section>
 
       <section className="grid gap-5 xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.55fr)]">
@@ -104,11 +105,6 @@ function DashboardContent({ data }: { data: DashboardData }) {
       </section>
     </div>
   );
-}
-
-function EvidenceLane({ title, detail, href, tone }: { title: string; detail: string; href: string; tone: "cyan" | "violet" | "emerald" }) {
-  const tones = { cyan: "border-cyan-500/20 bg-cyan-500/[0.055]", violet: "border-violet-500/20 bg-violet-500/[0.055]", emerald: "border-emerald-500/20 bg-emerald-500/[0.055]" };
-  return <Link href={href} className={`focus-ring group rounded-2xl border p-4 transition-transform hover:-translate-y-0.5 ${tones[tone]}`}><p className="text-xs font-bold">{title}</p><p className="mt-2 text-[11px] leading-5 text-muted-foreground">{detail}</p><span className="mt-3 flex items-center gap-1 text-[10px] font-bold tracking-wider text-primary uppercase">Inspect evidence<ArrowRight className="size-3 transition-transform group-hover:translate-x-1" /></span></Link>;
 }
 
 function SourceBadge({ source }: { source: string }) {
