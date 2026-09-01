@@ -102,35 +102,7 @@ RecoveryIQ was evaluated against version-controlled strategies on the same seale
 
 RecoveryIQ relies on three layers: **probabilistic intelligence**, **deterministic financial boundaries**, and **verified execution**.
 
-```mermaid
-flowchart TD
-    Incoming["Payment Event"] --> Orchestrator["FastAPI Orchestrator"]
-
-    subgraph Intelligence["Probabilistic Intelligence"]
-        Orchestrator --> Health["Degradation Intelligence"]
-        Health --> ML["LightGBM Model V2"]
-        ML -->|Action-conditioned probability| ERV["ERV Optimizer"]
-    end
-
-    subgraph Safety["Deterministic Safety Boundary"]
-        ERV -->|Proposed Action| Policy["Sequential Policy V2"]
-        Policy -->|Allowed| Executor["Execution Dispatcher"]
-        Policy -->|Insufficient Context| Human["Human Review"]
-        Policy -->|Unsafe / Uneconomic| Stop["STOP"]
-    end
-
-    subgraph Verification["Execution & Provider Verification"]
-        Executor --> Razorpay["Razorpay Test Mode"]
-        Razorpay --> Webhook["Signed HMAC Webhook"]
-        Webhook --> Outcome["ExternalOutcome"]
-        Outcome --> Attribution["RecoveryAttribution"]
-    end
-
-    LLM["LLM Explanation Layer"] -.->|Explanation only| Orchestrator
-    DB["SQLite + UNIQUE Constraints"] --> Webhook
-    DB --> Outcome
-    DB --> Attribution
-```
+![RecoveryIQ Architecture](docs/assets/architecture.png)
 
 ### The Execution Flow
 
