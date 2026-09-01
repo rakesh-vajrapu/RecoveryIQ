@@ -4,29 +4,74 @@
 
 RecoveryIQ detects revenue at risk, estimates how recoverable a failed payment is, chooses the highest-value safe intervention under deterministic guardrails, executes only supported recovery workflows, verifies provider outcomes, and attributes recovered revenue exactly once.
 
-A failed payment does not always mean "retry immediately."
-The failure may come from customer liquidity issues, an expired payment instrument, issuer degradation, temporary network problems, mandate failure, or insufficient recovery context. 
-
-RecoveryIQ decides whether to WAIT, RETRY, CREATE A PAYMENT LINK, SUGGEST AN ALTERNATE METHOD, REQUEST PAYMENT METHOD UPDATE, ESCALATE TO HUMAN, or STOP. But every financial action remains strictly bounded by deterministic policy.
-
 ---
 
-## Razorpay AI Buildathon — Track 03 Alignment
+## 1. RecoveryIQ at a Glance
 
-The core Track 03 loop requires an AI to detect revenue at risk → determine the right intervention → execute a bounded recovery workflow → prove recovery.
+- **Problem**: Naive payment retries burn contact limits, incur provider costs, and ignore issuer degradation.
+- **Detection**: Real-time tracking of failed subscription and one-time payments.
+- **Prediction**: Action-conditioned LightGBM models estimate recovery probability per intervention.
+- **Optimization**: Expected Recovery Value (ERV) balances probability, revenue, cost, and friction.
+- **Policy**: Deterministic, bounded Sequential Policy V2 limits retries, contacts, and horizons.
+- **Execution**: Razorpay Test Mode Payment Link creation and operator escalations.
+- **Verification**: Strict HMAC SHA-256 validation of Razorpay webhook lifecycles.
+- **Attribution**: Exactly-once uniqueness constraints prevent duplicate financial attribution.
+- **Evaluation**: 27,406 sealed simulated episodes validating portfolio-level recovery lift.
+- **Safety**: Verified isolated local 10-way duplicate webhook and concurrent execution race defenses.
+- **AI Authority Boundary**: LLM is strictly explanation-only; it cannot execute or authorize payments.
 
-| Track Requirement | RecoveryIQ Implementation |
+## 2. 60-Second Evaluator Summary
+
+RecoveryIQ is an autonomous revenue recovery control plane that combines real-time **revenue-at-risk detection** and **degradation intelligence** with **action-conditioned calibrated ML** to optimize interventions via **Expected Recovery Value**. Crucially, all AI recommendations pass through a **deterministic policy** enforcing **bounded recovery** limits. When an action is authorized, it executes via **Razorpay Test Mode**, processes asynchronous **signed HMAC webhooks**, applies strict **provider-event deduplication**, and records the result as an **ExternalOutcome** tied to a **RecoveryAttribution**. This architecture ensures **exactly-once local attribution** backed by an immutable **audit trail**. The system's scale is proven via **sealed batch evaluation**, its financial safety is proven via **adversarial concurrency verification**, and its AI risk is eliminated via a strict **LLM explanation-only boundary**.
+
+## 3. Track 03 Control Loop
+
+RecoveryIQ implements the complete Track 03 AI recovery loop:
+
+- **DETECT** → `apps/api/app/services/recovery_case.py` (Revenue at risk correlation)
+- **DECIDE** → `artifacts/model/` (LightGBM V2 prediction & ERV optimization)
+- **GUARD** → `artifacts/policy/` (Deterministic Sequential Policy V2 bounds)
+- **EXECUTE** → `apps/api/app/integrations/razorpay/` (Test Mode Payment Link executor)
+- **VERIFY** → `apps/api/app/api/razorpay.py` (HMAC SHA-256 Webhook signature validation)
+- **ATTRIBUTE** → `apps/api/app/services/attribution.py` (Exactly-once `ExternalOutcome` to `RecoveryAttribution` mapping)
+- **MEASURE** → `apps/api/app/api/batch_explorer.py` (Portfolio-level simulated performance)
+
+## 4. Feature / Evidence Matrix
+
+| Capability | Status | Implementation / Evidence |
+| :--- | :--- | :--- |
+| Action-Conditioned ML | VERIFIED | LightGBM V2 models (`artifacts/model`) |
+| Degradation Intelligence | ADVISORY ONLY | Payment Health service / Detector V2 metadata |
+| Expected Recovery Value | VERIFIED | `recoveriq_sequential_policy` calculation |
+| Bounded Policy Constraints | VERIFIED | Max limits & 48h horizon (`artifacts/policy`) |
+| Signed Webhook Validation | VERIFIED | `X-Razorpay-Signature` HMAC SHA-256 (`test_razorpay_gateway.py`) |
+| Concurrent Idempotency | PROVEN | SQLite `UNIQUE` bounds (`test_concurrency.py`) |
+| External Payment Execution | VERIFIED | Razorpay Test Mode Payment Links (`test_razorpay_integration.py`) |
+| Explanatory AI | VERIFIED | Groq strict Pydantic fallback layer (`test_groq_explanations.py`) |
+
+## 5. Engineering Invariants
+
+The architecture enforces the following verified invariants:
+- **LLM cannot authorize financial execution**: The explanation provider is isolated from the state machine.
+- **Duplicate provider events cannot create duplicate recovery attribution**: Webhook IDs and Outcome IDs enforce exactly-once logic at the database level.
+- **Recovery attribution is uniqueness-constrained**: `RecoveryAttribution.external_outcome_id` is `UNIQUE`.
+- **Unsupported/insufficient-context cases safely abstain**: Missing state triggers a safe `HUMAN_REVIEW` escalation.
+- **Retry/contact/intervention limits are deterministic**: Hardcoded limits block ML recommendations that exceed policy.
+- **Simulated money is never represented as provider revenue**: Evaluation pipelines are strictly isolated from the provider execution layer.
+- **Test Mode money is never represented as real money**: All integration tests run against `rzp_test_` keys.
+
+## 6. Claims → Evidence
+
+| Claim | Evidence artifact/test/source |
 | :--- | :--- |
-| **Detect revenue risk** | Real-time tracking of failed subscription/one-time payments |
-| **Degradation intelligence** | Payment Health tracks issuer and network failures over time |
-| **Recovery prediction** | Action-conditioned ML estimation of recovery probability |
-| **ERV optimization** | Ranks interventions by Expected Recovery Value |
-| **Bounded policy** | Enforces a 48-hour horizon and absolute retry/contact limits |
-| **Stopping rules** | Terminates on RECOVERED, STOP, or HUMAN_REVIEW limits |
-| **Razorpay Test Mode** | Executes Payment Links where supported via the Test Mode API |
-| **Signed webhooks** | Strict HMAC SHA-256 verification of Razorpay lifecycle events |
-| **Exactly-once attribution** | Prevents duplicate simulated or test revenue attribution |
-| **Simulated scaling** | A sealed batch of 27,406 episodes evaluated for recovery value |
+| 27,406 sealed episodes | `artifacts/evaluation/` frozen evaluation artifact |
+| 75.97% simulated recovery | Sequential Policy V2 evaluation endpoint |
+| 0 policy violations | Policy evaluation endpoint |
+| 10-way webhook deduplication | `apps/api/tests/test_concurrency.py` (`test_webhook_deduplication_race`) |
+| 10-way execution race | `apps/api/tests/test_concurrency.py` (`test_execution_idempotency_race`) |
+| ₹2.00 Test Mode recovery | Persisted `RecoveryAttribution` evidence via Razorpay UI |
+| Signed webhook handling | `apps/api/tests/test_razorpay_integration.py` |
+| LLM explanation-only | `apps/api/tests/test_ai_providers.py` |
 
 ---
 
