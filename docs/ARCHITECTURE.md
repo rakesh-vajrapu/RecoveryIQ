@@ -4,7 +4,7 @@
 
 RecoverIQ separates evidence production, bounded sequential authorization, execution, and explanation. Statistical and ML components produce action-level evidence; a deterministic policy engine authorizes at most three adaptive interventions; executors perform those actions; optional Groq or Gemini providers explain only already-computed evidence. The database and verified payment-provider events remain the financial system of record.
 
-![RecoverIQ System Shape Architecture](assets/system_shape.png)
+![RecoveryIQ System Shape](assets/system_shape.png)
 
 The foundation, standalone simulator/baselines, robustness methodology, both detector/model generations, bounded Sequential Policy V2, explanation-provider layer, and Razorpay Test Mode adapter are implemented through Phase 7.5. One synthetic INR 1.00 Payment Link completed a genuine Test Mode create/fetch, signed paid webhook, exactly-once attribution, recovery, and duplicate replay. Broader autonomous provider execution, Live Mode, and the operational UI remain future commitments.
 
