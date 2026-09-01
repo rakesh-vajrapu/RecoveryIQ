@@ -1,6 +1,6 @@
 import uuid
-from datetime import UTC, datetime, timedelta
 from collections.abc import Generator
+from datetime import UTC, datetime, timedelta
 
 import pytest
 from httpx import AsyncClient
@@ -9,18 +9,18 @@ from sqlalchemy.orm import Session, sessionmaker
 from app.core.config import Settings
 from app.db.session import create_database_engine
 from app.models import (
-    Payment,
-    RecoveryCase,
-    RecoveryDecisionRecord,
-    RecoveryExecutionPlan,
+    Customer,
     ExternalExecution,
     ExternalOutcome,
-    RecoveryAttribution,
     ExternalWebhookEvent,
-    RecoveryCaseStatus,
     Merchant,
-    Customer,
-    Subscription
+    Payment,
+    RecoveryAttribution,
+    RecoveryCase,
+    RecoveryCaseStatus,
+    RecoveryDecisionRecord,
+    RecoveryExecutionPlan,
+    Subscription,
 )
 
 pytestmark = pytest.mark.asyncio
