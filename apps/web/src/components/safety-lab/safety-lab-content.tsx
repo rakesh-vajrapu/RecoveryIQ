@@ -5,6 +5,7 @@ import { AlertTriangle, CheckCircle2, Copy, Database, Shield, ShieldCheck, Alert
 
 import { MetricCard } from "@/components/metric-card";
 import { cn } from "@/lib/utils";
+import { apiBaseUrl } from "@/lib/api";
 
 interface SafetyEvidence {
   schema_version: string;
@@ -18,7 +19,8 @@ interface SafetyEvidence {
   };
   provider: {
     type: string;
-    razorpay_network_calls: number;
+    fake_provider_create_calls: number;
+    real_razorpay_network_calls: number;
   };
   scenarios: Record<string, Record<string, unknown>>;
 }
@@ -31,7 +33,7 @@ export function SafetyLabContent() {
   const fetchEvidence = async () => {
     setError(false);
     try {
-      const res = await fetch("/api/safety/summary");
+      const res = await fetch(`${apiBaseUrl}/api/safety/summary`);
       if (!res.ok) throw new Error("Safety evidence unavailable");
       const json = await res.json();
       setData(json);
@@ -209,7 +211,11 @@ export function SafetyLabContent() {
             <div>
               <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Provider Status</p>
               <div className="rounded-lg border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-sm text-amber-700 dark:text-amber-400">
-                Tests run using an isolated {data.provider.type} provider with {data.provider.razorpay_network_calls} Razorpay network calls.
+                Tests run using an isolated {data.provider.type} provider with:
+                <ul className="mt-2 font-mono text-[10px] font-bold space-y-1">
+                  <li>FAKE PROVIDER CALLS: {data.provider.fake_provider_create_calls}</li>
+                  <li>REAL RAZORPAY NETWORK CALLS: {data.provider.real_razorpay_network_calls}</li>
+                </ul>
               </div>
             </div>
           </div>

@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0",
+  "evidence_type": "ISOLATED_LOCAL_VERIFICATION",
+  "generated_at": "2026-09-01T11:24:08.097371+00:00",
+  "git_commit": "HEAD",
+  "database": {
+    "engine": "sqlite",
+    "journal_mode": "delete",
+    "temporary": true
+  },
+  "provider": {
+    "type": "FAKE",
+    "fake_provider_create_calls": 1,
+    "real_razorpay_network_calls": 0
+  },
+  "scenarios": {
+    "concurrent_webhook": {
+      "status": "PROVEN",
+      "measured": {
+        "submitted": 10,
+        "unique_persisted_event": 1,
+        "processed": 1,
+        "duplicates": 9,
+        "financial_side_effects": 0,
+        "unhandled_exceptions": 0
+      },
+      "defense_mechanism": "ExternalWebhookEvent.provider_event_id UNIQUE constraint",
+      "test_source": "Scenario A / test_webhook_deduplication_race",
+      "notes": "10 exact concurrent webhooks safely reduce to 1."
+    },
+    "concurrent_executor": {
+      "status": "PROVEN",
+      "measured": {
+        "invocations": 10,
+        "logical_executions": 1,
+        "fake_provider_calls": 1,
+        "fake_provider_resources": 1,
+        "duplicate_provider_effects": 0,
+        "response_classifications": {
+          "success": 10,
+          "conflict": 0
+        }
+      },
+      "defense_mechanism": "idempotency_key UNIQUE constraint & service layer reservation",
+      "test_source": "Scenario B / test_execution_idempotency_race",
+      "notes": "10 concurrent attempts to create a payment link result in exactly 1."
+    },
+    "duplicate_success": {
+      "status": "PROVEN",
+      "measured": {
+        "submitted": 10,
+        "external_outcome": 1,
+        "recovery_attribution": 1,
+        "recovered_transitions": 1,
+        "attributed_amount": 49900,
+        "duplicate_attributed_amount": 0
+      },
+      "defense_mechanism": "RecoveryAttribution.external_outcome_id UNIQUE constraint",
+      "test_source": "Scenario C / test_outcome_attribution_race",
+      "notes": "10 concurrent successful outcomes attribute value exactly once."
+    },
+    "sequential_duplicate": {
+      "status": "PROVEN",
+      "measured": {
+        "first_call_status": "CREATED",
+        "second_call_status": "EXISTING_EXECUTION_REUSED",
+        "provider_calls_total": 1
+      },
+      "defense_mechanism": "Execution existence check before provider call",
+      "test_source": "Scenario D / sequential_duplicate",
+      "notes": "Double clicks are handled gracefully without re-calling the provider."
+    },
+    "retry_storm": {
+      "status": "PROVEN",
+      "measured": {
+        "requested_action": "RETRY_LATER_12H",
+        "policy_result": "BLOCKED",
+        "stopping_rule": "MAX_INTERVENTIONS",
+        "external_side_effects": 0,
+        "policy_config": {
+          "horizon": 48.0,
+          "max_interventions": 3,
+          "max_retries": 2,
+          "max_contacts": 2
+        }
+      },
+      "defense_mechanism": "Sequential Policy bounds checking",
+      "test_source": "Scenario E / policy checks",
+      "notes": "Actions beyond policy bounds are strictly blocked before reaching executors."
+    },
+    "llm_outage": {
+      "status": "PROVEN",
+      "measured": {
+        "explanation_provider_state": "UNAVAILABLE",
+        "policy_decision_before": "UNCHANGED",
+        "financial_state_before": "UNCHANGED",
+        "provider_calls": 0
+      },
+      "defense_mechanism": "Deterministic fallback & LLM separation of authority",
+      "test_source": "Scenario F / test_disabled_gemini_fails_only_when_explicitly_invoked",
+      "notes": "LLM outage does not authorize or change any financial state."
+    },
+    "malformed_llm": {
+      "status": "PROVEN",
+      "measured": {
+        "malformed_output": "{\"foo\": \"bar\"}",
+        "schema_rejection": true,
+        "fallback_safe_failure": true,
+        "financial_state_unchanged": true
+      },
+      "defense_mechanism": "Pydantic Strict Validation",
+      "test_source": "Scenario G / Pydantic schema validation",
+      "notes": "Malformed LLM outputs are trapped by schema validators and fail safely."
+    },
+    "unmapped_payment": {
+      "status": "PROVEN",
+      "measured": {
+        "new_recovery_cases": 0,
+        "external_executions": 0,
+        "external_outcomes": 0,
+        "recovery_attributions": 0
+      },
+      "message": "IGNORED SAFELY",
+      "defense_mechanism": "Unknown correlation rule",
+      "test_source": "Scenario H / test_unmapped_order_failures_are_safely_ignored",
+      "notes": "RecoveryIQ never assumes financial ownership of unmapped payments."
+    },
+    "provider_crash_ambiguity": {
+      "status": "PARTIALLY_PROTECTED",
+      "measured": {},
+      "defense_mechanism": "Reservation + known provider ID reconciliation",
+      "test_source": "Architecture",
+      "notes": "Reconciliation path available through deterministic reference. Webhook or manual resolution required."
+    },
+    "stale_reservation": {
+      "status": "NOT_IMPLEMENTED",
+      "measured": {},
+      "defense_mechanism": "None",
+      "test_source": "Architecture",
+      "notes": "Automatic stale-reservation sweeping is not currently implemented."
+    }
+  }
+}

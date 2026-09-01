@@ -6,15 +6,9 @@ from fastapi import APIRouter, HTTPException
 
 router = APIRouter(prefix="/api/safety", tags=["Safety"])
 
-# Path to the generated artifact
-ARTIFACT_PATH = (
-    Path(__file__).parent.parent.parent.parent.parent
-    / "apps"
-    / "api"
-    / "artifacts"
-    / "demo"
-    / "safety-verification.json"
-)
+# Path to the generated artifact (stable repository root resolution)
+_REPO_ROOT = Path(__file__).resolve().parent.parent.parent.parent.parent
+ARTIFACT_PATH = _REPO_ROOT / "artifacts" / "demo" / "safety-verification.json"
 
 
 @router.get("/summary")
@@ -27,8 +21,9 @@ async def get_safety_summary() -> dict[str, Any]:
         raise HTTPException(status_code=404, detail="Safety evidence unavailable")
 
     try:
-        with open(ARTIFACT_PATH, encoding="utf-8") as f:
-            data = json.load(f)
+        content = ARTIFACT_PATH.read_text(encoding="utf-8")
+        import typing
+        data = typing.cast(dict[str, Any], json.loads(content))
     except Exception as e:
         raise HTTPException(status_code=500, detail="Invalid safety artifact") from e
 
