@@ -84,19 +84,30 @@ RecoveryIQ relies on three layers: probabilistic intelligence, deterministic bou
 
 ```mermaid
 flowchart TD
-    Incoming["Payment Event"] --> Orchestrator["FastAPI Orchestrator"]
-    Orchestrator --> Health["Degradation Intelligence"]
-    Health --> ML["LightGBM Model V2"]
-    ML --> ERV["ERV Optimizer"]
-    Orchestrator --> LLM["LLM Explainer Agent"]
-    LLM -.-> Orchestrator
-    ERV --> Policy["Sequential Policy Engine"]
-    Policy --> DB["SQLite + UNIQUE Constraints"]
-    Policy --> Executor["Execution Dispatcher"]
-    Executor --> RZP["Razorpay Test-Mode Executor"]
-    RZP --> Webhook["Signed HMAC Webhook"]
-    Webhook --> DB
-    Webhook --> Attribution["Recovery Attribution"]
+    Incoming([Payment Event]) --> Orchestrator[FastAPI Orchestrator]
+
+    subgraph Heuristic [Heuristic / Probabilistic Layer]
+        Orchestrator --> Health[Degradation Intelligence]
+        Health --> ML[LightGBM Model V2]
+        ML -->|P_recovery given action| ERV[ERV Optimizer]
+        Orchestrator -->|Context| LLM[LLM Explainer Agent]
+        LLM -. Structured Explanation .-> Orchestrator
+    end
+
+    subgraph Deterministic [Deterministic Safety Boundary]
+        ERV -->|Proposed Action| Policy[Sequential Policy Engine]
+        Policy -->|Bounds Check| Policy
+        Policy -->|Execution Reservation| DB[(SQLite + UNIQUE Constraints)]
+    end
+
+    subgraph Execution [Execution & Verification]
+        Policy -->|Final Approved Action| Executor[Execution Dispatcher]
+        Executor -->|Dispatch| RZP[Razorpay Test-Mode Executor]
+        RZP -->|Asynchronous Event| Webhook[Signed HMAC Webhook]
+    end
+
+    Webhook -->|Primary Key Constraint| DB
+    Webhook -->|Exactly-Once Mapping| Attribution[Recovery Attribution]
 ```
 
 ### The Execution Flow

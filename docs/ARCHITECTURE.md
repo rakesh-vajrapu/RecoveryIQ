@@ -32,30 +32,30 @@ The system is strictly divided into three layers: a probabilistic intelligence l
 
 ```mermaid
 flowchart TD
-    Incoming(["Payment Event"]) --> Orchestrator["FastAPI Orchestrator"]
+    Incoming([Payment Event]) --> Orchestrator[FastAPI Orchestrator]
 
-    subgraph Heuristic ["Heuristic / Probabilistic Layer"]
-        Orchestrator --> Health["Degradation Intelligence"]
-        Health --> ML["LightGBM Model V2"]
-        ML -->|"P(recovery given action)"| ERV["ERV Optimizer"]
-        Orchestrator -->|"Context"| LLM["LLM Explainer Agent"]
-        LLM -. "Structured Explanation" .-> Orchestrator
+    subgraph Heuristic [Heuristic / Probabilistic Layer]
+        Orchestrator --> Health[Degradation Intelligence]
+        Health --> ML[LightGBM Model V2]
+        ML -->|P_recovery given action| ERV[ERV Optimizer]
+        Orchestrator -->|Context| LLM[LLM Explainer Agent]
+        LLM -. Structured Explanation .-> Orchestrator
     end
 
-    subgraph Deterministic ["Deterministic Safety Boundary"]
-        ERV -->|"Proposed Action"| Policy["Sequential Policy Engine"]
-        Policy -->|"Bounds Check"| Policy
-        Policy -->|"Execution Reservation"| DB[("SQLite + UNIQUE Constraints")]
+    subgraph Deterministic [Deterministic Safety Boundary]
+        ERV -->|Proposed Action| Policy[Sequential Policy Engine]
+        Policy -->|Bounds Check| Policy
+        Policy -->|Execution Reservation| DB[(SQLite + UNIQUE Constraints)]
     end
 
-    subgraph Execution ["Execution & Verification"]
-        Policy -->|"Final Approved Action"| Executor["Execution Dispatcher"]
-        Executor -->|"Dispatch"| RZP["Razorpay Test-Mode Executor"]
-        RZP -->|"Asynchronous Event"| Webhook["Signed HMAC Webhook"]
+    subgraph Execution [Execution & Verification]
+        Policy -->|Final Approved Action| Executor[Execution Dispatcher]
+        Executor -->|Dispatch| RZP[Razorpay Test-Mode Executor]
+        RZP -->|Asynchronous Event| Webhook[Signed HMAC Webhook]
     end
 
-    Webhook -->|"Primary Key Constraint"| DB
-    Webhook -->|"Exactly-Once Mapping"| Attribution["Recovery Attribution"]
+    Webhook -->|Primary Key Constraint| DB
+    Webhook -->|Exactly-Once Mapping| Attribution[Recovery Attribution]
 ```
 
 **CRITICAL RULE**: The LLM acts exclusively in an **explanation only** capacity. It cannot authorize payment execution, change deterministic policy, or mark a payment as recovered.
