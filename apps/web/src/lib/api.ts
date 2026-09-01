@@ -14,6 +14,11 @@ export type DecisionExplanation = { summary: string; factors: string[]; confiden
 
 export type StrategyEvaluation = { id: string; name: string; recovered_count: number; recovery_rate: number; simulated_net_value_minor: number; contacts: number; retries: number; human_reviews: number; policy_violations: number };
 export type EvaluationSummary = { evidence_type: string; evaluation_name: string; episodes: number; recoveryiq: StrategyEvaluation; primary_baseline: StrategyEvaluation; incremental: { recovery_rate_pp: number; simulated_net_value_minor: number }; strategies: StrategyEvaluation[] };
+
+export type CohortItem = { value: string; episodes: number; recovery_rate: number; top_sequence?: string; top_sequence_share?: number; unique_sequences?: number };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type BatchExplorerData = any;
+
 export class ApiError extends Error {
   constructor(public readonly status: number, message: string) { super(message); this.name = "ApiError"; }
 }
@@ -84,6 +89,10 @@ export async function getCaseExplanation(id: string): Promise<DecisionExplanatio
 export async function getEvaluationSummary(signal?: AbortSignal): Promise<EvaluationSummary> {
   const payload = await request(`/api/evaluation/summary`, { signal });
   if (!isEvaluationSummary(payload)) throw invalidData("evaluation summary");
+  return payload;
+}
+export async function getBatchExplorerData(signal?: AbortSignal): Promise<BatchExplorerData> {
+  const payload = await request(`/api/evaluation/batch-explorer`, { signal });
   return payload;
 }
 export function errorMessage(error: unknown): string { return error instanceof Error ? error.message : "An unexpected error occurred."; }

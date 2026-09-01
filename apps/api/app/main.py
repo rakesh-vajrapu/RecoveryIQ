@@ -5,6 +5,7 @@ import structlog
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.batch_explorer import router as batch_explorer_router
 from app.api.evaluation import router as evaluation_router
 from app.api.health import router as health_router
 from app.api.payment_health import router as payment_health_router
@@ -38,6 +39,7 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
+app.include_router(batch_explorer_router)
 app.include_router(health_router)
 app.include_router(razorpay_router)
 app.include_router(evaluation_router)

@@ -158,6 +158,27 @@ function DashboardContent({ data }: { data: DashboardData }) {
           </div>
         </section>
       )}
+
+      {/* Batch Explorer Teaser (Simulated) */}
+      {data.evalSummary && (
+        <section>
+          <div className="bg-gradient-to-r from-emerald-950/20 to-[#0c0e12] border border-emerald-900/30 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-6">
+            <div>
+              <div className="flex items-center gap-2">
+                <Target className="w-4 h-4 text-emerald-500" />
+                <h3 className="text-sm font-bold tracking-widest text-emerald-100 uppercase">Batch Explorer</h3>
+                <span className="text-[9px] bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-mono ml-2">SIMULATED EVIDENCE</span>
+              </div>
+              <p className="text-xs text-emerald-200/50 mt-1">
+                Explore {data.evalSummary.episodes.toLocaleString()} sealed episodes • Portfolio intelligence by cohort
+              </p>
+            </div>
+            <Link href="/batch-explorer" className="focus-ring flex items-center gap-2 rounded-lg bg-emerald-500/10 text-emerald-400 px-4 py-2 text-xs font-semibold hover:bg-emerald-500/20 transition-colors border border-emerald-500/20">
+              Explore Cohorts <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
