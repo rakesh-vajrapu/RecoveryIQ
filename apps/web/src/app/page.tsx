@@ -26,7 +26,20 @@ export default function CommandCenterPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Recovery command center" title="Revenue recovery, with every boundary visible." description="Monitor current opportunities, verified outcomes, execution readiness, and the deterministic controls that keep recovery safe." icon={Activity} actions={<Button variant="outline" onClick={resource.retry} disabled={resource.loading}><RefreshCw className={resource.loading ? "animate-spin" : ""} />Refresh data</Button>} />
+      <PageHeader eyebrow="Recovery command center" title="RecoveryIQ: Autonomous Revenue Recovery Control Plane" description="Detect revenue at risk, select the highest-value safe intervention, execute bounded recovery, and verify the outcome." icon={Activity} actions={<Button variant="outline" onClick={resource.retry} disabled={resource.loading}><RefreshCw className={resource.loading ? "animate-spin" : ""} />Refresh data</Button>} />
+      
+      {/* Control Loop Visual */}
+      <div className="mb-6 flex overflow-x-auto rounded-xl border bg-card/50 px-5 py-3 text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
+        <div className="flex items-center gap-3 whitespace-nowrap" title="ML predicts · Policy decides · Razorpay verifies · AI explains">
+          <span className="text-foreground">Detect</span><ArrowRight className="size-3 text-muted-foreground/50" />
+          <span className="text-foreground">Predict</span><ArrowRight className="size-3 text-muted-foreground/50" />
+          <span className="text-foreground">Decide</span><ArrowRight className="size-3 text-muted-foreground/50" />
+          <span className="text-primary">Execute</span><ArrowRight className="size-3 text-primary/50" />
+          <span className="text-emerald-600 dark:text-emerald-400">Verify</span><ArrowRight className="size-3 text-emerald-600/50 dark:text-emerald-400/50" />
+          <span className="text-emerald-600 dark:text-emerald-400">Attribute</span>
+        </div>
+      </div>
+
       {resource.loading && <LoadingPanel label="Loading the recovery command center" />}
       {resource.error && <ErrorPanel message={resource.error} onRetry={resource.retry} />}
       {resource.data && <DashboardContent data={resource.data} />}
@@ -40,23 +53,30 @@ function DashboardContent({ data }: { data: DashboardData }) {
   const demoActive = active.filter((item) => item.source === "DEMO_SYNTHETIC");
   const revenueAtRisk = demoActive.reduce((sum, item) => sum + item.amount_minor, 0);
   const verifiedRecovery = data.cases.reduce((sum, item) => sum + item.verified_recovery_minor, 0);
-  const reviews = active.filter((item) => item.status === "HUMAN_REVIEW").length;
+  // Actual relevant Human Review count for the operational context (not batch 35)
+  const operationalReviews = active.filter((item) => item.status === "HUMAN_REVIEW").length;
   const latest = [...data.cases].sort((left, right) => new Date(right.last_activity_at).getTime() - new Date(left.last_activity_at).getTime()).slice(0, 5);
 
   return (
     <div className="space-y-5">
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        <MetricCard label="Revenue at risk" value={formatMoney(revenueAtRisk)} detail="Clearly labeled synthetic opportunities" icon={Target} tone="rose" progress={100} />
-        <MetricCard label="Active opportunities" value={String(active.length)} detail={`${demoActive.length} synthetic demo cases`} icon={Activity} tone="blue" progress={data.cases.length ? (active.length / data.cases.length) * 100 : 0} />
-        <MetricCard label="Verified Razorpay Test recovery" value={formatMoney(verifiedRecovery)} detail="Test Mode · no real money" icon={CircleDollarSign} tone="emerald" progress={verifiedRecovery > 0 ? 100 : 0} />
-        <MetricCard label="Batch recovery performance" value="75.97%" detail="SIMULATED · 27,406 sealed episodes" icon={Beaker} tone="violet" progress={75.97} />
-        <MetricCard label="Safe escalations" value={String(reviews)} detail="Human Review · insufficient context" icon={ShieldAlert} tone="amber" progress={active.length ? (reviews / active.length) * 100 : 0} />
+      {/* Evidence Provenance Strip */}
+      <section className="grid gap-3 sm:grid-cols-3">
+        <div className="flex items-center gap-3 rounded-xl border border-cyan-500/20 bg-cyan-500/[0.05] p-3"><span className="rounded bg-cyan-500/20 px-1.5 py-0.5 text-[9px] font-bold text-cyan-700 dark:text-cyan-300">DEMO</span><p className="text-[10px] font-medium text-muted-foreground">Synthetic operational scenario</p></div>
+        <div className="flex items-center gap-3 rounded-xl border border-violet-500/20 bg-violet-500/[0.05] p-3"><span className="rounded bg-violet-500/20 px-1.5 py-0.5 text-[9px] font-bold text-violet-700 dark:text-violet-300">SIMULATED</span><p className="text-[10px] font-medium text-muted-foreground">Frozen batch evaluation</p></div>
+        <div className="flex items-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.05] p-3"><span className="rounded bg-emerald-500/20 px-1.5 py-0.5 text-[9px] font-bold text-emerald-700 dark:text-emerald-300">RAZORPAY TEST</span><p className="text-[10px] font-medium text-muted-foreground">Provider-verified Test Mode</p></div>
       </section>
 
-      <section className="grid gap-3 md:grid-cols-3">
-        <EvidenceLane title="Synthetic demo opportunities" detail="Presentation-only revenue at risk. Not provider transactions." href="/recovery-cases" tone="cyan" />
-        <EvidenceLane title="Simulated batch evaluation" detail="Frozen performance evidence. Monetary values are simulated." href="/evaluation" tone="violet" />
-        <EvidenceLane title="Razorpay Test Mode evidence" detail="Signed provider lifecycle and exactly-once attribution." href="/integrations/razorpay" tone="emerald" />
+      {/* Row 1 Metrics */}
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <MetricCard label="Revenue at risk" value={formatMoney(revenueAtRisk)} detail="Featured recovery opportunities" icon={Target} tone="cyan" progress={100} badge="DEMO · SYNTHETIC" />
+        <MetricCard label="Active opportunities" value={String(active.length)} detail={`${demoActive.length} synthetic demo cases`} icon={Activity} tone="blue" progress={data.cases.length ? (active.length / data.cases.length) * 100 : 0} />
+        <MetricCard label="Verified Razorpay Test recovery" value={formatMoney(verifiedRecovery)} detail="Exactly-once attribution" subtext="No real money moved" icon={CircleDollarSign} tone="emerald" progress={verifiedRecovery > 0 ? 100 : 0} badge="RAZORPAY · TEST MODE" />
+      </section>
+
+      {/* Row 2 Metrics */}
+      <section className="grid gap-4 sm:grid-cols-2">
+        <MetricCard label="Sealed batch recovery" value="75.97%" detail="20,821 recovered · 27,406 episodes" subtext="Sealed evaluation · not provider revenue" icon={Beaker} tone="violet" progress={75.97} badge="SIMULATED" />
+        <MetricCard label="Safe escalations" value={String(operationalReviews)} detail="Human Review · insufficient context" icon={ShieldAlert} tone="amber" progress={active.length ? (operationalReviews / active.length) * 100 : 0} />
       </section>
 
       <section className="grid gap-5 xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.55fr)]">

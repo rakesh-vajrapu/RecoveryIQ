@@ -11,7 +11,7 @@ const tones = {
   blue: "bg-blue-500/10 text-blue-700 dark:text-blue-300",
 };
 
-export function MetricCard({ label, value, detail, icon: Icon, tone = "emerald", progress }: { label: string; value: string; detail: string; icon: LucideIcon; tone?: keyof typeof tones; progress?: number }) {
+export function MetricCard({ label, value, detail, icon: Icon, tone = "emerald", progress, badge, subtext }: { label: string; value: string; detail: string; icon: LucideIcon; tone?: keyof typeof tones; progress?: number; badge?: string; subtext?: string }) {
   const boundedProgress = Math.max(0, Math.min(100, progress ?? 0));
   return (
     <article className="surface-panel interactive-panel group flex min-h-[190px] flex-col rounded-2xl p-5">
@@ -22,7 +22,14 @@ export function MetricCard({ label, value, detail, icon: Icon, tone = "emerald",
         </div>
         <span className={cn("grid size-10 place-items-center rounded-xl transition-transform duration-300 group-hover:rotate-3 group-hover:scale-105", tones[tone])}><Icon className="size-4.5" /></span>
       </div>
-      <div className="mt-auto pt-5"><div className="h-1 overflow-hidden rounded-full bg-muted"><div className="h-full rounded-full bg-primary transition-[width] duration-700" style={{ width: `${progress === undefined ? 32 : boundedProgress}%` }} /></div><p className="mt-3 text-[11px] leading-5 text-muted-foreground">{detail}</p></div>
+      <div className="mt-auto pt-5">
+        {badge && <div className="mb-2 inline-flex rounded border border-current bg-transparent px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-widest opacity-80">{badge}</div>}
+        <div className="h-1 overflow-hidden rounded-full bg-muted"><div className="h-full rounded-full bg-primary transition-[width] duration-700" style={{ width: `${progress === undefined ? 32 : boundedProgress}%` }} /></div>
+        <div className="mt-3 flex items-center justify-between">
+          <p className="text-[11px] leading-5 text-muted-foreground">{detail}</p>
+          {subtext && <p className="text-[9px] font-bold text-muted-foreground">{subtext}</p>}
+        </div>
+      </div>
     </article>
   );
 }
