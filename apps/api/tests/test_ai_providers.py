@@ -1,4 +1,3 @@
-
 import pytest
 
 from app.ai.fake import FakeLLMProvider
@@ -38,6 +37,3 @@ async def test_deterministic_fallback_uses_only_supplied_evidence() -> None:
     assert any("WAITING" in factor for factor in result.factors)
     assert any("issuer_unavailable" in factor for factor in result.factors)
     assert all("payment succeeded" not in factor.lower() for factor in result.factors)
-
-
-

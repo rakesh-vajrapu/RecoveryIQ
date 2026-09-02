@@ -134,21 +134,33 @@ def get_razorpay_evidence(db: Annotated[Session, Depends(get_db_session)]) -> di
             "provider_truth": {
                 "webhook_authenticated": any(w.event_type == "payment_link.paid" for w in wh_list),
                 "webhook_invariants_verified": any(
-                    w.event_type == "payment_link.paid" and
-                    w.provider_confirmation_status.value != "NOT_REQUIRED"
+                    w.event_type == "payment_link.paid"
+                    and w.provider_confirmation_status.value != "NOT_REQUIRED"
                     for w in wh_list
                 ),
                 "provider_confirmation_status": next(
-                    (w.provider_confirmation_status.value for w in wh_list if w.event_type == "payment_link.paid"),
-                    "NOT_AVAILABLE"
+                    (
+                        w.provider_confirmation_status.value
+                        for w in wh_list
+                        if w.event_type == "payment_link.paid"
+                    ),
+                    "NOT_AVAILABLE",
                 ),
                 "provider_confirmation_method": next(
-                    (w.provider_confirmation_method for w in wh_list if w.event_type == "payment_link.paid" and w.provider_confirmation_method),
-                    "NOT_AVAILABLE"
+                    (
+                        w.provider_confirmation_method
+                        for w in wh_list
+                        if w.event_type == "payment_link.paid" and w.provider_confirmation_method
+                    ),
+                    "NOT_AVAILABLE",
                 ),
                 "provider_confirmed_at": next(
-                    (w.provider_confirmed_at for w in wh_list if w.event_type == "payment_link.paid"),
-                    None
+                    (
+                        w.provider_confirmed_at
+                        for w in wh_list
+                        if w.event_type == "payment_link.paid"
+                    ),
+                    None,
                 ),
                 "external_outcome_count": len(outcomes),
                 "recovery_attribution_count": 1 if attribution else 0,

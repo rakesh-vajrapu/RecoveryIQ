@@ -30,6 +30,13 @@ class WebhookProcessingStatus(StrEnum):
     FAILED = "FAILED"
 
 
+class ProviderConfirmationStatus(StrEnum):
+    NOT_REQUIRED = "NOT_REQUIRED"
+    PENDING = "PENDING"
+    CONFIRMED = "CONFIRMED"
+    MISMATCH = "MISMATCH"
+
+
 class ExecutionCapability(StrEnum):
     REAL_TEST_EXECUTION = "REAL_TEST_EXECUTION"
     INTERNAL_SCHEDULE_ONLY = "INTERNAL_SCHEDULE_ONLY"
@@ -107,6 +114,13 @@ class ExternalWebhookEvent(TimestampedUuidMixin, Base):
     redacted_payload: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict, nullable=False)
     failure_reason: Mapped[str | None] = mapped_column(String(200))
     processed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    provider_confirmation_status: Mapped[ProviderConfirmationStatus] = mapped_column(
+        Enum(ProviderConfirmationStatus, name="provider_confirmation_status", native_enum=False),
+        default=ProviderConfirmationStatus.NOT_REQUIRED,
+        nullable=False,
+    )
+    provider_confirmation_method: Mapped[str | None] = mapped_column(String(80))
+    provider_confirmed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
 class ExternalEntityMapping(TimestampedUuidMixin, Base):

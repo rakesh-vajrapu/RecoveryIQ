@@ -145,6 +145,7 @@ def _link_event(
             fake_link = harness.gateway._links_by_id.get(execution.provider_entity_id)
             if fake_link:
                 from app.integrations.razorpay.gateway import PaymentLinkResult
+
                 harness.gateway._links_by_id[execution.provider_entity_id] = PaymentLinkResult(
                     id=fake_link.id,
                     order_id=fake_link.order_id,
@@ -664,7 +665,9 @@ async def test_paid_payment_link_recovers_once_and_preserves_subscription_state(
         execution = session.scalar(select(ExternalExecution))
         stored_case = session.get(RecoveryCase, recovery_case.id)
         assert execution is not None and stored_case is not None
-        payload = _link_event("payment_link_paid.json", execution, stored_case, harness=razorpay_harness)
+        payload = _link_event(
+            "payment_link_paid.json", execution, stored_case, harness=razorpay_harness
+        )
     first = await _post_event(razorpay_harness, payload, "evt_link_paid")
     duplicate_id = await _post_event(razorpay_harness, payload, "evt_link_paid")
     replay_new_id = await _post_event(razorpay_harness, payload, "evt_link_paid_replay")
@@ -722,7 +725,9 @@ async def test_paid_link_uses_completion_time_and_exposes_real_last_activity(
         execution = session.scalar(select(ExternalExecution))
         stored_case = session.get(RecoveryCase, recovery_case.id)
         assert execution is not None and stored_case is not None
-        payload = _link_event("payment_link_paid.json", execution, stored_case, harness=razorpay_harness)
+        payload = _link_event(
+            "payment_link_paid.json", execution, stored_case, harness=razorpay_harness
+        )
         expected_amount_minor = execution.amount_minor
     payload["created_at"] = link_created_at
     link_entity = payload["payload"]["payment_link"]["entity"]
@@ -785,7 +790,9 @@ async def test_paid_link_mismatch_does_not_recover_case(
         execution = session.scalar(select(ExternalExecution))
         stored_case = session.get(RecoveryCase, recovery_case.id)
         assert execution is not None and stored_case is not None
-        payload = _link_event("payment_link_paid.json", execution, stored_case, harness=razorpay_harness)
+        payload = _link_event(
+            "payment_link_paid.json", execution, stored_case, harness=razorpay_harness
+        )
     entity = payload["payload"]["payment_link"]["entity"]
     if mismatch == "reference":
         entity["reference_id"] = "unrelated_reference"
@@ -947,7 +954,9 @@ async def test_paid_then_stale_pending_cannot_regress_recovered_case(
         execution = session.scalar(select(ExternalExecution))
         stored_case = session.get(RecoveryCase, recovery_case.id)
         assert execution is not None and stored_case is not None
-        paid = _link_event("payment_link_paid.json", execution, stored_case, harness=razorpay_harness)
+        paid = _link_event(
+            "payment_link_paid.json", execution, stored_case, harness=razorpay_harness
+        )
     await _post_event(razorpay_harness, paid, "evt_paid_before_stale")
     stale = copy.deepcopy(_fixture("subscription_pending.json"))
     stale["created_at"] = 1699999999

@@ -25,6 +25,7 @@ from app.models import (
 
 pytestmark = pytest.mark.asyncio
 
+
 @pytest.fixture
 def db(test_settings: Settings) -> Generator[Session, None, None]:
     engine = create_database_engine(test_settings)
@@ -32,15 +33,17 @@ def db(test_settings: Settings) -> Generator[Session, None, None]:
     with SessionLocal() as session:
         yield session
 
+
 async def test_get_razorpay_evidence_empty(client: AsyncClient, db: Session) -> None:
     response = await client.get("/api/integrations/razorpay/evidence")
     assert response.status_code == 200
     data = response.json()
-    
+
     assert data["evidence_type"] == "RAZORPAY_TEST_MODE"
     assert data["all_time_recovered_minor"] == 0
     assert data["last_7_days_recovered_minor"] == 0
     assert data["selected_case"] is None
+
 
 async def test_get_razorpay_evidence_seeded(client: AsyncClient, db: Session) -> None:
     # 1. Arrange Merchant, Customer, Subscription, Payment
@@ -63,7 +66,7 @@ async def test_get_razorpay_evidence_seeded(client: AsyncClient, db: Session) ->
         external_id="p_1",
         amount_minor=100,
         currency="INR",
-        status="failed"
+        status="failed",
     )
     db.add(payment)
     db.flush()
@@ -75,7 +78,7 @@ async def test_get_razorpay_evidence_seeded(client: AsyncClient, db: Session) ->
         id=target_id,
         payment_id=payment.id,
         status=RecoveryCaseStatus.RECOVERED,
-        correlation_id=uuid.uuid4()
+        correlation_id=uuid.uuid4(),
     )
     db.add(case)
     db.flush()
@@ -84,7 +87,7 @@ async def test_get_razorpay_evidence_seeded(client: AsyncClient, db: Session) ->
         recovery_case_id=case.id,
         decision_key="dec_123",
         kind="HUMAN_REVIEW",
-        reason="INSUFFICIENT_CONTEXT"
+        reason="INSUFFICIENT_CONTEXT",
     )
     db.add(decision)
     db.flush()
@@ -95,7 +98,7 @@ async def test_get_razorpay_evidence_seeded(client: AsyncClient, db: Session) ->
         action="CREATE_PAYMENT_LINK",
         capability="RAZORPAY_TEST_MODE_PAYMENT_LINK",
         initiator="OPERATOR_INITIATED",
-        rationale="Test"
+        rationale="Test",
     )
     db.add(plan)
     db.flush()
@@ -111,7 +114,7 @@ async def test_get_razorpay_evidence_seeded(client: AsyncClient, db: Session) ->
         provider_reference_id="ref_123",
         provider_entity_id="pl_123",
         amount_minor=100,
-        currency="INR"
+        currency="INR",
     )
     db.add(execution)
     db.flush()
@@ -122,7 +125,7 @@ async def test_get_razorpay_evidence_seeded(client: AsyncClient, db: Session) ->
         event_type="payment.failed",
         provider_event_id="evt_failed123",
         processing_status="PROCESSED",
-        payload_sha256="fakehash"
+        payload_sha256="fakehash",
     )
     db.add(webhook)
     db.flush()
@@ -135,7 +138,7 @@ async def test_get_razorpay_evidence_seeded(client: AsyncClient, db: Session) ->
         verified=True,
         amount_minor=100,
         currency="INR",
-        occurred_at=datetime.now(UTC).replace(tzinfo=None)
+        occurred_at=datetime.now(UTC).replace(tzinfo=None),
     )
     db.add(outcome)
     db.flush()
@@ -150,7 +153,7 @@ async def test_get_razorpay_evidence_seeded(client: AsyncClient, db: Session) ->
         amount_minor=100,
         currency="INR",
         occurred_at=recent_date,
-        created_at=recent_date
+        created_at=recent_date,
     )
     db.add(attr1)
 
@@ -162,15 +165,13 @@ async def test_get_razorpay_evidence_seeded(client: AsyncClient, db: Session) ->
         external_id="p_2",
         amount_minor=150,
         currency="INR",
-        status="failed"
+        status="failed",
     )
     db.add(payment2)
     db.flush()
 
     case2 = RecoveryCase(
-        payment_id=payment2.id,
-        status=RecoveryCaseStatus.RECOVERED,
-        correlation_id=uuid.uuid4()
+        payment_id=payment2.id, status=RecoveryCaseStatus.RECOVERED, correlation_id=uuid.uuid4()
     )
     db.add(case2)
     db.flush()
@@ -181,7 +182,7 @@ async def test_get_razorpay_evidence_seeded(client: AsyncClient, db: Session) ->
         event_type="payment.failed",
         provider_event_id="evt_failed124",
         processing_status="PROCESSED",
-        payload_sha256="fakehash2"
+        payload_sha256="fakehash2",
     )
     db.add(webhook2)
     db.flush()
@@ -194,7 +195,7 @@ async def test_get_razorpay_evidence_seeded(client: AsyncClient, db: Session) ->
         verified=True,
         amount_minor=150,
         currency="INR",
-        occurred_at=datetime.now(UTC).replace(tzinfo=None)
+        occurred_at=datetime.now(UTC).replace(tzinfo=None),
     )
     db.add(outcome2)
     db.flush()
@@ -209,10 +210,10 @@ async def test_get_razorpay_evidence_seeded(client: AsyncClient, db: Session) ->
         amount_minor=150,
         currency="INR",
         occurred_at=old_date,
-        created_at=old_date
+        created_at=old_date,
     )
     db.add(attr2)
-    
+
     db.commit()
 
     # 2. Act

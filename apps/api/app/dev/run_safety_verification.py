@@ -325,6 +325,7 @@ async def run_scenarios() -> dict[str, Any]:
     # SCENARIO F: LLM Outage
     async with LocalSafetyHarness() as harness:
         from app.ai.groq import GroqExplanationProvider
+
         harness.settings.groq_api_key = None
         provider = GroqExplanationProvider(harness.settings)
         try:

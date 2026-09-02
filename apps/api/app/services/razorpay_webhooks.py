@@ -1083,6 +1083,8 @@ def reconcile_payment_link_provider_truth(
     if recovery_case is None:
         return
 
+    from app.integrations.razorpay.gateway import PaymentLinkResult
+    provider_link: PaymentLinkResult | None = None
     try:
         if link_id:
             provider_link = gateway.fetch_payment_link(link_id)
@@ -1095,8 +1097,18 @@ def reconcile_payment_link_provider_truth(
     if not provider_link:
         event.provider_confirmation_status = ProviderConfirmationStatus.MISMATCH
         event.provider_confirmed_at = utc_now()
+        event.processing_status = WebhookProcessingStatus.IGNORED
+        event.failure_reason = "PROVIDER_LINK_NOT_FOUND"
         session.add(event)
-        _audit_outcome_rejected(session, recovery_case, event, "PROVIDER_LINK_NOT_FOUND")
+        add_audit_event(
+            session,
+            correlation_id=recovery_case.correlation_id,
+            entity_type="ExternalWebhookEvent",
+            entity_id=event.id,
+            actor="RAZORPAY_WEBHOOK_PROCESSOR",
+            event_type="PROVIDER_CONFIRMATION_MISMATCH",
+            metadata={"reason": "PROVIDER_LINK_NOT_FOUND"},
+        )
         return
 
     if (
@@ -1107,13 +1119,32 @@ def reconcile_payment_link_provider_truth(
     ):
         event.provider_confirmation_status = ProviderConfirmationStatus.MISMATCH
         event.provider_confirmed_at = utc_now()
+        event.processing_status = WebhookProcessingStatus.IGNORED
+        event.failure_reason = "PROVIDER_TRUTH_MISMATCH"
         session.add(event)
-        _audit_outcome_rejected(session, recovery_case, event, "PROVIDER_TRUTH_MISMATCH")
+        add_audit_event(
+            session,
+            correlation_id=recovery_case.correlation_id,
+            entity_type="ExternalWebhookEvent",
+            entity_id=event.id,
+            actor="RAZORPAY_WEBHOOK_PROCESSOR",
+            event_type="PROVIDER_CONFIRMATION_MISMATCH",
+            metadata={"reason": "PROVIDER_TRUTH_MISMATCH"},
+        )
         return
 
     event.provider_confirmation_status = ProviderConfirmationStatus.CONFIRMED
     event.provider_confirmed_at = utc_now()
     session.add(event)
+    add_audit_event(
+        session,
+        correlation_id=recovery_case.correlation_id,
+        entity_type="ExternalWebhookEvent",
+        entity_id=event.id,
+        actor="RAZORPAY_WEBHOOK_PROCESSOR",
+        event_type="PROVIDER_CONFIRMATION_CONFIRMED",
+        metadata={"method": "PAYMENT_LINK_FETCH"},
+    )
 
     execution.provider_entity_id = provider_link.id
     execution.payment_link_status = PaymentLinkStatus.PAID

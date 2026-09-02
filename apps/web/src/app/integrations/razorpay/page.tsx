@@ -93,9 +93,9 @@ function TimelineAndEvidence({ data }: { data: NonNullable<RazorpayEvidence["sel
                 <span className="font-semibold">{data.provider_truth.webhook_authenticated ? "Verified" : "Missing"}</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className={`w-2 h-2 rounded-full ${data.provider_truth.provider_confirmation_status === 'CONFIRMED' ? 'bg-emerald-500' : (data.provider_truth.provider_confirmation_status === 'PENDING' ? 'bg-amber-500' : 'bg-red-500')}`} />
+                <div className={`w-2 h-2 rounded-full ${data.provider_truth.provider_confirmation_status === 'CONFIRMED' ? 'bg-emerald-500' : (data.provider_truth.provider_confirmation_status === 'PENDING' ? 'bg-amber-500' : (data.provider_truth.provider_confirmation_status === 'NOT_REQUIRED' ? 'bg-muted' : 'bg-red-500'))}`} />
                 <span className="text-muted-foreground">Provider State:</span>
-                <span className="font-semibold">{data.provider_truth.provider_confirmation_status.replace(/_/g, ' ')}</span>
+                <span className="font-semibold">{data.provider_truth.provider_confirmation_status === 'NOT_REQUIRED' ? 'NOT CAPTURED' : data.provider_truth.provider_confirmation_status.replace(/_/g, ' ')}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className={`w-2 h-2 rounded-full ${data.provider_truth.webhook_invariants_verified ? 'bg-emerald-500' : 'bg-muted'}`} />

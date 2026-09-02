@@ -148,6 +148,7 @@ async def test_outcome_attribution_race(razorpay_harness: RazorpayHarness) -> No
         fake_link = razorpay_harness.gateway._links_by_id.get(link_id)
         if fake_link:
             from app.integrations.razorpay.gateway import PaymentLinkResult
+
             razorpay_harness.gateway._links_by_id[link_id] = PaymentLinkResult(
                 id=fake_link.id,
                 order_id=fake_link.order_id,
