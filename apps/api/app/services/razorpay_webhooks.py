@@ -10,6 +10,11 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from app.integrations.razorpay.gateway import (
+    RazorpayGateway,
+    RazorpayTransientError,
+    RazorpayUnknownOutcomeError,
+)
 from app.models import (
     AttributionSource,
     AuditEvent,
@@ -33,6 +38,7 @@ from app.models import (
     WebhookProcessingStatus,
 )
 from app.models.entities import utc_now
+from app.models.razorpay import ProviderConfirmationStatus
 from app.services.audit import add_audit_event
 from app.services.razorpay_context import record_safe_v2_decision
 
@@ -193,7 +199,9 @@ def persist_webhook_event(
     return event, False
 
 
-def process_webhook_event(session: Session, event_id: uuid.UUID) -> None:
+def process_webhook_event(
+    session: Session, event_id: uuid.UUID, gateway: RazorpayGateway | None = None
+) -> None:
     event = session.get(ExternalWebhookEvent, event_id)
     if event is None:
         raise LookupError("external webhook event not found")
@@ -212,7 +220,7 @@ def process_webhook_event(session: Session, event_id: uuid.UUID) -> None:
         elif event.event_type == "subscription.charged":
             _process_subscription_charged(session, event)
         else:
-            _process_payment_link_event(session, event)
+            _process_payment_link_event(session, event, gateway)
         if event.processing_status is WebhookProcessingStatus.PROCESSING:
             event.processing_status = WebhookProcessingStatus.PROCESSED
         event.processed_at = utc_now()
@@ -544,7 +552,9 @@ def _process_subscription_charged(session: Session, event: ExternalWebhookEvent)
     )
 
 
-def _process_payment_link_event(session: Session, event: ExternalWebhookEvent) -> None:
+def _process_payment_link_event(
+    session: Session, event: ExternalWebhookEvent, gateway: RazorpayGateway | None
+) -> None:
     link = _entity(event.redacted_payload, "payment_link")
     link_id = str(link.get("id") or "")
     reference_id = str(link.get("reference_id") or "")
@@ -597,37 +607,18 @@ def _process_payment_link_event(session: Session, event: ExternalWebhookEvent) -
         ):
             _audit_outcome_rejected(session, recovery_case, event, "PAID_INVARIANT_MISMATCH")
             return
-        payment_entity = _entity(event.redacted_payload, "payment")
-        external_payment_id = str(payment_entity.get("id") or "") or None
-        payment_completed_at = payment_link_completion_datetime(
-            event.redacted_payload,
-            fallback=event.received_at,
-        )
-        execution.payment_link_status = PaymentLinkStatus.PAID
-        execution.completed_at = payment_completed_at
-        outcome = _record_external_outcome(
-            session,
-            event=event,
-            recovery_case=recovery_case,
-            execution=execution,
-            status=ExternalOutcomeStatus.PAID,
-            external_payment_id=external_payment_id,
-            external_payment_link_id=link_id,
-            amount_minor=execution.amount_minor,
-            currency=execution.currency,
-            occurred_at=payment_completed_at,
-        )
-        _attribute_recovery_once(
-            session,
-            recovery_case=recovery_case,
-            execution=execution,
-            outcome=outcome,
-            external_payment_id=external_payment_id,
-            external_payment_link_id=link_id,
-            occurred_at=payment_completed_at,
-            source=AttributionSource.PAYMENT_LINK_PAID,
-        )
-        logger.info("razorpay_payment_links_paid")
+        if event.provider_confirmation_status == ProviderConfirmationStatus.NOT_REQUIRED:
+            event.provider_confirmation_status = ProviderConfirmationStatus.PENDING
+            event.provider_confirmation_method = "PAYMENT_LINK_FETCH"
+            session.commit()
+
+        if event.provider_confirmation_status == ProviderConfirmationStatus.PENDING:
+            if gateway is None:
+                raise RuntimeError(
+                    "RazorpayGateway is required to process payment_link.paid events"
+                )
+            reconcile_payment_link_provider_truth(session, event.id, gateway)
+
         return
     if recovery_case.status is RecoveryCaseStatus.RECOVERED:
         _mark_ignored(session, event, "TERMINAL_RECOVERY_CASE")
@@ -1062,3 +1053,100 @@ def _safe_int(value: Any) -> int:
         return int(value)
     except (TypeError, ValueError):
         return -1
+
+
+def reconcile_payment_link_provider_truth(
+    session: Session, event_id: uuid.UUID, gateway: RazorpayGateway
+) -> None:
+    event = session.get(ExternalWebhookEvent, event_id)
+    if not event:
+        return
+
+    envelope = event.redacted_payload
+    link = _entity(envelope, "payment_link")
+    link_id = str(link.get("id") or "")
+    reference_id = str(link.get("reference_id") or "")
+
+    execution = None
+    if link_id:
+        execution = session.scalar(
+            select(ExternalExecution).where(ExternalExecution.provider_entity_id == link_id)
+        )
+    if execution is None and reference_id:
+        execution = session.scalar(
+            select(ExternalExecution).where(ExternalExecution.provider_reference_id == reference_id)
+        )
+    if execution is None:
+        return
+
+    recovery_case = session.get(RecoveryCase, execution.recovery_case_id)
+    if recovery_case is None:
+        return
+
+    try:
+        if link_id:
+            provider_link = gateway.fetch_payment_link(link_id)
+        else:
+            provider_link = gateway.find_payment_link_by_reference(reference_id)
+    except (RazorpayTransientError, RazorpayUnknownOutcomeError):
+        logger.warning("provider_fetch_transient_failure", link_id=link_id, exc_info=True)
+        raise
+
+    if not provider_link:
+        event.provider_confirmation_status = ProviderConfirmationStatus.MISMATCH
+        event.provider_confirmed_at = utc_now()
+        session.add(event)
+        _audit_outcome_rejected(session, recovery_case, event, "PROVIDER_LINK_NOT_FOUND")
+        return
+
+    if (
+        provider_link.status != "paid"
+        or provider_link.amount_minor != execution.amount_minor
+        or provider_link.amount_paid_minor != execution.amount_minor
+        or provider_link.currency != execution.currency
+    ):
+        event.provider_confirmation_status = ProviderConfirmationStatus.MISMATCH
+        event.provider_confirmed_at = utc_now()
+        session.add(event)
+        _audit_outcome_rejected(session, recovery_case, event, "PROVIDER_TRUTH_MISMATCH")
+        return
+
+    event.provider_confirmation_status = ProviderConfirmationStatus.CONFIRMED
+    event.provider_confirmed_at = utc_now()
+    session.add(event)
+
+    execution.provider_entity_id = provider_link.id
+    execution.payment_link_status = PaymentLinkStatus.PAID
+
+    payment_completed_at = payment_link_completion_datetime(
+        event.redacted_payload, fallback=event.received_at
+    )
+    execution.completed_at = payment_completed_at
+
+    payment_entity = _entity(event.redacted_payload, "payment")
+    external_payment_id = str(payment_entity.get("id") or "") or None
+
+    outcome = _record_external_outcome(
+        session,
+        event=event,
+        recovery_case=recovery_case,
+        execution=execution,
+        status=ExternalOutcomeStatus.PAID,
+        external_payment_id=external_payment_id,
+        external_payment_link_id=provider_link.id,
+        amount_minor=execution.amount_minor,
+        currency=execution.currency,
+        occurred_at=payment_completed_at,
+    )
+
+    _attribute_recovery_once(
+        session,
+        recovery_case=recovery_case,
+        execution=execution,
+        outcome=outcome,
+        external_payment_id=external_payment_id,
+        external_payment_link_id=provider_link.id,
+        occurred_at=payment_completed_at,
+        source=AttributionSource.PAYMENT_LINK_PAID,
+    )
+    logger.info("razorpay_payment_links_paid_triangulated")

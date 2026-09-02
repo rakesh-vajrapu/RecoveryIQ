@@ -159,6 +159,16 @@ export type RazorpayEvidence = {
       provider_event_id: string;
       created_at: string;
     }>;
+    provider_truth?: {
+      webhook_authenticated: boolean;
+      webhook_invariants_verified: boolean;
+      provider_confirmation_status: string;
+      provider_confirmation_method: string;
+      provider_confirmed_at: string | null;
+      external_outcome_count: number;
+      recovery_attribution_count: number;
+      recovered_transition_count: number;
+    };
   } | null;
 };
 

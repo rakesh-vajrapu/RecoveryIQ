@@ -82,6 +82,35 @@ function TimelineAndEvidence({ data }: { data: NonNullable<RazorpayEvidence["sel
           </div>
           <span className="rounded bg-emerald-500/10 px-2 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">Read Only</span>
         </div>
+        
+        {data.provider_truth && (
+          <div className="border-b p-5 bg-card/40">
+            <h3 className="text-sm font-semibold mb-3">Provider Truth Triangulation</h3>
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${data.provider_truth.webhook_authenticated ? 'bg-emerald-500' : 'bg-muted'}`} />
+                <span className="text-muted-foreground">Webhook Auth:</span>
+                <span className="font-semibold">{data.provider_truth.webhook_authenticated ? "Verified" : "Missing"}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${data.provider_truth.provider_confirmation_status === 'CONFIRMED' ? 'bg-emerald-500' : (data.provider_truth.provider_confirmation_status === 'PENDING' ? 'bg-amber-500' : 'bg-red-500')}`} />
+                <span className="text-muted-foreground">Provider State:</span>
+                <span className="font-semibold">{data.provider_truth.provider_confirmation_status.replace(/_/g, ' ')}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${data.provider_truth.webhook_invariants_verified ? 'bg-emerald-500' : 'bg-muted'}`} />
+                <span className="text-muted-foreground">Invariants:</span>
+                <span className="font-semibold">{data.provider_truth.webhook_invariants_verified ? "Verified" : "Pending"}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${data.provider_truth.recovery_attribution_count > 0 ? 'bg-emerald-500' : 'bg-muted'}`} />
+                <span className="text-muted-foreground">Attribution:</span>
+                <span className="font-semibold">{data.provider_truth.recovery_attribution_count > 0 ? "Attributed" : "None"}</span>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="p-6 flex-1 bg-black/90 text-emerald-400 font-mono text-[11px] overflow-auto max-h-[400px]">
           <pre>{JSON.stringify(data.webhooks.filter(w => w.event_type === "payment_link.paid" || w.event_type === "payment.failed"), null, 2)}</pre>
         </div>

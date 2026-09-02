@@ -143,6 +143,22 @@ async def test_outcome_attribution_race(razorpay_harness: RazorpayHarness) -> No
     # Important: same payment ID so it attributes to the same payment
     paid_payload["payload"]["payment"]["entity"]["id"] = "pay_race123"
 
+    # Sync harness gateway state
+    if link_id:
+        fake_link = razorpay_harness.gateway._links_by_id.get(link_id)
+        if fake_link:
+            from app.integrations.razorpay.gateway import PaymentLinkResult
+            razorpay_harness.gateway._links_by_id[link_id] = PaymentLinkResult(
+                id=fake_link.id,
+                order_id=fake_link.order_id,
+                amount_minor=fake_link.amount_minor,
+                amount_paid_minor=fake_link.amount_minor,
+                currency=fake_link.currency,
+                reference_id=fake_link.reference_id,
+                status="paid",
+                short_url=fake_link.short_url,
+            )
+
     async def fire_paid(i: int) -> Response:
         local_payload = copy.deepcopy(paid_payload)
         # DIFFERENT event IDs! So they all pass deduplication and process concurrently!

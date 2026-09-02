@@ -115,7 +115,12 @@ Create behavior is conservative:
 - An unknown execution is looked up by stored provider ID or unique reference. A matching link resolves the same execution; a missing or failed lookup keeps replacement creation blocked.
 - Fetch operations use at most three bounded attempts because they are read-only.
 
-`payment_link.paid` attributes recovery only when link ID/reference, optional RecoverIQ case/correlation notes, exact expected amount, full `amount_paid`, INR currency, and paid status all agree. `partially_paid` does not recover the case. Expired/cancelled links terminate the external execution without attributing recovery.
+`payment_link.paid` attributes recovery only after a strict three-layer Provider Truth Triangulation:
+1. The webhook must be authenticated via HMAC-SHA256 signature verification.
+2. The system must independently fetch the Payment Link state from the provider to confirm it is actually paid, guarding against isolated webhook bugs.
+3. Link ID/reference, optional RecoverIQ case/correlation notes, exact expected amount, full `amount_paid`, INR currency, and paid status all must agree with local invariants.
+
+If the independent fetch transiently fails, the event remains `PENDING` for a deterministic retry. If it confirms a mismatch, it marks `MISMATCH`, persists an audit event, and denies the attribution. `partially_paid` does not recover the case. Expired/cancelled links terminate the external execution without attributing recovery.
 
 Attribution is unique per RecoveryCase and external execution/payment. It stores `RAZORPAY_TEST`, external opaque IDs, amount/currency, provider event time, and source (`PAYMENT_LINK_PAID` or `SUBSCRIPTION_CHARGED`). Test rupees are never production revenue.
 

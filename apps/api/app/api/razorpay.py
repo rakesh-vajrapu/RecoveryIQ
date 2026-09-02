@@ -230,7 +230,7 @@ async def razorpay_webhook(
         logger.info("razorpay_webhook_duplicates", event_type=event.event_type)
         return WebhookAcknowledgement(status="duplicate")
     if settings.celery_task_always_eager:
-        process_webhook_event(session, event.id)
+        process_webhook_event(session, event.id, gateway)
     else:
         process_razorpay_webhook.delay(str(event.id))
     return WebhookAcknowledgement(status="accepted")

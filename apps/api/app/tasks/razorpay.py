@@ -3,7 +3,9 @@ from __future__ import annotations
 import uuid
 
 from app.celery_app import celery_app
+from app.core.config import get_settings
 from app.db.session import SessionLocal
+from app.integrations.razorpay.dependencies import build_razorpay_gateway
 from app.services.razorpay_webhooks import process_webhook_event
 
 
@@ -16,5 +18,11 @@ from app.services.razorpay_webhooks import process_webhook_event
 def process_razorpay_webhook(event_id: str) -> None:
     """Idempotent worker boundary for a previously persisted event."""
 
+    settings = get_settings()
+    gateway = build_razorpay_gateway(settings)
+
     with SessionLocal() as session:
-        process_webhook_event(session, uuid.UUID(event_id))
+        try:
+            process_webhook_event(session, uuid.UUID(event_id), gateway)
+        finally:
+            gateway.close()

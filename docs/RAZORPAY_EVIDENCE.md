@@ -29,6 +29,8 @@ This lifecycle evidence proves:
 - Real provider API integration
 - Payment Link execution where supported
 - Signed webhook authenticity (raw-body HMAC validation)
+- Independent Provider Truth Triangulation via live fetch
+- Exact-match local invariant verification (amount, currency, references)
 - Correlation logic
 - External outcome recording and recovery attribution
 - Exactly-once local accounting
