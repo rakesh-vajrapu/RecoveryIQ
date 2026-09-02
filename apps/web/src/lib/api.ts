@@ -29,8 +29,8 @@ async function request(path: string, init: RequestInit = {}): Promise<unknown> {
   let response: Response;
   try {
     response = await fetch(`${apiBaseUrl}${path}`, { cache: "no-store", ...init, headers: { Accept: "application/json", ...init.headers } });
-  } catch (err: any) {
-    if (err && err.name === "AbortError") throw err;
+  } catch (err: unknown) {
+    if (err instanceof Error && err.name === "AbortError") throw err;
     throw new ApiError(0, "The RecoverIQ API is unavailable. Check the backend and try again.");
   }
   let payload: unknown = null;

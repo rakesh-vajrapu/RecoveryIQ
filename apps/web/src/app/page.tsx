@@ -15,8 +15,7 @@ import { getHealth, getRazorpayStatus, getRecoveryCases, getEvaluationSummary, g
 import { formatDate, formatMoney, shortId } from "@/lib/format";
 import { RecoveryImpact } from "@/components/recovery-impact";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type DashboardData = { health: HealthResponse; integration: RazorpayStatus; cases: RecoveryCaseSummary[]; evalSummary: EvaluationSummary | null; paymentHealth: any | null };
+type DashboardData = { health: HealthResponse; integration: RazorpayStatus; cases: RecoveryCaseSummary[]; evalSummary: EvaluationSummary | null; paymentHealth: Record<string, unknown> | null };
 const terminalStates = new Set(["RECOVERED", "FAILED", "STOPPED"]);
 
 export default function CommandCenterPage() {
@@ -25,14 +24,14 @@ export default function CommandCenterPage() {
     let paymentHealth = null;
     try {
       evalSummary = await getEvaluationSummary(signal);
-    } catch (e: any) {
-      if (e.name === "AbortError") throw e;
+    } catch (e: unknown) {
+      if (e instanceof Error && e.name === "AbortError") throw e;
       console.error("Failed to load evaluation summary", e);
     }
     try {
       paymentHealth = await getPaymentHealthSummary(signal);
-    } catch (e: any) {
-      if (e.name === "AbortError") throw e;
+    } catch (e: unknown) {
+      if (e instanceof Error && e.name === "AbortError") throw e;
       console.error("Failed to load payment health", e);
     }
     const [health, integration, cases] = await Promise.all([getHealth(signal), getRazorpayStatus(signal), getRecoveryCases(signal)]);
