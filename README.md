@@ -26,6 +26,8 @@ The model predicts what may work. **ERV** evaluates what is economically worthwh
 
 RecoveryIQ is an autonomous revenue recovery control plane built to avoid naive payment retries and unsafe AI execution.
 
+**RecoveryIQ is not simply a payment-failure classifier. Its core thesis is adaptive multi-step recovery over a bounded episode, where the next action can change after observing previous outcomes, while deterministic constraints limit retries, contacts, horizon, and total interventions.**
+
 It uses event-driven payment-failure correlation and **action-conditioned LightGBM V2** models to estimate recovery probability under candidate actions. **Expected Recovery Value (ERV)** balances probability, recoverable revenue, intervention cost, and customer friction.
 
 Every recommendation passes through **Sequential Policy V2**, which enforces deterministic limits on retries, contacts, interventions, and recovery horizon. Supported actions can execute through **Razorpay Test Mode**, while signed HMAC webhooks establish provider truth and database uniqueness constraints protect local outcomes and recovery attribution from duplication.
