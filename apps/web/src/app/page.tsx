@@ -15,7 +15,7 @@ import { getHealth, getRazorpayStatus, getRecoveryCases, getEvaluationSummary, g
 import { formatDate, formatMoney, shortId } from "@/lib/format";
 import { RecoveryImpact } from "@/components/recovery-impact";
 
-type DashboardData = { health: HealthResponse; integration: RazorpayStatus; cases: RecoveryCaseSummary[]; evalSummary: EvaluationSummary | null; paymentHealth: Record<string, unknown> | null };
+type DashboardData = { health: HealthResponse; integration: RazorpayStatus; cases: RecoveryCaseSummary[]; evalSummary: EvaluationSummary | null; paymentHealth: { episodes?: unknown[] } | null };
 const terminalStates = new Set(["RECOVERED", "FAILED", "STOPPED"]);
 
 export default function CommandCenterPage() {
