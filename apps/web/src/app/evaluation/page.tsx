@@ -1,7 +1,8 @@
-import { BarChart3, Beaker, Bot, CheckCircle2, DatabaseZap, ShieldCheck, Sparkles } from "lucide-react";
+import { BarChart3, Beaker, Bot, CheckCircle2, DatabaseZap, ShieldCheck, Sparkles, AlertTriangle } from "lucide-react";
 
 import { MetricCard } from "@/components/metric-card";
 import { PageHeader } from "@/components/page-header";
+import { getActionAdvantageDiagnostic } from "@/lib/api";
 
 const policies = [
   { label: "Sequential Policy V2", value: 75.97, color: "bg-primary" },
@@ -9,7 +10,11 @@ const policies = [
   { label: "Reminder + Retry", value: 53.09, color: "bg-violet-500" },
 ];
 
-export default function EvaluationPage() {
+export const dynamic = "force-dynamic";
+
+export default async function EvaluationPage() {
+  const diagnostic = await getActionAdvantageDiagnostic().catch(() => null);
+
   return (
     <>
       <PageHeader eyebrow="Frozen evaluation evidence" title="Evidence before claims." description="A transparent view of the sealed simulator, model, policy, detector, and Test Mode results that support this submission." icon={BarChart3} />
@@ -21,6 +26,94 @@ export default function EvaluationPage() {
           <MetricCard label="Policy violations" value="0" detail="27,406 sealed episodes" icon={ShieldCheck} tone="violet" progress={0} />
           <MetricCard label="Separate provider proof" value="₹2.00" detail="Razorpay Test Mode · no real money" icon={DatabaseZap} tone="amber" progress={100} />
         </section>
+        
+        {diagnostic && (
+          <section className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.03] p-5 sm:p-6">
+            <div className="flex items-start justify-between">
+              <div>
+                <span className="rounded-full border border-amber-500/25 bg-amber-500/10 px-3 py-1 text-[10px] font-bold tracking-[0.12em] text-amber-700 uppercase dark:text-amber-300">POST-HOC · SIMULATED</span>
+                <h2 className="mt-4 text-xl font-bold">COUNTERFACTUAL ACTION ADVANTAGE</h2>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  Candidate actions are compared inside RecoveryIQ&apos;s frozen simulator under matched hidden-world conditions. This is not production causal evidence, and Simulator 0.3.0 does not model natural recovery during WAIT.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <MetricCard 
+                label="Selected Action Best/Tied" 
+                value={`${((diagnostic.metrics.fraction_best + diagnostic.metrics.fraction_tied) * 100).toFixed(1)}%`} 
+                detail="vs feasible alternatives" 
+                icon={Sparkles} 
+                tone="cyan" 
+                progress={(diagnostic.metrics.fraction_best + diagnostic.metrics.fraction_tied) * 100} 
+              />
+              <MetricCard 
+                label="Counterfactual Value Capture" 
+                value={`${(diagnostic.metrics.value_capture_fraction * 100).toFixed(1)}%`} 
+                detail="of best alternative net value" 
+                icon={BarChart3} 
+                tone="emerald" 
+                progress={diagnostic.metrics.value_capture_fraction * 100} 
+              />
+              <MetricCard 
+                label="Mean Action Regret" 
+                value={`₹${(diagnostic.metrics.mean_regret_minor / 100).toFixed(2)}`} 
+                detail="average value lost to suboptimal choice" 
+                icon={AlertTriangle} 
+                tone="amber" 
+                progress={100} 
+              />
+              <MetricCard 
+                label="Eligible Decisions" 
+                value={diagnostic.metrics.eligible_paired_decisions.toLocaleString()} 
+                detail=">= 2 feasible modeled candidates" 
+                icon={CheckCircle2} 
+                tone="violet" 
+                progress={100} 
+              />
+            </div>
+            
+            <div className="mt-6 overflow-hidden rounded-xl border">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead className="bg-muted/50 text-muted-foreground">
+                    <tr>
+                      <th className="px-4 py-3 font-medium">Selected Action</th>
+                      <th className="px-4 py-3 font-medium text-right">Decisions</th>
+                      <th className="px-4 py-3 font-medium text-right">Recovery Rate</th>
+                      <th className="px-4 py-3 font-medium text-right">Best Alternative</th>
+                      <th className="px-4 py-3 font-medium text-right">Value Capture</th>
+                      <th className="px-4 py-3 font-medium text-right">Regret</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    {Object.entries(diagnostic.breakdown.action)
+                      .sort(([, a], [, b]) => b.eligible_decisions - a.eligible_decisions)
+                      .map(([action, stats]) => {
+                        const capture = stats.counterfactual_net_value_minor > 0 
+                          ? Math.max(0, stats.factual_net_value_minor) / stats.counterfactual_net_value_minor 
+                          : 1.0;
+                        return (
+                          <tr key={action} className="bg-card hover:bg-muted/30">
+                            <td className="px-4 py-3 font-medium">{action}</td>
+                            <td className="px-4 py-3 text-right">{stats.eligible_decisions.toLocaleString()}</td>
+                            <td className="px-4 py-3 text-right">{(stats.factual_recovery_rate * 100).toFixed(1)}%</td>
+                            <td className="px-4 py-3 text-right">{(stats.best_counterfactual_recovery_rate * 100).toFixed(1)}%</td>
+                            <td className="px-4 py-3 text-right">{(capture * 100).toFixed(1)}%</td>
+                            <td className="px-4 py-3 text-right text-amber-600 dark:text-amber-400">
+                              ₹{(stats.regret_minor / 100 / stats.eligible_decisions).toFixed(2)}
+                            </td>
+                          </tr>
+                        );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        )}
+
         <section className="grid gap-5 xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)]">
           <article className="surface-panel rounded-2xl p-5 sm:p-6"><div className="flex items-start justify-between"><div><p className="eyebrow">Sealed policy comparison</p><h2 className="mt-2 text-lg font-semibold">Episode recovery rate</h2></div><span className="rounded-full border bg-card px-3 py-1 text-[10px] font-semibold text-muted-foreground">Synthetic evidence</span></div><div className="mt-8 space-y-6">{policies.map((policy) => <div key={policy.label}><div className="mb-2 flex items-center justify-between gap-4"><p className="text-xs font-medium">{policy.label}</p><p className="font-mono text-xs font-semibold">{policy.value.toFixed(2)}%</p></div><div className="h-3 overflow-hidden rounded-full bg-muted"><div className={`h-full rounded-full ${policy.color}`} style={{ width: `${policy.value}%` }} /></div></div>)}</div><p className="mt-7 border-t pt-4 text-[11px] leading-5 text-muted-foreground">Results come from paired synthetic evaluation and are not production revenue claims.</p></article>
           <div className="grid gap-4"><EvidenceCard icon={Bot} title="Recovery Model V2" body="Passed its held-out gate on 62,918 decisions across 27,451 synthetic episodes with frozen isotonic calibration." /><EvidenceCard icon={ShieldCheck} title="Detector V2" body="Failed its hard-policy safety gate and remains advisory-only. It is excluded from primary Model V2 features." /><EvidenceCard icon={Sparkles} title="Explanation layer" body="Groq is optional, structured, and non-authoritative. Deterministic fallback preserves availability without changing recovery." /></div>

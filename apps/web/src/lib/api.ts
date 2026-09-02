@@ -217,3 +217,44 @@ export async function getGovernanceProfile(signal?: AbortSignal): Promise<Govern
   return data as GovernanceProfile;
 }
 
+export type ActionAdvantageDiagnostic = {
+  artifact_type: string;
+  limitations: string[];
+  metrics: {
+    total_decisions: number;
+    eligible_paired_decisions: number;
+    mean_feasible_alternatives: number;
+    factual_recoveries: number;
+    counterfactual_recoveries: number;
+    factual_net_value_minor: number;
+    counterfactual_net_value_minor: number;
+    regret_minor: number;
+    best_count: number;
+    tied_count: number;
+    suboptimal_count: number;
+    advantage_vs_second_best_minor: number;
+    value_capture_fraction: number;
+    factual_recovery_rate: number;
+    best_counterfactual_recovery_rate: number;
+    mean_regret_minor: number;
+    fraction_best: number;
+    fraction_tied: number;
+    fraction_suboptimal: number;
+    mean_advantage_vs_second_best_minor: number;
+  };
+  breakdown: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    action: Record<string, any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    failure_reason: Record<string, any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payment_method: Record<string, any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    decision_index: Record<string, any>;
+  };
+};
+
+export async function getActionAdvantageDiagnostic(signal?: AbortSignal): Promise<ActionAdvantageDiagnostic> {
+  const data = await request("/api/evaluation/action-advantage", { signal });
+  return data as ActionAdvantageDiagnostic;
+}

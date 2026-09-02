@@ -165,13 +165,13 @@ DIAGNOSTIC_PATH = (
     Path(__file__).parent.parent.parent.parent.parent
     / "artifacts"
     / "evaluation"
-    / "paired-intervention-v1"
-    / "paired-intervention-summary-v1.json"
+    / "multi-action-counterfactual-v1"
+    / "multi-action-counterfactual-summary-v1.json"
 )
 
 
-@router.get("/intervention-diagnostic")
-async def get_intervention_diagnostic() -> dict[str, Any]:
+@router.get("/action-advantage")
+async def get_action_advantage_diagnostic() -> dict[str, Any]:
     if not DIAGNOSTIC_PATH.exists():
         raise HTTPException(status_code=404, detail="Diagnostic artifact unavailable")
     try:
