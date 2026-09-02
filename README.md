@@ -1,8 +1,10 @@
 # RecoveryIQ
 
+**Razorpay Buildathon 2026 · Track 03 — AI Revenue Recovery**
+
 ### Autonomous Revenue Recovery Control Plane for Razorpay-style payment workflows
 
-RecoveryIQ detects revenue at risk, estimates **action-conditioned recovery probability**, optimizes interventions using **Expected Recovery Value (ERV)**, and executes supported recovery workflows under strict deterministic safety boundaries.
+**RecoveryIQ is an AI Revenue Recovery Agent and bounded control plane that detects revenue at risk, estimates action-conditioned recovery probability, selects the highest-value safe intervention using Expected Recovery Value, executes supported recovery workflows under deterministic policy guardrails, verifies provider outcomes, and attributes recovered revenue exactly once locally.**
 
 > **Evidence note:** All portfolio evaluation results are **simulated** and do not represent Razorpay production revenue. Razorpay integration evidence uses **Test Mode only**. **No real money is moved.**
 
@@ -28,11 +30,28 @@ RecoveryIQ is an autonomous revenue recovery control plane built to avoid naive 
 
 **RecoveryIQ is not simply a payment-failure classifier. Its core thesis is adaptive multi-step recovery over a bounded episode, where the next action can change after observing previous outcomes, while deterministic constraints limit retries, contacts, horizon, and total interventions.**
 
-It uses event-driven payment-failure correlation and **action-conditioned LightGBM V2** models to estimate recovery probability under candidate actions. **Expected Recovery Value (ERV)** balances probability, recoverable revenue, intervention cost, and customer friction.
+It uses event-driven payment-failure correlation and an **Action-Conditioned LightGBM V2 Probability Engine** to estimate `P(recovery | action, context)` under candidate actions. **Expected Recovery Value (ERV) Optimization** ranks interventions by balancing calibrated recovery probability, recoverable payment value, intervention cost, and customer friction cost.
 
-Every recommendation passes through **Sequential Policy V2**, which enforces deterministic limits on retries, contacts, interventions, and recovery horizon. Supported actions can execute through **Razorpay Test Mode**, while signed HMAC webhooks establish provider truth and database uniqueness constraints protect local outcomes and recovery attribution from duplication.
+Every recommendation passes through **Deterministic Sequential Policy Guardrails**, which enforces limits on retries, contacts, interventions, and recovery horizon. Supported actions execute through Razorpay Test Mode, where **Signed HMAC Webhook Verification** (raw-body HMAC SHA-256) establishes provider truth. **Idempotency Guardrails** and **Exactly-Once Local Recovery Attribution** ensure database uniqueness constraints protect local outcomes and attribution from duplication.
 
-The LLM remains strictly **explanation-only** and has no financial execution authority.
+The LLM remains strictly **explanation-only** and has **NO FINANCIAL EXECUTION AUTHORITY**.
+
+---
+
+## 🧠 Core Engineering Signals
+
+| Engineering Capability | RecoveryIQ Implementation |
+| --- | --- |
+| **AI Revenue Recovery Agent** | Bounded control plane integrating ML, economics, policy, and execution |
+| **Action-Conditioned LightGBM V2 Probability Engine** | Estimates calibrated `P(recovery | action, context)` for feasible recovery actions |
+| **Expected Recovery Value (ERV) Optimization** | Ranks interventions using expected recovered value minus intervention and friction costs |
+| **Deterministic Sequential Policy Guardrails** | Enforces recovery horizon, intervention, retry, contact, support, and stopping limits |
+| **Idempotency Guardrails** | Durable execution reservations and database `UNIQUE` constraints prevent duplicate local financial effects |
+| **Signed HMAC Webhook Verification** | Razorpay Test Mode webhook signatures are validated against the raw request body before processing |
+| **Exactly-Once Local Recovery Attribution** | Verified provider outcomes map to at most one local `RecoveryAttribution` |
+| **Human-in-the-Loop Escalation** | Insufficient model support or missing context safely routes to `HUMAN_REVIEW` |
+| **Adversarial Concurrency Verification** | Isolated 10-way webhook, executor, and success races verify duplicate protection |
+| **Auditable Decision Trace** | Decision → execution plan → execution → provider outcome → attribution are separately persisted and auditable |
 
 ---
 
@@ -49,6 +68,9 @@ The LLM remains strictly **explanation-only** and has no financial execution aut
 ---
 
 ## 🎯 Track 03 Control Loop
+
+RecoveryIQ directly addresses Razorpay Track 03 by implementing:
+**Detect → Decide → Guard → Execute → Verify → Attribute → Measure**
 
 | Track Stage | RecoveryIQ |
 | --- | --- |
@@ -133,15 +155,16 @@ The LLM is **explanation-only**. It cannot authorize payment execution, change f
 
 | Differentiator | Why It Matters |
 | --- | --- |
-| **Action-conditioned ML** | Evaluates recovery probability under each candidate action |
-| **ERV optimization** | Optimizes economic value instead of maximizing raw probability alone |
+| **Action-Conditioned LightGBM V2 Probability Engine** | Evaluates recovery probability under each candidate action |
+| **ERV Optimization** | Optimizes economic value instead of maximizing raw probability alone |
 | **Degradation awareness** | Adds issuer, payment-method, and global context before blindly retrying |
-| **Deterministic policy** | Keeps financial authorization outside generative AI |
-| **Bounded sequential recovery** | Controls retries, contacts, interventions, and recovery horizon |
-| **Safe abstention** | Insufficient context can become `HUMAN_REVIEW` rather than forced automation |
-| **Provider verification** | Uses authenticated Razorpay Test Mode evidence as external truth |
-| **Exactly-once local attribution** | Prevents duplicate local recovery accounting |
-| **Adversarial verification** | Demonstrates concurrency and idempotency defenses |
+| **Deterministic Sequential Policy Guardrails** | Keeps financial authorization outside generative AI |
+| **Bounded Sequential Recovery** | Controls retries, contacts, interventions, and recovery horizon |
+| **Safe Human-in-the-Loop Escalation** | Insufficient context can safely escalate to `HUMAN_REVIEW` |
+| **Signed HMAC Webhook Verification** | Uses authenticated Razorpay Test Mode evidence as external truth |
+| **Idempotency Guardrails** | Protects execution and accounting from race conditions |
+| **Exactly-Once Local Attribution** | Prevents duplicate local recovery accounting |
+| **Adversarial Concurrency Verification** | Demonstrates concurrency and idempotency defenses |
 
 ---
 
@@ -162,7 +185,7 @@ RecoveryIQ separates evidence categories so simulated performance is never confu
 
 ## 🛡️ Safety & Reliability Highlights
 
-RecoveryIQ verifies critical financial-state invariants under concurrent and duplicate requests.
+RecoveryIQ verifies critical financial-state invariants under concurrent and duplicate requests using **Idempotency Guardrails**.
 
 - **10-way Webhook Race:** 10 concurrent identical webhook requests reduce to **1 logical provider event** and 9 duplicates.
 - **10-way Executor Race:** 10 concurrent execution attempts result in **1 logical execution** and **1 fake-provider call**.
@@ -171,7 +194,7 @@ RecoveryIQ verifies critical financial-state invariants under concurrent and dup
 
 ### Reliability Boundary
 
-Database-level duplicate prevention, local execution reservation, outcome uniqueness, and attribution uniqueness are verified.
+These Idempotency Guardrails consist of provider event deduplication, durable execution reservation, database `UNIQUE` constraints, unique external outcomes, and unique recovery attribution.
 
 The provider-accepted-but-local-process-crashes-before-persistence window is only **partially protected** through provider references and reconciliation. An automatic stale execution-reservation reaper is **not implemented**.
 
@@ -185,15 +208,21 @@ RecoveryIQ includes provider-facing Test Mode verification in addition to simula
 
 `Payment Failure` → `RecoveryCase` → `HUMAN_REVIEW` → `OPERATOR_INITIATED` Payment Link → mapped recovery attempt → successful Test Mode payment → signed webhook → `ExternalOutcome` → `RecoveryAttribution` → `RECOVERED`
 
+### Why the Test Mode Case Uses Human Review
+
+RecoveryIQ intentionally refuses to fabricate missing Model V2 history from a first provider event. When the frozen feature requirements cannot be constructed from verified Razorpay Test Mode evidence, the system safely returns `HUMAN_REVIEW / INSUFFICIENT_CONTEXT`. The operator-initiated Payment Link therefore demonstrates safe abstention, authenticated provider execution, outcome verification, and exactly-once local attribution rather than pretending that incomplete provider context supports autonomous ML execution.
+
+Autonomous Sequential Policy V2 behavior is evaluated on complete sealed simulated trajectories; Razorpay Test Mode evidence validates the provider integration and financial-state boundaries.
+
 ### What This Proves
 
-- Razorpay Test Mode integration,
+- **Razorpay Test Mode Integration**,
 - Payment Link creation/fetch where supported,
-- raw-body HMAC SHA-256 signature verification,
+- **Signed HMAC Webhook Verification** (raw-body HMAC SHA-256 signature verification),
 - provider-event deduplication,
 - order-ID correlation fallback,
 - external outcome persistence,
-- exactly-once local recovery attribution.
+- **Exactly-Once Local Recovery Attribution**.
 
 **Verified Razorpay Test Mode recovery: ₹2.00. No real money moved.**
 
