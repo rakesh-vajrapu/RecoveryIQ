@@ -6,7 +6,7 @@ This document was pre-registered before any Phase 5 policy seed was generated. D
 
 Simulator `0.3.0`, Detector V1, Detector V2, Recovery Model V1 training/hyperparameters/calibration, and all Phase 4 results remain frozen at commit `eb2da6bc7b32b6ffd0b646ee1ebe065bf585bba0`. Detector V2 is an **advisory feature source only**. WATCH and CONFIRMED cannot authorize, block, force, or stop an action. The negative Phase 4 health-feature ablation remains part of the evidence.
 
-Phase 5 evaluates first-intervention decisions only. It does not implement sequential replanning, production side effects, Gemini, Razorpay, frontend policy controls, model retraining, detector retuning, or the overall-final benchmark.
+Phase 5 evaluates first-intervention decisions only. It does not implement sequential replanning, production side effects, LLM integration, Razorpay, frontend policy controls, model retraining, detector retuning, or the overall-final benchmark.
 
 ## Registered policy seeds
 
@@ -212,7 +212,7 @@ The highest predicted-ERV candidate was blocked 6,238 rule-times: 5,156 quiet-ho
 
 The equivalent first-action view is the Phase 5 headline comparison. Under their original multi-action semantics, the existing Fixed Retry workflow recovered 10,357 payments at 38.17% with 2,131,122,950 net minor, while Reminder + Retry recovered 12,885 at 47.48% with 2,623,000,700 net minor. RecoverIQ did **not** beat the existing Reminder + Retry workflow. That workflow takes an average 2.55 actions per failure and is not an equivalent first-intervention comparator, but its stronger outcome remains visible.
 
-All evidence is synthetic and simulator-specific. Policy V1 evaluates only the first intervention, uses deterministic point probabilities rather than epistemic uncertainty, uses synthetic cost/operational assumptions, and does not simulate the outcome of human review. It contains no production execution, Razorpay integration, Gemini explanation, sequential replanning, or overall-final evaluation. The compact source of truth is `artifacts/policy/recoveriq-policy-v1/validation-evaluation-v1.json`.
+All evidence is synthetic and simulator-specific. Policy V1 evaluates only the first intervention, uses deterministic point probabilities rather than epistemic uncertainty, uses synthetic cost/operational assumptions, and does not simulate the outcome of human review. It contains no production execution, Razorpay integration, LLM explanation, sequential replanning, or overall-final evaluation. The compact source of truth is `artifacts/policy/recoveriq-policy-v1/validation-evaluation-v1.json`.
 
 ## Phase 6 addendum — Sequential Policy V2
 

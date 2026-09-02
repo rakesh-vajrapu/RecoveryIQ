@@ -55,7 +55,7 @@ An action is a candidate, not an authorization. The policy engine remains author
 
 ## Non-goals
 
-V1 is not a chatbot, fraud engine, abandoned-cart system, general customer-support platform, B2B collections product, reconciliation system, or live-mode payment processor. It will not collect PAN, CVV, OTP, or raw bank credentials. It will not use Groq, Gemini, or any LLM to set payment state, determine whether money moved, approve policy, or execute actions.
+V1 is not a chatbot, fraud engine, abandoned-cart system, general customer-support platform, B2B collections product, reconciliation system, or live-mode payment processor. It will not collect PAN, CVV, OTP, or raw bank credentials. It will not use Groq or any LLM to set payment state, determine whether money moved, approve policy, or execute actions.
 
 ## Success metrics
 
@@ -65,4 +65,4 @@ No target number is asserted before the simulator and evaluation harness exist.
 
 ## Definition of done
 
-A reviewer can clone the repository, install locked dependencies, run a seeded benchmark, start the API and UI without external credentials, inspect a degradation-aware decision trace, run the tests, and reproduce reported results. Optional credentials unlock only explicitly opted-in provider validation. The Razorpay Level A contract is reproducible offline, and the sanitized Phase 7.5 report records one genuine Level B Test Mode Payment Link E2E. Core recovery continues when optional Groq/Gemini enrichment, Redis, or an external payment API is unavailable, according to documented fallbacks and policy.
+A reviewer can clone the repository, install locked dependencies, run a seeded benchmark, start the API and UI without external credentials, inspect a degradation-aware decision trace, run the tests, and reproduce reported results. Optional credentials unlock only explicitly opted-in provider validation. The Razorpay Level A contract is reproducible offline, and the sanitized Phase 7.5 report records one genuine Level B Test Mode Payment Link E2E. Core recovery continues when optional Groq enrichment, Redis, or an external payment API is unavailable, according to documented fallbacks and policy.

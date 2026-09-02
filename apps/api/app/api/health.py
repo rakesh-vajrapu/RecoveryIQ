@@ -16,7 +16,6 @@ class HealthResponse(BaseModel):
     status: Literal["healthy"]
     environment: str
     database: Literal["sqlite", "postgresql", "other"]
-    gemini_enabled: bool
     celery_eager: bool
 
 
@@ -31,6 +30,5 @@ def health(
         status="healthy",
         environment=settings.app_env,
         database=settings.database_kind,
-        gemini_enabled=settings.gemini_enabled,
         celery_eager=settings.celery_task_always_eager,
     )

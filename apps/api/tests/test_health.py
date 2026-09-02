@@ -12,7 +12,6 @@ async def test_health_reports_safe_runtime_state(client: AsyncClient) -> None:
         "status": "healthy",
         "environment": "test",
         "database": "sqlite",
-        "gemini_enabled": False,
         "celery_eager": True,
     }
 

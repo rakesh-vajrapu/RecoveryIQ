@@ -14,7 +14,6 @@ from pydantic import SecretStr, ValidationError
 from sqlalchemy import select
 from sqlalchemy.orm import sessionmaker
 
-from app.ai.gemini import GeminiLLMProvider
 from app.ai.provider import LLMConfigurationError
 from app.ai.schemas import DecisionExplanation
 from app.core.config import Settings, get_settings
@@ -60,8 +59,6 @@ class LocalSafetyHarness:
             razorpay_key_secret=SecretStr("offline-key-secret"),
             razorpay_webhook_secret=SecretStr(WEBHOOK_SECRET),
             celery_task_always_eager=True,
-            gemini_enabled=False,
-            gemini_api_key=None,
         )
         self.engine = create_database_engine(self.settings)
         Base.metadata.create_all(self.engine)
@@ -327,7 +324,9 @@ async def run_scenarios() -> dict[str, Any]:
 
     # SCENARIO F: LLM Outage
     async with LocalSafetyHarness() as harness:
-        provider = GeminiLLMProvider(harness.settings)
+        from app.ai.groq import GroqExplanationProvider
+        harness.settings.groq_api_key = None
+        provider = GroqExplanationProvider(harness.settings)
         try:
             await provider.health_check()
             llm_state = "AVAILABLE"
@@ -343,7 +342,7 @@ async def run_scenarios() -> dict[str, Any]:
                 "provider_calls": 0,
             },
             "defense_mechanism": "Deterministic fallback & LLM separation of authority",
-            "test_source": "Scenario F / test_disabled_gemini_fails_only_when_explicitly_invoked",
+            "test_source": "Scenario F / test_missing_groq_key_fails_safely",
             "notes": "LLM outage does not authorize or change any financial state.",
         }
 

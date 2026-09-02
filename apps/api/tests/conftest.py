@@ -19,7 +19,6 @@ def test_settings(tmp_path: Path) -> Settings:
         _env_file=None,
         app_env="test",
         database_url=f"sqlite:///{tmp_path / 'recoveriq-test.db'}",
-        gemini_enabled=False,
         celery_task_always_eager=True,
     )
 

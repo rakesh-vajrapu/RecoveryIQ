@@ -10,7 +10,7 @@ Phase 4 estimates:
 
 `P(recovered_within_48h | observable context at T, candidate action, action timing)`
 
-It evaluates probability and action-ranking quality only. It does not implement expected recovery value, action selection policy, financial authorization, side effects, Gemini, Razorpay, or frontend work.
+It evaluates probability and action-ranking quality only. It does not implement expected recovery value, action selection policy, financial authorization, side effects, Razorpay, or frontend work.
 
 ## Pre-registered seed protocol
 
@@ -99,7 +99,7 @@ Ranking evaluates every feasible candidate without executing an intelligent poli
 
 The health-feature ablation compares otherwise equivalent frozen LightGBM models on probability and ranking metrics, including during/outside hidden incidents, near onset or clearance, and high/low observable health-evidence slices. A non-improvement remains visible.
 
-SHAP produces structured global and local evidence from model features only. It cannot mutate state, select an action, authorize policy, or generate Gemini prose.
+SHAP produces structured global and local evidence from model features only. It cannot mutate state, select an action, authorize policy, or generate LLM prose.
 
 ## Results
 
@@ -222,4 +222,4 @@ The held-out command refuses a second run in the same artifact root. `shap-repor
 - Health-inclusive V1 did not beat the matched health-free ablation on Brier, log loss, or ranking; detector V2 remains advisory-only and its failed hard-policy gate is unchanged.
 - Isotonic calibration creates sparse extreme-probability bins. Overall supported bins passed, while small per-action and incident-adjacent slices need wider uncertainty treatment before economic use.
 - SHAP explains model behavior, not intervention causality, policy safety, or authorization.
-- No intelligent policy, ERV optimizer, autonomous execution, Gemini feature, Razorpay integration, frontend ML dashboard, or final overall benchmark was implemented.
+- No intelligent policy, ERV optimizer, autonomous execution, LLM feature, Razorpay integration, frontend ML dashboard, or final overall benchmark was implemented.

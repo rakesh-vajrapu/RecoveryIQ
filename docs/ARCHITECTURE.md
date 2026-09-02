@@ -2,7 +2,7 @@
 
 ## System shape
 
-RecoverIQ separates evidence production, bounded sequential authorization, execution, and explanation. Statistical and ML components produce action-level evidence; a deterministic policy engine authorizes at most three adaptive interventions; executors perform those actions; optional Groq or Gemini providers explain only already-computed evidence. The database and verified payment-provider events remain the financial system of record.
+RecoverIQ separates evidence production, bounded sequential authorization, execution, and explanation. Statistical and ML components produce action-level evidence; a deterministic policy engine authorizes at most three adaptive interventions; executors perform those actions; an optional Groq provider explains only already-computed evidence. The database and verified payment-provider events remain the financial system of record.
 
 ![RecoveryIQ System Shape](assets/system_shape.png)
 
@@ -138,11 +138,11 @@ Recovery Model V2 is a new tabular action-conditioned model for these trajectory
 
 The implementation keeps four concrete authority boundaries: `recoveriq_sequential` owns observable episode state, feasibility, timing, and attribution; `recoveriq_ml_v2` owns logging, the frozen feature boundary, model/calibration, and held-out scoring; `recoveriq_sequential_policy` owns deterministic scoring/rules and baseline selection; only its evaluation module may instantiate the hidden simulator oracle. Model and policy artifacts bind schema/model/calibrator/baseline hashes. Registered held-out and validation entry points write attempt markers before world generation and refuse rerun.
 
-The sealed Phase 6 evaluation confirmed that later-state model quality remained supported and that all seven strategies saw the same per-seed initial-cohort digest. This is simulator evidence, not production authority: no executor, Gemini call, Razorpay adapter, frontend control, or external side effect was added.
+The sealed Phase 6 evaluation confirmed that later-state model quality remained supported and that all seven strategies saw the same per-seed initial-cohort digest. This is simulator evidence, not production authority: no executor, LLM call, Razorpay adapter, frontend control, or external side effect was added.
 
 ## Explanation-provider boundary
 
-Application code depends on an `ExplanationProvider` protocol. `GroqExplanationProvider` is the optional primary OpenAI-compatible adapter, `GeminiLLMProvider` remains optional and disabled by default, `FakeLLMProvider` provides deterministic tests, and `DeterministicFallbackProvider` keeps explanations available without network access. Providers return Pydantic-validated structures with no authority fields. They cannot mutate payment state, authorize actions, call Razorpay, or determine outcomes, and no remote provider is called automatically during startup.
+Application code depends on an `ExplanationProvider` protocol. `GroqExplanationProvider` is the optional primary OpenAI-compatible adapter, `FakeLLMProvider` provides deterministic tests, and `DeterministicFallbackProvider` keeps explanations available without network access. Providers return Pydantic-validated structures with no authority fields. They cannot mutate payment state, authorize actions, call Razorpay, or determine outcomes, and no remote provider is called automatically during startup.
 
 ## Razorpay Test Mode execution boundary
 

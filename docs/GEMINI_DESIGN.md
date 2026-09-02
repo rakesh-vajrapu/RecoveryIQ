@@ -2,7 +2,7 @@
 
 ## Purpose and authority boundary
 
-The explanation layer makes structured recovery evidence easier for humans to understand and operate. Phase 7 supports bounded decision-trace and recovery-case explanations through Groq, optional Gemini, fake, and deterministic providers.
+The explanation layer makes structured recovery evidence easier for humans to understand and operate. Phase 7 supports bounded decision-trace and recovery-case explanations through Groq, fake, and deterministic providers.
 
 An explanation provider is not a financial authority. It may not determine payment or subscription status, infer that money moved, set transaction amounts, approve policy, bypass stopping rules, choose authoritative retry counts, execute actions, or attribute revenue. Those facts come from verified provider events, application state, deterministic calculations, and policy.
 
@@ -10,13 +10,9 @@ An explanation provider is not a financial authority. It may not determine payme
 
 Groq uses the OpenAI-compatible client with `https://api.groq.com/openai/v1`. Configuration is environment-driven:
 
-- `EXPLANATION_PROVIDER` defaults to `fallback` and may select `groq`, `gemini`, or `fallback`;
+- `EXPLANATION_PROVIDER` defaults to `fallback` and may select `groq` or `fallback`;
 - `GROQ_API_KEY` is optional at application startup;
 - `GROQ_MODEL` defaults to `openai/gpt-oss-120b`; model, timeout, and maximum retries are typed settings;
-- `GEMINI_ENABLED` defaults to false;
-- `GEMINI_API_KEY` is optional at application startup;
-- `GEMINI_MODEL` defaults to `gemini-3.7-flash` but is configurable;
-- `GEMINI_API_VERSION`, timeout, maximum retries, and thinking level are typed settings.
 
 No call occurs during import or application startup. Keys are represented as secret types and never included in health responses, logs, prompts, or exceptions. Missing keys, provider failures, timeouts, network errors, and invalid responses resolve to deterministic explanations.
 
@@ -25,7 +21,6 @@ No call occurs during import or application startup. Keys are represented as sec
 ```text
 ExplanationProvider protocol
 ├── GroqExplanationProvider        primary OpenAI-compatible adapter
-├── GeminiLLMProvider              optional Google SDK adapter
 ├── FakeLLMProvider                deterministic fixtures and tests
 ├── ResilientExplanationProvider   failure isolation
 └── DeterministicFallbackProvider  evidence-derived local explanation
@@ -45,7 +40,7 @@ DecisionExplanation
   limitations: list[string]
 ```
 
-Groq uses JSON Object Mode and includes the Pydantic JSON schema in the prompt. Every response is validated locally with `DecisionExplanation`, including `extra="forbid"`. Gemini retains its schema request and local Pydantic validation. Neither provider can return an action, policy result, execution command, or recovery outcome field.
+Groq uses JSON Object Mode and includes the Pydantic JSON schema in the prompt. Every response is validated locally with `DecisionExplanation`, including `extra="forbid"`. The provider cannot return an action, policy result, execution command, or recovery outcome field.
 
 ## Reliability and rate limits
 

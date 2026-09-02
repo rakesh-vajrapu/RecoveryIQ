@@ -31,15 +31,7 @@ class Settings(BaseSettings):
     razorpay_key_secret: SecretStr | None = None
     razorpay_webhook_secret: SecretStr | None = None
 
-    gemini_enabled: bool = False
-    gemini_api_key: SecretStr | None = None
-    gemini_model: str = "gemini-3.7-flash"
-    gemini_api_version: str = "v1"
-    gemini_timeout_seconds: float = Field(default=20.0, gt=0, le=120)
-    gemini_max_retries: int = Field(default=3, ge=0, le=10)
-    gemini_thinking_level: Literal["minimal", "low", "medium", "high"] = "low"
-
-    explanation_provider: Literal["fallback", "gemini", "groq"] = "fallback"
+    explanation_provider: Literal["fallback", "groq"] = "fallback"
     groq_api_key: SecretStr | None = None
     groq_model: str = "openai/gpt-oss-120b"
     groq_timeout_seconds: float = Field(default=20.0, gt=0, le=120)
@@ -51,7 +43,6 @@ class Settings(BaseSettings):
         "razorpay_key_id",
         "razorpay_key_secret",
         "razorpay_webhook_secret",
-        "gemini_api_key",
         "groq_api_key",
         mode="before",
     )

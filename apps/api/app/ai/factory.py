@@ -1,5 +1,4 @@
 from app.ai.fallback import DeterministicFallbackProvider
-from app.ai.gemini import GeminiLLMProvider
 from app.ai.groq import GroqExplanationProvider
 from app.ai.provider import ExplanationProvider
 from app.ai.resilient import ResilientExplanationProvider
@@ -12,11 +11,6 @@ def create_explanation_provider(settings: Settings) -> ExplanationProvider:
     if settings.explanation_provider == "groq":
         return ResilientExplanationProvider(
             GroqExplanationProvider(settings),
-            fallback,
-        )
-    if settings.explanation_provider == "gemini" and settings.gemini_enabled:
-        return ResilientExplanationProvider(
-            GeminiLLMProvider(settings),
             fallback,
         )
     return fallback
