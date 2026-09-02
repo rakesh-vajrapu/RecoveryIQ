@@ -1,5 +1,12 @@
 # Paired Intervention Value Diagnostic: Preregistration
 
+> [!CAUTION]
+> **INVALIDATED_BEFORE_RESULT_USE**
+> 
+> **Reason**: The preregistered no-immediate-intervention comparator is degenerate under Simulator 0.3.0 because `WAIT` has zero direct recovery. It therefore cannot estimate natural recovery or meaningful intervention uplift.
+> 
+> A new diagnostic "Paired Multi-Action Counterfactual Diagnostic" replaces this.
+
 **Version**: 1.0.0
 **Date**: 2026-09-02
 

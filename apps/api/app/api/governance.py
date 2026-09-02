@@ -221,16 +221,17 @@ def get_governance_profile() -> GovernanceProfileResponse:
         GovernanceRule(
             id="ATTRIBUTION_ONCE",
             category=RuleCategory.ACCOUNTING_SAFETY,
-            effect="Database UNIQUE constraint",
+            effect="Exactly-once success recording constraint in simulation",
             enforcement=EnforcementAction.ACCOUNTING_INVARIANT,
             episode_termination=EpisodeTermination.NO,
         ),
         GovernanceRule(
             id="MODEL_SCHEMA_VALID",
             category=RuleCategory.EVIDENCE_GATE,
-            effect="Required schema mismatch",
+            description="Ensure input context matches exactly what Model V2 was trained on.",
+            effect="Pre-engine evaluation gate against required V2 schema",
             enforcement=EnforcementAction.HUMAN_REVIEW,
-            episode_termination=EpisodeTermination.YES,
+            episode_termination=EpisodeTermination.CONDITIONAL,
         ),
         GovernanceRule(
             id="MODEL_SUPPORT",

@@ -159,3 +159,25 @@ async def get_simulated_decision_example() -> Any:
         "outcomes": [],
         "attribution": None,
     }
+
+
+DIAGNOSTIC_PATH = (
+    Path(__file__).parent.parent.parent.parent.parent
+    / "artifacts"
+    / "evaluation"
+    / "paired-intervention-v1"
+    / "paired-intervention-summary-v1.json"
+)
+
+
+@router.get("/intervention-diagnostic")
+async def get_intervention_diagnostic() -> dict[str, Any]:
+    if not DIAGNOSTIC_PATH.exists():
+        raise HTTPException(status_code=404, detail="Diagnostic artifact unavailable")
+    try:
+        with open(DIAGNOSTIC_PATH, encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Invalid diagnostic artifact") from e
+    
+    return data
