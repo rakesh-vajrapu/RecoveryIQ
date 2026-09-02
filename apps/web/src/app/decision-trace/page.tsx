@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, BrainCircuit, CheckCircle2, Cpu, RefreshCw, ShieldCheck, Sparkles, Workflow } from "lucide-react";
+import { ArrowRight, BrainCircuit, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useCallback } from "react";
 
@@ -11,6 +11,7 @@ import { EmptyPanel, ErrorPanel, LoadingPanel } from "@/components/ui/state-pane
 import { useApiResource } from "@/hooks/use-api-resource";
 import { getRecoveryCase, getRecoveryCases, type RecoveryCaseDetail } from "@/lib/api";
 import { shortId, titleCase } from "@/lib/format";
+import { GovernanceProfilePanel } from "@/components/ui/governance-profile";
 
 export default function DecisionTracePage() {
   const load = useCallback(async (signal: AbortSignal): Promise<RecoveryCaseDetail[]> => {
@@ -24,8 +25,7 @@ export default function DecisionTracePage() {
   return (
     <>
       <PageHeader eyebrow="Decision intelligence" title="See why policy allowed, stopped, or escalated." description="Decision records are immutable evidence. Models estimate probabilities, while the deterministic policy remains the only action-selection authority." icon={BrainCircuit} actions={<Button variant="outline" onClick={resource.retry} disabled={resource.loading}><RefreshCw className={resource.loading ? "animate-spin" : ""} />Refresh traces</Button>} />
-      <BoundaryGraphic />
-      <div className="mt-4 rounded-2xl border border-violet-500/20 bg-violet-500/[0.055] p-4 text-xs leading-5 text-muted-foreground"><strong className="text-foreground">Bounded stopping rules:</strong> 48-hour horizon, at most three autonomous interventions, at most two retries, at most two contacts, and immediate termination on recovery, STOP, or Human Review.</div>
+      <GovernanceProfilePanel />
       <div className="mt-5">
         {resource.loading && <LoadingPanel />}
         {resource.error && <ErrorPanel message={resource.error} onRetry={resource.retry} />}
@@ -36,10 +36,7 @@ export default function DecisionTracePage() {
   );
 }
 
-function BoundaryGraphic() {
-  const steps = [{ icon: Cpu, label: "Model", detail: "Estimates" }, { icon: Workflow, label: "ERV", detail: "Compares" }, { icon: ShieldCheck, label: "Policy", detail: "Authorizes" }, { icon: CheckCircle2, label: "Provider", detail: "Verifies" }, { icon: Sparkles, label: "AI", detail: "Explains" }];
-  return <section className="surface-panel overflow-x-auto rounded-2xl p-5"><div className="flex min-w-[660px] items-center justify-between">{steps.map((step, index) => <div key={step.label} className="contents"><div className="flex min-w-24 flex-col items-center text-center"><span className={`grid size-10 place-items-center rounded-xl ${step.label === "Policy" ? "bg-primary text-primary-foreground shadow-[0_8px_24px_var(--glow-primary)]" : "border bg-card text-muted-foreground"}`}><step.icon className="size-4" /></span><p className="mt-2 text-xs font-semibold">{step.label}</p><p className="mt-1 text-[9px] tracking-wider text-muted-foreground uppercase">{step.detail}</p></div>{index < steps.length - 1 && <div className="mx-3 h-px flex-1 bg-gradient-to-r from-border via-primary/40 to-border" />}</div>)}</div></section>;
-}
+
 
 function EvidenceBadge({ source }: { source: string }) {
   if (source === "DEMO_SYNTHETIC") return <span className="inline-flex rounded-full border border-cyan-500/25 bg-cyan-500/10 px-2.5 py-1 text-[9px] font-bold tracking-wider text-cyan-700 uppercase dark:text-cyan-300">Demo · Synthetic</span>;

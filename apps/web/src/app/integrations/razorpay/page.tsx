@@ -21,7 +21,7 @@ export default function RazorpayIntegrationPage() {
   const resource = useApiResource(load);
   return (
     <>
-      <PageHeader eyebrow="Provider integration" title="Razorpay, constrained to Test Mode." description="Inspect provider readiness and execution capabilities without exposing credentials or enabling Live Mode." icon={CreditCard} actions={<Button variant="outline" onClick={resource.retry} disabled={resource.loading}><RefreshCw className={resource.loading ? "animate-spin" : ""} />Refresh status</Button>} />
+      <PageHeader eyebrow="Operational Provider Boundary" title="Razorpay, constrained to Test Mode." description="Test Mode webhook validation, Provider Truth Triangulation, and strict attribution represent the operational safety boundary (not the simulator's sequential policy model)." icon={CreditCard} actions={<Button variant="outline" onClick={resource.retry} disabled={resource.loading}><RefreshCw className={resource.loading ? "animate-spin" : ""} />Refresh status</Button>} />
       {resource.loading && <LoadingPanel />}
       {resource.error && <ErrorPanel message={resource.error} onRetry={resource.retry} />}
       {resource.data && <div className="space-y-5">

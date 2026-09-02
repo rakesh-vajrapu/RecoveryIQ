@@ -176,3 +176,44 @@ export async function getRazorpayEvidence(signal?: AbortSignal): Promise<Razorpa
   const data = await request("/api/integrations/razorpay/evidence", { signal });
   return data as RazorpayEvidence;
 }
+
+export type GovernanceLimits = {
+  recovery_horizon_hours: number;
+  max_autonomous_interventions: number;
+  max_retries: number;
+  max_contacts: number;
+  minimum_retry_interval_hours: number;
+};
+
+export type GovernanceRule = {
+  id: string;
+  category: "AUTONOMY_BOUND" | "CUSTOMER_PROTECTION" | "ACTION_FEASIBILITY" | "EVIDENCE_GATE" | "ECONOMIC_STOP" | "ACCOUNTING_SAFETY";
+  effect: string;
+  enforcement: "STOP" | "HUMAN_REVIEW" | "FILTER_ACTION" | "SCHEDULE_ACTION" | "ACCOUNTING_INVARIANT";
+  episode_termination: "YES" | "NO" | "CONDITIONAL";
+};
+
+export type GovernanceAuthority = {
+  model: string;
+  erv: string;
+  policy: string;
+  provider: string;
+  llm: string;
+};
+
+export type GovernanceProfile = {
+  profile_name: string;
+  policy_version: string;
+  model_version: string;
+  config_hash: string;
+  evidence_lane: string;
+  limits: GovernanceLimits;
+  rules: GovernanceRule[];
+  authority: GovernanceAuthority;
+};
+
+export async function getGovernanceProfile(signal?: AbortSignal): Promise<GovernanceProfile> {
+  const data = await request("/api/governance/profile", { signal });
+  return data as GovernanceProfile;
+}
+

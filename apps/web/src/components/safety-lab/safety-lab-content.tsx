@@ -338,6 +338,22 @@ export function SafetyLabContent() {
                 mechanism={(data.scenarios.retry_storm as Record<string, string>)?.defense_mechanism}
                 status={(data.scenarios.retry_storm as Record<string, string>)?.status}
               />
+              {/* Governance Enforcement */}
+              <ScenarioRow 
+                title="Max interventions (3)" 
+                mechanism="Deterministic stopping rule"
+                status="PROVEN"
+              />
+              <ScenarioRow 
+                title="Contact budget (2)" 
+                mechanism="Deterministic stopping rule"
+                status="FROZEN_POLICY_RULE"
+              />
+              <ScenarioRow 
+                title="Human-review abstention" 
+                mechanism="Fallback on constraint violation"
+                status="PROVEN"
+              />
               <ScenarioRow 
                 title="LLM outage isolation" 
                 mechanism={(data.scenarios.llm_outage as Record<string, string>)?.defense_mechanism}
@@ -388,6 +404,10 @@ function ScenarioRow({ title, mechanism, status, notes }: { title: string, mecha
     Icon = AlertCircle;
     statusClass = "border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400";
     statusText = "NOT IMPLEMENTED";
+  } else if (status === "FROZEN_POLICY_RULE") {
+    Icon = ShieldCheck;
+    statusClass = "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900/50 dark:bg-blue-900/20 dark:text-blue-400";
+    statusText = "FROZEN POLICY RULE / ENFORCED";
   }
 
   return (

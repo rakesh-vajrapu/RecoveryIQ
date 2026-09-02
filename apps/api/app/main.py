@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.batch_explorer import router as batch_explorer_router
 from app.api.evaluation import router as evaluation_router
+from app.api.governance import router as governance_router
 from app.api.health import router as health_router
 from app.api.payment_health import router as payment_health_router
 from app.api.razorpay import router as razorpay_router
@@ -47,3 +48,4 @@ app.include_router(evaluation_router)
 app.include_router(payment_health_router)
 app.include_router(safety_router)
 app.include_router(razorpay_evidence_router)
+app.include_router(governance_router)
