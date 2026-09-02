@@ -86,6 +86,7 @@ def get_razorpay_evidence(db: Annotated[Session, Depends(get_db_session)]) -> di
                     "payment_link_status": e.payment_link_status.value
                     if e.payment_link_status and hasattr(e.payment_link_status, "value")
                     else e.payment_link_status,
+                    "created_at": e.created_at,
                 }
                 for e in executions
             ],

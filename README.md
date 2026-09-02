@@ -297,10 +297,10 @@ Create local environment files by copying the provided examples:
 
 ```bash
 # Backend configuration
-cp apps/api/.env.example apps/api/.env
+cp .env.example apps/api/.env
 
 # Frontend configuration
-cp apps/web/.env.example apps/web/.env.local
+cp .env.example apps/web/.env.local
 ```
 Update `apps/api/.env` with your Razorpay **Test Mode** credentials and Groq API key (optional). Never commit secrets.
 

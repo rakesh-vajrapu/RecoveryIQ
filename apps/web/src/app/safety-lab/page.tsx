@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/page-header";
 import { SafetyLabContent } from "@/components/safety-lab/safety-lab-content";
 
 export const metadata: Metadata = {
-  title: "Safety Lab | RecoverIQ",
+  title: "Safety Lab | RecoveryIQ",
   description: "Verified safety and idempotency evidence.",
 };
 

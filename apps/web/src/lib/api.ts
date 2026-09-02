@@ -31,7 +31,7 @@ async function request(path: string, init: RequestInit = {}): Promise<unknown> {
     response = await fetch(`${apiBaseUrl}${path}`, { cache: "no-store", ...init, headers: { Accept: "application/json", ...init.headers } });
   } catch (err: unknown) {
     if (err instanceof Error && err.name === "AbortError") throw err;
-    throw new ApiError(0, "The RecoverIQ API is unavailable. Check the backend and try again.");
+    throw new ApiError(0, "The RecoveryIQ API is unavailable. Check the backend and try again.");
   }
   let payload: unknown = null;
   try { payload = await response.json(); } catch { if (response.ok) throw new ApiError(response.status, "The API returned an invalid response."); }
@@ -132,6 +132,7 @@ export type RazorpayEvidence = {
       state: string;
       provider_url: string | null;
       payment_link_status: string | null;
+      created_at: string;
     }>;
     outcomes: Array<{
       id: string;

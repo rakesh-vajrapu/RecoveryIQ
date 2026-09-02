@@ -6,7 +6,7 @@ import { AppShell } from "@/components/app-shell";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: { default: "RecoverIQ Command Center", template: "%s · RecoverIQ" },
+  title: { default: "RecoveryIQ Command Center", template: "%s · RecoveryIQ" },
   description: "Bounded, auditable revenue recovery operations",
 };
 

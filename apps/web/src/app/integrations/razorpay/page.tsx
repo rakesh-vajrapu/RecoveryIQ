@@ -32,7 +32,7 @@ export default function RazorpayIntegrationPage() {
           <IntegrationCard icon={Link2} label="Payment Link" value={resource.data.status.capabilities.CREATE_PAYMENT_LINK === "REAL_TEST_EXECUTION" ? "Available" : "Unavailable"} ok={resource.data.status.capabilities.CREATE_PAYMENT_LINK === "REAL_TEST_EXECUTION"} />
           <IntegrationCard icon={LockKeyhole} label="Live payments" value="Blocked" ok />
         </section>
-        <section className="grid gap-5 lg:grid-cols-[0.65fr_1.35fr]"><article className="rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.065] p-6"><p className="eyebrow text-emerald-700 dark:text-emerald-300">Provider-verified Test recovery</p><p className="mt-3 text-3xl font-black text-emerald-700 dark:text-emerald-200">{formatMoney(resource.data.verifiedRecoveryMinor)}</p><p className="mt-2 text-xs leading-5 text-muted-foreground">Exactly-once attribution from authenticated Razorpay Test Mode evidence. No real money moved.</p></article><section className="surface-panel overflow-hidden rounded-2xl"><div className="border-b px-5 py-4 sm:px-6"><p className="eyebrow">Execution capability map</p><h2 className="mt-1.5 text-base font-semibold">What each action is allowed to do</h2></div><div className="grid gap-px bg-border sm:grid-cols-2 xl:grid-cols-3">{Object.entries(resource.data.status.capabilities).map(([action, capability]) => <div key={action} className="bg-card/85 p-4"><p className="font-mono text-[11px] font-semibold">{action}</p><p className="mt-2 text-xs text-muted-foreground">{titleCase(capability)}</p></div>)}</div></section></section>
+        <section className="grid gap-5 lg:grid-cols-[0.65fr_1.35fr]"><article className="rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.065] p-6"><p className="eyebrow text-emerald-700 dark:text-emerald-300">Provider-verified Test recovery</p><p className="mt-3 text-3xl font-black text-emerald-700 dark:text-emerald-200">{formatMoney(resource.data.verifiedRecoveryMinor)}</p><p className="mt-2 text-xs leading-5 text-muted-foreground">Exactly-once attribution from authenticated Razorpay Test Mode evidence. No real money moved.</p></article><section className="surface-panel overflow-hidden rounded-2xl"><div className="border-b px-5 py-4 sm:px-6"><p className="eyebrow">Execution capability map</p><h2 className="mt-1.5 text-base font-semibold">What each action is allowed to do</h2></div><div className="grid gap-px bg-border sm:grid-cols-2 xl:grid-cols-3">{Object.entries(resource.data.status.capabilities).map(([action, capability]) => <div key={action} className="bg-card/85 p-4"><p className="font-mono text-[11px] font-semibold">{action}</p><p className="mt-2 text-xs text-muted-foreground">{action === "STOP" ? "Policy Decision Only" : titleCase(capability)}</p></div>)}</div></section></section>
         {resource.data.evidence.selected_case && (
           <TimelineAndEvidence data={resource.data.evidence.selected_case} />
         )}
@@ -61,7 +61,7 @@ function TimelineAndEvidence({ data }: { data: NonNullable<RazorpayEvidence["sel
             <TimelineItem title="Initial Payment Failed" time={data.failed_attempts[0]?.created_at} description={`Provider Event: ${data.failed_attempts[0]?.provider_event_id || 'N/A'}`} status="failure" />
             
             {/* Operator Action */}
-            <TimelineItem title="Operator Initiated Recovery" time={data.executions[0]?.provider_url ? "System logged" : ""} description={`Created Payment Link via ${data.execution_initiator}`} status="info" />
+            <TimelineItem title="Operator Initiated Recovery" time={data.executions[0]?.created_at} description={`Created Payment Link via ${data.execution_initiator}`} status="info" />
             
             {/* Aug 30 Additional failures (Optional depending on data) */}
             {data.failed_attempts.length > 1 && (
@@ -77,8 +77,8 @@ function TimelineAndEvidence({ data }: { data: NonNullable<RazorpayEvidence["sel
       <div className="surface-panel rounded-2xl overflow-hidden flex flex-col">
         <div className="border-b px-5 py-4 flex justify-between items-center">
           <div>
-            <p className="eyebrow">Raw Evidence</p>
-            <h2 className="mt-1.5 text-base font-semibold">Provider JSON Payload</h2>
+            <p className="eyebrow">Sanitized Provider Evidence</p>
+            <h2 className="mt-1.5 text-base font-semibold">Redacted Webhook Evidence</h2>
           </div>
           <span className="rounded bg-emerald-500/10 px-2 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">Read Only</span>
         </div>
