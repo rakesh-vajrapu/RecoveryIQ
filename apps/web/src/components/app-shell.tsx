@@ -34,7 +34,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <div className="flex h-[76px] items-center gap-3 border-b px-5">
           <Link href="/" className="focus-ring group flex min-w-0 items-center gap-3 rounded-xl">
             <LogoMark />
-            <span className="min-w-0"><span className="block text-sm font-bold tracking-[-0.01em]">RecoverIQ</span><span className="block truncate text-[10px] font-medium tracking-[0.06em] text-muted-foreground uppercase">Revenue intelligence</span></span>
+            <span className="min-w-0"><span className="block text-sm font-bold tracking-[-0.01em] transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-[#0b7b91]">RecoveryIQ</span><span className="block truncate text-[10px] font-medium tracking-[0.06em] text-muted-foreground uppercase">Revenue intelligence</span></span>
           </Link>
           <button type="button" onClick={() => setMenuOpen(false)} aria-label="Close navigation" className="focus-ring ml-auto grid size-9 place-items-center rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground lg:hidden"><X className="size-4" /></button>
         </div>
@@ -73,7 +73,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <div className="min-w-0">
         <header className="sticky top-0 z-30 flex h-[76px] items-center gap-3 border-b bg-[var(--surface-glass)] px-4 backdrop-blur-2xl sm:px-7 lg:px-9">
           <button type="button" onClick={() => setMenuOpen(true)} aria-label="Open navigation" className="focus-ring grid size-10 place-items-center rounded-xl border bg-card text-muted-foreground shadow-sm hover:text-foreground lg:hidden"><Menu className="size-4.5" /></button>
-          <div className="min-w-0"><p className="eyebrow truncate">Operations / {routeLabel(pathname)}</p><p className="mt-0.5 truncate text-sm font-semibold">RecoverIQ control plane</p></div>
+          <div className="min-w-0"><p className="eyebrow truncate">Operations / {routeLabel(pathname)}</p><p className="mt-0.5 truncate text-sm font-semibold group cursor-default"><span className="transition-all duration-300 group-hover:text-primary group-hover:drop-shadow-[0_0_8px_rgba(14,165,122,0.5)]">RecoveryIQ</span> control plane</p></div>
           <div className="ml-auto flex items-center gap-2 sm:gap-3">
             <div className="hidden items-center gap-2 rounded-full border bg-card/75 px-3 py-1.5 text-[10px] font-semibold tracking-[0.11em] text-primary uppercase shadow-sm sm:flex"><span className="size-1.5 rounded-full bg-primary shadow-[0_0_9px_var(--primary)]" />Local demo runtime</div>
             <ThemeToggle />
