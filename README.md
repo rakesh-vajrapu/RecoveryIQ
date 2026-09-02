@@ -102,6 +102,7 @@ RecoveryIQ was evaluated against version-controlled strategies on the same seale
 
 RecoveryIQ relies on three layers: **probabilistic intelligence**, **deterministic financial boundaries**, and **verified execution**.
 
+![RecoveryIQ Detailed Architecture](docs/assets/detailed_architecture.jpg)
 ![RecoveryIQ Architecture](docs/assets/architecture.png)
 
 [Read the full Architecture Deep Dive →](docs/ARCHITECTURE.md)
