@@ -1,4 +1,4 @@
-export const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://127.0.0.1:8000";
+export const apiBaseUrl = typeof window === "undefined" ? (process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000") : "";
 
 export type HealthResponse = { service: string; status: "healthy"; environment: string; database: "sqlite" | "postgresql" | "other"; gemini_enabled: boolean; celery_eager: boolean };
 export type RecoveryCaseSummary = { id: string; status: string; correlation_id: string; amount_minor: number; currency: string; source: string; synthetic: boolean; failure_type: string; payment_method: string; decision_kind: string | null; decision_reason: string | null; verified_recovery_minor: number; verified_recovery_at: string | null; created_at: string; last_activity_at: string };
@@ -29,7 +29,8 @@ async function request(path: string, init: RequestInit = {}): Promise<unknown> {
   let response: Response;
   try {
     response = await fetch(`${apiBaseUrl}${path}`, { cache: "no-store", ...init, headers: { Accept: "application/json", ...init.headers } });
-  } catch {
+  } catch (err: any) {
+    if (err && err.name === "AbortError") throw err;
     throw new ApiError(0, "The RecoverIQ API is unavailable. Check the backend and try again.");
   }
   let payload: unknown = null;

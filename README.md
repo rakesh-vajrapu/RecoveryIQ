@@ -277,7 +277,34 @@ Detector V2 remains **advisory only**. It cannot authorize execution or override
 
 ## 🛠️ Installation & Local Setup
 
-### Backend
+### Prerequisites
+Before running RecoveryIQ on a new machine, ensure you have the following installed:
+- **Git** (v2.30+)
+- **Node.js** (v20.0.0 or higher) for the frontend
+- **Python** (v3.12+) for the backend
+- **uv** package manager (`pip install uv`) for Python dependencies
+
+### 1. Download the Repository
+
+```bash
+git clone https://github.com/rakesh-vajrapu/RecoveryIQ.git
+cd RecoveryIQ
+```
+
+### 2. Environment Configuration
+
+Create local environment files by copying the provided examples:
+
+```bash
+# Backend configuration
+cp apps/api/.env.example apps/api/.env
+
+# Frontend configuration
+cp apps/web/.env.example apps/web/.env.local
+```
+Update `apps/api/.env` with your Razorpay **Test Mode** credentials and Groq API key (optional). Never commit secrets.
+
+### 3. Backend Setup
 
 ```bash
 cd apps/api
@@ -286,17 +313,16 @@ uv run alembic upgrade head
 uv run fastapi run app/main.py --port 8000
 ```
 
-### Frontend
+### 4. Frontend Setup
 
+In a new terminal window:
 ```bash
 cd apps/web
 npm ci
 npm run dev
 ```
 
-Configure required environment variables through `.env.example`.
-
-Razorpay credentials must be **Test Mode credentials**. Never commit secrets.
+The Command Center will be available at `http://localhost:3000`.
 
 ---
 
