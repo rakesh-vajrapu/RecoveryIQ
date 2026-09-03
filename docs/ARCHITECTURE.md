@@ -158,14 +158,14 @@ A first Razorpay failure does not contain provably complete historical inputs fo
 
 `AuditEvent` is append-oriented and stores a correlation UUID, entity reference, actor, event type, UTC timestamp, and redacted JSON metadata. Domain services—not UI prose and not an explanation provider—emit audit events at transaction boundaries. Secrets, request headers, raw payment payloads, PAN, CVV, OTP, and unnecessary PII are forbidden from metadata. A later milestone will add retention rules for longer-lived environments.
 
- 
- # #   D e t e r m i n i s t i c   R e c o v e r y   P r o o f   R e c o r d 
- 
- R e c o v e r y I Q   i n c l u d e s   a   D e t e r m i n i s t i c   R e c o v e r y   P r o o f   R e c o r d   s y s t e m .   I t   m a p s   d i s p a r a t e   p e r s i s t e d   e v i d e n c e   m o d e l s  i n c l u d i n g   \ R e c o v e r y C a s e \ ,   \ R e c o v e r y D e c i s i o n R e c o r d \ ,   \ E x t e r n a l E x e c u t i o n \ ,   \ E x t e r n a l O u t c o m e \ ,   a n d   \ R e c o v e r y A t t r i b u t i o n \  i n t o   a   s i n g l e   r e a d - o n l y   v i e w .   
- 
- T h e   P r o o f   R e c o r d   c a t e g o r i z e s   t h e   e v i d e n c e   l a n e   ( e . g .   \ D E M O _ S Y N T H E T I C \   v s   \ R A Z O R P A Y _ T E S T _ M O D E \ )   a n d   c o m p u t e s   a   c a n o n i c a l   S H A - 2 5 6   f i n g e r p r i n t .   T h i s   f i n g e r p r i n t   i s   a   d e t e r m i n i s t i c   h a s h   o f   t h e   n o n - s e c r e t   e v i d e n c e   f i e l d s ,   d e s i g n e d   t o   a n s w e r   t h e   q u e s t i o n :   ' W h a t   e v i d e n c e   s u p p o r t s   t h i s   r e c o v e r y   d e c i s i o n ,   e x e c u t i o n ,   p r o v i d e r   o u t c o m e ,   a n d   a t t r i b u t i o n ? '   I t   i s   n o t   a   b l o c k c h a i n   o r   c r y p t o g r a p h i c   p r o o f ,   b u t   r a t h e r   a   t r a n s p a r e n t   c h e c k s u m   o f   t h e   d a t a   a t   r e a d   t i m e . 
- 
- 
+
+## Deterministic Recovery Proof Record
+
+RecoveryIQ includes a Deterministic Recovery Proof Record system. It maps disparate persisted evidence models including \RecoveryCase\, \RecoveryDecisionRecord\, \ExternalExecution\, \ExternalOutcome\, and \RecoveryAttribution\ into a single read-only view. 
+
+The Proof Record categorizes the evidence lane (e.g. \DEMO_SYNTHETIC\ vs \RAZORPAY_TEST_MODE\) and computes a canonical SHA-256 fingerprint. This fingerprint is a deterministic hash of the non-secret evidence fields, designed to answer the question: 'What evidence supports this recovery decision, execution, provider outcome, and attribution?' It is not a blockchain or cryptographic proof, but rather a transparent checksum of the data at read time.
+
+
 ## Recovery Proof Record
 
 To address external audit requirements and maintain transparency, RecoveryIQ provides a Deterministic Recovery Proof Record. The Proof Record aggregates the independent components of a recovery lifecycle (decision, execution, outcome, attribution, and provider evidence) into a single read-only view. 
