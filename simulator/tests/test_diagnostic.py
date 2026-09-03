@@ -1,9 +1,21 @@
 # mypy: ignore-errors
 import json
 from pathlib import Path
+from typing import Any
 
 from recoveriq_policy_evaluation.diagnostic import run_paired_diagnostic
+from recoveriq_sequential.episodes import (
+    build_episode_templates,
+    generate_sequential_candidates,
+    initial_episode_state,
+)
+from recoveriq_sequential.models import EpisodeTermination
+from recoveriq_sequential.oracle import SequentialScenarioOracle
+from recoveriq_sequential_policy.engine import RecoverIQSequentialPolicyEngine
 from recoveriq_sequential_policy.models import FrozenSequentialBaselines
+from recoveriq_sequential_policy.scoring import SequentialModelV2Scorer
+from recoveriq_simulator.config import SimulatorConfig
+from recoveriq_simulator.scenario import ScenarioGenerator
 from recoveriq_simulator.seeds import DIAGNOSTIC_SEEDS
 
 
@@ -59,17 +71,6 @@ def test_diagnostic_deterministic(tmp_path: Path):
     )
 
 
-from recoveriq_sequential.episodes import (
-    build_episode_templates,
-    generate_sequential_candidates,
-    initial_episode_state,
-)
-from recoveriq_sequential.models import EpisodeTermination
-from recoveriq_sequential.oracle import SequentialScenarioOracle
-from recoveriq_sequential_policy.engine import RecoverIQSequentialPolicyEngine
-from recoveriq_sequential_policy.scoring import SequentialModelV2Scorer
-from recoveriq_simulator.config import SimulatorConfig
-from recoveriq_simulator.scenario import ScenarioGenerator
 
 
 def test_diagnostic_oracle_non_interference():
@@ -81,7 +82,7 @@ def test_diagnostic_oracle_non_interference():
         / "development-baselines-v2.json"
     )
     with open(baselines_path, encoding="utf-8") as f:
-        baselines = FrozenSequentialBaselines.model_validate(json.load(f))
+        _ = FrozenSequentialBaselines.model_validate(json.load(f))
     model_root = (
         Path(__file__).parent.parent.parent / "artifacts" / "ml" / "models" / "recovery-model-v2"
     )

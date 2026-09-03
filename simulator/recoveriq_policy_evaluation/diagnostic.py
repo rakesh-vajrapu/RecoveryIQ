@@ -195,7 +195,7 @@ def run_paired_diagnostic(
 
                 # Second best alternative for advantage vs second-best
                 sorted_cfs = sorted(cf_evaluations, key=lambda x: x["net_val"], reverse=True)
-                # the best alternative is sorted_cfs[0]. The second best *feasible alternative* is sorted_cfs[1] if it exists, else we just use best_cf
+                # best is sorted_cfs[0]. Second best is sorted_cfs[1] if exists, else best_cf
                 second_best_cf = sorted_cfs[1] if len(sorted_cfs) > 1 else sorted_cfs[0]
                 adv2 = factual_val - second_best_cf["net_val"]
                 advantage_vs_second_best_sum += adv2
@@ -340,8 +340,13 @@ def run_paired_diagnostic(
         "policy_version": "2.0.0",
         "policy_config_hash": "ce7712b1ee4e800d54a875eb65a7bc826680e59faa465b54cbc1db7472010b25",
         "seed_group": "final_diagnostic",
-        "comparator_semantics": "Evaluate factual selected action vs all other feasible candidate actions. Window is specific to each candidate.",
-        "eligibility_definition": "SequentialDecisionKind.ACTION selected, >=2 feasible modelled candidates.",
+        "comparator_semantics": (
+            "Evaluate factual selected action vs all other feasible candidate actions. "
+            "Window is specific to each candidate."
+        ),
+        "eligibility_definition": (
+            "SequentialDecisionKind.ACTION selected, >=2 feasible modelled candidates."
+        ),
         "limitations": [
             "POST_HOC_SIMULATED_COUNTERFACTUAL_DIAGNOSTIC",
             "Matched outcomes are generated inside RecoveryIQ's frozen simulator.",
