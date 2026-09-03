@@ -51,7 +51,7 @@ async def test_get_governance_profile(client: AsyncClient) -> None:
             "MODEL_SCHEMA_VALID",
             "MODEL_SUPPORT",
             "CALIBRATION_SUPPORT",
-            "LOW_DECISION_MARGIN"
+            "LOW_DECISION_MARGIN",
         ]:
             assert rule["enforcement"] == "HUMAN_REVIEW"
         elif rule["id"] in ["ATTRIBUTION_ONCE"]:
@@ -70,6 +70,7 @@ def test_missing_artifact(tmp_path: Path) -> None:
 def test_corrupt_artifact() -> None:
     # Mock open and read corrupt JSON
     from unittest.mock import mock_open
+
     m = mock_open(read_data="{ bad json }")
     with patch("app.api.governance.Path.exists", return_value=True), patch("builtins.open", m):
         client = TestClient(app)
@@ -82,6 +83,7 @@ def test_invalid_schema() -> None:
     # Valid JSON, but missing required fields
     valid_json_invalid_schema = '{"policy_version": "2.0.0"}'
     from unittest.mock import mock_open
+
     m = mock_open(read_data=valid_json_invalid_schema)
     with patch("app.api.governance.Path.exists", return_value=True), patch("builtins.open", m):
         client = TestClient(app)
@@ -92,21 +94,24 @@ def test_invalid_schema() -> None:
 
 def test_invalid_artifact_type() -> None:
     # Valid JSON, correct schema, wrong artifact_type
-    valid_json = json.dumps({
-        "artifact_type": "WRONG_TYPE",
-        "policy_version": "2.0.0",
-        "model_version": "2.0.0",
-        "config_hash": "abc",
-        "cost_regime": "BALANCED",
-        "horizon_hours": 48.0,
-        "max_interventions": 3,
-        "max_retries": 2,
-        "max_contacts": 2,
-        "min_retry_interval_hours": 2.0,
-        "stopping_rules": [],
-        "validation_status": "VALIDATED"
-    })
+    valid_json = json.dumps(
+        {
+            "artifact_type": "WRONG_TYPE",
+            "policy_version": "2.0.0",
+            "model_version": "2.0.0",
+            "config_hash": "abc",
+            "cost_regime": "BALANCED",
+            "horizon_hours": 48.0,
+            "max_interventions": 3,
+            "max_retries": 2,
+            "max_contacts": 2,
+            "min_retry_interval_hours": 2.0,
+            "stopping_rules": [],
+            "validation_status": "VALIDATED",
+        }
+    )
     from unittest.mock import mock_open
+
     m = mock_open(read_data=valid_json)
     with patch("app.api.governance.Path.exists", return_value=True), patch("builtins.open", m):
         client = TestClient(app)

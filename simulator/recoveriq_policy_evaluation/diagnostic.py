@@ -80,8 +80,8 @@ def run_paired_diagnostic(
                 "eligible_decisions": 0,
                 "factual_recoveries": 0,
                 "counterfactual_recoveries": 0,
-                "factual_net_value_minor": 0,
-                "counterfactual_net_value_minor": 0,
+                "selected_total_realized_net_value": 0,
+                "best_feasible_total_realized_net_value": 0,
                 "regret_minor": 0,
                 "best_count": 0,
                 "tied_count": 0,
@@ -92,8 +92,8 @@ def run_paired_diagnostic(
         dimension[key]["eligible_decisions"] += 1
         dimension[key]["factual_recoveries"] += int(is_factual_recovery)
         dimension[key]["counterfactual_recoveries"] += int(is_cf_recovery)
-        dimension[key]["factual_net_value_minor"] += factual_val
-        dimension[key]["counterfactual_net_value_minor"] += cf_val
+        dimension[key]["selected_total_realized_net_value"] += factual_val
+        dimension[key]["best_feasible_total_realized_net_value"] += cf_val
         dimension[key]["regret_minor"] += regret
         dimension[key]["best_count"] += int(best)
         dimension[key]["tied_count"] += int(tied)
@@ -210,11 +210,10 @@ def run_paired_diagnostic(
                     suboptimal_count += 1
                     is_best, is_tied, is_sub = False, False, True
 
-                # Value capture
+                # Value capture (Raw sum of all realized net values without clipping)
                 best_overall_val = max(factual_val, best_cf["net_val"])
-                if best_overall_val > 0:
-                    value_capture_den += best_overall_val
-                    value_capture_num += max(0, factual_val)
+                value_capture_den += best_overall_val
+                value_capture_num += factual_val
 
                 factual_recoveries += int(factual_eval["outcome"].recovered)
                 cf_best_recoveries += int(best_cf["outcome"].recovered)
@@ -316,22 +315,23 @@ def run_paired_diagnostic(
         else 0,
         "factual_recoveries": factual_recoveries,
         "counterfactual_recoveries": cf_best_recoveries,
-        "factual_net_value_minor": factual_recovered_value,
-        "counterfactual_net_value_minor": cf_best_recovered_value,
+        "selected_total_realized_net_value": factual_recovered_value,
+        "best_feasible_total_realized_net_value": cf_best_recovered_value,
         "regret_minor": total_regret,
         "best_count": best_count,
         "tied_count": tied_count,
         "suboptimal_count": suboptimal_count,
         "advantage_vs_second_best_minor": advantage_vs_second_best_sum,
-        "value_capture_fraction": value_capture_num / value_capture_den
+        "counterfactual_value_capture": value_capture_num / value_capture_den
         if value_capture_den > 0
-        else 1.0,
+        else None,
     }
     _compute_derived(headline)
 
     return {
-        "artifact_type": ARTIFACT_TYPE,
-        "diagnostic_version": DIAGNOSTIC_VERSION,
+        "artifact_type": "post_hoc_simulated_counterfactual_diagnostic",
+        "evidence_status": "SEALED_POST_HOC_SIMULATED_COUNTERFACTUAL_DIAGNOSTIC",
+        "diagnostic_version": "3.0.0",
         "generated_at": datetime.utcnow().isoformat() + "Z",
         "simulator_version": "0.3.0",
         "model_version": "2.0.0",

@@ -226,14 +226,14 @@ export type ActionAdvantageDiagnostic = {
     mean_feasible_alternatives: number;
     factual_recoveries: number;
     counterfactual_recoveries: number;
-    factual_net_value_minor: number;
-    counterfactual_net_value_minor: number;
+    selected_total_realized_net_value: number;
+    best_feasible_total_realized_net_value: number;
     regret_minor: number;
     best_count: number;
     tied_count: number;
     suboptimal_count: number;
     advantage_vs_second_best_minor: number;
-    value_capture_fraction: number;
+    counterfactual_value_capture: number | null;
     factual_recovery_rate: number;
     best_counterfactual_recovery_rate: number;
     mean_regret_minor: number;
