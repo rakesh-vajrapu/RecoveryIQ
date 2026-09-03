@@ -396,3 +396,9 @@ To address external audit requirements and maintain transparency, RecoveryIQ pro
 The Proof Record does NOT use blockchain, cryptographic immutability, digital signatures, non-repudiation, or provider-signed proofs. It computes a SHA-256 fingerprint of the canonical non-secret included evidence fields. 
 
 The fingerprint changes when included canonical evidence fields change. Detecting a change requires comparison with a previously recorded fingerprint.
+
+## Critical Financial Path Gate
+
+Critical Financial Path Gate — CI explicitly exercises authentication, idempotency, provider-truth reconciliation, outcome uniqueness, attribution uniqueness, and fail-closed payment-state transitions.
+
+These are isolated local verification tests using fake/provider fixtures; they are not live Razorpay Test Mode transactions.

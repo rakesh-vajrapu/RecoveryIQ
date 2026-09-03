@@ -4,6 +4,8 @@ from datetime import UTC, datetime
 from typing import Any
 
 import pytest
+from httpx import AsyncClient
+from sqlalchemy import select
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.api.proof import compute_proof_fingerprint
@@ -455,3 +457,25 @@ async def test_proof_stages(client: Any, db_session: Session, mock_case_id: uuid
     response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
     assert response.status_code == 200
     assert response.json()["proof_completeness"] == "PROVIDER_TRIANGULATED"
+
+@pytest.mark.asyncio
+async def test_recovery_proof_does_not_mutate_state(client: AsyncClient, db_session: Session, mock_case_id: uuid.UUID) -> None:
+    """CFP-12: Recovery proof is read-only."""
+    # Create a synthetic case with some evidence
+    case = create_test_case(db_session, mock_case_id, is_demo=False)
+    db_session.commit()
+    
+    # Take snapshot
+    case_count = db_session.scalar(select(db_session.query(RecoveryCase).where(RecoveryCase.id == mock_case_id).exists()))
+    exec_count = len(db_session.scalars(select(ExternalExecution).where(ExternalExecution.recovery_case_id == mock_case_id)).all())
+    out_count = len(db_session.scalars(select(ExternalOutcome).where(ExternalOutcome.recovery_case_id == mock_case_id)).all())
+    attr_count = len(db_session.scalars(select(RecoveryAttribution).where(RecoveryAttribution.recovery_case_id == mock_case_id)).all())
+    
+    response = await client.get(f'/api/recovery-cases/{mock_case_id}/proof')
+    assert response.status_code == 200
+    
+    # Verify no new writes
+    assert case_count == db_session.scalar(select(db_session.query(RecoveryCase).where(RecoveryCase.id == mock_case_id).exists()))
+    assert exec_count == len(db_session.scalars(select(ExternalExecution).where(ExternalExecution.recovery_case_id == mock_case_id)).all())
+    assert out_count == len(db_session.scalars(select(ExternalOutcome).where(ExternalOutcome.recovery_case_id == mock_case_id)).all())
+    assert attr_count == len(db_session.scalars(select(RecoveryAttribution).where(RecoveryAttribution.recovery_case_id == mock_case_id)).all())

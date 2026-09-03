@@ -1,0 +1,121 @@
+{
+  "CFP-01": {
+    "name": "Webhook authenticity",
+    "risk": "Unauthenticated provider data changes financial state",
+    "invariant": "Invalid or missing Razorpay signature is rejected before processing",
+    "evidence_lane": "ISOLATED_LOCAL_VERIFICATION",
+    "tests": [
+      "tests/test_razorpay_gateway.py::test_webhook_signature_is_hmac_sha256_over_exact_raw_bytes",
+      "tests/test_razorpay_integration.py::test_missing_and_invalid_webhook_signatures_are_rejected",
+      "tests/test_razorpay_integration.py::test_signature_cannot_be_reused_for_different_raw_json_representation"
+    ]
+  },
+  "CFP-02": {
+    "name": "Provider event idempotency",
+    "risk": "Provider retries same webhook and RecoveryIQ applies effect twice",
+    "invariant": "same x-razorpay-event-id replay is acknowledged safely without duplicate financial effect",
+    "evidence_lane": "ISOLATED_LOCAL_VERIFICATION",
+    "tests": [
+      "tests/test_razorpay_integration.py::test_duplicate_event_id_is_acknowledged_without_duplicate_side_effects"
+    ]
+  },
+  "CFP-03": {
+    "name": "Execution idempotency / reservation",
+    "risk": "Worker retry creates multiple Payment Links or duplicate external execution",
+    "invariant": "one durable execution reservation prevents duplicate provider calls for the same logical execution",
+    "evidence_lane": "ISOLATED_LOCAL_VERIFICATION",
+    "tests": [
+      "tests/test_razorpay_integration.py::test_operator_payment_link_is_idempotent_and_auditable",
+      "tests/test_razorpay_integration.py::test_timeout_after_create_reconciles_without_second_create",
+      "tests/test_concurrency.py::test_execution_idempotency_race"
+    ]
+  },
+  "CFP-04": {
+    "name": "Payment correlation invariants",
+    "risk": "Recovery for one payment/case is attributed to another",
+    "invariant": "Mismatch in amount, currency, or reference fails closed and creates no attribution",
+    "evidence_lane": "ISOLATED_LOCAL_VERIFICATION",
+    "tests": [
+      "tests/test_razorpay_integration.py::test_paid_link_mismatch_does_not_recover_case",
+      "tests/test_razorpay_integration.py::test_mapped_order_failure_mismatches_are_rejected",
+      "tests/test_razorpay_integration.py::test_unmapped_order_failures_are_safely_ignored"
+    ]
+  },
+  "CFP-05": {
+    "name": "Provider truth triangulation",
+    "risk": "Signed webhook claims payment but independent provider truth contradicts it",
+    "invariant": "CONFIRMED status requires matching independent provider state; MISMATCH blocks outcome",
+    "evidence_lane": "ISOLATED_LOCAL_VERIFICATION",
+    "tests": [
+      "tests/test_razorpay_integration.py::test_paid_link_mismatch_does_not_recover_case",
+      "tests/test_proof.py::test_full_triangulated_proof"
+    ]
+  },
+  "CFP-06": {
+    "name": "External outcome uniqueness",
+    "risk": "Same provider success produces multiple local financial outcomes",
+    "invariant": "Provider success replay yields exactly one ExternalOutcome",
+    "evidence_lane": "ISOLATED_LOCAL_VERIFICATION",
+    "tests": [
+      "tests/test_razorpay_integration.py::test_reprocessing_completed_event_is_idempotent_worker_retry",
+      "tests/test_concurrency.py::test_outcome_attribution_race"
+    ]
+  },
+  "CFP-07": {
+    "name": "Recovery attribution exactly once",
+    "risk": "Revenue is counted twice",
+    "invariant": "Exactly-once local recovery attribution semantics per case",
+    "evidence_lane": "ISOLATED_LOCAL_VERIFICATION",
+    "tests": [
+      "tests/test_razorpay_integration.py::test_paid_payment_link_recovers_once_and_preserves_subscription_state",
+      "tests/test_razorpay_integration.py::test_subscription_charged_attributes_recovery_exactly_once"
+    ]
+  },
+  "CFP-08": {
+    "name": "Non-success payment states",
+    "risk": "RecoveryIQ marks revenue recovered when payment did not fully succeed",
+    "invariant": "Expired, cancelled, or partial payments produce no successful attribution",
+    "evidence_lane": "ISOLATED_LOCAL_VERIFICATION",
+    "tests": [
+      "tests/test_razorpay_integration.py::test_terminal_payment_link_is_not_recovered"
+    ]
+  },
+  "CFP-09": {
+    "name": "Subscription.charged recovery",
+    "risk": "A legitimate recurring charge is mis-correlated or counted incorrectly",
+    "invariant": "subscription.charged safely and independently recovers correctly correlated cases exactly once",
+    "evidence_lane": "ISOLATED_LOCAL_VERIFICATION",
+    "tests": [
+      "tests/test_razorpay_integration.py::test_subscription_charged_attributes_recovery_exactly_once",
+      "tests/test_razorpay_integration.py::test_newer_charged_then_older_pending_does_not_regress_or_open_case"
+    ]
+  },
+  "CFP-10": {
+    "name": "Execution authority",
+    "risk": "Operator action is represented as autonomous model execution",
+    "invariant": "OPERATOR_INITIATED execution safely records autonomous=false separate from provenance",
+    "evidence_lane": "ISOLATED_LOCAL_VERIFICATION",
+    "tests": [
+      "tests/test_razorpay_integration.py::test_operator_payment_link_is_idempotent_and_auditable"
+    ]
+  },
+  "CFP-11": {
+    "name": "Unknown provider outcome / crash ambiguity",
+    "risk": "Network failure occurs after provider may have accepted execution, causing blind retries",
+    "invariant": "Unknown outcomes are partially protected and safely block immediate blind replays",
+    "evidence_lane": "ISOLATED_LOCAL_VERIFICATION",
+    "tests": [
+      "tests/test_razorpay_gateway.py::test_http_gateway_treats_create_transport_timeout_as_unknown",
+      "tests/test_razorpay_integration.py::test_timeout_before_create_stays_unknown_and_blocks_replacement"
+    ]
+  },
+  "CFP-12": {
+    "name": "Evidence does not create financial truth",
+    "risk": "Recovery Proof endpoint accidentally mutates financial state",
+    "invariant": "Recovery proof is strictly read-only and does not persist confirmation records",
+    "evidence_lane": "ISOLATED_LOCAL_VERIFICATION",
+    "tests": [
+      "tests/test_critical_financial_gate.py::test_recovery_proof_does_not_mutate_state"
+    ]
+  }
+}
