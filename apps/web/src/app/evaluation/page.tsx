@@ -31,10 +31,13 @@ export default async function EvaluationPage() {
           <section className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.03] p-5 sm:p-6">
             <div className="flex items-start justify-between">
               <div>
-                <span className="rounded-full border border-amber-500/25 bg-amber-500/10 px-3 py-1 text-[10px] font-bold tracking-[0.12em] text-amber-700 uppercase dark:text-amber-300">SEALED · POST-HOC · SIMULATED</span>
+                <span className="rounded-full border border-amber-500/25 bg-amber-500/10 px-3 py-1 text-[10px] font-bold tracking-[0.12em] text-amber-700 uppercase dark:text-amber-300">POST-HOC · SIMULATED</span>
                 <h2 className="mt-4 text-xl font-bold">COUNTERFACTUAL ACTION ADVANTAGE</h2>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                  Feasible actions are compared under matched simulated hidden-world conditions. This is not production causal evidence. Simulator 0.3.0 does not model direct natural recovery during WAIT.
+                  The multi-action diagnostic is a post-hoc simulator evaluation. Its development involved iterative implementation verification, so it is not presented as one-time sealed evidence.
+                </p>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  Feasible recovery actions are compared under matched simulated hidden-world conditions. This is not production causal evidence. Simulator 0.3.0 does not model direct natural recovery during WAIT.
                 </p>
               </div>
             </div>

@@ -1,6 +1,6 @@
 {
   "artifact_type": "post_hoc_simulated_counterfactual_diagnostic",
-  "evidence_status": "SEALED_POST_HOC_SIMULATED_COUNTERFACTUAL_DIAGNOSTIC",
+  "evidence_status": "POST_HOC_SIMULATED_COUNTERFACTUAL_DIAGNOSTIC",
   "diagnostic_version": "3.0.0",
   "generated_at": "2026-09-03T05:14:05.515338Z",
   "simulator_version": "0.3.0",

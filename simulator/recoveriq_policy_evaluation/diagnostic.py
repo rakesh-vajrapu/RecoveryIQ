@@ -330,7 +330,7 @@ def run_paired_diagnostic(
 
     return {
         "artifact_type": "post_hoc_simulated_counterfactual_diagnostic",
-        "evidence_status": "SEALED_POST_HOC_SIMULATED_COUNTERFACTUAL_DIAGNOSTIC",
+        "evidence_status": "POST_HOC_SIMULATED_COUNTERFACTUAL_DIAGNOSTIC",
         "diagnostic_version": "3.0.0",
         "generated_at": datetime.utcnow().isoformat() + "Z",
         "simulator_version": "0.3.0",
