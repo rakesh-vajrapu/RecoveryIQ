@@ -506,5 +506,7 @@
         "mean_advantage_vs_second_best_minor": 4606.13413304253
       }
     }
-  }
+  },
+  "evidence_status": "INVALIDATED_FOR_FINAL_SEALED_CLAIMS",
+  "invalidation_reason": "V2 remains exploratory evidence because the sealed runner used cwd-relative attempt/output paths, the implemented value-capture numerator clipped negative selected realized values instead of using the preregistered raw aggregate formula, and diagnostic code/quality corrections occurred after execution."
 }
