@@ -54,9 +54,7 @@ jobs:
       - run: uv run ruff check .
       - run: uv run mypy app tests
       - name: Critical Financial Path Gate
-        run: |
-          CFP_TESTS=$(python -c "import json; print(' '.join(t for cfp in json.load(open('tests/critical_financial_paths.json')).values() for t in cfp.get('tests', [])))")
-          uv run pytest $CFP_TESTS
+        run: uv run python scripts/run_critical_financial_gate.py
       - run: uv run pytest
 
   frontend:

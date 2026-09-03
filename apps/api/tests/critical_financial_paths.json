@@ -115,7 +115,7 @@
     "invariant": "Recovery proof is strictly read-only and does not persist confirmation records",
     "evidence_lane": "ISOLATED_LOCAL_VERIFICATION",
     "tests": [
-      "tests/test_critical_financial_gate.py::test_recovery_proof_does_not_mutate_state"
+      "tests/test_proof.py::test_recovery_proof_does_not_mutate_state"
     ]
   }
 }
