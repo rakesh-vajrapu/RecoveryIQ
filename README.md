@@ -169,10 +169,38 @@ The LLM is **explanation-only**. It cannot authorize payment execution, change f
 | **Deterministic Sequential Policy Guardrails** | Keeps financial authorization outside generative AI |
 | **Bounded Sequential Recovery** | Controls retries, contacts, interventions, and recovery horizon |
 | **Safe Human-in-the-Loop Escalation** | Insufficient context can safely escalate to `HUMAN_REVIEW` |
-| **Signed HMAC Webhook Verification** | Uses authenticated Razorpay Test Mode evidence as external truth |
+| **Signed HMAC Webhook Verification** | Authenticates Razorpay Test Mode webhook provenance and exact raw-body integrity before processing. |
 | **Idempotency Guardrails** | Protects execution and accounting from race conditions |
 | **Exactly-Once Local Attribution** | Prevents duplicate local recovery accounting |
 | **Adversarial Concurrency Verification** | Demonstrates concurrency and idempotency defenses |
+
+---
+
+
+## 🔎 Trust, Auditability & Financial Safety
+
+RecoveryIQ does not ask judges to trust an AI decision merely because the model produced a score. It separates prediction, financial authorization, provider verification, attribution, and audit evidence, then verifies the highest-risk financial paths independently.
+
+| Capability | What it adds | Evidence / boundary | Learn more |
+|---|---|---|---|
+| **Provider Truth Triangulation** | Signed webhook authenticates incoming event. Independent Payment Link fetch verifies provider state. CONFIRMED only after provider invariants match (else fails closed). | **RAZORPAY · TEST MODE**. (Note: Historical ₹2 Test Mode evidence predates this capability and remains Provider Fetch: NOT CAPTURED). | [Razorpay Evidence](docs/RAZORPAY_EVIDENCE.md) |
+| **Recovery Governance Profile** | Frozen Sequential Policy V2 limits exposed as inspectable governance. Distinguishes STOP, HUMAN_REVIEW, FILTER_ACTION, SCHEDULE_ACTION, and ACCOUNTING_INVARIANT. Deterministic policy retains financial authority; AI does not authorize execution. | **ISOLATED LOCAL VERIFICATION** & **SEALED · SIMULATED** | [Sequential Recovery](docs/SEQUENTIAL_RECOVERY.md) |
+| **Counterfactual Action Advantage** | Compares selected action with feasible alternative actions under matched simulated hidden-world conditions. Measures action-selection headroom. | **POST-HOC · SIMULATED**. (48,405 eligible paired decisions, 43.99% selected best/tied, 52.29% counterfactual value capture). Simulator 0.3.0 does not model direct natural recovery during WAIT. | [Evaluation Results](docs/EVALUATION_RESULTS.md) |
+| **Recovery Proof Record** | Deterministic read-only projection of decision, execution, provider-outcome, and attribution. The SHA-256 fingerprint changes when included canonical evidence fields change. Detecting a change requires comparison with a previously recorded fingerprint. | **ISOLATED LOCAL VERIFICATION** (It does not execute, create attribution, independently query Razorpay, provide immutable storage, or act as a digital signature). | [Architecture](docs/ARCHITECTURE.md) |
+| **Critical Financial Path Gate** | Enforces 12 named financial invariants mapped to 20 unique pytest selectors (24/24 tests passed). Protects webhook authenticity, idempotency, execution reservations, outcome uniqueness, and crash ambiguity. | **ISOLATED LOCAL VERIFICATION**. (Provider crash ambiguity = PARTIALLY_PROTECTED, stale reservation sweeper = NOT_IMPLEMENTED). | [Critical Financial Path Gate](docs/CRITICAL_FINANCIAL_PATH_GATE.md) |
+
+---
+
+## 📚 Reviewer Deep Dives
+
+- [Architecture](docs/ARCHITECTURE.md)
+- [Evaluation Results](docs/EVALUATION_RESULTS.md)
+- [Razorpay / Provider Evidence](docs/RAZORPAY_EVIDENCE.md)
+- [Safety & Reliability](docs/SAFETY_AND_RELIABILITY.md)
+- [Recovery Governance](docs/SEQUENTIAL_RECOVERY.md)
+- [Critical Financial Path Gate](docs/CRITICAL_FINANCIAL_PATH_GATE.md)
+- [Counterfactual Evaluation](docs/EVALUATION_RESULTS.md)
+- [Degradation Detector](docs/DEGRADATION_DETECTION_V2.md)
 
 ---
 
@@ -380,26 +408,6 @@ npm run build
 
 ---
 
-
-## 📜 Recovery Proof Record
-
-Recovery Proof Record is a deterministic read-only projection of persisted decision, execution, provider-outcome, and attribution evidence.
-
-The fingerprint changes when included canonical evidence fields change. Detecting a change requires comparison with a previously recorded fingerprint.
-
----
-
-## 🔐 Critical Financial Path Gate
-
-| Metric | Value | Evidence Lane |
-| --- | --- | --- |
-| **Named Financial Invariants** | 12 | ISOLATED LOCAL VERIFICATION |
-| **Unique Pytest Selectors** | 20 | ISOLATED LOCAL VERIFICATION |
-| **Tests Executed & Passed** | 24 / 24 | ISOLATED LOCAL VERIFICATION |
-
-Protected areas include webhook authenticity, provider event idempotency, execution reservation, outcome/attribution uniqueness, crash ambiguity, non-success states, subscription.charged, and read-only proof behavior.
-
----
 
 ## License
 
