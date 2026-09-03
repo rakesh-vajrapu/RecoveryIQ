@@ -133,7 +133,7 @@ def compute_proof_fingerprint(record_dict: dict[str, Any]) -> str:
     return hashlib.sha256(canonical_bytes).hexdigest()
 
 
-def build_recovery_proof_record(session: Session, recovery_case: RecoveryCase) -> RecoveryProofRecord:
+def build_recovery_proof_record(session: Session, recovery_case: RecoveryCase) -> RecoveryProofRecord:  # noqa: E501
     evidence = recovery_evidence(session, recovery_case)
     evidence_lane = "DEMO_SYNTHETIC" if evidence.synthetic else "RAZORPAY_TEST_MODE"
     
@@ -153,9 +153,9 @@ def build_recovery_proof_record(session: Session, recovery_case: RecoveryCase) -
             decision_id=decision_record.id,
             decision_kind=decision_record.kind.value,
             selected_action=decision_record.selected_action,
-            model_version=decision_record.model_version if evidence_lane != "DEMO_SYNTHETIC" else None,
-            policy_version=decision_record.policy_version if evidence_lane != "DEMO_SYNTHETIC" else None,
-            policy_config_hash=decision_record.context_metadata.get("policy_config_hash") if evidence_lane != "DEMO_SYNTHETIC" else None,
+            model_version=decision_record.model_version if evidence_lane != "DEMO_SYNTHETIC" else None,  # noqa: E501
+            policy_version=decision_record.policy_version if evidence_lane != "DEMO_SYNTHETIC" else None,  # noqa: E501
+            policy_config_hash=decision_record.context_metadata.get("policy_config_hash") if evidence_lane != "DEMO_SYNTHETIC" else None,  # noqa: E501
             decision_recorded_at=decision_record.created_at,
         )
     
@@ -186,7 +186,7 @@ def build_recovery_proof_record(session: Session, recovery_case: RecoveryCase) -
         
     execution_proof = None
     if external_execution:
-        provider_entity_type = "PAYMENT_LINK" if external_execution.action == "CREATE_PAYMENT_LINK" else "UNKNOWN"
+        provider_entity_type = "PAYMENT_LINK" if external_execution.action == "CREATE_PAYMENT_LINK" else "UNKNOWN"  # noqa: E501
         execution_proof = ExecutionProof(
             execution_id=external_execution.id,
             provider=external_execution.provider,
@@ -226,7 +226,7 @@ def build_recovery_proof_record(session: Session, recovery_case: RecoveryCase) -
             else:
                 status_str = conf_status.value
                 
-            amount_verified = True if status_str == "CONFIRMED" else (None if status_str == "NOT_CAPTURED" else False)
+            amount_verified = True if status_str == "CONFIRMED" else (None if status_str == "NOT_CAPTURED" else False)  # noqa: E501
                 
             provider_evidence_proof = ProviderEvidenceProof(
                 webhook_received=True,
@@ -296,15 +296,15 @@ def build_recovery_proof_record(session: Session, recovery_case: RecoveryCase) -
     if decision_proof:
         proof_dict["decision"] = json.loads(decision_proof.model_dump_json(exclude_none=True))
     if authorization_proof:
-        proof_dict["authorization"] = json.loads(authorization_proof.model_dump_json(exclude_none=True))
+        proof_dict["authorization"] = json.loads(authorization_proof.model_dump_json(exclude_none=True))  # noqa: E501
     if execution_proof:
         proof_dict["execution"] = json.loads(execution_proof.model_dump_json(exclude_none=True))
     if provider_evidence_proof:
-        proof_dict["provider_evidence"] = json.loads(provider_evidence_proof.model_dump_json(exclude_none=True))
+        proof_dict["provider_evidence"] = json.loads(provider_evidence_proof.model_dump_json(exclude_none=True))  # noqa: E501
     if outcome_proof:
         proof_dict["outcome"] = json.loads(outcome_proof.model_dump_json(exclude_none=True))
     if attribution_proof:
-        proof_dict["attribution"] = json.loads(attribution_proof.model_dump_json(exclude_none=True))
+        proof_dict["attribution"] = json.loads(attribution_proof.model_dump_json(exclude_none=True))  # noqa: E501
         
     fingerprint = compute_proof_fingerprint(proof_dict)
     

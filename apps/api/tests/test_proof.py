@@ -31,8 +31,10 @@ from app.models import (
 from app.models.razorpay import ProviderConfirmationStatus
 
 
+from typing import Generator, Any
+
 @pytest.fixture
-def db_session(test_settings: Settings) -> Session:
+def db_session(test_settings: Settings) -> Generator[Session, None, None]:
     engine = create_database_engine(test_settings)
     Base.metadata.create_all(engine)
     session_maker = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
@@ -46,7 +48,7 @@ def mock_case_id() -> uuid.UUID:
     return uuid.uuid4()
 
 
-def create_test_case(session, case_id: uuid.UUID, is_demo: bool = False) -> RecoveryCase:
+def create_test_case(session: Session, case_id: uuid.UUID, is_demo: bool = False) -> RecoveryCase:
     merchant = Merchant(name="Test")
     session.add(merchant)
     session.flush()
@@ -94,13 +96,13 @@ def create_test_case(session, case_id: uuid.UUID, is_demo: bool = False) -> Reco
 
 
 @pytest.mark.asyncio
-async def test_get_proof_404(client):
+async def test_get_proof_404(client: Any) -> None:
     response = await client.get(f"/api/recovery-cases/{uuid.uuid4()}/proof")
     assert response.status_code == 404
 
 
 @pytest.mark.asyncio
-async def test_proof_determinism():
+async def test_proof_determinism() -> None:
     record_1 = {
         "case_id": "123",
         "evidence_lane": "RAZORPAY_TEST_MODE",
@@ -141,7 +143,7 @@ async def test_proof_determinism():
 
 
 @pytest.mark.asyncio
-async def test_demo_case_proof(client, db_session, mock_case_id):
+async def test_demo_case_proof(client: Any, db_session: Session, mock_case_id: uuid.UUID) -> None:
     create_test_case(db_session, mock_case_id, is_demo=True)
     db_session.commit()
 
@@ -155,7 +157,7 @@ async def test_demo_case_proof(client, db_session, mock_case_id):
 
 
 @pytest.mark.asyncio
-async def test_full_triangulated_proof(client, db_session, mock_case_id):
+async def test_full_triangulated_proof(client: Any, db_session: Session, mock_case_id: uuid.UUID) -> None:
     case = create_test_case(db_session, mock_case_id, is_demo=False)
     # Convert to Razorpay mode for this test by mocking evidence as non-synthetic
     # We just need some real execution to make it not synthetic.
@@ -240,7 +242,7 @@ async def test_full_triangulated_proof(client, db_session, mock_case_id):
 
 
 @pytest.mark.asyncio
-async def test_legacy_rs_2_proof(client, db_session, mock_case_id):
+async def test_legacy_rs_2_proof(client: Any, db_session: Session, mock_case_id: uuid.UUID) -> None:
     case = create_test_case(db_session, mock_case_id, is_demo=False)
     
     decision = RecoveryDecisionRecord(

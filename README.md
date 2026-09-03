@@ -386,5 +386,13 @@ MIT
  
  # # #   R e c o v e r y   P r o o f   R e c o r d 
  
- R e c o v e r y I Q   f e a t u r e s   a   r e a d - o n l y   D e t e r m i n i s t i c   R e c o v e r y   P r o o f   R e c o r d   t h a t   a g g r e g a t e s   d e c i s i o n ,   e x e c u t i o n ,   o u t c o m e ,   a n d   a t t r i b u t i o n   e v i d e n c e   i n t o   a   s i n g l e   c a n o n i c a l   v i e w .   T h e   p r o o f   s y s t e m   u t i l i z e s   a   d e t e r m i n i s t i c   J S O N   s e r i a l i z a t i o n   a n d   S H A - 2 5 6   f i n g e r p r i n t i n g   m e c h a n i s m   t o   p r o v i d e   a   t r a n s p a r e n t   c h e c k s u m   o f   t h e   c a s e ' s   e v i d e n c e .  
+ R e c o v e r y I Q   f e a t u r e s   a   r e a d - o n l y   D e t e r m i n i s t i c   R e c o v e r y   P r o o f   R e c o r d   t h a t   a g g r e g a t e s   d e c i s i o n ,   e x e c u t i o n ,   o u t c o m e ,   a n d   a t t r i b u t i o n   e v i d e n c e   i n t o   a   s i n g l e   c a n o n i c a l   v i e w .   T h e   p r o o f   s y s t e m   u t i l i z e s   a   d e t e r m i n i s t i c   J S O N   s e r i a l i z a t i o n   a n d   S H A - 2 5 6   f i n g e r p r i n t i n g   m e c h a n i s m   t o   p r o v i d e   a   t r a n s p a r e n t   c h e c k s u m   o f   t h e   c a s e ' s   e v i d e n c e . 
  
+ 
+## Recovery Proof Record
+
+To address external audit requirements and maintain transparency, RecoveryIQ provides a Deterministic Recovery Proof Record. The Proof Record aggregates the independent components of a recovery lifecycle (decision, execution, outcome, attribution, and provider evidence) into a single read-only view. 
+
+The Proof Record does NOT use blockchain, cryptographic immutability, digital signatures, non-repudiation, or provider-signed proofs. It computes a SHA-256 fingerprint of the canonical non-secret included evidence fields. 
+
+The fingerprint changes when included canonical evidence fields change. Detecting a change requires comparison with a previously recorded fingerprint.

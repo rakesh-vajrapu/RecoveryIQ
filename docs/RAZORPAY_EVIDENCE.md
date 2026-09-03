@@ -263,10 +263,10 @@ A focused regression proves that a Payment Link created on an earlier date and p
 - [x] Created date preserved and Last Activity displayed separately
 - [x] No commit or push performed
 
- 
- # #   R e c o v e r y   P r o o f   R e c o r d 
- 
- T o   a d d r e s s   e x t e r n a l   a u d i t   r e q u i r e m e n t s   a n d   m a i n t a i n   t r a n s p a r e n c y ,   R e c o v e r y I Q   p r o v i d e s   a   D e t e r m i n i s t i c   R e c o v e r y   P r o o f   R e c o r d .   T h e   P r o o f   R e c o r d   a g g r e g a t e s   t h e   i n d e p e n d e n t   c o m p o n e n t s   o f   a   r e c o v e r y   l i f e c y c l e   ( d e c i s i o n ,   e x e c u t i o n ,   o u t c o m e ,   a t t r i b u t i o n ,   a n d   p r o v i d e r   e v i d e n c e )   i n t o   a   s i n g l e   r e a d - o n l y   v i e w .   
- 
- T h e   P r o o f   R e c o r d   d o e s   N O T   u s e   b l o c k c h a i n   o r   c r y p t o g r a p h i c   i m m u t a b i l i t y .   I t   c o m p u t e s   a   c a n o n i c a l ,   d e t e r m i n i s t i c   S H A - 2 5 6   f i n g e r p r i n t   f r o m   t h e   e v i d e n c e   f i e l d s .   T h e   f i n g e r p r i n t   s e r v e s   a s   a n   i n t e g r i t y   c h e c k s u m   o v e r   t h e   s p e c i f i c   f i e l d s   a n d   v a l u e s   s h o w n   i n   t h e   P r o o f   R e c o r d ,   m a k i n g   a n y   c h a n g e s   t o   t h e   u n d e r l y i n g   d a t a b a s e   i m m e d i a t e l y   a p p a r e n t   b y   a l t e r i n g   t h e   f i n g e r p r i n t .  
- 
+## Recovery Proof Record
+
+To address external audit requirements and maintain transparency, RecoveryIQ provides a Deterministic Recovery Proof Record. The Proof Record aggregates the independent components of a recovery lifecycle (decision, execution, outcome, attribution, and provider evidence) into a single read-only view. 
+
+The Proof Record does NOT use blockchain, cryptographic immutability, digital signatures, non-repudiation, or provider-signed proofs. It computes a SHA-256 fingerprint of the canonical non-secret included evidence fields. 
+
+The fingerprint changes when included canonical evidence fields change. Detecting a change requires comparison with a previously recorded fingerprint.
