@@ -506,5 +506,7 @@
         "mean_advantage_vs_second_best_minor": 9132.958072420364
       }
     }
-  }
+  },
+  "evidence_status": "INVALIDATED / EXPLORATORY",
+  "invalidation_reason": "MULTI_ACTION_V1_EXPLORATORY_INVALIDATED_FOR_SEALED_CLAIMS - The diagnostic implementation was modified after the registered diagnostic seeds had already been executed and inspected. Therefore those seeds are not used as sealed final diagnostic evidence. This is procedural, not due to poor performance."
 }
