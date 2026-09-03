@@ -8,6 +8,30 @@
 
 > **Evidence note:** All portfolio evaluation results are **simulated** and do not represent Razorpay production revenue. Razorpay integration evidence uses **Test Mode only**. **No real money is moved.**
 
+![FastAPI · Python 3.12](https://img.shields.io/badge/Backend-FastAPI_·_Python_3.12-009688?style=flat-square&logo=fastapi)
+![Next.js 16 · React 19](https://img.shields.io/badge/Frontend-Next.js_16_·_React_19-000000?style=flat-square&logo=nextdotjs)
+![LightGBM V2 · Calibrated](https://img.shields.io/badge/ML-LightGBM_V2_·_Calibrated-FF9900?style=flat-square)
+![Optimization](https://img.shields.io/badge/Optimization-Expected_Recovery_Value-0052CC?style=flat-square)
+![Policy](https://img.shields.io/badge/Policy-Sequential_Policy_V2-0052CC?style=flat-square)
+![Razorpay Test Mode](https://img.shields.io/badge/Provider-Razorpay_Test_Mode-0B58C6?style=flat-square)
+![Critical Financial Path Gate](https://img.shields.io/badge/Verification-Critical_Financial_Path_Gate-2EA043?style=flat-square)
+![27,406 SEALED · SIMULATED Episodes](https://img.shields.io/badge/Evaluation-27,406_SEALED_·_SIMULATED_Episodes-2EA043?style=flat-square)
+
+## 🎯 Judge & Reviewer Snapshot
+
+| Pillar | RecoveryIQ |
+|---|---|
+| **Core Value Proposition** | Recovers failed recurring payments by choosing the highest-value safe intervention rather than blindly retrying. |
+| **Decision Intelligence** | Action-conditioned LightGBM V2 estimates calibrated `P(recovery | action, context)` for feasible interventions. |
+| **Economic Optimization** | Expected Recovery Value balances recovery probability, payment value, intervention cost, and customer friction. |
+| **Financial Authority** | Deterministic Sequential Policy V2 — not the LLM — authorizes, schedules, escalates, filters, or stops recovery actions. |
+| **Provider Verification** | Signed Razorpay Test Mode webhooks authenticate incoming provider events; Provider Truth Triangulation independently checks Payment Link state before a newly triangulated paid event is confirmed. |
+| **Accounting Safety** | Exactly-once LOCAL outcome and recovery attribution semantics backed by durable idempotency/uniqueness protections. |
+| **Evidence** | 27,406 SEALED · SIMULATED episodes; 75.97% recovery; ₹4.71 Cr simulated net recovery; 0 policy violations. |
+| **AI Boundary** | LLM is explanation-only and has zero financial execution authority. |
+
+**MODEL PREDICTS → ERV OPTIMIZES → POLICY AUTHORIZES → PROVIDER VERIFIES → AI EXPLAINS**
+
 ---
 
 ## 💸 The Business Problem
@@ -19,8 +43,6 @@ Failures can come from customer liquidity, expired instruments, mandate issues, 
 RecoveryIQ separates intelligence from financial authority:
 
 **Detect → Predict → Optimize → Guard → Execute → Verify → Attribute**
-
-The model predicts what may work. **ERV** evaluates what is economically worthwhile. The **deterministic policy** decides what is allowed. **Razorpay provider evidence** verifies what actually happened. The **LLM only explains**.
 
 ---
 
