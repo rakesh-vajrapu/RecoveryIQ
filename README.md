@@ -32,7 +32,7 @@ RecoveryIQ is an autonomous revenue recovery control plane built to avoid naive 
 
 It uses event-driven payment-failure correlation and an **Action-Conditioned LightGBM V2 Probability Engine** to estimate `P(recovery | action, context)` under candidate actions. **Expected Recovery Value (ERV) Optimization** ranks interventions by balancing calibrated recovery probability, recoverable payment value, intervention cost, and customer friction cost.
 
-Every recommendation passes through **Deterministic Sequential Policy Guardrails**, which enforces limits on retries, contacts, interventions, and recovery horizon. Supported actions execute through Razorpay Test Mode, where **Signed HMAC Webhook Verification** (raw-body HMAC SHA-256) establishes provider truth. **Idempotency Guardrails** and **Exactly-Once Local Recovery Attribution** ensure database uniqueness constraints protect local outcomes and attribution from duplication.
+Every recommendation passes through **Deterministic Sequential Policy Guardrails**, which enforces limits on retries, contacts, interventions, and recovery horizon. Supported actions execute through Razorpay Test Mode, where **Signed HMAC Webhook Verification** (raw-body HMAC SHA-256) authenticates the webhook; Provider Truth Triangulation independently fetches provider state before a triangulated Payment Link recovery is confirmed. **Idempotency Guardrails** and **Exactly-Once local outcome and recovery attribution semantics** ensure database uniqueness constraints protect local outcomes and attribution from duplication.
 
 The LLM remains strictly **explanation-only** and has **NO FINANCIAL EXECUTION AUTHORITY**.
 
@@ -48,7 +48,7 @@ The LLM remains strictly **explanation-only** and has **NO FINANCIAL EXECUTION A
 | **Deterministic Sequential Policy Guardrails** | Enforces recovery horizon, intervention, retry, contact, support, and stopping limits |
 | **Idempotency Guardrails** | Durable execution reservations and database `UNIQUE` constraints prevent duplicate local financial effects |
 | **Signed HMAC Webhook Verification** | Razorpay Test Mode webhook signatures are validated against the raw request body before processing |
-| **Exactly-Once Local Recovery Attribution** | Verified provider outcomes map to at most one local `RecoveryAttribution` |
+| **Exactly-Once local outcome and recovery attribution semantics** | Verified provider outcomes map to at most one local `RecoveryAttribution` |
 | **Human-in-the-Loop Escalation** | Insufficient model support or missing context safely routes to `HUMAN_REVIEW` |
 | **Adversarial Concurrency Verification** | Isolated 10-way webhook, executor, and success races verify duplicate protection |
 | **Auditable Decision Trace** | Decision → execution plan → execution → provider outcome → attribution are separately persisted and auditable |
@@ -98,9 +98,9 @@ The sealed evaluation of RecoveryIQ Sequential Policy V2 produced the following 
 | **Simulated Net Recovery Value** | ₹4,71,96,320.70 | SEALED · SIMULATED |
 | **Incremental Simulated Value vs Reminder + Retry** | +₹1,44,07,440.70 | SEALED · SIMULATED |
 | **Policy Violations** | 0 | SEALED · SIMULATED |
-| **Razorpay Test Mode Verified Recovery** | ₹2.00 | RAZORPAY · TEST MODE |
-| **10-way Webhook Race** | 10 → 1 logical event | ISOLATED LOCAL |
-| **10-way Execution Race** | 10 → 1 fake-provider call | ISOLATED LOCAL |
+| **Razorpay Test Mode** | Historical recovery: ₹2.00 (Provider Fetch: NOT CAPTURED) | RAZORPAY · TEST MODE |
+| **10-way Webhook Race** | 10 → 1 logical event | ISOLATED LOCAL VERIFICATION |
+| **10-way Execution Race** | 10 → 1 fake-provider call | ISOLATED LOCAL VERIFICATION |
 
 ---
 
@@ -230,9 +230,9 @@ Autonomous Sequential Policy V2 behavior is evaluated on complete sealed simulat
 - provider-event deduplication,
 - order-ID correlation fallback,
 - external outcome persistence,
-- **Exactly-Once Local Recovery Attribution**.
+- **Exactly-Once local outcome and recovery attribution semantics**.
 
-**Verified Razorpay Test Mode recovery: ₹2.00. No real money moved.**
+**Historical recovery evidence: ₹2.00. Provider Fetch: NOT CAPTURED. No real money moved.**
 
 [Read the complete provider evidence →](docs/RAZORPAY_EVIDENCE.md)
 
@@ -351,7 +351,7 @@ uv run mypy app tests
 uv run pytest
 ```
 
-Current backend suite: **87 tests passed**.
+Current backend suite: **97 tests passed**.
 
 ### Frontend
 
@@ -380,25 +380,27 @@ npm run build
 
 ---
 
-## License
 
-MIT
- 
- # # #   R e c o v e r y   P r o o f   R e c o r d 
- 
- R e c o v e r y I Q   f e a t u r e s   a   r e a d - o n l y   D e t e r m i n i s t i c   R e c o v e r y   P r o o f   R e c o r d   t h a t   a g g r e g a t e s   d e c i s i o n ,   e x e c u t i o n ,   o u t c o m e ,   a n d   a t t r i b u t i o n   e v i d e n c e   i n t o   a   s i n g l e   c a n o n i c a l   v i e w .   T h e   p r o o f   s y s t e m   u t i l i z e s   a   d e t e r m i n i s t i c   J S O N   s e r i a l i z a t i o n   a n d   S H A - 2 5 6   f i n g e r p r i n t i n g   m e c h a n i s m   t o   p r o v i d e   a   t r a n s p a r e n t   c h e c k s u m   o f   t h e   c a s e ' s   e v i d e n c e . 
- 
- 
-## Recovery Proof Record
+## 📜 Recovery Proof Record
 
-To address external audit requirements and maintain transparency, RecoveryIQ provides a Deterministic Recovery Proof Record. The Proof Record aggregates the independent components of a recovery lifecycle (decision, execution, outcome, attribution, and provider evidence) into a single read-only view. 
-
-The Proof Record does NOT use blockchain, cryptographic immutability, digital signatures, non-repudiation, or provider-signed proofs. It computes a SHA-256 fingerprint of the canonical non-secret included evidence fields. 
+Recovery Proof Record is a deterministic read-only projection of persisted decision, execution, provider-outcome, and attribution evidence.
 
 The fingerprint changes when included canonical evidence fields change. Detecting a change requires comparison with a previously recorded fingerprint.
 
-## Critical Financial Path Gate
+---
 
-Critical Financial Path Gate — CI explicitly exercises authentication, idempotency, provider-truth reconciliation, outcome uniqueness, attribution uniqueness, and fail-closed payment-state transitions.
+## 🔐 Critical Financial Path Gate
 
-These are isolated local verification tests using fake/provider fixtures; they are not live Razorpay Test Mode transactions.
+| Metric | Value | Evidence Lane |
+| --- | --- | --- |
+| **Named Financial Invariants** | 12 | ISOLATED LOCAL VERIFICATION |
+| **Unique Pytest Selectors** | 20 | ISOLATED LOCAL VERIFICATION |
+| **Tests Executed & Passed** | 24 / 24 | ISOLATED LOCAL VERIFICATION |
+
+Protected areas include webhook authenticity, provider event idempotency, execution reservation, outcome/attribution uniqueness, crash ambiguity, non-success states, subscription.charged, and read-only proof behavior.
+
+---
+
+## License
+
+MIT

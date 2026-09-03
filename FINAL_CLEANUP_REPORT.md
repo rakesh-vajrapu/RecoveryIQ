@@ -1,3 +1,5 @@
+> **HISTORICAL SNAPSHOT — superseded by the current README, current CI, and subsequent commits.**
+
 # RecoverIQ Final Cleanup Report
 
 Cleanup date: 2026-08-23 (Asia/Calcutta)
