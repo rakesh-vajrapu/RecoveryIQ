@@ -25,6 +25,7 @@ from recoveriq_simulator.scenario import ScenarioGenerator
 ARTIFACT_TYPE = "post_hoc_simulated_counterfactual_diagnostic"
 DIAGNOSTIC_VERSION = "2.0.0"
 
+
 def run_paired_diagnostic(
     seeds: tuple[int, ...],
     baselines: FrozenSequentialBaselines,
@@ -46,7 +47,7 @@ def run_paired_diagnostic(
     cf_best_recoveries = 0
     factual_recovered_value = 0
     cf_best_recovered_value = 0
-    
+
     total_regret = 0
     best_count = 0
     tied_count = 0
@@ -61,7 +62,19 @@ def run_paired_diagnostic(
     method_breakdown: dict[str, dict[str, Any]] = {}
     index_breakdown: dict[str, dict[str, Any]] = {}
 
-    def _track(dimension: dict[str, dict[str, Any]], key: str, is_factual_recovery: bool, is_cf_recovery: bool, factual_val: int, cf_val: int, regret: int, best: bool, tied: bool, suboptimal: bool, adv2: int):
+    def _track(
+        dimension: dict[str, dict[str, Any]],
+        key: str,
+        is_factual_recovery: bool,
+        is_cf_recovery: bool,
+        factual_val: int,
+        cf_val: int,
+        regret: int,
+        best: bool,
+        tied: bool,
+        suboptimal: bool,
+        adv2: int,
+    ):
         if key not in dimension:
             dimension[key] = {
                 "eligible_decisions": 0,
@@ -75,7 +88,7 @@ def run_paired_diagnostic(
                 "suboptimal_count": 0,
                 "advantage_vs_second_best_minor": 0,
             }
-        
+
         dimension[key]["eligible_decisions"] += 1
         dimension[key]["factual_recoveries"] += int(is_factual_recovery)
         dimension[key]["counterfactual_recoveries"] += int(is_cf_recovery)
@@ -99,13 +112,17 @@ def run_paired_diagnostic(
             active = [rt for rt in runtimes if rt["state"].termination is EpisodeTermination.ACTIVE]
             if not active:
                 break
-            
+
             scoring_rows = []
             for rt in active:
-                candidates = generate_sequential_candidates(rt["template"], rt["state"], config.resolved_costs)
+                candidates = generate_sequential_candidates(
+                    rt["template"], rt["state"], config.resolved_costs
+                )
                 rt["candidates"] = candidates
-                scoring_rows.extend((rt["template"], rt["state"], candidate) for candidate in candidates)
-            
+                scoring_rows.extend(
+                    (rt["template"], rt["state"], candidate) for candidate in candidates
+                )
+
             batch_scores = scorer.score(scoring_rows) if scoring_rows else []
             score_offset = 0
 
@@ -116,68 +133,73 @@ def run_paired_diagnostic(
                 score_offset += len(candidates)
 
                 decision = engine.decide(rt["state"], scores)
-                
+
                 # Check eligibility
                 if decision.kind != SequentialDecisionKind.ACTION or not decision.selected:
                     excluded_decisions += 1
                     rt["state"] = rt["state"].model_copy(
                         update={
-                            "termination": EpisodeTermination.HUMAN_REVIEW if decision.kind == SequentialDecisionKind.HUMAN_REVIEW else EpisodeTermination.STOP
+                            "termination": EpisodeTermination.HUMAN_REVIEW
+                            if decision.kind == SequentialDecisionKind.HUMAN_REVIEW
+                            else EpisodeTermination.STOP
                         }
                     )
                     continue
-                
+
                 # Filter to feasible candidates (supported by the model)
                 feasible_scores = [s for s in scores if s.supported]
                 feasible_candidates = [s.candidate for s in feasible_scores]
-                
+
                 if len(feasible_candidates) < 2:
                     # Exclude if there are not at least 2 feasible candidates
                     excluded_decisions += 1
                     rt["state"] = rt["state"].model_copy(
-                        update={
-                            "termination": EpisodeTermination.STOP
-                        }
+                        update={"termination": EpisodeTermination.STOP}
                     )
                     continue
 
                 eligible_decisions += 1
                 selected_candidate = decision.selected.candidate
-                feasible_alternatives_sum += (len(feasible_candidates) - 1)
-                
+                feasible_alternatives_sum += len(feasible_candidates) - 1
+
                 # Evaluate all feasible candidates
                 evaluations = []
                 for cand in feasible_candidates:
                     outcome = oracle.execute(rt["template"], rt["state"], cand)
                     amount = rt["template"].observation.amount_minor if outcome.recovered else 0
-                    cost = cand.recovery_action.intervention_cost_minor + cand.recovery_action.friction_cost_minor
+                    cost = (
+                        cand.recovery_action.intervention_cost_minor
+                        + cand.recovery_action.friction_cost_minor
+                    )
                     net_val = amount - cost
-                    evaluations.append({
-                        "candidate": cand,
-                        "outcome": outcome,
-                        "net_val": net_val,
-                        "is_selected": cand.label == selected_candidate.label
-                    })
-                
+                    evaluations.append(
+                        {
+                            "candidate": cand,
+                            "outcome": outcome,
+                            "net_val": net_val,
+                            "is_selected": cand.label == selected_candidate.label,
+                        }
+                    )
+
                 # Factual Outcome
                 factual_eval = next(e for e in evaluations if e["is_selected"])
                 factual_val = factual_eval["net_val"]
-                
+
                 # Counterfactual Outcomes (excluding the selected one)
                 cf_evaluations = [e for e in evaluations if not e["is_selected"]]
                 best_cf = max(cf_evaluations, key=lambda x: x["net_val"])
-                
+
                 # Regret and Advantage
                 regret = max(0, best_cf["net_val"] - factual_val)
                 total_regret += regret
-                
+
                 # Second best alternative for advantage vs second-best
                 sorted_cfs = sorted(cf_evaluations, key=lambda x: x["net_val"], reverse=True)
                 # the best alternative is sorted_cfs[0]. The second best *feasible alternative* is sorted_cfs[1] if it exists, else we just use best_cf
                 second_best_cf = sorted_cfs[1] if len(sorted_cfs) > 1 else sorted_cfs[0]
                 adv2 = factual_val - second_best_cf["net_val"]
                 advantage_vs_second_best_sum += adv2
-                
+
                 if factual_val > best_cf["net_val"]:
                     best_count += 1
                     is_best, is_tied, is_sub = True, False, False
@@ -198,19 +220,69 @@ def run_paired_diagnostic(
                 cf_best_recoveries += int(best_cf["outcome"].recovered)
                 factual_recovered_value += factual_val
                 cf_best_recovered_value += best_cf["net_val"]
-                
+
                 # Breakdowns
                 action_label = selected_candidate.label
                 reason = rt["template"].observation.failure_reason.value
                 method = rt["template"].observation.payment_method.value
                 dec_idx = str(rt["state"].decision_index)
 
-                _track(action_breakdown, action_label, factual_eval["outcome"].recovered, best_cf["outcome"].recovered, factual_val, best_cf["net_val"], regret, is_best, is_tied, is_sub, adv2)
-                _track(reason_breakdown, reason, factual_eval["outcome"].recovered, best_cf["outcome"].recovered, factual_val, best_cf["net_val"], regret, is_best, is_tied, is_sub, adv2)
-                _track(method_breakdown, method, factual_eval["outcome"].recovered, best_cf["outcome"].recovered, factual_val, best_cf["net_val"], regret, is_best, is_tied, is_sub, adv2)
-                _track(index_breakdown, dec_idx, factual_eval["outcome"].recovered, best_cf["outcome"].recovered, factual_val, best_cf["net_val"], regret, is_best, is_tied, is_sub, adv2)
+                _track(
+                    action_breakdown,
+                    action_label,
+                    factual_eval["outcome"].recovered,
+                    best_cf["outcome"].recovered,
+                    factual_val,
+                    best_cf["net_val"],
+                    regret,
+                    is_best,
+                    is_tied,
+                    is_sub,
+                    adv2,
+                )
+                _track(
+                    reason_breakdown,
+                    reason,
+                    factual_eval["outcome"].recovered,
+                    best_cf["outcome"].recovered,
+                    factual_val,
+                    best_cf["net_val"],
+                    regret,
+                    is_best,
+                    is_tied,
+                    is_sub,
+                    adv2,
+                )
+                _track(
+                    method_breakdown,
+                    method,
+                    factual_eval["outcome"].recovered,
+                    best_cf["outcome"].recovered,
+                    factual_val,
+                    best_cf["net_val"],
+                    regret,
+                    is_best,
+                    is_tied,
+                    is_sub,
+                    adv2,
+                )
+                _track(
+                    index_breakdown,
+                    dec_idx,
+                    factual_eval["outcome"].recovered,
+                    best_cf["outcome"].recovered,
+                    factual_val,
+                    best_cf["net_val"],
+                    regret,
+                    is_best,
+                    is_tied,
+                    is_sub,
+                    adv2,
+                )
 
-                rt["state"] = advance_episode_state(rt["template"], rt["state"], selected_candidate, factual_eval["outcome"])
+                rt["state"] = advance_episode_state(
+                    rt["template"], rt["state"], selected_candidate, factual_eval["outcome"]
+                )
 
     def _compute_derived(node: dict[str, Any]) -> None:
         eligible = node.get("eligible_decisions") or node.get("eligible_paired_decisions")
@@ -222,7 +294,9 @@ def run_paired_diagnostic(
         node["fraction_best"] = node["best_count"] / eligible
         node["fraction_tied"] = node["tied_count"] / eligible
         node["fraction_suboptimal"] = node["suboptimal_count"] / eligible
-        node["mean_advantage_vs_second_best_minor"] = node["advantage_vs_second_best_minor"] / eligible
+        node["mean_advantage_vs_second_best_minor"] = (
+            node["advantage_vs_second_best_minor"] / eligible
+        )
 
     def _compute_breakdowns(breakdown: dict[str, dict[str, Any]]) -> None:
         for val in breakdown.values():
@@ -237,7 +311,9 @@ def run_paired_diagnostic(
         "total_decisions": total_decisions,
         "eligible_paired_decisions": eligible_decisions,
         "excluded_decisions": excluded_decisions,
-        "mean_feasible_alternatives": feasible_alternatives_sum / eligible_decisions if eligible_decisions else 0,
+        "mean_feasible_alternatives": feasible_alternatives_sum / eligible_decisions
+        if eligible_decisions
+        else 0,
         "factual_recoveries": factual_recoveries,
         "counterfactual_recoveries": cf_best_recoveries,
         "factual_net_value_minor": factual_recovered_value,
@@ -247,10 +323,12 @@ def run_paired_diagnostic(
         "tied_count": tied_count,
         "suboptimal_count": suboptimal_count,
         "advantage_vs_second_best_minor": advantage_vs_second_best_sum,
-        "value_capture_fraction": value_capture_num / value_capture_den if value_capture_den > 0 else 1.0,
+        "value_capture_fraction": value_capture_num / value_capture_den
+        if value_capture_den > 0
+        else 1.0,
     }
     _compute_derived(headline)
-    
+
     return {
         "artifact_type": ARTIFACT_TYPE,
         "diagnostic_version": DIAGNOSTIC_VERSION,
@@ -269,7 +347,7 @@ def run_paired_diagnostic(
             "Matched outcomes are generated inside RecoveryIQ's frozen simulator.",
             "This is not production causal evidence.",
             "Simulator 0.3.0 does not model natural recovery during WAIT.",
-            "This measures policy action quality inside the hand-designed simulator."
+            "This measures policy action quality inside the hand-designed simulator.",
         ],
         "metrics": headline,
         "breakdown": {
@@ -277,5 +355,5 @@ def run_paired_diagnostic(
             "failure_reason": reason_breakdown,
             "payment_method": method_breakdown,
             "decision_index": index_breakdown,
-        }
+        },
     }

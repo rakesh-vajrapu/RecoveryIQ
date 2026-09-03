@@ -1,6 +1,8 @@
 import json
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent / "simulator"))
+
 from recoveriq_simulator.seeds import FINAL_DIAGNOSTIC_SEEDS
 from recoveriq_sequential_policy.models import FrozenSequentialBaselines
 from recoveriq_policy_evaluation.diagnostic import run_paired_diagnostic
