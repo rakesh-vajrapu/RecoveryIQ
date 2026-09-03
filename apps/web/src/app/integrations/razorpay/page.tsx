@@ -80,7 +80,12 @@ function TimelineAndEvidence({ data }: { data: NonNullable<RazorpayEvidence["sel
             <p className="eyebrow">Sanitized Provider Evidence</p>
             <h2 className="mt-1.5 text-base font-semibold">Redacted Webhook Evidence</h2>
           </div>
-          <span className="rounded bg-emerald-500/10 px-2 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">Read Only</span>
+          <div className="flex items-center gap-2">
+            <span className="rounded bg-emerald-500/10 px-2 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">Read Only</span>
+            <Button variant="outline" size="sm" className="h-7 text-xs" nativeButton={false} render={<Link href={`/recovery-cases/${data.case_id}`} />}>
+              View Recovery Proof
+            </Button>
+          </div>
         </div>
         
         {data.provider_truth && (

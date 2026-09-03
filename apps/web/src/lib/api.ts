@@ -12,6 +12,30 @@ export type AuditEvent = { id: string; created_at: string; actor: string; event_
 export type RazorpayStatus = { integration_version: string; execution_environment: string; provider_mode: "test"; api_configured: boolean; webhook_configured: boolean; live_mode_available: false; capabilities: Record<string, string> };
 export type DecisionExplanation = { summary: string; factors: string[]; confidence: number; limitations: string[] };
 
+export type CaseProof = { status: string; amount_minor: number; currency: string; created_at: string; recovered_at: string | null };
+export type DecisionProof = { decision_id: string; decision_kind: string; selected_action: string | null; model_version: string | null; policy_version: string | null; policy_config_hash: string | null; decision_recorded_at: string };
+export type AuthorizationProof = { initiator: string; provider_capability: string; execution_mode: string; autonomous: boolean };
+export type ExecutionProof = { execution_id: string; provider: string; provider_entity_type: string; provider_entity_reference: string; execution_status: string; created_at: string };
+export type ProviderEvidenceProof = { webhook_received: boolean; webhook_signature_verified: boolean; provider_event_id: string | null; provider_confirmation_status: string; provider_confirmation_method: string | null; provider_confirmed_at: string | null; amount_verified: boolean | null; currency_verified: boolean | null; reference_verified: boolean | null };
+export type OutcomeProof = { external_outcome_id: string; provider_payment_reference: string | null; outcome: string; recorded_at: string };
+export type AttributionProof = { attribution_id: string; attributed: boolean; amount_minor: number; currency: string; recorded_at: string; local_semantics: string };
+export type IntegrityProof = { canonicalization_version: string; algorithm: string; fingerprint: string };
+
+export type RecoveryProofRecord = {
+  proof_version: string;
+  case_id: string;
+  evidence_lane: string;
+  case: CaseProof;
+  decision?: DecisionProof;
+  authorization?: AuthorizationProof;
+  execution?: ExecutionProof;
+  provider_evidence?: ProviderEvidenceProof;
+  outcome?: OutcomeProof;
+  attribution?: AttributionProof;
+  integrity: IntegrityProof;
+  proof_completeness: string;
+};
+
 export type StrategyEvaluation = { id: string; name: string; recovered_count: number; recovery_rate: number; simulated_net_value_minor: number; contacts: number; retries: number; human_reviews: number; policy_violations: number };
 export type EvaluationSummary = { evidence_type: string; evaluation_name: string; episodes: number; recoveryiq: StrategyEvaluation; primary_baseline: StrategyEvaluation; incremental: { recovery_rate_pp: number; simulated_net_value_minor: number }; strategies: StrategyEvaluation[] };
 
@@ -56,6 +80,11 @@ export async function getRecoveryCase(id: string, signal?: AbortSignal): Promise
   const payload = await request(`/api/recovery-cases/${encodeURIComponent(id)}`, { signal });
   if (!isRecoveryCaseDetail(payload)) throw invalidData("recovery case detail");
   return payload;
+}
+export async function getRecoveryProof(id: string, signal?: AbortSignal): Promise<RecoveryProofRecord> {
+  const payload = await request(`/api/recovery-cases/${encodeURIComponent(id)}/proof`, { signal });
+  if (!isRecord(payload) || typeof payload.proof_version !== "string") throw invalidData("recovery proof record");
+  return payload as RecoveryProofRecord;
 }
 export async function getSimulatedDecisionExample(signal?: AbortSignal): Promise<RecoveryCaseDetail> {
   const payload = await request("/api/evaluation/simulated-decision-example", { signal });

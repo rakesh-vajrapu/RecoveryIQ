@@ -11,6 +11,7 @@ import { EmptyPanel, ErrorPanel, LoadingPanel } from "@/components/ui/state-pane
 import { useApiResource } from "@/hooks/use-api-resource";
 import { createTestPaymentLink, errorMessage, getCaseExplanation, getRecoveryCase, type DecisionExplanation, type ExternalExecution, type RecoveryCaseDetail } from "@/lib/api";
 import { formatDate, formatMoney, shortId, titleCase } from "@/lib/format";
+import { RecoveryProof } from "@/components/recovery-proof";
 
 export function RecoveryCaseDetailView({ id, simulatedCase }: { id?: string; simulatedCase?: RecoveryCaseDetail }) {
   const load = useCallback(async (signal: AbortSignal) => {
@@ -276,6 +277,8 @@ function CaseContent({ recoveryCase, onRefresh, isSimulated }: { recoveryCase: R
       )}
 
       <ExplanationCard caseId={recoveryCase.id} hasDecision={Boolean(latestDecision)} isSimulated={isSimulated} />
+
+      <RecoveryProof caseId={recoveryCase.id} />
     </div>
   );
 }
