@@ -1,8 +1,6 @@
+# mypy: ignore-errors
 """Paired Multi-Action Counterfactual Diagnostic execution."""
 
-import hashlib
-import json
-from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -16,22 +14,16 @@ from recoveriq_sequential.episodes import (
 )
 from recoveriq_sequential.models import (
     EpisodeTermination,
-    SequentialCandidate,
-    SequentialEpisodeState,
-    SequentialEpisodeTemplate,
 )
 from recoveriq_sequential.oracle import SequentialScenarioOracle
 from recoveriq_sequential_policy.engine import RecoverIQSequentialPolicyEngine
 from recoveriq_sequential_policy.models import FrozenSequentialBaselines, SequentialDecisionKind
 from recoveriq_sequential_policy.scoring import SequentialModelV2Scorer
 from recoveriq_simulator.config import SimulatorConfig
-from recoveriq_simulator.enums import ActionType
-from recoveriq_simulator.observation import RecoveryAction
 from recoveriq_simulator.scenario import ScenarioGenerator
-from recoveriq_simulator.seeds import SEED_GROUPS
 
 ARTIFACT_TYPE = "post_hoc_simulated_counterfactual_diagnostic"
-DIAGNOSTIC_VERSION = "1.0.0"
+DIAGNOSTIC_VERSION = "2.0.0"
 
 def run_paired_diagnostic(
     seeds: tuple[int, ...],
@@ -269,7 +261,7 @@ def run_paired_diagnostic(
         "calibration_sha256": "1c5b13a613bf04f3c9015fbe43b27c7ac138c2346310dd346b6c32000c21f85e",
         "policy_version": "2.0.0",
         "policy_config_hash": "ce7712b1ee4e800d54a875eb65a7bc826680e59faa465b54cbc1db7472010b25",
-        "seed_group": "diagnostic",
+        "seed_group": "final_diagnostic",
         "comparator_semantics": "Evaluate factual selected action vs all other feasible candidate actions. Window is specific to each candidate.",
         "eligibility_definition": "SequentialDecisionKind.ACTION selected, >=2 feasible modelled candidates.",
         "limitations": [

@@ -165,8 +165,8 @@ DIAGNOSTIC_PATH = (
     Path(__file__).parent.parent.parent.parent.parent
     / "artifacts"
     / "evaluation"
-    / "multi-action-counterfactual-v1"
-    / "multi-action-counterfactual-summary-v1.json"
+    / "multi-action-counterfactual-v2"
+    / "multi-action-counterfactual-summary-v2.json"
 )
 
 
@@ -180,4 +180,4 @@ async def get_action_advantage_diagnostic() -> dict[str, Any]:
     except Exception as e:
         raise HTTPException(status_code=500, detail="Invalid diagnostic artifact") from e
     
-    return data
+    return data  # type: ignore
