@@ -45,6 +45,7 @@ def db_session(test_settings: Settings) -> Generator[Session, None, None]:
         session.rollback()
     # Let conftest drop_all handle cleanup.
 
+
 @pytest.fixture
 def mock_case_id() -> uuid.UUID:
     return uuid.uuid4()
@@ -65,18 +66,19 @@ def create_test_case(session: Session, case_id: uuid.UUID, is_demo: bool = False
         subscription_id=uuid.uuid4(),  # dummy, would normally need real sub
         amount_minor=1000,
         status="failed",
-        external_id="demo_recoveriq_123" if is_demo else "pay_123"
+        external_id="demo_recoveriq_123" if is_demo else "pay_123",
     )
     # mock subscription id
     from app.models import Subscription
+
     sub = Subscription(merchant_id=merchant.id, customer_id=customer.id, status="active")
     session.add(sub)
     session.flush()
     payment.subscription_id = sub.id
-    
+
     session.add(payment)
     session.flush()
-    
+
     payment_attempt = PaymentAttempt(
         payment_id=payment.id,
         status="failed",
@@ -90,7 +92,7 @@ def create_test_case(session: Session, case_id: uuid.UUID, is_demo: bool = False
         id=case_id,
         payment_id=payment.id,
         status=RecoveryCaseStatus.RECOVERED,
-        correlation_id=uuid.uuid4()
+        correlation_id=uuid.uuid4(),
     )
     session.add(case)
     session.flush()
@@ -130,16 +132,16 @@ async def test_proof_determinism() -> None:
         "case_id": "123",
         "evidence_lane": "RAZORPAY_TEST_MODE",
         "case": {"status": "RECOVERED"},
-        "integrity": {"some": "data"}  # should be excluded
+        "integrity": {"some": "data"},  # should be excluded
     }
     assert compute_proof_fingerprint(record_1) == compute_proof_fingerprint(record_4)
-    
+
     # Check nulls are omitted and deterministic
     record_5 = {
         "case_id": "123",
         "evidence_lane": "RAZORPAY_TEST_MODE",
         "case": {"status": "RECOVERED"},
-        "outcome": None
+        "outcome": None,
     }
     assert compute_proof_fingerprint(record_1) == compute_proof_fingerprint(record_5)
 
@@ -159,12 +161,14 @@ async def test_demo_case_proof(client: Any, db_session: Session, mock_case_id: u
 
 
 @pytest.mark.asyncio
-async def test_full_triangulated_proof(client: Any, db_session: Session, mock_case_id: uuid.UUID) -> None:  # noqa: E501
+async def test_full_triangulated_proof(
+    client: Any, db_session: Session, mock_case_id: uuid.UUID
+) -> None:
     case = create_test_case(db_session, mock_case_id, is_demo=False)
     # Convert to Razorpay mode for this test by mocking evidence as non-synthetic
     # We just need some real execution to make it not synthetic.
     # To make it RAZORPAY_TEST_MODE, we need an Execution
-    
+
     decision = RecoveryDecisionRecord(
         recovery_case_id=case.id,
         decision_key="dec_1",
@@ -174,18 +178,18 @@ async def test_full_triangulated_proof(client: Any, db_session: Session, mock_ca
     )
     db_session.add(decision)
     db_session.flush()
-    
+
     plan = RecoveryExecutionPlan(
         recovery_case_id=case.id,
         recovery_decision_id=decision.id,
         action="CREATE_PAYMENT_LINK",
         capability=ExecutionCapability.REAL_TEST_EXECUTION,
         initiator=ExecutionInitiator.POLICY,
-        rationale="rat"
+        rationale="rat",
     )
     db_session.add(plan)
     db_session.flush()
-    
+
     exec_record = ExternalExecution(
         recovery_case_id=case.id,
         execution_plan_id=plan.id,
@@ -197,17 +201,17 @@ async def test_full_triangulated_proof(client: Any, db_session: Session, mock_ca
         amount_minor=1000,
     )
     db_session.add(exec_record)
-    
+
     webhook = ExternalWebhookEvent(
         provider_event_id="ev_1",
         event_type="payment_link.paid",
         payload_sha256="hash",
         provider_confirmation_status=ProviderConfirmationStatus.CONFIRMED,
-        provider_confirmation_method="PAYMENT_LINK_FETCH"
+        provider_confirmation_method="PAYMENT_LINK_FETCH",
     )
     db_session.add(webhook)
     db_session.flush()
-    
+
     outcome = ExternalOutcome(
         recovery_case_id=case.id,
         external_execution_id=exec_record.id,
@@ -215,11 +219,11 @@ async def test_full_triangulated_proof(client: Any, db_session: Session, mock_ca
         status=ExternalOutcomeStatus.PAID,
         amount_minor=1000,
         currency="INR",
-        occurred_at=datetime.now(UTC)
+        occurred_at=datetime.now(UTC),
     )
     db_session.add(outcome)
     db_session.flush()
-    
+
     attribution = RecoveryAttribution(
         recovery_case_id=case.id,
         external_execution_id=exec_record.id,
@@ -228,10 +232,10 @@ async def test_full_triangulated_proof(client: Any, db_session: Session, mock_ca
         amount_minor=1000,
         currency="INR",
         occurred_at=datetime.now(UTC),
-        attribution_source="PAYMENT_LINK_PAID"
+        attribution_source="PAYMENT_LINK_PAID",
     )
     db_session.add(attribution)
-    
+
     db_session.commit()
 
     response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
@@ -246,7 +250,7 @@ async def test_full_triangulated_proof(client: Any, db_session: Session, mock_ca
 @pytest.mark.asyncio
 async def test_legacy_rs_2_proof(client: Any, db_session: Session, mock_case_id: uuid.UUID) -> None:
     case = create_test_case(db_session, mock_case_id, is_demo=False)
-    
+
     decision = RecoveryDecisionRecord(
         recovery_case_id=case.id,
         decision_key="dec_2",
@@ -256,18 +260,18 @@ async def test_legacy_rs_2_proof(client: Any, db_session: Session, mock_case_id:
     )
     db_session.add(decision)
     db_session.flush()
-    
+
     plan = RecoveryExecutionPlan(
         recovery_case_id=case.id,
         recovery_decision_id=decision.id,
         action="CREATE_PAYMENT_LINK",
         capability=ExecutionCapability.REAL_TEST_EXECUTION,
-        initiator=ExecutionInitiator.OPERATOR_INITIATED, # Operator initiated
-        rationale="rat"
+        initiator=ExecutionInitiator.OPERATOR_INITIATED,  # Operator initiated
+        rationale="rat",
     )
     db_session.add(plan)
     db_session.flush()
-    
+
     exec_record = ExternalExecution(
         recovery_case_id=case.id,
         execution_plan_id=plan.id,
@@ -279,16 +283,16 @@ async def test_legacy_rs_2_proof(client: Any, db_session: Session, mock_case_id:
         amount_minor=200,
     )
     db_session.add(exec_record)
-    
+
     webhook = ExternalWebhookEvent(
         provider_event_id="ev_1",
         event_type="payment_link.paid",
         payload_sha256="hash",
-        provider_confirmation_status=ProviderConfirmationStatus.NOT_REQUIRED # Legacy!
+        provider_confirmation_status=ProviderConfirmationStatus.NOT_REQUIRED,  # Legacy!
     )
     db_session.add(webhook)
     db_session.flush()
-    
+
     outcome = ExternalOutcome(
         recovery_case_id=case.id,
         external_execution_id=exec_record.id,
@@ -296,11 +300,11 @@ async def test_legacy_rs_2_proof(client: Any, db_session: Session, mock_case_id:
         status=ExternalOutcomeStatus.PAID,
         amount_minor=200,
         currency="INR",
-        occurred_at=datetime.now(UTC)
+        occurred_at=datetime.now(UTC),
     )
     db_session.add(outcome)
     db_session.flush()
-    
+
     attribution = RecoveryAttribution(
         recovery_case_id=case.id,
         external_execution_id=exec_record.id,
@@ -309,17 +313,17 @@ async def test_legacy_rs_2_proof(client: Any, db_session: Session, mock_case_id:
         amount_minor=200,
         currency="INR",
         occurred_at=datetime.now(UTC),
-        attribution_source="PAYMENT_LINK_PAID"
+        attribution_source="PAYMENT_LINK_PAID",
     )
     db_session.add(attribution)
-    
+
     db_session.commit()
 
     response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
     assert response.status_code == 200
     data = response.json()
     assert data["evidence_lane"] == "RAZORPAY_TEST_MODE"
-    assert data["proof_completeness"] == "ATTRIBUTED" # Not triangulated!
+    assert data["proof_completeness"] == "ATTRIBUTED"  # Not triangulated!
     assert data["provider_evidence"]["provider_confirmation_status"] == "NOT_CAPTURED"
     assert data["provider_evidence"]["amount_verified"] is None
     assert data["authorization"]["autonomous"] is False
@@ -331,13 +335,13 @@ async def test_proof_stages(client: Any, db_session: Session, mock_case_id: uuid
     # 1. CASE ONLY
     case = create_test_case(db_session, mock_case_id, is_demo=False)
     db_session.commit()
-    
+
     response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
     assert response.status_code == 200
     data = response.json()
     assert data["proof_completeness"] == "CASE_ONLY"
     assert data.get("decision") is None
-    
+
     # 2. DECISION RECORDED
     decision = RecoveryDecisionRecord(
         recovery_case_id=case.id,
@@ -348,15 +352,15 @@ async def test_proof_stages(client: Any, db_session: Session, mock_case_id: uuid
         model_version="2.0.0",
         policy_version="2.0.0",
         feature_schema_version="2.0",
-        context_metadata={"policy_config_hash": "hash1"}
+        context_metadata={"policy_config_hash": "hash1"},
     )
     db_session.add(decision)
     db_session.commit()
-    
+
     response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
     assert response.status_code == 200
     assert response.json()["proof_completeness"] == "DECISION_RECORDED"
-    
+
     # 3. EXECUTION RECORDED
     plan = RecoveryExecutionPlan(
         recovery_case_id=case.id,
@@ -364,7 +368,7 @@ async def test_proof_stages(client: Any, db_session: Session, mock_case_id: uuid
         action="CREATE_PAYMENT_LINK",
         capability=ExecutionCapability.REAL_TEST_EXECUTION,
         initiator=ExecutionInitiator.POLICY,
-        rationale="rat"
+        rationale="rat",
     )
     db_session.add(plan)
     db_session.flush()
@@ -380,22 +384,22 @@ async def test_proof_stages(client: Any, db_session: Session, mock_case_id: uuid
     )
     db_session.add(exec_record)
     db_session.commit()
-    
+
     response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
     assert response.status_code == 200
     assert response.json()["proof_completeness"] == "EXECUTION_RECORDED"
-    
+
     # 4. PROVIDER OUTCOME RECORDED
     webhook = ExternalWebhookEvent(
         provider_event_id="ev_2",
         event_type="payment_link.paid",
         payload_sha256="hash2",
         provider_confirmation_status=ProviderConfirmationStatus.CONFIRMED,
-        provider_confirmation_method="PAYMENT_LINK_FETCH"
+        provider_confirmation_method="PAYMENT_LINK_FETCH",
     )
     db_session.add(webhook)
     db_session.flush()
-    
+
     outcome = ExternalOutcome(
         recovery_case_id=case.id,
         external_execution_id=exec_record.id,
@@ -403,36 +407,37 @@ async def test_proof_stages(client: Any, db_session: Session, mock_case_id: uuid
         status=ExternalOutcomeStatus.PAID,
         amount_minor=1000,
         currency="INR",
-        occurred_at=datetime.now(UTC)
+        occurred_at=datetime.now(UTC),
     )
     db_session.add(outcome)
     db_session.commit()
-    
+
     response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
     assert response.status_code == 200
     assert response.json()["proof_completeness"] == "PROVIDER_OUTCOME_RECORDED"
     assert response.json()["provider_evidence"]["webhook_signature_verified"] is False
-    
+
     # Add Webhook Signature Validation Audit
     from app.models import AuditEvent
+
     audit = AuditEvent(
         correlation_id=case.correlation_id,
         entity_type="ExternalWebhookEvent",
         entity_id=webhook.id,
         actor="TEST",
         event_type="WEBHOOK_SIGNATURE_VALIDATED",
-        metadata={"method": "HMAC_SHA256_RAW_BODY"}
+        metadata={"method": "HMAC_SHA256_RAW_BODY"},
     )
     db_session.add(audit)
     db_session.commit()
-    
+
     response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
     assert response.status_code == 200
     assert response.json()["provider_evidence"]["webhook_signature_verified"] is True
-    
+
     # 5. ATTRIBUTED
     webhook.provider_confirmation_status = ProviderConfirmationStatus.NOT_REQUIRED
-    
+
     attribution = RecoveryAttribution(
         recovery_case_id=case.id,
         external_execution_id=exec_record.id,
@@ -441,41 +446,72 @@ async def test_proof_stages(client: Any, db_session: Session, mock_case_id: uuid
         amount_minor=1000,
         currency="INR",
         occurred_at=datetime.now(UTC),
-        attribution_source="PAYMENT_LINK_PAID"
+        attribution_source="PAYMENT_LINK_PAID",
     )
     db_session.add(attribution)
     db_session.commit()
-    
+
     response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
     assert response.status_code == 200
     assert response.json()["proof_completeness"] == "ATTRIBUTED"
-    
+
     # 6. PROVIDER_TRIANGULATED
     webhook.provider_confirmation_status = ProviderConfirmationStatus.CONFIRMED
     db_session.commit()
-    
+
     response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
     assert response.status_code == 200
     assert response.json()["proof_completeness"] == "PROVIDER_TRIANGULATED"
 
+
 @pytest.mark.asyncio
-async def test_recovery_proof_does_not_mutate_state(client: AsyncClient, db_session: Session, mock_case_id: uuid.UUID) -> None:
+async def test_recovery_proof_does_not_mutate_state(
+    client: AsyncClient, db_session: Session, mock_case_id: uuid.UUID
+) -> None:
     """CFP-12: Recovery proof is read-only."""
     # Create a synthetic case with some evidence
-    case = create_test_case(db_session, mock_case_id, is_demo=False)
+    create_test_case(db_session, mock_case_id, is_demo=False)
     db_session.commit()
-    
+
     # Take snapshot
-    case_count = db_session.scalar(select(db_session.query(RecoveryCase).where(RecoveryCase.id == mock_case_id).exists()))
-    exec_count = len(db_session.scalars(select(ExternalExecution).where(ExternalExecution.recovery_case_id == mock_case_id)).all())
-    out_count = len(db_session.scalars(select(ExternalOutcome).where(ExternalOutcome.recovery_case_id == mock_case_id)).all())
-    attr_count = len(db_session.scalars(select(RecoveryAttribution).where(RecoveryAttribution.recovery_case_id == mock_case_id)).all())
-    
-    response = await client.get(f'/api/recovery-cases/{mock_case_id}/proof')
+    case_count = db_session.scalar(
+        select(db_session.query(RecoveryCase).where(RecoveryCase.id == mock_case_id).exists())
+    )
+    exec_count = len(
+        db_session.scalars(
+            select(ExternalExecution).where(ExternalExecution.recovery_case_id == mock_case_id)
+        ).all()
+    )
+    out_count = len(
+        db_session.scalars(
+            select(ExternalOutcome).where(ExternalOutcome.recovery_case_id == mock_case_id)
+        ).all()
+    )
+    attr_count = len(
+        db_session.scalars(
+            select(RecoveryAttribution).where(RecoveryAttribution.recovery_case_id == mock_case_id)
+        ).all()
+    )
+
+    response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
     assert response.status_code == 200
-    
+
     # Verify no new writes
-    assert case_count == db_session.scalar(select(db_session.query(RecoveryCase).where(RecoveryCase.id == mock_case_id).exists()))
-    assert exec_count == len(db_session.scalars(select(ExternalExecution).where(ExternalExecution.recovery_case_id == mock_case_id)).all())
-    assert out_count == len(db_session.scalars(select(ExternalOutcome).where(ExternalOutcome.recovery_case_id == mock_case_id)).all())
-    assert attr_count == len(db_session.scalars(select(RecoveryAttribution).where(RecoveryAttribution.recovery_case_id == mock_case_id)).all())
+    assert case_count == db_session.scalar(
+        select(db_session.query(RecoveryCase).where(RecoveryCase.id == mock_case_id).exists())
+    )
+    assert exec_count == len(
+        db_session.scalars(
+            select(ExternalExecution).where(ExternalExecution.recovery_case_id == mock_case_id)
+        ).all()
+    )
+    assert out_count == len(
+        db_session.scalars(
+            select(ExternalOutcome).where(ExternalOutcome.recovery_case_id == mock_case_id)
+        ).all()
+    )
+    assert attr_count == len(
+        db_session.scalars(
+            select(RecoveryAttribution).where(RecoveryAttribution.recovery_case_id == mock_case_id)
+        ).all()
+    )
