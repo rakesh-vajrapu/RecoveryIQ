@@ -54,7 +54,7 @@ The *Probability Policy* achieved a slightly higher raw recovery rate (76.18% vs
 | **75.97% simulated recovery** | Sequential Policy V2 evaluation endpoint |
 | **₹1.44 Cr incremental simulated net value** | Sequential Policy V2 evaluation endpoint |
 | **0 policy violations** | Policy evaluation endpoint |
-| **Action-Conditioned ML** | LightGBM V2 models (`artifacts/model`) |
+| **Action-Conditioned ML** | LightGBM V2 models (`artifacts/ml/models/recovery-model-v2`) |
 | **Expected Recovery Value** | `recoveriq_sequential_policy` calculation |
 
 ---
@@ -78,3 +78,19 @@ To ensure scientifically honest results, hidden simulator ground truth (such as 
 - ₹4.72 Cr does not represent Razorpay production revenue.
 - Payment Health signals are derived from simulated events, not real live-mode issuer telemetry.
 - No production deployment is claimed.
+
+
+## Post-Hoc Counterfactual Action Advantage
+
+Evidence status: **POST-HOC · SIMULATED**
+
+**Metrics**:
+- 48,405 eligible paired decisions
+- 43.99% selected best/tied
+- 52.29% counterfactual value capture
+
+This evaluates the same simulated decision state where the selected action is compared with other feasible actions using an evaluation-only hidden-world realization. The comparator is a hindsight/reference diagnostic that identifies action-selection headroom.
+
+> **LIMITATION**: Simulator 0.3.0 does not model direct natural recovery during WAIT.
+
+**Explicitly Note**: This is NOT sealed evidence, causal uplift, treatment effect, or production causal evidence.

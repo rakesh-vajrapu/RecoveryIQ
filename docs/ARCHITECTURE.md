@@ -6,7 +6,7 @@ RecoverIQ separates evidence production, bounded sequential authorization, execu
 
 ![RecoveryIQ System Shape](assets/system_shape.png)
 
-The foundation, standalone simulator/baselines, robustness methodology, both detector/model generations, bounded Sequential Policy V2, explanation-provider layer, and Razorpay Test Mode adapter are implemented through Phase 7.5. One synthetic INR 1.00 Payment Link completed a genuine Test Mode create/fetch, signed paid webhook, exactly-once attribution, recovery, and duplicate replay. Broader autonomous provider execution, Live Mode, and the operational UI remain future commitments.
+The final submission includes the simulator/model/policy stack, explanation boundary, Razorpay Test Mode integration, operator UI, Provider Truth Triangulation, Recovery Governance Profile, Recovery Proof Record, and Critical Financial Path Gate. Live Mode and broader autonomous provider execution remain out of scope.
 
 ## Control Plane & Authority Boundaries
 
@@ -37,7 +37,10 @@ flowchart TD
     end
 
     Webhook -->|"Primary Key Constraint"| DB
-    Webhook -->|"Exactly-Once Mapping"| Attribution["Recovery Attribution"]
+    Webhook -->|"Persisted Event"| Reconciliation["Provider Truth reconciliation"]
+    Reconciliation -->|"Independent Provider Fetch"| TruthState["CONFIRMED / MISMATCH"]
+    TruthState -->|"Exactly-Once Mapping"| Outcome["ExternalOutcome"]
+    Outcome --> Attribution["RecoveryAttribution"]
 ```
 
 **CRITICAL RULE**: The LLM acts exclusively in an **explanation only** capacity. It cannot authorize payment execution, change deterministic policy, or mark a payment as recovered.

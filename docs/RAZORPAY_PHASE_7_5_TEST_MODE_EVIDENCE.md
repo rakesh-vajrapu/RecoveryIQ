@@ -1,3 +1,11 @@
+> **HISTORICAL RAZORPAY · TEST MODE EVIDENCE**
+>
+> This evidence predates the persisted Provider Truth Triangulation fields
+> introduced later. Historical provider read-only checks may be documented
+> here, but the current Recovery Proof / evidence projection must report
+> Provider Fetch as NOT CAPTURED unless an actual persisted confirmation
+> record exists.
+
 # RecoverIQ Phase 7.5 — Razorpay Test Mode Evidence
 
 Generated: `2026-08-22T12:55:15.749Z`

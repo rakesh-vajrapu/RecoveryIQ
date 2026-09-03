@@ -1,3 +1,8 @@
+> Historical real Test Mode evidence totals ₹2.00.
+> It predates persisted Provider Truth Triangulation.
+> Provider Fetch is therefore reported as NOT CAPTURED in current proof/evidence
+> projections unless a persisted confirmation record exists.
+
 # Razorpay Provider Evidence
 
 [Back to README](../README.md)
@@ -9,7 +14,7 @@ This document provides canonical provider integration evidence for RecoveryIQ. I
 
 ## The Test Mode Lifecycle
 
-RecoveryIQ proves its provider API integration through the following strict exactly-once lifecycle:
+RecoveryIQ proves its provider API integration through the following provider lifecycle with exactly-once local outcome and recovery attribution semantics:
 
 1. **Failure observed**
 2. **`RecoveryCase`** created and correlated
@@ -29,7 +34,7 @@ This lifecycle evidence proves:
 - Real provider API integration
 - Payment Link execution where supported
 - Signed webhook authenticity (raw-body HMAC validation)
-- Independent Provider Truth Triangulation via live fetch
+- Historical read-only provider GET verification confirmed captured/paid provider state after webhook processing. This predates the persisted Provider Truth Triangulation pipeline and is not represented as a captured ProviderConfirmationStatus.CONFIRMED record.
 - Exact-match local invariant verification (amount, currency, references)
 - Correlation logic
 - External outcome recording and recovery attribution
@@ -163,7 +168,7 @@ No live webhook was replayed. Duplicate idempotency was verified by the existing
 
 ## Audit lifecycle
 
-The immutable timeline preserves:
+The persisted audit timeline preserves:
 
 1. Aug 23: original failure receipt and signature validation.
 2. Aug 23: RecoveryCase creation, deterministic model/policy review, and Human Review decision.
