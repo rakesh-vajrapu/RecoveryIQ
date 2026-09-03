@@ -145,11 +145,14 @@ RecoveryIQ relies on three layers: **probabilistic intelligence**, **determinist
 
 ### Recovery Governance Profile
 
-The system strictly enforces the frozen Sequential Policy V2 guardrails as an auditable **Recovery Governance Profile**.
-- **Autonomy Bounds:** 48-hour horizon, max 3 interventions, max 2 retries, max 2 contacts, and 2-hour minimum retry cooling interval.
-- **Customer Protection:** Opt-out and quiet-hours schedule strictly block execution (STOP).
-- **Model Support:** Inadequate evaluation-bin training density or schema mismatches safely fallback to `HUMAN_REVIEW`.
-- **Economic Safety:** Non-positive incremental ERV and duplicate payment links are blocked (STOP).
+The frozen Sequential Policy V2 remains deterministic financial authority.
+
+- **Autonomy Bounds:** 48-hour horizon, max 3 interventions, max 2 retries, max 2 contacts, 2-hour minimum retry interval.
+- **STOP:** MAX_INTERVENTIONS, RECOVERY_HORIZON, BUDGETS_EXHAUSTED, NO_FEASIBLE_ACTION, NON_POSITIVE_INCREMENTAL_ERV.
+- **HUMAN_REVIEW:** insufficient MODEL_SUPPORT, insufficient CALIBRATION_SUPPORT, LOW_DECISION_MARGIN.
+- **FILTER / SCHEDULE:** retry/contact caps constrain candidates; customer opt-out constrains contact actions; quiet hours schedule contact actions; duplicate Payment Links filter that candidate; minimum retry interval filters/schedules retry candidates.
+- **PRE-ENGINE:** MODEL_SCHEMA_VALID.
+- **ACCOUNTING:** ATTRIBUTION_ONCE.
 
 ### LLM Authority Boundary
 
