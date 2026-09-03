@@ -47,6 +47,7 @@ class DecisionProof(ApiModel):
     decision_id: uuid.UUID
     decision_kind: str
     selected_action: str | None
+    provenance_status: str
     model_version: str | None
     policy_version: str | None
     policy_config_hash: str | None
@@ -149,13 +150,27 @@ def build_recovery_proof_record(session: Session, recovery_case: RecoveryCase) -
     
     decision_proof = None
     if decision_record:
+        has_provenance = bool(decision_record.context_metadata.get("policy_config_hash"))
+        if evidence_lane == "DEMO_SYNTHETIC":
+            prov_status = "NOT_APPLICABLE"
+            mod_v, pol_v, hash_v = None, None, None
+        elif has_provenance:
+            prov_status = "RECORDED"
+            mod_v = decision_record.model_version
+            pol_v = decision_record.policy_version
+            hash_v = decision_record.context_metadata.get("policy_config_hash")
+        else:
+            prov_status = "NOT_CAPTURED"
+            mod_v, pol_v, hash_v = None, None, None
+
         decision_proof = DecisionProof(
             decision_id=decision_record.id,
             decision_kind=decision_record.kind.value,
             selected_action=decision_record.selected_action,
-            model_version=decision_record.model_version if evidence_lane != "DEMO_SYNTHETIC" else None,  # noqa: E501
-            policy_version=decision_record.policy_version if evidence_lane != "DEMO_SYNTHETIC" else None,  # noqa: E501
-            policy_config_hash=decision_record.context_metadata.get("policy_config_hash") if evidence_lane != "DEMO_SYNTHETIC" else None,  # noqa: E501
+            provenance_status=prov_status,
+            model_version=mod_v,
+            policy_version=pol_v,
+            policy_config_hash=hash_v,
             decision_recorded_at=decision_record.created_at,
         )
     
@@ -226,11 +241,28 @@ def build_recovery_proof_record(session: Session, recovery_case: RecoveryCase) -
             else:
                 status_str = conf_status.value
                 
-            amount_verified = True if status_str == "CONFIRMED" else (None if status_str == "NOT_CAPTURED" else False)  # noqa: E501
+            # Audit webhook signature validated
+            from app.models import AuditEvent
+            audit_validated = session.scalar(
+                select(AuditEvent).where(
+                    AuditEvent.entity_type == "ExternalWebhookEvent",
+                    AuditEvent.entity_id == webhook.id,
+                    AuditEvent.event_type == "WEBHOOK_SIGNATURE_VALIDATED"
+                ).limit(1)
+            )
+            webhook_signature_verified = bool(audit_validated)
+
+            # Invariant: Provider Truth Triangulation explicitly verifies 
+            # amount_minor, amount_paid_minor, and currency match the execution 
+            # before persisting ProviderConfirmationStatus.CONFIRMED.
+            amount_verified = (
+                True if status_str == "CONFIRMED"
+                else (None if status_str == "NOT_CAPTURED" else False)
+            )
                 
             provider_evidence_proof = ProviderEvidenceProof(
                 webhook_received=True,
-                webhook_signature_verified=True,  # if it was persisted, it was verified
+                webhook_signature_verified=webhook_signature_verified,
                 provider_event_id=webhook.provider_event_id,
                 provider_confirmation_status=status_str,
                 provider_confirmation_method=webhook.provider_confirmation_method,
@@ -269,8 +301,10 @@ def build_recovery_proof_record(session: Session, recovery_case: RecoveryCase) -
         recovered_at=recovered_at,
     )
     
-    # Proof completeness
-    completeness = "DECISION_ONLY"
+# Proof completeness
+    completeness = "CASE_ONLY"
+    if decision_proof:
+        completeness = "DECISION_RECORDED"
     if external_execution:
         completeness = "EXECUTION_RECORDED"
     if external_outcome:
@@ -304,7 +338,7 @@ def build_recovery_proof_record(session: Session, recovery_case: RecoveryCase) -
     if outcome_proof:
         proof_dict["outcome"] = json.loads(outcome_proof.model_dump_json(exclude_none=True))
     if attribution_proof:
-        proof_dict["attribution"] = json.loads(attribution_proof.model_dump_json(exclude_none=True))  # noqa: E501
+        proof_dict["attribution"] = json.loads(attribution_proof.model_dump_json(exclude_none=True))
         
     fingerprint = compute_proof_fingerprint(proof_dict)
     

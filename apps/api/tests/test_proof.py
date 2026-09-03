@@ -1,5 +1,7 @@
 import uuid
+from collections.abc import Generator
 from datetime import UTC, datetime
+from typing import Any
 
 import pytest
 from sqlalchemy.orm import Session, sessionmaker
@@ -30,8 +32,6 @@ from app.models import (
 )
 from app.models.razorpay import ProviderConfirmationStatus
 
-
-from typing import Generator, Any
 
 @pytest.fixture
 def db_session(test_settings: Settings) -> Generator[Session, None, None]:
@@ -151,13 +151,13 @@ async def test_demo_case_proof(client: Any, db_session: Session, mock_case_id: u
     assert response.status_code == 200
     data = response.json()
     assert data["evidence_lane"] == "DEMO_SYNTHETIC"
-    assert data["proof_completeness"] == "DECISION_ONLY"
+    assert data["proof_completeness"] == "CASE_ONLY"
     assert "integrity" in data
     assert data["integrity"]["algorithm"] == "SHA-256"
 
 
 @pytest.mark.asyncio
-async def test_full_triangulated_proof(client: Any, db_session: Session, mock_case_id: uuid.UUID) -> None:
+async def test_full_triangulated_proof(client: Any, db_session: Session, mock_case_id: uuid.UUID) -> None:  # noqa: E501
     case = create_test_case(db_session, mock_case_id, is_demo=False)
     # Convert to Razorpay mode for this test by mocking evidence as non-synthetic
     # We just need some real execution to make it not synthetic.
@@ -322,3 +322,136 @@ async def test_legacy_rs_2_proof(client: Any, db_session: Session, mock_case_id:
     assert data["provider_evidence"]["amount_verified"] is None
     assert data["authorization"]["autonomous"] is False
     assert data["authorization"]["initiator"] == "OPERATOR_INITIATED"
+
+
+@pytest.mark.asyncio
+async def test_proof_stages(client: Any, db_session: Session, mock_case_id: uuid.UUID) -> None:
+    # 1. CASE ONLY
+    case = create_test_case(db_session, mock_case_id, is_demo=False)
+    db_session.commit()
+    
+    response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["proof_completeness"] == "CASE_ONLY"
+    assert data.get("decision") is None
+    
+    # 2. DECISION RECORDED
+    decision = RecoveryDecisionRecord(
+        recovery_case_id=case.id,
+        decision_key="dec_stages",
+        kind=DecisionKind.ACTION,
+        selected_action="CREATE_PAYMENT_LINK",
+        reason="Because",
+        model_version="2.0.0",
+        policy_version="2.0.0",
+        feature_schema_version="2.0",
+        context_metadata={"policy_config_hash": "hash1"}
+    )
+    db_session.add(decision)
+    db_session.commit()
+    
+    response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
+    assert response.status_code == 200
+    assert response.json()["proof_completeness"] == "DECISION_RECORDED"
+    
+    # 3. EXECUTION RECORDED
+    plan = RecoveryExecutionPlan(
+        recovery_case_id=case.id,
+        recovery_decision_id=decision.id,
+        action="CREATE_PAYMENT_LINK",
+        capability=ExecutionCapability.REAL_TEST_EXECUTION,
+        initiator=ExecutionInitiator.POLICY,
+        rationale="rat"
+    )
+    db_session.add(plan)
+    db_session.flush()
+    exec_record = ExternalExecution(
+        recovery_case_id=case.id,
+        execution_plan_id=plan.id,
+        execution_mode=ExecutionMode.RAZORPAY_TEST,
+        action="CREATE_PAYMENT_LINK",
+        state=ExternalExecutionState.SUCCEEDED,
+        idempotency_key="idk2",
+        provider_reference_id="ref2",
+        amount_minor=1000,
+    )
+    db_session.add(exec_record)
+    db_session.commit()
+    
+    response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
+    assert response.status_code == 200
+    assert response.json()["proof_completeness"] == "EXECUTION_RECORDED"
+    
+    # 4. PROVIDER OUTCOME RECORDED
+    webhook = ExternalWebhookEvent(
+        provider_event_id="ev_2",
+        event_type="payment_link.paid",
+        payload_sha256="hash2",
+        provider_confirmation_status=ProviderConfirmationStatus.CONFIRMED,
+        provider_confirmation_method="PAYMENT_LINK_FETCH"
+    )
+    db_session.add(webhook)
+    db_session.flush()
+    
+    outcome = ExternalOutcome(
+        recovery_case_id=case.id,
+        external_execution_id=exec_record.id,
+        webhook_event_id=webhook.id,
+        status=ExternalOutcomeStatus.PAID,
+        amount_minor=1000,
+        currency="INR",
+        occurred_at=datetime.now(UTC)
+    )
+    db_session.add(outcome)
+    db_session.commit()
+    
+    response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
+    assert response.status_code == 200
+    assert response.json()["proof_completeness"] == "PROVIDER_OUTCOME_RECORDED"
+    assert response.json()["provider_evidence"]["webhook_signature_verified"] is False
+    
+    # Add Webhook Signature Validation Audit
+    from app.models import AuditEvent
+    audit = AuditEvent(
+        correlation_id=case.correlation_id,
+        entity_type="ExternalWebhookEvent",
+        entity_id=webhook.id,
+        actor="TEST",
+        event_type="WEBHOOK_SIGNATURE_VALIDATED",
+        metadata={"method": "HMAC_SHA256_RAW_BODY"}
+    )
+    db_session.add(audit)
+    db_session.commit()
+    
+    response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
+    assert response.status_code == 200
+    assert response.json()["provider_evidence"]["webhook_signature_verified"] is True
+    
+    # 5. ATTRIBUTED
+    webhook.provider_confirmation_status = ProviderConfirmationStatus.NOT_REQUIRED
+    
+    attribution = RecoveryAttribution(
+        recovery_case_id=case.id,
+        external_execution_id=exec_record.id,
+        external_outcome_id=outcome.id,
+        execution_mode=ExecutionMode.RAZORPAY_TEST,
+        amount_minor=1000,
+        currency="INR",
+        occurred_at=datetime.now(UTC),
+        attribution_source="PAYMENT_LINK_PAID"
+    )
+    db_session.add(attribution)
+    db_session.commit()
+    
+    response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
+    assert response.status_code == 200
+    assert response.json()["proof_completeness"] == "ATTRIBUTED"
+    
+    # 6. PROVIDER_TRIANGULATED
+    webhook.provider_confirmation_status = ProviderConfirmationStatus.CONFIRMED
+    db_session.commit()
+    
+    response = await client.get(f"/api/recovery-cases/{mock_case_id}/proof")
+    assert response.status_code == 200
+    assert response.json()["proof_completeness"] == "PROVIDER_TRIANGULATED"

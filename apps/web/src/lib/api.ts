@@ -13,7 +13,7 @@ export type RazorpayStatus = { integration_version: string; execution_environmen
 export type DecisionExplanation = { summary: string; factors: string[]; confidence: number; limitations: string[] };
 
 export type CaseProof = { status: string; amount_minor: number; currency: string; created_at: string; recovered_at: string | null };
-export type DecisionProof = { decision_id: string; decision_kind: string; selected_action: string | null; model_version: string | null; policy_version: string | null; policy_config_hash: string | null; decision_recorded_at: string };
+export type DecisionProof = { decision_id: string; decision_kind: string; selected_action: string | null; provenance_status: string; model_version: string | null; policy_version: string | null; policy_config_hash: string | null; decision_recorded_at: string };
 export type AuthorizationProof = { initiator: string; provider_capability: string; execution_mode: string; autonomous: boolean };
 export type ExecutionProof = { execution_id: string; provider: string; provider_entity_type: string; provider_entity_reference: string; execution_status: string; created_at: string };
 export type ProviderEvidenceProof = { webhook_received: boolean; webhook_signature_verified: boolean; provider_event_id: string | null; provider_confirmation_status: string; provider_confirmation_method: string | null; provider_confirmed_at: string | null; amount_verified: boolean | null; currency_verified: boolean | null; reference_verified: boolean | null };
