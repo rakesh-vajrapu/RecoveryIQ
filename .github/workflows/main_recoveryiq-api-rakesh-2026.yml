@@ -1,65 +1,68 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
-
 name: Build and deploy Python app to Azure Web App - recoveryiq-api-rakesh-2026
 
 on:
-  push:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
     branches:
       - main
   workflow_dispatch:
 
+concurrency:
+  group: recoveryiq-azure-production
+  cancel-in-progress: true
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read #This is required for actions/checkout
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python version
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      # 🛠️ Local Build Section (Optional)
-      # The following section in your workflow is designed to catch build issues early on the client side, before deployment. This can be helpful for debugging and validation. However, if this step significantly increases deployment time and early detection is not critical for your workflow, you may remove this section to streamline the deployment process.
-      - name: Create and Start virtual environment and Install dependencies
-        run: |
-          python -m venv antenv
-          source antenv/bin/activate
-          pip install -r requirements.txt
-                
-      # By default, when you enable GitHub CI/CD integration through the Azure portal, the platform automatically sets the SCM_DO_BUILD_DURING_DEPLOYMENT application setting to true. This triggers the use of Oryx, a build engine that handles application compilation and dependency installation (e.g., pip install) directly on the platform during deployment. Hence, we exclude the antenv virtual environment directory from the deployment artifact to reduce the payload size. 
-      - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v4
-        with:
-          name: python-app
-          path: |
-            .
-            !antenv/
-
-      # 🚫 Opting Out of Oryx Build
-      # If you prefer to disable the Oryx build process during deployment, follow these steps:
-      # 1. Remove the SCM_DO_BUILD_DURING_DEPLOYMENT app setting from your Azure App Service Environment variables.
-      # 2. Refer to sample workflows for alternative deployment strategies: https://github.com/Azure/actions-workflow-samples/tree/master/AppService
-      
-
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    if: >
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') ||
+      github.event_name == 'workflow_dispatch'
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+      - name: Log the Git commit SHA being deployed
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_run" ]; then
+            echo "Deploying commit: ${{ github.event.workflow_run.head_sha }}"
+          else
+            echo "Deploying from workflow_dispatch (manual run)"
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          name: python-app
-      
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Prepare Deployment Package
+        run: |
+          mkdir -p .azure-deploy
+          
+          # Copy backend requirements to the root of the deployment package
+          cp requirements/backend.txt .azure-deploy/requirements.txt
+          
+          # Copy source directories
+          mkdir -p .azure-deploy/apps
+          cp -r apps/api .azure-deploy/apps/
+          cp -r artifacts .azure-deploy/
+          
+      - name: Verify Package Assertions
+        run: |
+          # Assert REQUIRED files/directories exist
+          if [ ! -f ".azure-deploy/apps/api/app/main.py" ]; then echo "Missing apps/api/app/main.py"; exit 1; fi
+          if [ ! -f ".azure-deploy/requirements.txt" ]; then echo "Missing requirements.txt"; exit 1; fi
+          if [ ! -f ".azure-deploy/artifacts/policy/recoveriq-sequential-v2/successful-adaptive-trace-v2.json" ]; then echo "Missing successful-adaptive-trace-v2.json"; exit 1; fi
+          if [ ! -f ".azure-deploy/artifacts/policy/recoveriq-sequential-v2/bounded-failure-trace-v2.json" ]; then echo "Missing bounded-failure-trace-v2.json"; exit 1; fi
+          
+          # Assert FORBIDDEN files/directories DO NOT exist
+          if [ -d ".azure-deploy/apps/web" ]; then echo "Found forbidden apps/web"; exit 1; fi
+          if [ -d ".azure-deploy/simulator" ]; then echo "Found forbidden simulator"; exit 1; fi
+          if [ -d ".azure-deploy/ml" ]; then echo "Found forbidden ml"; exit 1; fi
+          if [ -f ".azure-deploy/.env" ]; then echo "Found forbidden .env"; exit 1; fi
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -73,4 +76,43 @@ jobs:
         with:
           app-name: 'recoveryiq-api-rakesh-2026'
           slot-name: 'Production'
+          package: '.azure-deploy'
           
+      - name: Post-Deploy Health Verification
+        run: |
+          echo "Verifying /health endpoint..."
+          ATTEMPTS=0
+          MAX_ATTEMPTS=18
+          while [ $ATTEMPTS -lt $MAX_ATTEMPTS ]; do
+            STATUS_CODE=$(curl -o /dev/null -s -w "%{http_code}\n" https://recoveryiq-api-rakesh-2026.azurewebsites.net/health)
+            if [ "$STATUS_CODE" == "200" ]; then
+              echo "Health check passed!"
+              curl -s https://recoveryiq-api-rakesh-2026.azurewebsites.net/health
+              break
+            fi
+            echo "Attempt $((ATTEMPTS+1)) failed with status $STATUS_CODE. Retrying in 10s..."
+            ATTEMPTS=$((ATTEMPTS+1))
+            sleep 10
+          done
+          
+          if [ $ATTEMPTS -eq $MAX_ATTEMPTS ]; then
+            echo "Health verification failed after $MAX_ATTEMPTS attempts."
+            exit 1
+          fi
+
+      - name: Verify Replay API
+        run: |
+          echo "Verifying /api/evaluation/replay/presets endpoint..."
+          RESPONSE=$(curl -s https://recoveryiq-api-rakesh-2026.azurewebsites.net/api/evaluation/replay/presets)
+          
+          if [[ "$RESPONSE" != *"successful-adaptive-trace-v2"* ]]; then
+            echo "Response missing successful-adaptive-trace-v2: $RESPONSE"
+            exit 1
+          fi
+          
+          if [[ "$RESPONSE" != *"bounded-failure-trace-v2"* ]]; then
+            echo "Response missing bounded-failure-trace-v2: $RESPONSE"
+            exit 1
+          fi
+          
+          echo "Replay API verification passed!"
