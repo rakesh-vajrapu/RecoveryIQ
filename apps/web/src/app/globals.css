@@ -140,6 +140,21 @@
   100% { left: 200%; }
 }
 
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4), 0 0 0 0 rgba(16, 185, 129, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.7), 0 0 0 8px rgba(16, 185, 129, 0);
+    transform: scale(1.04);
+  }
+}
+
+.attention-btn {
+  animation: pulse-glow 2.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .animated-shine-button {
   position: relative;
   overflow: hidden;
