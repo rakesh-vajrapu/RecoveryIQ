@@ -45,7 +45,7 @@ async def test_read_only_behavior_and_no_simulator_import() -> None:
     assert "lightgbm" not in sys.modules
 
 async def test_no_provider_invocation_in_replay(client: AsyncClient) -> None:
-    # Just a sanity test that fetching replay does not call gateway (it's purely read-only json dump)
+    # Just a sanity test that fetching replay does not call gateway (read-only json dump)
     response = await client.get("/api/evaluation/replay/successful-adaptive-trace-v2")
     assert response.status_code == 200
 

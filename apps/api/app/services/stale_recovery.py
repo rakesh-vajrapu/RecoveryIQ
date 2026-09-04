@@ -65,9 +65,12 @@ def sweep_stale_external_executions(
             if recovery_case:
                 recovery_case.status = RecoveryCaseStatus.FAILED
 
+            corr_id = execution.id
+            if recovery_case and recovery_case.correlation_id:
+                corr_id = recovery_case.correlation_id
             add_audit_event(
                 session,
-                correlation_id=recovery_case.correlation_id if recovery_case and recovery_case.correlation_id else execution.id,
+                correlation_id=corr_id,
                 entity_type="ExternalExecution",
                 entity_id=execution.id,
                 actor="STALE_RESERVATION_SWEEPER",
@@ -104,9 +107,12 @@ def sweep_stale_external_executions(
             post_dispatch_swept += 1
             session.refresh(execution)
             recovery_case = session.get(RecoveryCase, execution.recovery_case_id)
+            corr_id = execution.id
+            if recovery_case and recovery_case.correlation_id:
+                corr_id = recovery_case.correlation_id
             add_audit_event(
                 session,
-                correlation_id=recovery_case.correlation_id if recovery_case and recovery_case.correlation_id else execution.id,
+                correlation_id=corr_id,
                 entity_type="ExternalExecution",
                 entity_id=execution.id,
                 actor="STALE_RESERVATION_SWEEPER",
