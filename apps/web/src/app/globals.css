@@ -175,6 +175,46 @@
   overflow: hidden;
 }
 
+@keyframes rgb-slide {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.rgb-glowing-wrapper {
+  position: relative;
+  border-radius: inherit;
+}
+
+.rgb-glowing-wrapper::before,
+.rgb-glowing-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  background: linear-gradient(
+    90deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  background-size: 300% 100%;
+  border-radius: inherit;
+  animation: rgb-slide 3s linear infinite;
+}
+
+.rgb-glowing-wrapper::after {
+  filter: blur(12px);
+  z-index: -2;
+  opacity: 0.7;
+}
+
 .animated-shine-button::after {
   content: "";
   position: absolute;

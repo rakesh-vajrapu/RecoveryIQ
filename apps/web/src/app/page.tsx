@@ -56,9 +56,11 @@ export default function CommandCenterPage() {
             </Link>
             <div className="flex flex-col items-center">
               <Link href="/demo">
-                <Button className="attention-btn animated-shine-button gap-2 bg-emerald-600 hover:bg-emerald-500 hover:scale-[1.06] active:scale-95 text-white shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all duration-300 font-extrabold text-sm h-10 px-6 rounded-xl border border-emerald-400/30">
-                  Try RecoveryIQ <ArrowRight className="size-4" />
-                </Button>
+                <div className="rgb-glowing-wrapper rounded-xl">
+                  <Button className="attention-btn animated-shine-button gap-2 bg-emerald-600 hover:bg-emerald-500 hover:scale-[1.06] active:scale-95 text-white shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all duration-300 font-extrabold text-sm h-10 px-6 rounded-xl border border-emerald-400/30 w-full">
+                    Try RecoveryIQ <ArrowRight className="size-4" />
+                  </Button>
+                </div>
               </Link>
             </div>
           </div>
