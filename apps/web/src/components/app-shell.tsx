@@ -1,6 +1,6 @@
 "use client";
 
-import { Activity, BarChart3, BrainCircuit, ChevronRight, CreditCard, HeartPulse, ListChecks, Menu, Moon, ShieldCheck, Sun, X } from "lucide-react";
+import { Activity, BarChart3, BrainCircuit, ChevronRight, CreditCard, HeartPulse, ListChecks, Menu, Moon, ShieldCheck, Sun, Workflow, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -10,8 +10,9 @@ import { cn } from "@/lib/utils";
 
 const navigation = [
   { label: "Command Center", href: "/", icon: Activity },
-  { label: "Payment Health", href: "/payment-health", icon: HeartPulse },
+  { label: "Architecture", href: "/architecture", icon: Workflow },
   { label: "Recovery Queue", href: "/recovery-cases", icon: ListChecks },
+  { label: "Payment Health", href: "/payment-health", icon: HeartPulse },
   { label: "Decision Trace", href: "/decision-trace", icon: BrainCircuit },
   { label: "Batch Explorer", href: "/batch-explorer", icon: BarChart3 },
   { label: "Safety Lab", href: "/safety-lab", icon: ShieldCheck },

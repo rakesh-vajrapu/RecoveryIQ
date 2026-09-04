@@ -105,11 +105,11 @@ Alembic is the only supported schema evolution path. Application startup checks 
 
 ## Background execution strategy
 
-Celery remains the background-job boundary in every environment. Local development and tests set `CELERY_TASK_ALWAYS_EAGER=true`, use memory transport/backend, and execute tasks synchronously. Full environments set eager mode false and use Redis as broker and result backend. Task definitions must remain serializable, idempotent, and safe under retries; eager mode must not become a separate implementation.
+Celery remains the background-job boundary in every environment. Local development, tests, and the current Azure reviewer deployment set `CELERY_TASK_ALWAYS_EAGER=true` and execute tasks synchronously. Future full-scale environments may configure Redis as broker and result backend. Task definitions must remain serializable, idempotent, and safe under retries; eager mode must not become a separate implementation.
 
 ## API and frontend boundary
 
-FastAPI exposes typed JSON under an HTTP boundary. The Next.js App Router frontend consumes the API using `NEXT_PUBLIC_API_BASE_URL`; its build does not require a running backend. Runtime connectivity is shown explicitly as connected, unavailable, or not yet checked. The UI must not synthesize financial metrics when the API has no data.
+FastAPI exposes typed JSON under an HTTP boundary. The Next.js App Router frontend consumes the API using `NEXT_PUBLIC_API_BASE_URL`; its build does not require a running backend. Runtime connectivity is shown explicitly as connected, unavailable, or not yet checked. The UI includes an interactive **Architecture Walkthrough** (`/architecture`) to visualize the boundary between the ML explanation layer and the deterministic policy/execution layer. The UI must not synthesize financial metrics when the API has no data.
 
 ## Payment-health detection boundary
 

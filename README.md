@@ -47,6 +47,8 @@ Try RecoveryIQ — interactive replay of frozen Model V2 → ERV → Policy V2 d
 | Proof | Where to inspect |
 |---|---|
 | Recovery control plane | [Command Center](https://recoveryiq-ai.vercel.app/) |
+| Interactive architecture | [Architecture Walkthrough](https://recoveryiq-ai.vercel.app/architecture) |
+| Simulated recovery flow | [Replay Lab](https://recoveryiq-ai.vercel.app/demo) |
 | Deterministic decision authority | [Decision Trace](https://recoveryiq-ai.vercel.app/decision-trace) |
 | Idempotency / concurrency evidence | [Safety Lab](https://recoveryiq-ai.vercel.app/safety-lab) |
 | Razorpay Test Mode integration | [Razorpay Evidence](https://recoveryiq-ai.vercel.app/integrations/razorpay) |
@@ -169,7 +171,7 @@ The sealed evaluation of RecoveryIQ Sequential Policy V2 produced the following 
 | **Simulated Net Recovery Value** | ₹4,71,96,320.70 | SEALED · SIMULATED |
 | **Incremental Simulated Value vs Reminder + Retry** | +₹1,44,07,440.70 | SEALED · SIMULATED |
 | **Policy Violations** | 0 | SEALED · SIMULATED |
-| **Razorpay Test Mode** | Historical recovery: ₹2.00 (Provider Fetch: NOT CAPTURED) | RAZORPAY · TEST MODE |
+| **Razorpay Test Mode** | Live Test Mode Judge demo: ₹1,000.00 / Historical recovery: ₹2.00 | RAZORPAY · TEST MODE |
 | **10-way Webhook Race** | 10 → 1 logical event | ISOLATED LOCAL VERIFICATION |
 | **10-way Execution Race** | 10 → 1 fake-provider call | ISOLATED LOCAL VERIFICATION |
 
@@ -195,7 +197,15 @@ RecoveryIQ was evaluated against version-controlled strategies on the same seale
 
 ## 🏗️ Architecture
 
-RecoveryIQ relies on three layers: **probabilistic intelligence**, **deterministic financial boundaries**, and **verified execution**.
+RecoveryIQ is built to ensure autonomous financial decisions are highly effective, completely deterministic, and perfectly verified. It operates by separating intelligence from execution authority.
+
+## Simple Architecture
+
+![RecoveryIQ Simple Architecture](docs/assets/simple_architecture.png)
+
+The system relies on three core layers: **probabilistic intelligence** to understand the optimal action, **deterministic financial boundaries** to ensure safety, and **verified execution** with Razorpay to guarantee exactly-once provider truth. This strict isolation guarantees that AI never blindly executes actions without verifiable policy and provider consensus.
+
+## Layered Architecture
 
 ![RecoveryIQ Architecture](docs/assets/architecture.png)
 
@@ -257,7 +267,7 @@ RecoveryIQ does not ask judges to trust an AI decision merely because the model 
 | **Recovery Governance Profile** | Frozen Sequential Policy V2 limits exposed as inspectable governance. Distinguishes STOP, HUMAN_REVIEW, FILTER_ACTION, SCHEDULE_ACTION, and ACCOUNTING_INVARIANT. Deterministic policy retains financial authority; AI does not authorize execution. | **ISOLATED LOCAL VERIFICATION** & **SEALED · SIMULATED** | [Sequential Recovery](docs/SEQUENTIAL_RECOVERY.md) |
 | **Counterfactual Action Advantage** | Compares selected action with feasible alternative actions under matched simulated hidden-world conditions. Measures action-selection headroom. | **POST-HOC · SIMULATED**. (48,405 eligible paired decisions, 43.99% selected best/tied, 52.29% counterfactual value capture). Simulator 0.3.0 does not model direct natural recovery during WAIT. | [Evaluation Results](docs/EVALUATION_RESULTS.md) |
 | **Recovery Proof Record** | Deterministic read-only projection of decision, execution, provider-outcome, and attribution. The SHA-256 fingerprint changes when included canonical evidence fields change. Detecting a change requires comparison with a previously recorded fingerprint. | **ISOLATED LOCAL VERIFICATION** (It does not execute, create attribution, independently query Razorpay, provide immutable storage, or act as a digital signature). | [Architecture](docs/ARCHITECTURE.md) |
-| **Critical Financial Path Gate** | Enforces 12 named financial invariants mapped to 20 unique pytest selectors (24/24 tests passed). Protects webhook authenticity, idempotency, execution reservations, outcome uniqueness, and crash ambiguity. | **ISOLATED LOCAL VERIFICATION**. (Provider crash ambiguity = PARTIALLY_PROTECTED, stale reservation sweeper = NOT_IMPLEMENTED). | [Critical Financial Path Gate](docs/CRITICAL_FINANCIAL_PATH_GATE.md) |
+| **Critical Financial Path Gate** | Enforces 12 named financial invariants mapped to 20 unique pytest selectors (24/24 tests passed). Protects webhook authenticity, idempotency, execution reservations, outcome uniqueness, and crash ambiguity. | **ISOLATED LOCAL VERIFICATION**. (CFP-03 PROVEN, CFP-11 PARTIALLY_PROTECTED). | [Critical Financial Path Gate](docs/CRITICAL_FINANCIAL_PATH_GATE.md) |
 
 ---
 
@@ -282,7 +292,7 @@ RecoveryIQ separates evidence categories so simulated performance is never confu
 | --- | --- | --- |
 | **DEMO · SYNTHETIC** | Judge-facing operational opportunities | 5 cases / ₹2,75,999 at risk |
 | **SEALED · SIMULATED** | Recovery-performance evaluation | 27,406 episodes / 75.97% recovery / ₹4.71 Cr+ simulated net value |
-| **RAZORPAY · TEST MODE** | Provider lifecycle verification | ₹2.00 Test recovery / **No real money moved** |
+| **RAZORPAY · TEST MODE** | Provider lifecycle verification | Live Test Mode Judge demo: ₹1,000.00 / Historical recovery: ₹2.00 / **No real money moved** |
 | **ISOLATED LOCAL VERIFICATION** | Reliability evidence | 10-way concurrency and idempotency verification |
 
 > These evidence lanes are intentionally isolated and must not be financially combined.
@@ -302,7 +312,7 @@ RecoveryIQ verifies critical financial-state invariants under concurrent and dup
 
 These Idempotency Guardrails consist of provider event deduplication, durable execution reservation, database `UNIQUE` constraints, unique external outcomes, and unique recovery attribution.
 
-The provider-accepted-but-local-process-crashes-before-persistence window is only **partially protected** through provider references and reconciliation. An automatic stale execution-reservation reaper is **not implemented**.
+The provider-accepted-but-local-process-crashes-before-persistence window is **partially protected** through provider references and reconciliation. An automatic stale execution-reservation sweeper is **implemented and tested** to deterministically recover both pre-dispatch and post-dispatch ambiguity without blind provider replay.
 
 [Read the full Safety & Reliability evidence →](docs/SAFETY_AND_RELIABILITY.md)
 
@@ -359,7 +369,9 @@ Detector V2 remains **advisory only**. It cannot authorize execution or override
 ## 🖥️ Product Surfaces
 
 - **Command Center:** Headline economic and operational evidence.
+- **Architecture Walkthrough:** Interactive control plane structure visualization.
 - **Payment Health:** Advisory simulated degradation intelligence.
+- **Replay Lab:** Live simulation and playback of bounded recovery workflows.
 - **Recovery Queue:** Operational recovery-case review.
 - **Decision Trace:** ML, ERV, policy, and explanation trace.
 - **Safety Lab:** Isolated adversarial verification.
@@ -470,7 +482,7 @@ npm run build
 - Payment Health evidence is simulated and Detector V2 is advisory only.
 - Safety Lab concurrency verification uses a fake provider and isolated local database.
 - Persistence: SQLite via SQLAlchemy 2 and Alembic.
-- Automatic stale execution-reservation cleanup is not implemented.
+- Automatic stale execution-reservation sweeper is implemented, but requires an external scheduling runner for continuous production operation.
 - Some actions remain recommendation-only or internal scheduling.
 - The LLM is strictly explanation-only.
 - No production deployment is claimed.

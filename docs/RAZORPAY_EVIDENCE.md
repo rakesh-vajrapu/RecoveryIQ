@@ -268,6 +268,26 @@ A focused regression proves that a Payment Link created on an earlier date and p
 - [x] Created date preserved and Last Activity displayed separately
 - [x] No commit or push performed
 
+## Live ₹1,000 Razorpay Test Mode Judge Demo
+
+To provide reviewers with concrete execution evidence, RecoveryIQ supports a live **Razorpay Test Mode Judge Demo**. 
+
+### How It Works
+
+1. **Prepare:** A reviewer explicitly creates a controlled synthetic `RecoveryCase` for exactly `100000` minor units (₹1,000.00 INR).
+2. **Execution:** The reviewer initiates a `CREATE_PAYMENT_LINK` execution through the provider adapter.
+3. **Provider Interaction:** A real Razorpay Test Mode Payment Link is generated. The reviewer completes a test checkout.
+4. **Webhook:** A real `payment_link.paid` webhook is delivered to the deployed App Service.
+5. **Verification:** The webhook signature is verified (raw-body HMAC-SHA256).
+6. **Triangulation:** The provider state is independently fetched and confirmed against the webhook.
+7. **Attribution:** The exact ₹1,000.00 amount is recorded as an `ExternalOutcome` and mapped to `RecoveryAttribution` exactly once.
+
+### Important Boundaries
+
+- **Test Mode Only:** This flow explicitly requires `EXECUTION_ENVIRONMENT=RAZORPAY_TEST` and `RAZORPAY_MODE=test`. Live mode is categorically blocked.
+- **No Real Money Moves:** Test checkout uses Razorpay mock cards/banks.
+- **₹1,000.00 vs ₹2.00:** The current deployed reviewer evidence includes this ₹1,000 Test Mode recovery. Historical persisted evidence (which predates full Provider Truth Triangulation) totals ₹2.00. These are distinct evidence sets and are not aggregated into simulated cohort benchmarks.
+
 ## Recovery Proof Record
 
 To address external audit requirements and maintain transparency, RecoveryIQ provides a Deterministic Recovery Proof Record. The Proof Record aggregates the independent components of a recovery lifecycle (decision, execution, outcome, attribution, and provider evidence) into a single read-only view. 

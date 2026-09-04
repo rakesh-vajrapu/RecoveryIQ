@@ -28,6 +28,7 @@ Safety is not assumed; it is actively verified through isolated local adversaria
 | **Concurrent Webhook Race** | 10 concurrent identical webhook requests → 1 unique persisted event (9 deduplicated) | `ExternalWebhookEvent.provider_event_id` UNIQUE constraint | **PROVEN** |
 | **Concurrent Execution Race** | 10 concurrent creation invocations → 1 logical execution → 1 fake provider call | `idempotency_key` UNIQUE constraint & execution reservation | **PROVEN** |
 | **Duplicate Success** | 10 identical success events → 1 `ExternalOutcome` → 1 `RecoveryAttribution` | `RecoveryAttribution.external_outcome_id` UNIQUE constraint | **PROVEN** |
+| **Stale Execution Recovery** | Stale local execution reservations are detected and reconciled without blind provider replay | Atomic CAS state transitions + provider reconciliation | **PROVEN** |
 
 ---
 
@@ -56,12 +57,39 @@ These strict constraints include:
 
 ---
 
+## Stale Execution Recovery
+
+Stale `ExternalExecution` reservations are detected and deterministically recovered without blind provider replay.
+
+### Pre-Dispatch Recovery (PLANNED → FAILED)
+
+If an execution reservation remains in `PLANNED` state beyond the configured timeout (default: 15 minutes), it is provably pre-dispatch — no provider API call was made. The sweeper atomically transitions it to `FAILED` with `failure_category = STALE_RESERVATION`.
+
+### Post-Dispatch Recovery (EXECUTING → UNKNOWN → Reconciliation)
+
+If an execution remains in `EXECUTING` state beyond the timeout, the provider dispatch may have occurred. The sweeper transitions it to `UNKNOWN` and invokes provider reconciliation using:
+
+- The `provider_entity_id` (if the provider returned an ID before crash), or
+- The `provider_reference_id` (the deterministic reference generated before dispatch).
+
+The reconciled provider resource is verified against the persisted amount, currency, and reference. Matching resources resolve the same execution. Mismatches, not-found results, and lookup errors all fail closed — no replacement Payment Link is authorized.
+
+### Evidence
+
+8 focused tests in `tests/test_stale_recovery.py` verify pre-dispatch sweep, post-dispatch reconciliation, mismatch rejection, idempotent re-sweep, concurrent sweep race protection, terminal state safety, and not-found blocking.
+
+Evidence lane: **ISOLATED LOCAL VERIFICATION**.
+
+[Read the full External Execution Recovery documentation →](EXTERNAL_EXECUTION_RECOVERY.md)
+
+---
+
 ## Provider Uncertainty & Reconciliation
 
 **Provider Crash Ambiguity:**
-If the local process crashes before persisting a successful provider call, the reservation remains. Reconciliation is supported via known provider reference lookups (e.g., retrieving Razorpay Test Mode Payment Links by deterministically generated IDs). 
-*Status: **PARTIALLY_PROTECTED***
+If the local process crashes before persisting a successful provider response, the reservation transitions to `UNKNOWN`. Reconciliation uses known provider identity/reference to resolve the execution without blind replay. Unresolved external ambiguity may require provider-side evidence or manual operator resolution.
+*Status: **PARTIALLY_PROTECTED** (CFP-11)*
 
 **Stale Execution Reservations:**
-An automatic stale-reservation sweeper is not currently implemented.
-*Status: **NOT_IMPLEMENTED***
+Stale pre-dispatch and post-dispatch reservations are detected and reconciled as described above. Repeated sweep invocations are idempotent.
+*Status: **PROVEN** (CFP-03)*
