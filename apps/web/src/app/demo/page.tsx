@@ -561,16 +561,41 @@ export default function ReplayLabPage() {
           </div>
 
           {isPlaying && (
-            <div className="flex flex-col items-center justify-center p-6 border border-emerald-500/30 bg-emerald-500/5 rounded-xl mb-6 shadow-sm">
-               <div className="flex items-center gap-4">
-                 <div className="size-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-                 <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">
-                   {currentPhaseIndex + 1}. {getActiveText(currentPhaseIndex, isDemo)}
-                 </span>
-               </div>
-               <div className="mt-3 text-[10px] font-bold tracking-widest uppercase text-emerald-600/70">
-                 {isDemo ? "RUNNING SYNTHETIC DEMO FLOW" : "REPLAYING FROZEN EVIDENCE"}
-               </div>
+            <div className="relative overflow-hidden flex flex-col items-center justify-center p-10 border border-emerald-500/30 bg-emerald-950/40 rounded-xl mb-6 shadow-[0_0_40px_rgba(16,185,129,0.15)]">
+              {/* Animated gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-emerald-900/20 animate-pulse"></div>
+              
+              {/* Radar sweep / processing ring */}
+              <div className="relative mb-6 flex items-center justify-center">
+                <div className="absolute inset-0 rounded-full border border-emerald-500/40 animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
+                <div className="absolute inset-0 rounded-full border border-emerald-500/20 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite_0.5s]"></div>
+                <div className="relative h-14 w-14 rounded-full border-[3px] border-emerald-500 border-r-transparent animate-spin flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.5)]">
+                  <div className="h-6 w-6 rounded-full bg-emerald-500/30 animate-pulse"></div>
+                </div>
+              </div>
+              
+              <div className="relative z-10 flex flex-col items-center gap-2">
+                <div className="flex items-center gap-3 text-lg font-bold text-emerald-400 tracking-wide">
+                  <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,1)]"></span>
+                  {currentPhaseIndex + 1}. {getActiveText(currentPhaseIndex, isDemo)}
+                  <span className="flex ml-[-4px]">
+                    <span className="animate-[bounce_1.4s_infinite] [animation-delay:-0.32s]">.</span>
+                    <span className="animate-[bounce_1.4s_infinite] [animation-delay:-0.16s]">.</span>
+                    <span className="animate-[bounce_1.4s_infinite]">.</span>
+                  </span>
+                </div>
+                <div className="text-[11px] font-bold tracking-[0.3em] uppercase text-emerald-500/70">
+                  {isDemo ? "Running synthetic demo flow" : "Replaying frozen evidence"}
+                </div>
+              </div>
+
+              {/* Progress bar at bottom */}
+              <div className="absolute bottom-0 left-0 h-1.5 bg-emerald-950 w-full overflow-hidden">
+                <div 
+                  className="h-full bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,1)] transition-all duration-500 ease-out" 
+                  style={{ width: `${Math.max(5, ((currentPhaseIndex + 1) / (PHASES.length || 1)) * 100)}%` }}
+                ></div>
+              </div>
             </div>
           )}
 
