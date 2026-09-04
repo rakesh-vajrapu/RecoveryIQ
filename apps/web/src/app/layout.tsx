@@ -8,6 +8,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: { default: "RecoveryIQ Command Center", template: "%s · RecoveryIQ" },
   description: "Bounded, auditable revenue recovery operations",
+  icons: {
+    icon: "/icon.jpg",
+  },
 };
 
 export const viewport: Viewport = {

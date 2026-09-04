@@ -2,15 +2,27 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { PageHeader } from "@/components/page-header";
-import { getReplayTrace, TraceData } from "@/lib/api";
+import { getReplayTrace } from "@/lib/api";
 import { formatMoney } from "@/lib/format";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 // Inline UI wrappers
-const Card = ({ children, className = "", onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) => (
-  <div onClick={onClick} className={`rounded-xl border bg-card shadow-sm ${className} ${onClick ? 'cursor-pointer hover:border-emerald-500/50 transition-colors' : ''}`}>
-    {children}
-  </div>
-);
+const Card = ({ children, className = "", onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) => {
+  if (onClick) {
+    return (
+      <button type="button" onClick={onClick} className={cn("text-left w-full rounded-xl border bg-card shadow-sm transition-colors cursor-pointer hover:border-emerald-500/50 hover:shadow-md focus-visible:ring-2 focus-visible:ring-emerald-500 outline-none", className)}>
+        {children}
+      </button>
+    );
+  }
+  return (
+    <div className={cn("rounded-xl border bg-card shadow-sm", className)}>
+      {children}
+    </div>
+  );
+};
+
 const CardHeader = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
   <div className={`flex flex-col space-y-1.5 p-6 ${className}`}>{children}</div>
 );
@@ -52,10 +64,144 @@ function formatActionLabel(label: string) {
   return mapping[label] || label;
 }
 
+// 20 EXACT SCENARIOS
+const D1_CONTEXTS = [
+  "TEMPORARY_NETWORK_ERROR", "ISSUER_UNAVAILABLE", "CUSTOMER_ACTION_REQUIRED", "AUTHENTICATION_FAILURE", 
+  "INSUFFICIENT_FUNDS", "INSTRUMENT_EXPIRED", "UNKNOWN_TRANSIENT_ERROR", "MANDATE_INACTIVE"
+];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const D1_SCENARIOS: any[] = Array.from({ length: 16 }).map((_, i) => ({
+  id: `demo-d1-${i + 1}`,
+  preset_name: "quick-recovery-demo",
+  initial_failure: { amount_minor: 100000, payment_method: i % 2 === 0 ? "card" : "upi", failure_reason: D1_CONTEXTS[i % D1_CONTEXTS.length] },
+  decisions: [
+    {
+      decision_index: 1,
+      observable_context: { elapsed_hours: 0, last_action: "NONE", previous_result: "NONE" },
+      candidates: [
+        { label: "RETRY_LATER_2H", probability: 0.88, incremental_erv_minor: 88000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
+        { label: "CREATE_PAYMENT_LINK", probability: 0.45, incremental_erv_minor: 45000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" }
+      ],
+      selected_action: "RETRY_LATER_2H",
+      policy_checks: { reason: "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV" }
+    }
+  ],
+  final: { recovered: true, termination: "RECOVERED", recovered_amount_minor: 100000, action_count: 1 }
+}));
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const SYNTHETIC_SCENARIOS: any[] = [
+  ...D1_SCENARIOS,
+  {
+    id: "demo-d2",
+    initial_failure: { amount_minor: 100000, payment_method: "card", failure_reason: "AUTHENTICATION_FAILURE" },
+    decisions: [
+      {
+        decision_index: 1,
+        observable_context: { elapsed_hours: 0, last_action: "NONE", previous_result: "NONE" },
+        candidates: [{ label: "CREATE_PAYMENT_LINK", probability: 0.6, incremental_erv_minor: 60000, supported: true }],
+        selected_action: "CREATE_PAYMENT_LINK",
+        policy_checks: { reason: "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV" }
+      },
+      {
+        decision_index: 2,
+        observable_context: { elapsed_hours: 24, last_action: "CREATE_PAYMENT_LINK", previous_result: "FAILED" },
+        candidates: [{ label: "OFFER_ALTERNATE_METHOD", probability: 0.7, incremental_erv_minor: 70000, supported: true }],
+        selected_action: "OFFER_ALTERNATE_METHOD",
+        policy_checks: { reason: "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV" }
+      }
+    ],
+    final: { recovered: true, termination: "RECOVERED", recovered_amount_minor: 100000, action_count: 2 }
+  },
+  {
+    id: "demo-d3",
+    initial_failure: { amount_minor: 100000, payment_method: "card", failure_reason: "INSTRUMENT_EXPIRED" },
+    decisions: [
+      {
+        decision_index: 1,
+        observable_context: { elapsed_hours: 0, last_action: "NONE", previous_result: "NONE" },
+        candidates: [{ label: "REQUEST_PAYMENT_METHOD_UPDATE", probability: 0.5, incremental_erv_minor: 50000, supported: true }],
+        selected_action: "REQUEST_PAYMENT_METHOD_UPDATE",
+        policy_checks: { reason: "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV" }
+      },
+      {
+        decision_index: 2,
+        observable_context: { elapsed_hours: 48, last_action: "REQUEST_PAYMENT_METHOD_UPDATE", previous_result: "FAILED" },
+        candidates: [{ label: "CREATE_PAYMENT_LINK", probability: 0.4, incremental_erv_minor: 40000, supported: true }],
+        selected_action: "CREATE_PAYMENT_LINK",
+        policy_checks: { reason: "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV" }
+      },
+      {
+        decision_index: 3,
+        observable_context: { elapsed_hours: 72, last_action: "CREATE_PAYMENT_LINK", previous_result: "FAILED" },
+        candidates: [{ label: "RETRY_LATER_2H", probability: 0.6, incremental_erv_minor: 60000, supported: true }],
+        selected_action: "RETRY_LATER_2H",
+        policy_checks: { reason: "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV" }
+      }
+    ],
+    final: { recovered: true, termination: "RECOVERED", recovered_amount_minor: 100000, action_count: 3 }
+  },
+  {
+    id: "demo-hr",
+    initial_failure: { amount_minor: 100000, payment_method: "unknown", failure_reason: "UNKNOWN_TRANSIENT_ERROR" },
+    decisions: [
+      {
+        decision_index: 1,
+        observable_context: { elapsed_hours: 0, last_action: "NONE", previous_result: "NONE" },
+        candidates: [{ label: "RETRY_LATER_24H", probability: 0.2, incremental_erv_minor: 20000, supported: true }],
+        selected_action: "RETRY_LATER_24H",
+        policy_checks: { reason: "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV" }
+      }
+    ],
+    final: { recovered: false, termination: "HUMAN_REVIEW_REQUIRED", recovered_amount_minor: 0, action_count: 1 }
+  },
+  {
+    id: "demo-stop",
+    initial_failure: { amount_minor: 100000, payment_method: "card", failure_reason: "INSUFFICIENT_FUNDS" },
+    decisions: [
+      {
+        decision_index: 1,
+        observable_context: { elapsed_hours: 0, last_action: "NONE", previous_result: "NONE" },
+        candidates: [{ label: "RETRY_NOW", probability: 0.1, incremental_erv_minor: -5000, supported: false }],
+        selected_action: "NONE",
+        policy_checks: { reason: "NO_POSITIVE_SUPPORTED_ACTION_BUDGET_EXHAUSTED" }
+      }
+    ],
+    final: { recovered: false, termination: "STOPPED", recovered_amount_minor: 0, action_count: 0 }
+  }
+];
+
+function getActiveText(phaseIndex: number, isDemo: boolean) {
+  if (isDemo) {
+    switch (phaseIndex) {
+      case 0: return "Reading synthetic payment context";
+      case 1: return "Presenting synthetic decision evidence";
+      case 2: return "Ranking the demo intervention";
+      case 3: return "Applying demo policy step";
+      case 4: return "Revealing synthetic outcome";
+      case 5: return "Updating the synthetic case state";
+      default: return "";
+    }
+  } else {
+    switch (phaseIndex) {
+      case 0: return "Loading recorded observable context";
+      case 1: return "Revealing recorded Model V2 probabilities";
+      case 2: return "Revealing recorded ERV ranking";
+      case 3: return "Revealing recorded Policy V2 decision";
+      case 4: return "Revealing recorded simulated outcome";
+      case 5: return "Advancing to the next recorded decision state";
+      default: return "";
+    }
+  }
+}
+
 export default function ReplayLabPage() {
   const [selectedPreset, setSelectedPreset] = useState<string>("quick-recovery-demo");
-  const [trace, setTrace] = useState<TraceData | null>(null);
+  const [quickDemoIndex, setQuickDemoIndex] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [apiTrace, setApiTrace] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Playback state
   const [currentDecisionIndex, setCurrentDecisionIndex] = useState(0);
@@ -63,70 +209,54 @@ export default function ReplayLabPage() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMicroscope, setIsMicroscope] = useState(false);
 
+  const isDemo = selectedPreset === "quick-recovery-demo";
+  const trace = isDemo ? SYNTHETIC_SCENARIOS[quickDemoIndex] : apiTrace;
+
+  const handleReset = useCallback(() => {
+    setCurrentDecisionIndex(0);
+    setCurrentPhaseIndex(0);
+    setIsPlaying(false);
+  }, []);
+
   useEffect(() => {
     if (!selectedPreset) return;
     
-    // We shouldn't trigger loading state from inside the effect without a mount check, 
-    // but in this simple demo component we can safely load data. To appease the linter, 
-    // we use a boolean flag or just let it be since it's a demo. Wait, the linter says:
-    // "Calling setState synchronously within an effect can trigger cascading renders"
+    if (selectedPreset === "quick-recovery-demo") {
+      setTimeout(() => {
+        setLoading(false);
+        setError(null);
+        handleReset();
+      }, 0);
+      return;
+    }
     
     let isMounted = true;
-    
+    setLoading(true);
+    setError(null);
     getReplayTrace(selectedPreset)
       .then((data) => {
         if (isMounted) {
-          if (selectedPreset === "quick-recovery-demo") {
-            // PRESENTATION DEMO behavior
-            // The 80% first-action demo distribution is not a sealed benchmark metric
-            const rand = Math.random();
-            let stepsToKeep = 3;
-            let isSuccess = true;
-            
-            if (rand < 0.80) {
-               stepsToKeep = 1;
-            } else if (rand < 0.96) {
-               stepsToKeep = 2;
-            } else if (rand < 0.99) {
-               stepsToKeep = 3;
-            } else {
-               stepsToKeep = 3;
-               isSuccess = false;
-            }
-
-            const modifiedData = JSON.parse(JSON.stringify(data)) as TraceData;
-            modifiedData.decisions = modifiedData.decisions.slice(0, stepsToKeep);
-            modifiedData.final.action_count = stepsToKeep;
-            modifiedData.final.autonomous_interventions = stepsToKeep;
-            
-            if (!isSuccess) {
-               modifiedData.final.recovered = false;
-               modifiedData.final.termination = "HUMAN_REVIEW_REQUIRED";
-            }
-            
-            setTrace(modifiedData);
-          } else {
-            // For preset-sequential-v2, bounded-failure-trace-v2, microscope
-            setTrace(data);
-          }
-          
+          setApiTrace(data);
           setLoading(false);
-          // Reset playback
-          setCurrentDecisionIndex(0);
-          setCurrentPhaseIndex(0);
-          setIsPlaying(false);
+          handleReset();
+        }
+      })
+      .catch((err) => {
+        if (isMounted) {
+          setError(err.message || "Replay evidence unavailable");
+          setLoading(false);
         }
       });
       
     return () => { isMounted = false; };
-  }, [selectedPreset]);
+  }, [selectedPreset, handleReset]);
 
   const handleNextStep = useCallback(() => {
     if (!trace) return;
     if (currentPhaseIndex < 4) { // Up to OUTCOME
       setCurrentPhaseIndex(p => p + 1);
     } else if (currentPhaseIndex === 4) {
-      // At OUTCOME, decide if there is a next decision or if it's the end
+      // At OUTCOME
       if (currentDecisionIndex < trace.decisions.length - 1) {
         setCurrentPhaseIndex(5); // REPLAN
       } else {
@@ -143,7 +273,7 @@ export default function ReplayLabPage() {
     if (isPlaying && trace) {
       timer = setTimeout(() => {
         handleNextStep();
-      }, 2000);
+      }, 750);
     }
     return () => clearTimeout(timer);
   }, [isPlaying, currentPhaseIndex, currentDecisionIndex, trace, handleNextStep]);
@@ -157,17 +287,11 @@ export default function ReplayLabPage() {
     }
   };
 
-  const handleReset = () => {
-    setCurrentDecisionIndex(0);
-    setCurrentPhaseIndex(0);
-    setIsPlaying(false);
-  };
-
   const renderPresetCards = () => (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
       <Card 
         onClick={() => { setSelectedPreset("quick-recovery-demo"); setIsMicroscope(false); }}
-        className={selectedPreset === "quick-recovery-demo" && !isMicroscope ? "border-emerald-500/50 bg-emerald-500/5 dark:bg-emerald-950/10" : ""}
+        className={isDemo ? "border-emerald-500 bg-emerald-500/5 dark:bg-emerald-950/10" : ""}
       >
         <CardHeader>
           <CardTitle>Quick Recovery Demo</CardTitle>
@@ -177,17 +301,17 @@ export default function ReplayLabPage() {
       
       <Card 
         onClick={() => { setSelectedPreset("successful-adaptive-trace-v2"); setIsMicroscope(false); }}
-        className={selectedPreset === "successful-adaptive-trace-v2" && !isMicroscope ? "border-emerald-500/50 bg-emerald-500/5 dark:bg-emerald-950/10" : ""}
+        className={selectedPreset === "successful-adaptive-trace-v2" && !isMicroscope ? "border-emerald-500 bg-emerald-500/5 dark:bg-emerald-950/10" : ""}
       >
         <CardHeader>
-          <CardTitle>Autonomous Recovery</CardTitle>
-          <div className="text-sm text-muted-foreground mt-2">Simulated to succeed on the first try 96% of the time, and adaptively replan otherwise.</div>
+          <CardTitle>Sequential Recovery Replay</CardTitle>
+          <div className="text-sm text-muted-foreground mt-2">Watch RecoveryIQ update state and replan across a full frozen recovery trajectory.</div>
         </CardHeader>
       </Card>
       
       <Card 
         onClick={() => { setSelectedPreset("bounded-failure-trace-v2"); setIsMicroscope(false); }}
-        className={selectedPreset === "bounded-failure-trace-v2" && !isMicroscope ? "border-emerald-500/50 bg-emerald-500/5 dark:bg-emerald-950/10" : ""}
+        className={selectedPreset === "bounded-failure-trace-v2" && !isMicroscope ? "border-emerald-500 bg-emerald-500/5 dark:bg-emerald-950/10" : ""}
       >
         <CardHeader>
           <CardTitle>Bounded Safety Stop</CardTitle>
@@ -197,7 +321,7 @@ export default function ReplayLabPage() {
 
       <Card 
         onClick={() => { setSelectedPreset("successful-adaptive-trace-v2"); setIsMicroscope(true); }}
-        className={isMicroscope ? "border-emerald-500/50 bg-emerald-500/5 dark:bg-emerald-950/10" : ""}
+        className={isMicroscope ? "border-emerald-500 bg-emerald-500/5 dark:bg-emerald-950/10" : ""}
       >
         <CardHeader>
           <CardTitle>Decision Microscope</CardTitle>
@@ -207,10 +331,32 @@ export default function ReplayLabPage() {
     </div>
   );
 
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <PageHeader 
+          eyebrow="TRY RECOVERYIQ" 
+          title={isDemo ? "RecoveryIQ Interactive Demo" : "RecoveryIQ Replay Lab"} 
+          description={isDemo ? "Experience a synthetic recovery flow, or inspect sealed RecoveryIQ decision evidence." : "Replay frozen RecoveryIQ decisions from sealed evaluation evidence."}
+        />
+        {renderPresetCards()}
+        <div className="p-8 text-center text-red-500 bg-red-500/10 border border-red-500/20 rounded-xl">
+          <h3 className="font-bold mb-2 text-lg">Replay evidence unavailable</h3>
+          <p className="text-sm mb-4">{error}</p>
+          <Button onClick={() => setSelectedPreset(selectedPreset)} variant="outline">Retry</Button>
+        </div>
+      </div>
+    );
+  }
+
   if (loading || !trace) {
     return (
       <div className="space-y-6">
-        <PageHeader eyebrow="TRY RECOVERYIQ" title="RecoveryIQ Replay Lab" description="Replay frozen RecoveryIQ decisions from sealed evaluation evidence." />
+        <PageHeader 
+          eyebrow="TRY RECOVERYIQ" 
+          title={isDemo ? "RecoveryIQ Interactive Demo" : "RecoveryIQ Replay Lab"} 
+          description={isDemo ? "Experience a synthetic recovery flow, or inspect sealed RecoveryIQ decision evidence." : "Replay frozen RecoveryIQ decisions from sealed evaluation evidence."}
+        />
         {renderPresetCards()}
         <div className="text-muted-foreground p-8 text-center animate-pulse">Loading trace evidence...</div>
       </div>
@@ -227,8 +373,8 @@ export default function ReplayLabPage() {
     <div className="space-y-6">
       <PageHeader
         eyebrow="TRY RECOVERYIQ"
-        title="RecoveryIQ Replay Lab"
-        description="Replay frozen RecoveryIQ decisions from sealed evaluation evidence."
+        title={isDemo ? "RecoveryIQ Interactive Demo" : "RecoveryIQ Replay Lab"}
+        description={isDemo ? "Experience a synthetic recovery flow, or inspect sealed RecoveryIQ decision evidence." : "Replay frozen RecoveryIQ decisions from sealed evaluation evidence."}
       />
 
       {renderPresetCards()}
@@ -236,11 +382,20 @@ export default function ReplayLabPage() {
       <div className="flex items-center justify-between p-4 bg-muted/50 border rounded-lg">
         <div className="flex items-center gap-4">
           <Badge variant="outline" className="text-[10px] tracking-widest uppercase border-emerald-500/20 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10">
-            {selectedPreset === 'quick-recovery-demo' ? 'DEMO · SYNTHETIC' : 'SEALED · SIMULATED REPLAY'}
+            {isDemo ? 'DEMO · SYNTHETIC' : 'SEALED · SIMULATED REPLAY'}
           </Badge>
-          <span className="text-sm text-muted-foreground">Interactive replay of frozen evaluation evidence. No new inference, provider action, or real money.</span>
+          <span className="text-sm text-muted-foreground">
+            {isDemo ? "Synthetic product walkthrough. Not sealed evidence, not live inference, and no provider action." : "Interactive presentation of frozen evaluation evidence. No new inference, provider action, or real money."}
+          </span>
         </div>
       </div>
+      
+      {isDemo && (
+         <div className="flex flex-col items-center gap-2 mt-4 text-center">
+            <span className="text-xs text-muted-foreground">Synthetic demo mix: 80% of presentation scenarios resolve on the first intervention.</span>
+            <span className="text-[10px] text-muted-foreground/70">Presentation distribution only — not a sealed benchmark metric.</span>
+         </div>
+      )}
 
       <div className="flex items-center gap-4 text-xs font-mono text-muted-foreground justify-center p-4 border bg-muted/30 rounded-xl my-8 overflow-x-auto text-center">
         <span>MODEL V2 <br/><span className="text-[10px] text-muted-foreground/70">(Recorded calibrated probabilities)</span></span>
@@ -279,7 +434,8 @@ export default function ReplayLabPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border">
-                    {decision.candidates.map((cand, i) => {
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                    {decision.candidates.map((cand: any, i: number) => {
                       const isSelected = cand.label === decision.selected_action;
                       return (
                         <tr key={i} className={`group transition-colors ${isSelected ? "bg-emerald-500/10 border-l-2 border-emerald-500" : "hover:bg-muted/40"}`}>
@@ -323,9 +479,9 @@ export default function ReplayLabPage() {
         <div className="space-y-6 animate-in fade-in duration-500">
           <div className="flex flex-wrap gap-4 mb-8 justify-center">
              {PHASES.map((phase, idx) => (
-                <div key={phase} className={`flex items-center gap-2 ${idx <= currentPhaseIndex ? 'text-emerald-600 dark:text-emerald-500' : 'text-muted-foreground'}`}>
-                  <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border ${idx === currentPhaseIndex ? 'border-emerald-500 bg-emerald-500/20' : idx < currentPhaseIndex ? 'border-emerald-500 bg-transparent' : 'border-border bg-transparent text-muted-foreground'}`}>
-                    {idx + 1}
+                <div key={phase} className={`flex items-center gap-2 ${idx === currentPhaseIndex ? 'text-emerald-600 dark:text-emerald-500 font-bold' : idx < currentPhaseIndex ? 'text-emerald-600/70 dark:text-emerald-500/70' : 'text-muted-foreground'}`}>
+                  <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border ${idx === currentPhaseIndex ? 'border-emerald-500 bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] text-white' : idx < currentPhaseIndex ? 'border-emerald-500 bg-transparent text-emerald-600' : 'border-border bg-transparent text-muted-foreground'}`}>
+                    {idx < currentPhaseIndex ? "✓" : idx + 1}
                   </span>
                   <span className="text-xs font-mono tracking-wider">{phase}</span>
                 </div>
@@ -333,17 +489,36 @@ export default function ReplayLabPage() {
           </div>
 
           <div className="flex flex-wrap gap-4 justify-center mb-8">
-            <button onClick={handlePrevStep} disabled={currentPhaseIndex === 0 && currentDecisionIndex === 0} className="px-4 py-2 bg-muted border rounded text-sm text-foreground disabled:opacity-50 hover:bg-muted/80 transition-colors">Previous Step</button>
-            <button onClick={() => setIsPlaying(!isPlaying)} disabled={showFinalOutcome} className={`px-4 py-2 border rounded text-sm font-bold transition-colors disabled:opacity-50 ${isPlaying ? 'bg-amber-600 hover:bg-amber-700 text-white border-amber-600' : 'bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-600'}`}>
-              {isPlaying ? "Pause Replay" : "Play Replay"}
-            </button>
-            <button onClick={handleNextStep} disabled={showFinalOutcome} className="px-4 py-2 bg-muted border rounded text-sm text-foreground disabled:opacity-50 hover:bg-muted/80 transition-colors">Next Step</button>
-            <button onClick={handleReset} className="px-4 py-2 bg-muted border rounded text-sm text-red-500 hover:bg-muted/80 transition-colors">Reset</button>
+             <Button onClick={handlePrevStep} disabled={currentPhaseIndex === 0 && currentDecisionIndex === 0} variant="outline">Previous Step</Button>
+             <Button 
+                onClick={() => setIsPlaying(!isPlaying)} 
+                disabled={showFinalOutcome} 
+                className={cn(
+                   "font-bold transition-all disabled:opacity-50",
+                   !isPlaying && isDemo ? "animated-border-button bg-emerald-600 hover:bg-emerald-700 text-white" : "",
+                   isPlaying ? "bg-amber-600 hover:bg-amber-700 text-white" : ""
+                )}
+             >
+                {isPlaying ? "Pause Demo" : "Play Demo"}
+             </Button>
+             <Button onClick={handleNextStep} disabled={showFinalOutcome} variant="outline">Next Step</Button>
+             {isDemo && !isPlaying && (
+                <Button onClick={() => { setQuickDemoIndex(i => (i + 1) % 20); handleReset(); }} variant="outline" className="text-emerald-600 border-emerald-600/20 hover:bg-emerald-600/10">Try Another Case</Button>
+             )}
+             <Button onClick={handleReset} variant="outline" className="text-red-500 hover:text-red-600 hover:bg-red-500/10 border-red-500/20">Reset</Button>
           </div>
 
           {isPlaying && (
-            <div className="text-center text-amber-600 dark:text-amber-500 text-xs font-mono tracking-widest animate-pulse mb-4">
-              REPLAYING FROZEN EVIDENCE
+            <div className="flex flex-col items-center justify-center p-6 border border-emerald-500/30 bg-emerald-500/5 rounded-xl mb-6 shadow-sm">
+               <div className="flex items-center gap-4">
+                 <div className="size-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+                 <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">
+                   {currentPhaseIndex + 1}. {getActiveText(currentPhaseIndex, isDemo)}
+                 </span>
+               </div>
+               <div className="mt-3 text-[10px] font-bold tracking-widest uppercase text-emerald-600/70">
+                 {isDemo ? "RUNNING SYNTHETIC DEMO FLOW" : "REPLAYING FROZEN EVIDENCE"}
+               </div>
             </div>
           )}
 
@@ -391,7 +566,8 @@ export default function ReplayLabPage() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-border">
-                      {decision.candidates.map((cand, i) => {
+                      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                    {decision.candidates.map((cand: any, i: number) => {
                         const isSelected = cand.label === decision.selected_action;
                         return (
                           <tr key={i} className={`group transition-colors ${(isSelected && currentPhaseIndex >= 3) ? "bg-emerald-500/10 border-l-2 border-emerald-500" : "hover:bg-muted/40"}`}>
@@ -447,11 +623,17 @@ export default function ReplayLabPage() {
           )}
 
           {showFinalOutcome && (
-            <Card className={isRecovered ? "border-emerald-500/50 bg-emerald-500/10 dark:bg-emerald-950/20" : "border-amber-500/50 bg-amber-500/10 dark:bg-amber-950/20"}>
+            <Card className={cn(isRecovered ? "border-emerald-500/50 bg-emerald-500/10 dark:bg-emerald-950/20" : "border-amber-500/50 bg-amber-500/10 dark:bg-amber-950/20")}>
               <CardHeader>
                 <CardTitle className={isRecovered ? "text-emerald-700 dark:text-emerald-400 text-2xl" : "text-amber-700 dark:text-amber-400 text-2xl"}>
-                  {isRecovered ? "SIMULATED RECOVERY" : "BOUNDED AUTONOMY WORKED AS DESIGNED"}
+                  {isRecovered ? "RECOVERED" : "BOUNDED AUTONOMY WORKED AS DESIGNED"}
                 </CardTitle>
+                {isRecovered && isDemo && (
+                   <div className="text-emerald-600 mt-2">Recovered on intervention {trace.final.action_count}</div>
+                )}
+                {isRecovered && !isDemo && (
+                   <div className="text-emerald-600 mt-2">SIMULATED RECOVERY</div>
+                )}
               </CardHeader>
               <CardContent className="space-y-3 text-sm text-muted-foreground">
                 {!isRecovered && (
@@ -474,10 +656,10 @@ export default function ReplayLabPage() {
                   <span>Autonomous Interventions Used:</span>
                   <span className="font-mono text-foreground">{trace.final.action_count}</span>
                 </div>
-                {!isRecovered && trace.final.no_fourth_autonomous_action && (
+                {!isRecovered && trace.final.termination === "STOPPED" && (
                   <div className="text-amber-600 dark:text-amber-500 text-xs font-bold tracking-widest mt-4">NO FOURTH AUTONOMOUS ACTION ALLOWED</div>
                 )}
-                {isRecovered && (
+                {isRecovered && !isDemo && trace.final.total_intervention_cost_minor !== undefined && (
                   <>
                     <div className="flex justify-between items-center pb-2 border-b border-border">
                       <span>Total Intervention Cost:</span>
@@ -497,7 +679,7 @@ export default function ReplayLabPage() {
             </Card>
           )}
 
-          {showFinalOutcome && (
+          {showFinalOutcome && !isDemo && (
             <div className="mt-12 p-6 border bg-muted/50 rounded-xl text-center">
               <h3 className="text-lg font-bold text-foreground mb-2 tracking-widest">PROVIDER EXECUTION NOT REPLAYED HERE</h3>
               <p className="text-sm text-muted-foreground mb-4">Replay Lab ends at policy evidence. Razorpay provider execution is demonstrated separately in Test Mode evidence.</p>

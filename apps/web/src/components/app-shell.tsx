@@ -2,6 +2,7 @@
 
 import { Activity, BarChart3, BrainCircuit, ChevronRight, CreditCard, HeartPulse, ListChecks, Menu, Moon, ShieldCheck, Sun, X } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
@@ -89,7 +90,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 }
 
 function LogoMark() {
-  return <span className="relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-xl bg-[linear-gradient(145deg,var(--primary),#0b7b91)] text-[11px] font-black tracking-tight text-white shadow-[0_8px_20px_var(--glow-primary)] transition-transform duration-300 group-hover:rotate-[-3deg] group-hover:scale-105">RQ<span className="absolute -right-1 -top-1 size-3 rounded-full border border-white/50 bg-white/20" /></span>;
+  return <span className="relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-xl shadow-[0_8px_20px_var(--glow-primary)] transition-transform duration-300 group-hover:rotate-[-3deg] group-hover:scale-105"><Image src="/logo.jpg" alt="RecoveryIQ Logo" width={40} height={40} className="object-cover" /><span className="absolute -right-1 -top-1 size-3 rounded-full border border-white/50 bg-white/20" /></span>;
 }
 
 function ThemeToggle() {
