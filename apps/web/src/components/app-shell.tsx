@@ -64,7 +64,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <div className="m-3 rounded-2xl border bg-card/70 p-4 shadow-sm">
           <div className="flex items-center gap-2 text-xs font-semibold"><span className="grid size-7 place-items-center rounded-lg bg-accent text-primary"><ShieldCheck className="size-4" /></span>Bounded autonomy</div>
           <p className="mt-3 text-[11px] leading-5 text-muted-foreground">Policy authorizes. Providers verify. AI explains supplied evidence only.</p>
-          <div className="mt-3 flex items-center gap-2 border-t pt-3 text-[10px] font-semibold tracking-[0.12em] text-primary uppercase"><span className="status-pulse flex items-center gap-2">Test mode</span></div>
+          <div className="mt-3 flex items-center gap-2 border-t pt-3 text-[10px] font-semibold tracking-[0.12em] text-primary uppercase"><span className="status-pulse flex items-center gap-2">Razorpay Test evidence</span></div>
         </div>
       </aside>
 
@@ -75,7 +75,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <button type="button" onClick={() => setMenuOpen(true)} aria-label="Open navigation" className="focus-ring grid size-10 place-items-center rounded-xl border bg-card text-muted-foreground shadow-sm hover:text-foreground lg:hidden"><Menu className="size-4.5" /></button>
           <div className="min-w-0"><p className="eyebrow truncate">Operations / {routeLabel(pathname)}</p><p className="mt-0.5 truncate text-sm font-semibold group cursor-default"><span className="transition-all duration-300 group-hover:text-primary group-hover:drop-shadow-[0_0_8px_rgba(14,165,122,0.5)]">RecoveryIQ</span> control plane</p></div>
           <div className="ml-auto flex items-center gap-2 sm:gap-3">
-            <div className="hidden items-center gap-2 rounded-full border bg-card/75 px-3 py-1.5 text-[10px] font-semibold tracking-[0.11em] text-primary uppercase shadow-sm sm:flex"><span className="size-1.5 rounded-full bg-primary shadow-[0_0_9px_var(--primary)]" />Local demo runtime</div>
+            <div className="hidden items-center gap-2 rounded-full border bg-card/75 px-3 py-1.5 text-[10px] font-semibold tracking-[0.11em] text-primary uppercase shadow-sm sm:flex"><span className="size-1.5 rounded-full bg-primary shadow-[0_0_9px_var(--primary)]" />Reviewer demo runtime</div>
             <ThemeToggle />
           </div>
         </header>

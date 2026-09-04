@@ -21,15 +21,6 @@
 ![Critical Financial Path Gate](https://img.shields.io/badge/Verification-Critical_Financial_Path_Gate-2EA043?style=flat-square)
 ![27,406 SEALED · SIMULATED Episodes](https://img.shields.io/badge/Evaluation-27,406_SEALED_·_SIMULATED_Episodes-2EA043?style=flat-square)
 
-## ☁️ Live Deployment
-
-- **Frontend:** [Vercel](https://recoveryiq-ai.vercel.app)
-- **Backend:** Microsoft Azure App Service
-- Public reviewer runtime is `SIMULATION`; Razorpay Test Mode evidence remains separately labelled.
-
-[Architecture](docs/ARCHITECTURE.md)
-
----
 
 ## 🎯 Judge & Reviewer Snapshot
 
@@ -49,28 +40,15 @@
 
 ---
 
-## ⚖️ AI Judgment — Right Tool, Right Place
+## 🔎 Reviewer Evidence Map
 
-| Problem / Responsibility | Tool | Why |
-|---|---|---|
-| Action-conditioned recovery probability | LightGBM + isotonic calibration | Structured nonlinear tabular prediction under uncertainty |
-| Economic action ranking | Deterministic Expected Recovery Value (ERV) | Arithmetic/business economics does not require generative AI |
-| Financial authorization | Deterministic Sequential Policy V2 | Financial decisions need reproducible, auditable limits and abstention |
-| Payment degradation detection | Statistical Detector V2 | Population-level observability; explicitly ADVISORY ONLY because it did not pass the hard-policy authority gate |
-| Provider truth | Razorpay signed evidence + independent provider verification where persisted | Payment truth must come from provider evidence, not AI inference |
-| Human-readable explanation | Optional Groq LLM + deterministic fallback | Language generation is appropriate here; LLM has ZERO financial execution authority |
-| Production causal uplift / treatment effect | NOT CLAIMED | Simulator 0.3.0 does not model a defensible untreated natural-recovery path during WAIT; real causal measurement would require appropriately designed merchant holdouts / controlled treatment data |
-
----
-
-## 🔧 What Broke — and What Changed
-
-This section directly answers Razorpay’s: **“What broke, and what did you do about it?”**
-
-1. **Detector V2 authority gate:** Detector V2 did not pass the hard-policy safety/authority gate. As a result, the detector remains advisory-only for observability/context and has zero policy overrides / execution authority.
-2. **Real provider context vs frozen Model V2:** During Razorpay integration, real provider events did not necessarily contain enough historical context to safely reconstruct the frozen Model V2 feature contract. Instead of inventing or zero-filling features, the system fails closed and routes to `HUMAN_REVIEW` rather than fabricating historical or provider context.
-3. **Probability Policy negative result:** Frozen validation showed Probability Policy slightly exceeded RecoveryIQ Sequential ERV V2 in raw recovery (76.18% vs 75.97%). However, RecoveryIQ used 491 fewer customer contacts across the cohort. This negative raw-recovery result was explicitly preserved rather than tuning against protected validation.
-4. **Distributed provider ambiguity:** External provider crash ambiguity cannot be honestly called exactly-once provider execution. The current status is `PARTIALLY_PROTECTED` and automatic stale reservation sweeping is `NOT_IMPLEMENTED`. RecoveryIQ only claims exactly-once LOCAL outcome and recovery attribution semantics.
+| Proof | Where to inspect |
+|---|---|
+| Recovery control plane | [Command Center](https://recoveryiq-ai.vercel.app/) |
+| Deterministic decision authority | [Decision Trace](https://recoveryiq-ai.vercel.app/decision-trace) |
+| Idempotency / concurrency evidence | [Safety Lab](https://recoveryiq-ai.vercel.app/safety-lab) |
+| Razorpay Test Mode integration | [Razorpay Evidence](https://recoveryiq-ai.vercel.app/integrations/razorpay) |
+| Sealed performance evidence | [Evaluation Lab](https://recoveryiq-ai.vercel.app/evaluation) |
 
 ---
 
@@ -114,6 +92,35 @@ The LLM remains strictly **explanation-only** and has **NO FINANCIAL EXECUTION A
 | **Human-in-the-Loop Escalation** | Insufficient model support or missing context safely routes to `HUMAN_REVIEW` |
 | **Adversarial Concurrency Verification** | Isolated 10-way webhook, executor, and success races verify duplicate protection |
 | **Auditable Decision Trace** | Decision → execution plan → execution → provider outcome → attribution are separately persisted and auditable |
+
+---
+
+## ⚖️ AI Judgment — Right Tool, Right Place
+
+| Problem / Responsibility | Tool | Why |
+|---|---|---|
+| Action-conditioned recovery probability | LightGBM + isotonic calibration | Structured nonlinear tabular prediction under uncertainty |
+| Economic action ranking | Deterministic Expected Recovery Value (ERV) | Arithmetic/business economics does not require generative AI |
+| Financial authorization | Deterministic Sequential Policy V2 | Financial decisions need reproducible, auditable limits and abstention |
+| Payment degradation detection | Statistical Detector V2 | Population-level observability; explicitly ADVISORY ONLY because it did not pass the hard-policy authority gate |
+| Provider truth | Razorpay signed evidence + independent provider verification where persisted | Payment truth must come from provider evidence, not AI inference |
+| Human-readable explanation | Optional Groq LLM + deterministic fallback | Language generation is appropriate here; LLM has ZERO financial execution authority |
+| Causal incremental lift | Not claimed from this simulator | Requires randomized holdouts / controlled treatment evidence |
+
+[Read the Evaluation Results →](docs/EVALUATION_RESULTS.md)
+
+---
+
+## 🔧 What Broke — and What Changed
+
+This section directly answers Razorpay’s: **“What broke, and what did you do about it?”**
+
+1. **Detector V2 authority gate:** Detector V2 did not pass the hard-policy safety/authority gate. As a result, the detector remains advisory-only for observability/context and has zero policy overrides / execution authority.
+2. **Real provider context vs frozen Model V2:** During Razorpay integration, real provider events did not necessarily contain enough historical context to safely reconstruct the frozen Model V2 feature contract. Instead of inventing or zero-filling features, the system fails closed and routes to `HUMAN_REVIEW` rather than fabricating historical or provider context.
+3. **Probability Policy negative result:** Frozen validation showed Probability Policy slightly beat RecoveryIQ Sequential ERV V2 in raw recovery (76.18% vs 75.97%). However, RecoveryIQ used 491 fewer customer contacts across the cohort. This negative raw-recovery result was preserved rather than tuning against protected validation.
+4. **Distributed provider ambiguity:** Distributed-system guarantees are deliberately scoped to local outcome/attribution semantics; provider crash ambiguity and remaining production-hardening boundaries are documented in Safety & Reliability.
+
+[Safety & Reliability](docs/SAFETY_AND_RELIABILITY.md)
 
 ---
 
