@@ -1,7 +1,7 @@
 import json
 import uuid
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from fastapi import APIRouter, HTTPException
 
@@ -127,7 +127,7 @@ async def get_simulated_decision_example() -> Any:
     # pyrefly: ignore [bad-assignment]
     selected_action: str = first_decision.get("selected_action") or "UNKNOWN"
     # pyrefly: ignore [bad-assignment]
-    policy_checks: dict = first_decision.get("policy_checks") or {}
+    policy_checks: dict[str, Any] = first_decision.get("policy_checks") or {}
     reason: str = policy_checks.get("reason") or "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV"
 
     decision_res = DecisionResponse(
@@ -184,4 +184,6 @@ async def get_action_advantage_diagnostic() -> dict[str, Any]:
     except Exception as e:
         raise HTTPException(status_code=500, detail="Invalid diagnostic artifact") from e
 
-    return data  # type: ignore
+    if not isinstance(data, dict):
+        raise HTTPException(status_code=500, detail="Invalid diagnostic artifact format")
+    return cast(dict[str, Any], data)
