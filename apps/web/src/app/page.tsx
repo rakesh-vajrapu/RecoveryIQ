@@ -41,10 +41,31 @@ export default function CommandCenterPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Recovery command center" title="RecoveryIQ: Autonomous Revenue Recovery Control Plane" description="Detect revenue at risk, select the highest-value safe intervention, execute bounded recovery, and verify the outcome." icon={Activity} actions={<Button variant="outline" onClick={resource.retry} disabled={resource.loading}><RefreshCw className={resource.loading ? "animate-spin" : ""} />Refresh data</Button>} />
+      <PageHeader 
+        eyebrow="Recovery command center" 
+        title="RecoveryIQ: Autonomous Revenue Recovery Control Plane" 
+        description="Detect revenue at risk, select the highest-value safe intervention, execute bounded recovery, and verify the outcome." 
+        icon={Activity} 
+        actions={
+          <div className="flex items-center gap-3">
+            <Button variant="ghost" size="sm" onClick={resource.retry} disabled={resource.loading} className="text-muted-foreground hidden sm:flex">
+              <RefreshCw className={resource.loading ? "animate-spin" : ""} /> Refresh data
+            </Button>
+            <Link href="/batch-explorer">
+              <Button variant="outline" size="sm">Explore Sealed Batch</Button>
+            </Link>
+            <div className="flex flex-col items-center">
+              <Link href="/recovery-cases">
+                <Button size="sm" className="gap-1.5">Try RecoveryIQ <ArrowRight className="size-3.5" /></Button>
+              </Link>
+              <span className="mt-1 text-[8px] font-bold tracking-[0.15em] text-muted-foreground uppercase">DEMO · SYNTHETIC</span>
+            </div>
+          </div>
+        } 
+      />
       
       {/* Control Loop Visual */}
-      <div className="mb-6 flex overflow-x-auto rounded-xl border bg-card/50 px-5 py-3 text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
+      <div className="mb-2 flex overflow-x-auto rounded-xl border bg-card/50 px-5 py-3 text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
         <div className="flex items-center gap-3 whitespace-nowrap" title="ML predicts · Policy decides · Razorpay verifies · AI explains">
           <span className="text-foreground">Detect</span><ArrowRight className="size-3 text-muted-foreground/50" />
           <span className="text-foreground">Predict</span><ArrowRight className="size-3 text-muted-foreground/50" />
@@ -52,6 +73,17 @@ export default function CommandCenterPage() {
           <span className="text-primary">Execute</span><ArrowRight className="size-3 text-primary/50" />
           <span className="text-emerald-600 dark:text-emerald-400">Verify</span><ArrowRight className="size-3 text-emerald-600/50 dark:text-emerald-400/50" />
           <span className="text-emerald-600 dark:text-emerald-400">Attribute</span>
+        </div>
+      </div>
+
+      {/* Quick Reviewer Path */}
+      <div className="mb-6 flex overflow-x-auto rounded-xl border border-primary/20 bg-primary/5 px-5 py-2.5 text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
+        <div className="flex items-center gap-3 whitespace-nowrap">
+          <span className="text-primary font-bold">QUICK REVIEW</span><span className="text-primary/30">|</span>
+          <Link href="/recovery-cases" className="hover:text-primary transition-colors">Recovery Case</Link><ArrowRight className="size-3 text-primary/50" />
+          <Link href="/decision-trace" className="hover:text-primary transition-colors">Decision Trace</Link><ArrowRight className="size-3 text-primary/50" />
+          <Link href="/evaluation" className="hover:text-primary transition-colors">Evaluation</Link><ArrowRight className="size-3 text-primary/50" />
+          <Link href="/integrations/razorpay" className="hover:text-primary transition-colors">Razorpay Evidence</Link>
         </div>
       </div>
 
