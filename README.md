@@ -4,10 +4,14 @@
 
 ### Autonomous Revenue Recovery Control Plane for Razorpay-style payment workflows
 
-**RecoveryIQ is an AI Revenue Recovery Agent and bounded control plane that detects revenue at risk, estimates action-conditioned recovery probability, selects the highest-value safe intervention using Expected Recovery Value, executes supported recovery workflows under deterministic policy guardrails, verifies provider outcomes, and attributes recovered revenue exactly once locally.**
+**🌐 Live Demo:** https://recoveryiq-ai.vercel.app
+
+**RecoveryIQ is an AI Revenue Recovery Agent and bounded control plane that detects revenue at risk, estimates action-conditioned recovery probability, selects the highest-value safe intervention using Expected Recovery Value, executes supported recovery workflows under deterministic policy guardrails, verifies provider outcomes, and attributes recovered revenue exactly once locally.** **Live reviewer deployment: Next.js on Vercel with the FastAPI control plane hosted on Microsoft Azure App Service.**
 
 > **Evidence note:** All portfolio evaluation results are **simulated** and do not represent Razorpay production revenue. Razorpay integration evidence uses **Test Mode only**. **No real money is moved.**
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-000000?style=flat-square&logo=vercel)](https://recoveryiq-ai.vercel.app)
+![Azure App Service](https://img.shields.io/badge/Backend_Cloud-Microsoft_Azure_App_Service-0078D4?style=flat-square&logo=microsoftazure&logoColor=white)
 ![FastAPI · Python 3.12](https://img.shields.io/badge/Backend-FastAPI_·_Python_3.12-009688?style=flat-square&logo=fastapi)
 ![Next.js 16 · React 19](https://img.shields.io/badge/Frontend-Next.js_16_·_React_19-000000?style=flat-square&logo=nextdotjs)
 ![LightGBM V2 · Calibrated](https://img.shields.io/badge/ML-LightGBM_V2_·_Calibrated-FF9900?style=flat-square)
@@ -17,10 +21,21 @@
 ![Critical Financial Path Gate](https://img.shields.io/badge/Verification-Critical_Financial_Path_Gate-2EA043?style=flat-square)
 ![27,406 SEALED · SIMULATED Episodes](https://img.shields.io/badge/Evaluation-27,406_SEALED_·_SIMULATED_Episodes-2EA043?style=flat-square)
 
+## ☁️ Live Deployment
+
+- **Frontend:** [Vercel](https://recoveryiq-ai.vercel.app)
+- **Backend:** Microsoft Azure App Service
+- Public reviewer runtime is `SIMULATION`; Razorpay Test Mode evidence remains separately labelled.
+
+[Architecture](docs/ARCHITECTURE.md)
+
+---
+
 ## 🎯 Judge & Reviewer Snapshot
 
 | Pillar | RecoveryIQ |
 |---|---|
+| **Live Deployment** | Next.js on Vercel → FastAPI on Microsoft Azure App Service; public reviewer runtime remains simulation-only. |
 | **Core Value Proposition** | Recovers failed recurring payments by choosing the highest-value safe intervention rather than blindly retrying. |
 | **Decision Intelligence** | Action-conditioned LightGBM V2 estimates calibrated `P(recovery | action, context)` for feasible interventions. |
 | **Economic Optimization** | Expected Recovery Value balances recovery probability, payment value, intervention cost, and customer friction. |
