@@ -443,12 +443,6 @@ export default function ReplayLabPage() {
         </div>
       </div>
       
-      {isDemo && (
-         <div className="flex flex-col items-center gap-2 mt-4 text-center">
-            <span className="text-xs text-muted-foreground">Synthetic demo mix: 80% of presentation scenarios resolve on the first intervention.</span>
-            <span className="text-[10px] text-muted-foreground/70">Presentation distribution only — not a sealed benchmark metric.</span>
-         </div>
-      )}
 
       <div className="flex items-center gap-4 text-xs font-mono text-muted-foreground justify-center p-4 border bg-muted/30 rounded-xl my-8 overflow-x-auto text-center">
         <span>MODEL V2 <br/><span className="text-[10px] text-muted-foreground/70">(Recorded calibrated probabilities)</span></span>

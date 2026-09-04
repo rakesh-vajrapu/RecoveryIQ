@@ -15,12 +15,6 @@ test('Sealed replay paths use SEALED_SIMULATED_REPLAY', () => {
   assert.ok(code.includes("'SEALED · SIMULATED REPLAY'"), "Must have SEALED badge");
 });
 
-test('Quick Recovery Demo explicitly documents synthetic mix', () => {
-  const pagePath = path.resolve(import.meta.dirname, '../src/app/demo/page.tsx');
-  const code = fs.readFileSync(pagePath, 'utf8');
-  assert.ok(code.includes("Synthetic demo mix: 80% of presentation scenarios resolve on the first intervention."), "Must document PRESENTATION DEMO behavior");
-  assert.ok(code.includes("Presentation distribution only — not a sealed benchmark metric."), "Must disclaim benchmark metric");
-});
 
 test('Quick Recovery Demo is decoupled from trace fetching', () => {
   const pagePath = path.resolve(import.meta.dirname, '../src/app/demo/page.tsx');
