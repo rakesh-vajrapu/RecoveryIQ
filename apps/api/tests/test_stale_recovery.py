@@ -1,4 +1,5 @@
 import uuid
+from collections.abc import Generator
 from datetime import timedelta
 
 import pytest
@@ -21,7 +22,6 @@ from app.models.entities import utc_now
 from app.services.stale_recovery import sweep_stale_external_executions
 
 
-from collections.abc import Generator
 @pytest.fixture
 def sessions() -> Generator[Session, None, None]:
     engine = create_engine("sqlite:///:memory:")
@@ -120,6 +120,11 @@ def test_stale_pre_dispatch_reservation_swept(sessions: Session) -> None:
 
 def test_stale_post_dispatch_ambiguous_execution(sessions: Session) -> None:
     gateway = FakeRazorpayGateway("secret")
+    def mock_find(*args: object, **kwargs: object) -> None:
+        from app.integrations.razorpay.gateway import RazorpayUnknownOutcomeError
+        raise RazorpayUnknownOutcomeError("mocked network failure")
+    gateway.find_payment_link_by_reference = mock_find  # type: ignore[method-assign]
+
     _case, execution = _setup_stale_data(
         sessions, ExternalExecutionState.EXECUTING, provider_reference_id="ref_123"
     )
@@ -129,7 +134,7 @@ def test_stale_post_dispatch_ambiguous_execution(sessions: Session) -> None:
 
     sessions.refresh(execution)
     assert execution.state == ExternalExecutionState.UNKNOWN
-    assert execution.failure_category == "RECONCILIATION_NOT_FOUND"
+    assert execution.failure_category == "RECONCILIATION_PENDING"
     assert gateway.create_calls == 0
 
 
@@ -175,7 +180,7 @@ def test_provider_lookup_mismatch(sessions: Session) -> None:
     ))
     gateway.create_calls = 0 # reset counter
 
-    result = sweep_stale_external_executions(sessions, gateway=gateway, timeout_minutes=15)
+    sweep_stale_external_executions(sessions, gateway=gateway, timeout_minutes=15)
     sessions.refresh(execution)
     assert execution.state == ExternalExecutionState.UNKNOWN
     assert execution.failure_category == "RECONCILIATION_MISMATCH"
@@ -213,10 +218,16 @@ def test_terminal_execution_ignored(sessions: Session) -> None:
     assert result["post_dispatch_swept"] == 0
 
 
-def test_unknown_already_pending(sessions: Session) -> None:
+def test_provider_lookup_returns_none(sessions: Session) -> None:
     gateway = FakeRazorpayGateway("secret")
-    _case, _execution = _setup_stale_data(sessions, ExternalExecutionState.UNKNOWN)
+    _case, execution = _setup_stale_data(
+        sessions, ExternalExecutionState.EXECUTING, provider_reference_id="ref_none"
+    )
 
     result = sweep_stale_external_executions(sessions, gateway=gateway, timeout_minutes=15)
-    assert result["pre_dispatch_swept"] == 0
-    assert result["post_dispatch_swept"] == 0
+    assert result["post_dispatch_swept"] == 1
+
+    sessions.refresh(execution)
+    assert execution.state == ExternalExecutionState.UNKNOWN
+    assert execution.failure_category == "RECONCILIATION_NOT_FOUND"
+    assert gateway.create_calls == 0
