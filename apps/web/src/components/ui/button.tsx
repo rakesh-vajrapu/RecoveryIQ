@@ -8,14 +8,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-[0_8px_24px_var(--glow-primary)] hover:-translate-y-0.5 hover:brightness-105 hover:shadow-[0_12px_32px_var(--glow-primary)]",
+        default: "bg-primary text-primary-foreground shadow-[0_8px_24px_var(--glow-primary)] hover:-translate-y-0.5 hover:scale-[1.02] hover:brightness-110 hover:shadow-[0_12px_32px_var(--glow-primary)] after:absolute after:inset-0 after:bg-gradient-to-r after:from-transparent after:via-white/10 after:to-transparent after:-translate-x-full hover:after:animate-[shimmer_1.5s_infinite]",
         outline:
-          "border-border bg-card/70 shadow-sm hover:-translate-y-0.5 hover:border-primary/25 hover:bg-muted hover:text-foreground hover:shadow-md aria-expanded:bg-muted aria-expanded:text-foreground",
+          "border-border bg-card/70 shadow-sm hover:-translate-y-0.5 hover:scale-[1.02] hover:border-primary/40 hover:bg-muted hover:text-foreground hover:shadow-[0_8px_24px_rgba(var(--primary),0.1)] aria-expanded:bg-muted aria-expanded:text-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:-translate-y-0.5 hover:brightness-95 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
-        ghost: "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
+          "bg-secondary text-secondary-foreground shadow-sm hover:-translate-y-0.5 hover:scale-[1.02] hover:brightness-105 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+        ghost: "hover:bg-muted hover:scale-[1.02] hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
         destructive:
-          "bg-destructive/10 text-destructive hover:-translate-y-0.5 hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20",
+          "bg-destructive/10 text-destructive hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 hover:shadow-[0_8px_24px_rgba(var(--destructive),0.15)]",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

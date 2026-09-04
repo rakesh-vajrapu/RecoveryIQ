@@ -152,12 +152,12 @@ function DashboardContent({ data }: { data: DashboardData }) {
       </section>
 
       <section className="grid gap-5 xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)]">
-        <article className="surface-panel overflow-hidden rounded-2xl">
+        <article className="surface-panel overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 hover:border-primary/20">
           <div className="flex items-center justify-between border-b px-5 py-4 sm:px-6"><div><p className="eyebrow">Latest activity</p><h2 className="mt-1.5 text-base font-semibold">Recovery queue</h2></div><Link href="/recovery-cases" className="focus-ring group flex items-center gap-1.5 rounded-lg px-2 py-1 text-xs font-semibold text-primary">View all<ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" /></Link></div>
           {latest.length === 0 ? <p className="p-8 text-center text-sm text-muted-foreground">No recovery cases have been recorded.</p> : <div className="divide-y">{latest.map((item) => <Link key={item.id} href={`/recovery-cases/${item.id}`} className="group grid gap-3 px-5 py-4 transition-colors hover:bg-muted/45 sm:grid-cols-[1fr_auto_auto_auto] sm:items-center sm:px-6"><div className="min-w-0"><p className="truncate font-mono text-xs font-semibold">Case {shortId(item.id)}</p><p className="mt-1 truncate text-[11px] text-muted-foreground">Ref {shortId(item.correlation_id, 12)} · activity {formatDate(item.last_activity_at)}</p></div><SourceBadge source={item.source} /><StatusBadge status={item.status} /><p className="text-sm font-semibold sm:text-right">{formatMoney(item.amount_minor, item.currency)}</p></Link>)}</div>}
         </article>
 
-        <article className="surface-panel rounded-2xl p-5 sm:p-6">
+        <article className="surface-panel rounded-2xl p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 hover:border-primary/20">
           <div className="flex items-start justify-between gap-3"><div><p className="eyebrow">Control plane</p><h2 className="mt-2 text-base font-semibold">Environment readiness</h2></div><ShieldCheck className="size-5 text-primary" /></div>
           <dl className="mt-6 space-y-3">
             <ReadinessRow label="Backend API" value={data.health.status === "healthy" ? "Healthy" : data.health.status} ok={data.health.status === "healthy"} />
