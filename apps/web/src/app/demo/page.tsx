@@ -53,7 +53,7 @@ function formatActionLabel(label: string) {
 }
 
 export default function ReplayLabPage() {
-  const [selectedPreset, setSelectedPreset] = useState<string>("successful-adaptive-trace-v2");
+  const [selectedPreset, setSelectedPreset] = useState<string>("quick-recovery-demo");
   const [trace, setTrace] = useState<TraceData | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -76,14 +76,16 @@ export default function ReplayLabPage() {
     getReplayTrace(selectedPreset)
       .then((data) => {
         if (isMounted) {
-          if (selectedPreset === "successful-adaptive-trace-v2") {
+          if (selectedPreset === "quick-recovery-demo") {
+            // PRESENTATION DEMO behavior
+            // The 80% first-action demo distribution is not a sealed benchmark metric
             const rand = Math.random();
             let stepsToKeep = 3;
             let isSuccess = true;
             
-            if (rand < 0.96) {
+            if (rand < 0.80) {
                stepsToKeep = 1;
-            } else if (rand < 0.98) {
+            } else if (rand < 0.96) {
                stepsToKeep = 2;
             } else if (rand < 0.99) {
                stepsToKeep = 3;
@@ -104,6 +106,7 @@ export default function ReplayLabPage() {
             
             setTrace(modifiedData);
           } else {
+            // For preset-sequential-v2, bounded-failure-trace-v2, microscope
             setTrace(data);
           }
           
@@ -163,12 +166,22 @@ export default function ReplayLabPage() {
   const renderPresetCards = () => (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
       <Card 
+        onClick={() => { setSelectedPreset("quick-recovery-demo"); setIsMicroscope(false); }}
+        className={selectedPreset === "quick-recovery-demo" && !isMicroscope ? "border-emerald-500/50 bg-emerald-500/5 dark:bg-emerald-950/10" : ""}
+      >
+        <CardHeader>
+          <CardTitle>Quick Recovery Demo</CardTitle>
+          <div className="text-sm text-muted-foreground mt-2">Watch RecoveryIQ intelligently recover payments.</div>
+        </CardHeader>
+      </Card>
+      
+      <Card 
         onClick={() => { setSelectedPreset("successful-adaptive-trace-v2"); setIsMicroscope(false); }}
         className={selectedPreset === "successful-adaptive-trace-v2" && !isMicroscope ? "border-emerald-500/50 bg-emerald-500/5 dark:bg-emerald-950/10" : ""}
       >
         <CardHeader>
           <CardTitle>Autonomous Recovery</CardTitle>
-          <div className="text-sm text-muted-foreground mt-2">Watch RecoveryIQ intelligently recover payments. Simulated to succeed on the first try 96% of the time, and adaptively replan otherwise.</div>
+          <div className="text-sm text-muted-foreground mt-2">Simulated to succeed on the first try 96% of the time, and adaptively replan otherwise.</div>
         </CardHeader>
       </Card>
       
@@ -223,7 +236,7 @@ export default function ReplayLabPage() {
       <div className="flex items-center justify-between p-4 bg-muted/50 border rounded-lg">
         <div className="flex items-center gap-4">
           <Badge variant="outline" className="text-[10px] tracking-widest uppercase border-emerald-500/20 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10">
-            SEALED · SIMULATED REPLAY
+            {selectedPreset === 'quick-recovery-demo' ? 'DEMO · SYNTHETIC' : 'SEALED · SIMULATED REPLAY'}
           </Badge>
           <span className="text-sm text-muted-foreground">Interactive replay of frozen evaluation evidence. No new inference, provider action, or real money.</span>
         </div>

@@ -115,17 +115,16 @@ export function RazorpayJudgeDemo() {
         <div>
           <h3 className="text-sm font-semibold mb-4 uppercase text-muted-foreground tracking-wider">Test Mode Timeline</h3>
           <div className="space-y-4">
-            <TimelineStep label="LOCAL TEST CASE PREPARED" done={true} />
-            <TimelineStep label="OPERATOR EXECUTION AUTHORIZED" done={linkCreated} />
-            <TimelineStep label="₹1,000 TEST PAYMENT LINK CREATED" done={linkCreated} />
-            <TimelineStep label="WAITING FOR RAZORPAY WEBHOOK" done={!!outcome} active={linkCreated && !outcome} />
-            <TimelineStep label="WEBHOOK RECEIVED" done={!!outcome} />
-            <TimelineStep label="WEBHOOK SIGNATURE VERIFIED" done={!!outcome} />
-            <TimelineStep label="PROVIDER STATE FETCHED" done={!!outcome} />
-            <TimelineStep label="PROVIDER TRUTH CONFIRMED" done={outcome?.verified === true} />
-            <TimelineStep label="EXTERNAL OUTCOME RECORDED" done={!!outcome} />
-            <TimelineStep label="LOCAL RECOVERY ATTRIBUTED" done={!!caseDetail.attribution} />
-            <TimelineStep label="RECOVERY CASE RECOVERED" done={isRecovered} />
+            <TimelineStep label="1. PREPARE ₹1,000 TEST CASE" done={true} />
+            <TimelineStep label="2. CREATE ₹1,000 RAZORPAY TEST PAYMENT LINK" done={linkCreated} />
+            <TimelineStep label="3. OPEN RAZORPAY TEST PAYMENT LINK" done={linkCreated} />
+            <TimelineStep label="4. WAITING FOR RAZORPAY WEBHOOK" done={!!outcome} active={linkCreated && !outcome} />
+            <TimelineStep label="5. WEBHOOK RECEIVED" done={!!outcome} />
+            <TimelineStep label="6. SIGNATURE VERIFIED" done={!!outcome} />
+            <TimelineStep label="7. PROVIDER STATE CONFIRMED" done={outcome?.verified === true} />
+            <TimelineStep label="8. EXTERNAL OUTCOME RECORDED" done={!!outcome} />
+            <TimelineStep label="9. LOCAL ATTRIBUTION CREATED" done={!!caseDetail.attribution} />
+            <TimelineStep label="10. RECOVERED" done={isRecovered} />
           </div>
           {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
         </div>

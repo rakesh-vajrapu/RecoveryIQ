@@ -101,7 +101,7 @@ def prepare_judge_demo_case(
 
     metadata = {
         "source": "RAZORPAY_TEST_MODE",
-        "synthetic": True,
+        "synthetic": False,
         "demo_id": setup_id,
         "amount_minor": 100000,
         "currency": "INR",

@@ -31,11 +31,11 @@ from app.models import (
     RecoveryDecisionRecord,
     RecoveryExecutionPlan,
 )
+from app.services.judge_demo import RazorpayJudgeDemoError, prepare_judge_demo_case
 from app.services.razorpay_execution import (
     OperatorExecutionError,
     create_operator_test_payment_link,
 )
-from app.services.judge_demo import prepare_judge_demo_case, RazorpayJudgeDemoError
 from app.services.razorpay_webhooks import (
     payment_link_completion_datetime,
     persist_webhook_event,
@@ -401,7 +401,6 @@ def create_test_payment_link(
 @router.post(
     "/api/integrations/razorpay/live-demo/case",
     response_model=RecoveryCaseResponse,
-    status_code=status.HTTP_201_CREATED,
     tags=["integrations"],
 )
 def create_judge_demo_case(

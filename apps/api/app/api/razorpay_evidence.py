@@ -21,9 +21,12 @@ router = APIRouter(prefix="/api/integrations/razorpay", tags=["razorpay"])
 def get_razorpay_evidence(db: Annotated[Session, Depends(get_db_session)]) -> dict[str, Any]:
     from datetime import datetime, timedelta
 
+    from app.models.razorpay import ExecutionMode
     # Calculate all-time recovered minor for RAZORPAY_TEST_MODE
     attributions = db.scalars(
-        select(RecoveryAttribution).where(RecoveryAttribution.execution_mode == "RAZORPAY_TEST")
+        select(RecoveryAttribution).where(
+            RecoveryAttribution.execution_mode == ExecutionMode.RAZORPAY_TEST
+        )
     ).all()
     all_time_recovered_minor = sum(a.amount_minor for a in attributions)
 

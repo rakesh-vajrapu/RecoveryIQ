@@ -64,8 +64,7 @@ export default function RazorpayIntegrationPage() {
             </div>
             <div className="grid gap-px bg-border sm:grid-cols-2 xl:grid-cols-3">
               {Object.entries(resource.data.status.capabilities).map(([action, capability]) => {
-                const st = resource.data!.status;
-                const canExecute = st.api_configured && st.webhook_configured && st.execution_environment === 'RAZORPAY_TEST';
+                const canExecute = resource.data!.status.api_configured && resource.data!.status.webhook_configured && resource.data!.status.execution_environment === 'RAZORPAY_TEST';
                 return (
                   <div key={action} className="bg-card/85 p-4">
                     <p className="font-mono text-[11px] font-semibold">{action}</p>
