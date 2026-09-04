@@ -175,25 +175,30 @@
   overflow: hidden;
 }
 
-@keyframes rgb-slide {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+@keyframes spin-border {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .rgb-glowing-wrapper {
   position: relative;
-  border-radius: inherit;
+  overflow: hidden;
+  padding: 2px; /* Border thickness */
+  border-radius: 0.75rem; /* rounded-xl */
+  display: inline-flex;
+  width: 100%;
 }
 
 .rgb-glowing-wrapper::before,
 .rgb-glowing-wrapper::after {
   content: "";
   position: absolute;
-  inset: -2px;
-  z-index: -1;
-  background: linear-gradient(
-    90deg,
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  padding-bottom: 200%; /* Ensure it's a square covering everything */
+  background: conic-gradient(
+    from 0deg,
     #ff0000,
     #ff7300,
     #fffb00,
@@ -204,15 +209,14 @@
     #ff00c8,
     #ff0000
   );
-  background-size: 300% 100%;
-  border-radius: inherit;
-  animation: rgb-slide 3s linear infinite;
+  animation: spin-border 3s linear infinite;
+  z-index: 0;
 }
 
 .rgb-glowing-wrapper::after {
   filter: blur(12px);
-  z-index: -2;
-  opacity: 0.7;
+  opacity: 0.5;
+  z-index: -1;
 }
 
 .animated-shine-button::after {
