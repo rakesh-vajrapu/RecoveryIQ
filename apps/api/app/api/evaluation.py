@@ -124,13 +124,17 @@ async def get_simulated_decision_example() -> Any:
 
     amount = initial.get("amount_minor", 0)
 
+    # pyrefly: ignore [bad-assignment]
+    selected_action: str = first_decision.get("selected_action") or "UNKNOWN"
+    # pyrefly: ignore [bad-assignment]
+    policy_checks: dict = first_decision.get("policy_checks") or {}
+    reason: str = policy_checks.get("reason") or "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV"
+
     decision_res = DecisionResponse(
         id=uuid.uuid4(),
         kind="ACTION",
-        selected_action=first_decision.get("selected_action"),
-        reason=first_decision.get("policy_checks", {}).get(
-            "reason", "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV"
-        ),
+        selected_action=selected_action,
+        reason=reason,
         model_version="2.0.0",
         policy_version="2.0.0",
         feature_schema_version="2.0",
