@@ -158,8 +158,8 @@ function CaseContent({ recoveryCase, onRefresh, isSimulated }: { recoveryCase: R
             </div>
             
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-white/70">
-                <thead className="bg-white/5 text-white/50 font-medium text-xs uppercase tracking-wider">
+              <table className="w-full text-left text-sm text-muted-foreground">
+                <thead className="bg-muted/50 text-muted-foreground font-medium text-xs uppercase tracking-wider">
                   <tr>
                     <th className="px-4 py-3">Action Candidate</th>
                     <th className="px-4 py-3">Capability</th>
@@ -176,7 +176,7 @@ function CaseContent({ recoveryCase, onRefresh, isSimulated }: { recoveryCase: R
                     const cost = expectedRecovery - cand.incremental_erv_minor;
                     
                     return (
-                      <tr key={cand.label} className={`hover:bg-white/[0.02] transition-colors ${isSelected ? "bg-emerald-500/10 text-white" : ""}`}>
+                      <tr key={cand.label} className={`hover:bg-muted/40 transition-colors ${isSelected ? "bg-emerald-500/10 text-foreground font-medium" : ""}`}>
                         <td className="px-4 py-3 font-medium flex items-center gap-2">
                           {titleCase(cand.label.replace(/_/g, " "))}
                           {isSelected && <span className="px-1.5 py-0.5 rounded text-[10px] uppercase font-bold bg-emerald-500/20 text-emerald-400">Selected</span>}
@@ -203,7 +203,7 @@ function CaseContent({ recoveryCase, onRefresh, isSimulated }: { recoveryCase: R
               </table>
             </div>
 
-            <div className="mt-6 p-4 rounded-xl border bg-white/5 border-white/10 space-y-3">
+            <div className="mt-6 p-4 rounded-xl border bg-muted/30 space-y-3">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">Why Selected?</span>
                 <p className="mt-1 text-sm leading-relaxed">

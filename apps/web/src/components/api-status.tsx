@@ -67,16 +67,16 @@ export function ApiStatus() {
   };
 
   return (
-    <article className="overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d131b]">
-      <div className="flex items-start justify-between gap-4 border-b border-white/[0.06] p-5 sm:p-6">
+    <article className="overflow-hidden rounded-xl border bg-card shadow-sm">
+      <div className="flex items-start justify-between gap-4 border-b p-5 sm:p-6">
         <div>
-          <p className="text-xs font-semibold tracking-[0.12em] text-slate-500 uppercase">
+          <p className="text-xs font-semibold tracking-[0.12em] text-muted-foreground uppercase">
             API connectivity
           </p>
-          <h3 className="mt-2 text-lg font-medium text-white">Backend control plane</h3>
-          <p className="mt-1 font-mono text-[11px] text-slate-600">{apiBaseUrl}/health</p>
+          <h3 className="mt-2 text-lg font-medium text-foreground">Backend control plane</h3>
+          <p className="mt-1 font-mono text-[11px] text-muted-foreground">{apiBaseUrl}/health</p>
         </div>
-        <Server className="size-5 text-slate-500" />
+        <Server className="size-5 text-muted-foreground" />
       </div>
 
       <div className="p-5 sm:p-6">
@@ -121,15 +121,16 @@ export function ApiStatus() {
                 Start the FastAPI service locally, then retry. No financial data is inferred while
                 the API is offline.
               </p>
-              <p className="mt-2 font-mono text-[10px] text-slate-700">{state.message}</p>
+              <p className="mt-2 font-mono text-[10px] text-muted-foreground">{state.message}</p>
             </div>
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={retry}
-              className="border-white/10 bg-transparent text-slate-300 hover:bg-white/5 hover:text-white"
+              className="border-border bg-transparent text-muted-foreground hover:bg-muted/50 hover:text-foreground"
             >
+              <RefreshCw className="mr-2 h-3 w-3" />
               Retry
             </Button>
           </div>
@@ -149,12 +150,12 @@ function StatusDatum({
   value: string;
 }) {
   return (
-    <div className="rounded-lg border border-white/[0.06] bg-black/10 p-3">
-      <div className="flex items-center gap-2 text-[10px] tracking-wide text-slate-600 uppercase">
+    <div className="rounded-lg border bg-muted/30 p-3">
+      <div className="flex items-center gap-2 text-[10px] tracking-wide text-muted-foreground uppercase">
         <Icon className="size-3.5" />
         {label}
       </div>
-      <p className="mt-2 font-mono text-xs text-slate-300">{value}</p>
+      <p className="mt-2 font-mono text-xs text-foreground">{value}</p>
     </div>
   );
 }

@@ -4,13 +4,15 @@
 
 ### Autonomous Revenue Recovery Control Plane for Razorpay-style payment workflows
 
-**🌐 Live Demo:** https://recoveryiq-ai.vercel.app
+**🌐 Live Demo:** https://recoveryiq-ai.vercel.app/demo
+
+Try RecoveryIQ — interactive replay of frozen Model V2 → ERV → Policy V2 decisions using sealed simulated evidence.
 
 **RecoveryIQ is an AI Revenue Recovery Agent and bounded control plane that detects revenue at risk, estimates action-conditioned recovery probability, selects the highest-value safe intervention using Expected Recovery Value, executes supported recovery workflows under deterministic policy guardrails, verifies provider outcomes, and attributes recovered revenue exactly once locally.** **Live reviewer deployment: Next.js on Vercel with the FastAPI control plane hosted on Microsoft Azure App Service.**
 
 > **Evidence note:** All portfolio evaluation results are **simulated** and do not represent Razorpay production revenue. Razorpay integration evidence uses **Test Mode only**. **No real money is moved.**
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-000000?style=flat-square&logo=vercel)](https://recoveryiq-ai.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-000000?style=flat-square&logo=vercel)](https://recoveryiq-ai.vercel.app/demo)
 ![Azure App Service](https://img.shields.io/badge/Backend_Cloud-Microsoft_Azure_App_Service-0078D4?style=flat-square&logo=microsoftazure&logoColor=white)
 ![FastAPI · Python 3.12](https://img.shields.io/badge/Backend-FastAPI_·_Python_3.12-009688?style=flat-square&logo=fastapi)
 ![Next.js 16 · React 19](https://img.shields.io/badge/Frontend-Next.js_16_·_React_19-000000?style=flat-square&logo=nextdotjs)
@@ -118,7 +120,7 @@ This section directly answers Razorpay’s: **“What broke, and what did you do
 1. **Detector V2 authority gate:** Detector V2 did not pass the hard-policy safety/authority gate. As a result, the detector remains advisory-only for observability/context and has zero policy overrides / execution authority.
 2. **Real provider context vs frozen Model V2:** During Razorpay integration, real provider events did not necessarily contain enough historical context to safely reconstruct the frozen Model V2 feature contract. Instead of inventing or zero-filling features, the system fails closed and routes to `HUMAN_REVIEW` rather than fabricating historical or provider context.
 3. **Probability Policy negative result:** Frozen validation showed Probability Policy slightly beat RecoveryIQ Sequential ERV V2 in raw recovery (76.18% vs 75.97%). However, RecoveryIQ used 491 fewer customer contacts across the cohort. This negative raw-recovery result was preserved rather than tuning against protected validation.
-4. **Distributed provider ambiguity:** Distributed-system guarantees are deliberately scoped to local outcome/attribution semantics; provider crash ambiguity and remaining production-hardening boundaries are documented in Safety & Reliability.
+4. **Distributed provider ambiguity:** Stale external execution reservations are now deterministically recovered without blind provider replay; CFP-03 is PROVEN, while unknown provider outcome/crash ambiguity remains PARTIALLY_PROTECTED. Distributed-system guarantees are deliberately scoped to local outcome/attribution semantics.
 
 [Safety & Reliability](docs/SAFETY_AND_RELIABILITY.md)
 

@@ -171,20 +171,21 @@ function DashboardContent({ data }: { data: DashboardData }) {
       </section>
 
       {/* Payment Health Teaser (Simulated) */}
+      {/* Payment Health Teaser (Simulated) */}
       {data.paymentHealth && (
         <section>
-          <div className="bg-gradient-to-r from-[#0c0e12] to-[#12161f] border border-white/10 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-6">
+          <div className="bg-card dark:bg-gradient-to-r dark:from-[#0c0e12] dark:to-[#12161f] border rounded-2xl p-5 flex flex-wrap items-center justify-between gap-6 shadow-sm">
             <div>
               <div className="flex items-center gap-2">
                 <ShieldAlert className="w-4 h-4 text-rose-500" />
-                <h3 className="text-sm font-bold tracking-widest text-white/80 uppercase">Payment Health</h3>
-                <span className="text-[9px] bg-white/10 border border-white/20 text-white/60 px-2 py-0.5 rounded font-mono ml-2">SIMULATED EVIDENCE</span>
+                <h3 className="text-sm font-bold tracking-widest text-foreground uppercase">Payment Health</h3>
+                <span className="text-[9px] bg-muted border text-muted-foreground px-2 py-0.5 rounded font-mono ml-2">SIMULATED EVIDENCE</span>
               </div>
-              <p className="text-xs text-white/50 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 {data.paymentHealth.episodes?.length || 0} Incident{data.paymentHealth.episodes?.length !== 1 ? "s" : ""} • Detector V2 Advisory Only
               </p>
             </div>
-            <Link href="/payment-health" className="focus-ring flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-xs font-semibold hover:bg-white/20 transition-colors">
+            <Link href="/payment-health" className="focus-ring flex items-center gap-2 rounded-lg bg-muted px-4 py-2 text-xs font-semibold hover:bg-muted/80 transition-colors border">
               View Payment Health <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -192,20 +193,21 @@ function DashboardContent({ data }: { data: DashboardData }) {
       )}
 
       {/* Batch Explorer Teaser (Simulated) */}
+      {/* Batch Explorer Teaser (Simulated) */}
       {data.evalSummary && (
         <section>
-          <div className="bg-gradient-to-r from-emerald-950/20 to-[#0c0e12] border border-emerald-900/30 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-6">
+          <div className="bg-card dark:bg-gradient-to-r dark:from-emerald-950/20 dark:to-[#0c0e12] border border-emerald-500/20 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-6 shadow-sm">
             <div>
               <div className="flex items-center gap-2">
                 <Target className="w-4 h-4 text-emerald-500" />
-                <h3 className="text-sm font-bold tracking-widest text-emerald-100 uppercase">Batch Explorer</h3>
-                <span className="text-[9px] bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-mono ml-2">SIMULATED EVIDENCE</span>
+                <h3 className="text-sm font-bold tracking-widest text-emerald-800 dark:text-emerald-100 uppercase">Batch Explorer</h3>
+                <span className="text-[9px] bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 px-2 py-0.5 rounded font-mono ml-2">SIMULATED EVIDENCE</span>
               </div>
-              <p className="text-xs text-emerald-200/50 mt-1">
+              <p className="text-xs text-emerald-700/70 dark:text-emerald-200/50 mt-1">
                 Explore {data.evalSummary.episodes.toLocaleString()} sealed episodes • Portfolio intelligence by cohort
               </p>
             </div>
-            <Link href="/batch-explorer" className="focus-ring flex items-center gap-2 rounded-lg bg-emerald-500/10 text-emerald-400 px-4 py-2 text-xs font-semibold hover:bg-emerald-500/20 transition-colors border border-emerald-500/20">
+            <Link href="/batch-explorer" className="focus-ring flex items-center gap-2 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 px-4 py-2 text-xs font-semibold hover:bg-emerald-500/20 transition-colors border border-emerald-500/20">
               Explore Cohorts <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
