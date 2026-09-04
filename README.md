@@ -411,7 +411,7 @@ Update `apps/api/.env` with your Razorpay **Test Mode** credentials and Groq API
 cd apps/api
 uv sync --dev --locked
 uv run alembic upgrade head
-uv run fastapi run app/main.py --port 8000
+uv run uvicorn app.main:app --port 8000 --reload
 ```
 
 ### 4. Frontend Setup
