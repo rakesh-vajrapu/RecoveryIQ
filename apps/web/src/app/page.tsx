@@ -56,7 +56,7 @@ export default function CommandCenterPage() {
             </Link>
             <div className="flex flex-col items-center">
               <Link href="/demo">
-                <Button size="sm" className="gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white">Try Replay Lab <ArrowRight className="size-3.5" /></Button>
+                <Button size="sm" className="gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white">Try RecoveryIQ <ArrowRight className="size-3.5" /></Button>
               </Link>
             </div>
           </div>

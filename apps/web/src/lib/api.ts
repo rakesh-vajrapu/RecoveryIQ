@@ -43,6 +43,57 @@ export type CohortItem = { value: string; episodes: number; recovery_rate: numbe
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type BatchExplorerData = any;
 
+export type CandidateAction = {
+  label: string;
+  p_recovery: number;
+  probability: number;
+  incremental_erv_minor: number;
+  action_stage_support?: number;
+  calibration_bin_support?: number;
+  supported?: boolean;
+};
+
+export type TraceDecisionRecord = {
+  decision_index: number;
+  selected_action: string;
+  reason: string;
+  candidates: CandidateAction[];
+  policy_checks: { reason?: string; [key: string]: unknown };
+  observable_context: {
+    elapsed_hours: number;
+    last_action: string;
+    previous_result: string;
+    [key: string]: unknown;
+  };
+};
+
+export type TraceData = {
+  evidence_type: string;
+  episode_id: string;
+  initial_failure: {
+    amount_minor: number;
+    currency: string;
+    failure_reason: string;
+    payment_method: string;
+    [key: string]: unknown;
+  };
+  decisions: TraceDecisionRecord[];
+  final: {
+    status: string;
+    autonomous_interventions: number;
+    contacts: number;
+    simulated_net_value_minor: number;
+    recovered: boolean;
+    termination: string;
+    recovered_amount_minor: number;
+    action_count: number;
+    no_fourth_autonomous_action: boolean;
+    total_intervention_cost_minor: number;
+    total_friction_cost_minor: number;
+    simulated_net_recovery_value_minor: number;
+  };
+};
+
 export class ApiError extends Error {
   constructor(public readonly status: number, message: string) { super(message); this.name = "ApiError"; }
 }
@@ -125,9 +176,9 @@ export async function getReplayPresets(signal?: AbortSignal): Promise<{ id: stri
   const payload = await request("/api/evaluation/replay/presets", { signal });
   return payload as { id: string; name: string }[];
 }
-export async function getReplayTrace(presetId: string, signal?: AbortSignal): Promise<any> {
+export async function getReplayTrace(presetId: string, signal?: AbortSignal): Promise<TraceData> {
   const payload = await request(`/api/evaluation/replay/${encodeURIComponent(presetId)}`, { signal });
-  return payload;
+  return payload as TraceData;
 }
 export async function getBatchExplorerData(signal?: AbortSignal): Promise<BatchExplorerData> {
   const payload = await request(`/api/evaluation/batch-explorer`, { signal });

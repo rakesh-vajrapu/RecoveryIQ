@@ -130,7 +130,14 @@ async def get_replay_trace(preset_id: str) -> dict[str, Any]:
 
     try:
         with open(trace_path, encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
+            return {
+                "evidence_type": "SEALED_SIMULATED_REPLAY",
+                "episode_id": data.get("episode_id"),
+                "initial_failure": data.get("initial_failure"),
+                "decisions": data.get("decisions", []),
+                "final": data.get("final")
+            }
     except Exception as e:
         raise HTTPException(status_code=500, detail="Invalid trace artifact") from e
 
