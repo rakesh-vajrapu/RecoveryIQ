@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     redis_url: str = "redis://localhost:6379/0"
     celery_task_always_eager: bool = True
     enable_demo_seed: bool = False
+    enable_razorpay_judge_demo: bool = False
 
     execution_environment: Literal["SIMULATION", "RAZORPAY_TEST"] = "SIMULATION"
     razorpay_mode: Literal["test"] = "test"

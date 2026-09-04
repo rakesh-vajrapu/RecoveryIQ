@@ -9,7 +9,16 @@ export type ExternalOutcome = { id: string; status: string; verified: boolean; a
 export type RecoveryAttribution = { execution_mode: string; amount_minor: number; currency: string; occurred_at: string; created_at: string; attribution_source: string };
 export type RecoveryCaseDetail = { id: string; status: string; correlation_id: string; amount_minor: number; currency: string; subscription_status: string; source: string; synthetic: boolean; failure_type: string; payment_method: string; failure_description: string | null; decisions: DecisionRecord[]; plans: ExecutionPlan[]; executions: ExternalExecution[]; outcomes: ExternalOutcome[]; attribution: RecoveryAttribution | null };
 export type AuditEvent = { id: string; created_at: string; actor: string; event_type: string; entity_type: string; event_metadata: Record<string, unknown> };
-export type RazorpayStatus = { integration_version: string; execution_environment: string; provider_mode: "test"; api_configured: boolean; webhook_configured: boolean; live_mode_available: false; capabilities: Record<string, string> };
+export type RazorpayStatus = {
+  integration_version: string;
+  execution_environment: string;
+  provider_mode: "test";
+  api_configured: boolean;
+  webhook_configured: boolean;
+  judge_demo_enabled: boolean;
+  live_mode_available: false;
+  capabilities: Record<string, string>;
+};
 export type DecisionExplanation = { summary: string; factors: string[]; confidence: number; limitations: string[] };
 
 export type CaseProof = { status: string; amount_minor: number; currency: string; created_at: string; recovered_at: string | null };
@@ -58,7 +67,7 @@ export type TraceDecisionRecord = {
   selected_action: string;
   reason: string;
   candidates: CandidateAction[];
-  policy_checks: { reason?: string; [key: string]: unknown };
+  policy_checks: { reason?: string;[key: string]: unknown };
   observable_context: {
     elapsed_hours: number;
     last_action: string;
@@ -156,6 +165,11 @@ export async function getRazorpayStatus(signal?: AbortSignal): Promise<RazorpayS
   const payload = await request("/api/integrations/razorpay/status", { signal });
   if (!isRecord(payload) || payload.provider_mode !== "test" || payload.live_mode_available !== false) throw invalidData("Razorpay status");
   return payload as RazorpayStatus;
+}
+export async function prepareRazorpayJudgeDemo(): Promise<RecoveryCaseDetail> {
+  const payload = await request("/api/integrations/razorpay/live-demo/case", { method: "POST" });
+  if (!isRecoveryCaseDetail(payload)) throw invalidData("judge demo setup");
+  return payload;
 }
 export async function createTestPaymentLink(id: string): Promise<ExternalExecution> {
   const payload = await request(`/api/recovery-cases/${encodeURIComponent(id)}/test-payment-link`, { method: "POST" });

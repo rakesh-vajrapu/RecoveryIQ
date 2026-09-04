@@ -35,6 +35,7 @@ from app.services.razorpay_execution import (
     OperatorExecutionError,
     create_operator_test_payment_link,
 )
+from app.services.judge_demo import prepare_judge_demo_case, RazorpayJudgeDemoError
 from app.services.razorpay_webhooks import (
     payment_link_completion_datetime,
     persist_webhook_event,
@@ -57,6 +58,7 @@ class RazorpayStatusResponse(ApiModel):
     provider_mode: Literal["test"]
     api_configured: bool
     webhook_configured: bool
+    judge_demo_enabled: bool
     live_mode_available: Literal[False]
     capabilities: dict[str, str]
 
@@ -176,6 +178,7 @@ def razorpay_status(
         provider_mode=settings.razorpay_mode,
         api_configured=settings.razorpay_api_configured,
         webhook_configured=settings.razorpay_webhook_configured,
+        judge_demo_enabled=settings.enable_razorpay_judge_demo,
         live_mode_available=False,
         capabilities={key: value.value for key, value in ACTION_CAPABILITIES.items()},
     )
@@ -393,6 +396,23 @@ def create_test_payment_link(
     except OperatorExecutionError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
     return ExecutionResponse.model_validate(execution)
+
+
+@router.post(
+    "/api/integrations/razorpay/live-demo/case",
+    response_model=RecoveryCaseResponse,
+    status_code=status.HTTP_201_CREATED,
+    tags=["integrations"],
+)
+def create_judge_demo_case(
+    session: Annotated[Session, Depends(get_db_session)],
+    settings: Annotated[Settings, Depends(get_settings)],
+) -> RecoveryCaseResponse:
+    try:
+        case = prepare_judge_demo_case(session, settings=settings)
+    except RazorpayJudgeDemoError as exc:
+        raise HTTPException(status_code=403, detail=str(exc)) from exc
+    return _recovery_case_response(session, case)
 
 
 def _recovery_case_response(session: Session, recovery_case: RecoveryCase) -> RecoveryCaseResponse:

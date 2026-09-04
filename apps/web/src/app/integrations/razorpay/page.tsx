@@ -1,7 +1,8 @@
 "use client";
 
-import { CheckCircle2, CreditCard, Link2, LockKeyhole, RefreshCw, ShieldCheck, Webhook } from "lucide-react";
+import { CheckCircle2, CreditCard, Link2, LockKeyhole, RefreshCw, ShieldCheck, Webhook, AlertCircle } from "lucide-react";
 import Link from "next/link";
+import { RazorpayJudgeDemo } from "@/components/razorpay-judge-demo";
 import { useCallback } from "react";
 
 import { PageHeader } from "@/components/page-header";
@@ -25,14 +26,66 @@ export default function RazorpayIntegrationPage() {
       {resource.loading && <LoadingPanel />}
       {resource.error && <ErrorPanel message={resource.error} onRetry={resource.retry} />}
       {resource.data && <div className="space-y-5">
-        <section className="relative overflow-hidden rounded-3xl border border-emerald-500/20 bg-[linear-gradient(130deg,rgb(16_185_129_/_0.13),var(--surface-glass)_55%)] p-6 shadow-[var(--shadow-panel)] sm:p-8"><div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full border-[34px] border-emerald-500/[0.06]" /><div className="relative flex flex-col justify-between gap-6 lg:flex-row lg:items-center"><div><div className="flex items-center gap-2 text-sm font-semibold text-emerald-700 dark:text-emerald-300"><CheckCircle2 className="size-4" />Integration configured</div><h2 className="mt-3 text-2xl font-bold tracking-tight">Secure provider execution is ready.</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">API and webhook credentials are detected by typed backend settings. Values are never returned to this page.</p></div><div className="rounded-2xl border border-amber-500/25 bg-amber-500/10 px-6 py-4 text-center"><p className="text-[10px] font-bold tracking-[0.16em] text-amber-700 uppercase dark:text-amber-300">Provider mode</p><p className="mt-1 text-2xl font-black text-amber-700 dark:text-amber-200">TEST</p><p className="mt-1 text-[10px] text-amber-700/75 dark:text-amber-300/75">No Live Mode</p></div></div></section>
+        <section className="relative overflow-hidden rounded-3xl border border-emerald-500/20 bg-[linear-gradient(130deg,rgb(16_185_129_/_0.13),var(--surface-glass)_55%)] p-6 shadow-[var(--shadow-panel)] sm:p-8">
+          <div className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full border-[34px] border-emerald-500/[0.06]" />
+          <div className="relative flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
+            <div>
+              <div className={`flex items-center gap-2 text-sm font-semibold ${resource.data.status.api_configured && resource.data.status.webhook_configured && resource.data.status.execution_environment === 'RAZORPAY_TEST' ? 'text-emerald-700 dark:text-emerald-300' : 'text-amber-700 dark:text-amber-300'}`}>
+                {resource.data.status.api_configured && resource.data.status.webhook_configured && resource.data.status.execution_environment === 'RAZORPAY_TEST' ? <><CheckCircle2 className="size-4" /> RAZORPAY TEST MODE CONNECTED</> : <><AlertCircle className="size-4" /> RAZORPAY TEST MODE INTEGRATION IMPLEMENTED</>}
+              </div>
+              <h2 className="mt-3 text-2xl font-bold tracking-tight">
+                {resource.data.status.api_configured && resource.data.status.webhook_configured && resource.data.status.execution_environment === 'RAZORPAY_TEST' ? 'Provider execution and signed webhook ingestion are enabled for Test Mode.' : 'Provider execution is currently disabled in this runtime.'}
+              </h2>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">API and webhook credentials are detected by typed backend settings. Values are never returned to this page.</p>
+            </div>
+            <div className="rounded-2xl border border-amber-500/25 bg-amber-500/10 px-6 py-4 text-center">
+              <p className="text-[10px] font-bold tracking-[0.16em] text-amber-700 uppercase dark:text-amber-300">Provider mode</p>
+              <p className="mt-1 text-2xl font-black text-amber-700 dark:text-amber-200">TEST</p>
+              <p className="mt-1 text-[10px] text-amber-700/75 dark:text-amber-300/75">No Live Mode</p>
+            </div>
+          </div>
+        </section>
         <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <IntegrationCard icon={CreditCard} label="API connection" value={resource.data.status.api_configured ? "Connected" : "Not configured"} ok={resource.data.status.api_configured} />
           <IntegrationCard icon={Webhook} label="Webhook" value={resource.data.status.webhook_configured ? "Active" : "Not configured"} ok={resource.data.status.webhook_configured} />
           <IntegrationCard icon={Link2} label="Payment Link" value={resource.data.status.capabilities.CREATE_PAYMENT_LINK === "REAL_TEST_EXECUTION" ? "Available" : "Unavailable"} ok={resource.data.status.capabilities.CREATE_PAYMENT_LINK === "REAL_TEST_EXECUTION"} />
           <IntegrationCard icon={LockKeyhole} label="Live payments" value="Blocked" ok />
         </section>
-        <section className="grid gap-5 lg:grid-cols-[0.65fr_1.35fr]"><article className="rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.065] p-6"><p className="eyebrow text-emerald-700 dark:text-emerald-300">Provider-verified Test recovery</p><p className="mt-3 text-3xl font-black text-emerald-700 dark:text-emerald-200">{formatMoney(resource.data.verifiedRecoveryMinor)}</p><p className="mt-2 text-xs leading-5 text-muted-foreground">Exactly-once attribution from authenticated Razorpay Test Mode evidence. No real money moved.</p></article><section className="surface-panel overflow-hidden rounded-2xl"><div className="border-b px-5 py-4 sm:px-6"><p className="eyebrow">Execution capability map</p><h2 className="mt-1.5 text-base font-semibold">What each action is allowed to do</h2></div><div className="grid gap-px bg-border sm:grid-cols-2 xl:grid-cols-3">{Object.entries(resource.data.status.capabilities).map(([action, capability]) => <div key={action} className="bg-card/85 p-4"><p className="font-mono text-[11px] font-semibold">{action}</p><p className="mt-2 text-xs text-muted-foreground">{action === "STOP" ? "Policy Decision Only" : titleCase(capability)}</p></div>)}</div></section></section>
+        <section className="grid gap-5 lg:grid-cols-[0.65fr_1.35fr]">
+          <article className="rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.065] p-6">
+            <p className="eyebrow text-emerald-700 dark:text-emerald-300">Provider-verified Test recovery</p>
+            <p className="mt-3 text-3xl font-black text-emerald-700 dark:text-emerald-200">{formatMoney(resource.data.verifiedRecoveryMinor)}</p>
+            <p className="mt-2 text-xs leading-5 text-muted-foreground">Exactly-once attribution from authenticated Razorpay Test Mode evidence. No real money moved.</p>
+          </article>
+          <section className="surface-panel overflow-hidden rounded-2xl">
+            <div className="border-b px-5 py-4 sm:px-6">
+              <p className="eyebrow">Execution capability map</p>
+              <h2 className="mt-1.5 text-base font-semibold">What each action is allowed to do</h2>
+            </div>
+            <div className="grid gap-px bg-border sm:grid-cols-2 xl:grid-cols-3">
+              {Object.entries(resource.data.status.capabilities).map(([action, capability]) => {
+                const st = resource.data!.status;
+                const canExecute = st.api_configured && st.webhook_configured && st.execution_environment === 'RAZORPAY_TEST';
+                return (
+                  <div key={action} className="bg-card/85 p-4">
+                    <p className="font-mono text-[11px] font-semibold">{action}</p>
+                    <p className="mt-2 text-xs text-muted-foreground">{action === "STOP" ? "Policy Decision Only" : titleCase(capability)}</p>
+                    {action !== "STOP" && (
+                      <div className="mt-3 text-[10px] space-y-1">
+                        <div className="flex justify-between"><span className="text-muted-foreground">Implemented:</span> <span className="font-bold">YES</span></div>
+                        <div className="flex justify-between"><span className="text-muted-foreground">Currently executable:</span> <span className={canExecute ? "font-bold text-amber-500" : "font-bold text-destructive"}>{canExecute ? "YES \u2014 TEST MODE ONLY" : "NO"}</span></div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        </section>
+        
+        {resource.data.status.judge_demo_enabled && (
+          <RazorpayJudgeDemo />
+        )}
         {resource.data.evidence.selected_case && (
           <TimelineAndEvidence data={resource.data.evidence.selected_case} />
         )}

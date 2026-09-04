@@ -6,9 +6,9 @@ import { formatMinorINRToCompact, formatMinorINRToFull } from "@/lib/currency";
 export function RecoveryImpact({ summary }: { summary: EvaluationSummary | null }) {
   if (!summary) {
     return (
-      <section className="mt-12 bg-card border rounded-2xl p-8 shadow-sm">
+      <section className="mt-12 bg-card border rounded-2xl p-8 shadow-sm glass-card hover-lift transition-all animate-slide-up-fade">
         <h2 className="text-xl font-medium tracking-tight text-foreground">Recovery Impact</h2>
-        <div className="mt-6 flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
+        <div className="mt-6 flex flex-col items-center justify-center py-12 text-center text-muted-foreground animate-pulse">
           <p>Evaluation evidence unavailable</p>
         </div>
       </section>
@@ -30,10 +30,10 @@ export function RecoveryImpact({ summary }: { summary: EvaluationSummary | null 
   return (
     <section className="mt-12 space-y-8">
       {/* Header */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 animate-slide-up-fade stagger-1">
         <div className="flex items-center gap-3">
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground">RECOVERY IMPACT</h2>
-          <span className="px-2 py-0.5 rounded text-xs font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground gradient-text animate-gradient-x">RECOVERY IMPACT</h2>
+          <span className="px-2 py-0.5 rounded text-xs font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 shadow-[0_0_8px_rgba(16,185,129,0.3)] animate-pulse">
             SEALED &middot; SIMULATED
           </span>
         </div>
@@ -50,7 +50,7 @@ export function RecoveryImpact({ summary }: { summary: EvaluationSummary | null 
       </div>
 
       {/* Main Metric Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 animate-slide-up-fade stagger-2">
         <MetricCard title="Recovery Rate" value={`${(riq.recovery_rate * 100).toFixed(2)}%`} tooltip="Raw recovery percentage" />
         <MetricCard 
             title="Simulated Net Value" 
@@ -76,7 +76,7 @@ export function RecoveryImpact({ summary }: { summary: EvaluationSummary | null 
         const contactsPerRecovery = riq.recovered_count > 0 ? riq.contacts / riq.recovered_count : 0;
         
         return (
-          <div className="bg-card border rounded-xl overflow-hidden mt-8 p-5 shadow-sm">
+          <div className="bg-card border rounded-xl overflow-hidden mt-8 p-5 shadow-sm glass-card hover-lift transition-all animate-slide-up-fade stagger-3">
             <h3 className="text-sm font-bold tracking-widest text-muted-foreground uppercase mb-4">Decision Quality Audit</h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <MetricCard 
@@ -100,7 +100,7 @@ export function RecoveryImpact({ summary }: { summary: EvaluationSummary | null 
       })()}
 
       {/* Leaderboard */}
-      <div className="bg-card border rounded-xl overflow-hidden mt-8 shadow-sm">
+      <div className="bg-card border rounded-xl overflow-hidden mt-8 shadow-sm glass-card hover-lift transition-all animate-slide-up-fade stagger-4">
         <div className="p-5 border-b bg-muted/30">
             <h3 className="text-lg font-medium text-foreground">RecoveryIQ vs Baselines</h3>
         </div>
@@ -117,25 +117,32 @@ export function RecoveryImpact({ summary }: { summary: EvaluationSummary | null 
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {summary.strategies.map((strategy) => (
-                <tr key={strategy.id} className={`hover:bg-muted/40 transition-colors ${strategy.id === riq.id ? "bg-muted font-medium text-foreground" : ""}`}>
-                  <td className="px-6 py-4 whitespace-nowrap flex items-center gap-2">
-                    {strategy.name}
-                    {strategy.id === riq.id && (
-                        <span className="px-1.5 py-0.5 rounded text-[10px] uppercase font-bold bg-blue-500/20 text-blue-400">
-                            V2
-                        </span>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right">{(strategy.recovery_rate * 100).toFixed(2)}%</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right" title={formatMinorINRToFull(strategy.simulated_net_value_minor)}>
-                      {formatMinorINRToCompact(strategy.simulated_net_value_minor)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right">{strategy.contacts > 0 ? strategy.contacts.toLocaleString() : "—"}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right">{strategy.retries > 0 ? strategy.retries.toLocaleString() : "—"}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right">{strategy.policy_violations.toString()}</td>
-                </tr>
-              ))}
+              {summary.strategies.map((strategy) => {
+                const isRiq = strategy.id === riq.id;
+                return (
+                  <tr key={strategy.id} className={`transition-all duration-300 ${
+                    isRiq 
+                      ? "bg-emerald-500/10 font-bold text-foreground drop-shadow-[0_0_15px_rgba(16,185,129,0.2)] border-l-4 border-l-emerald-500 shadow-sm relative z-10" 
+                      : "hover:bg-muted/50 hover:drop-shadow-lg"
+                  }`}>
+                    <td className={`px-6 py-4 whitespace-nowrap flex items-center gap-2 ${isRiq ? 'text-emerald-400' : ''}`}>
+                      {strategy.name}
+                      {isRiq && (
+                          <span className="px-2 py-0.5 rounded text-[10px] uppercase font-black bg-emerald-500 text-emerald-950 shadow-[0_0_10px_rgba(16,185,129,0.8)] animate-pulse">
+                              V2
+                          </span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right">{(strategy.recovery_rate * 100).toFixed(2)}%</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right" title={formatMinorINRToFull(strategy.simulated_net_value_minor)}>
+                        {formatMinorINRToCompact(strategy.simulated_net_value_minor)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right">{strategy.contacts > 0 ? strategy.contacts.toLocaleString() : "—"}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right">{strategy.retries > 0 ? strategy.retries.toLocaleString() : "—"}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right">{strategy.policy_violations.toString()}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
