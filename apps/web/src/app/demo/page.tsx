@@ -519,23 +519,23 @@ export default function ReplayLabPage() {
           </div>
 
           <div className="flex flex-wrap gap-4 justify-center mb-8">
-             <Button onClick={handlePrevStep} disabled={currentPhaseIndex === 0 && currentDecisionIndex === 0} variant="outline">Previous Step</Button>
+             <Button onClick={handlePrevStep} disabled={currentPhaseIndex === 0 && currentDecisionIndex === 0} variant="outline" className="hover:scale-[1.02] active:scale-95 transition-all duration-300">Previous Step</Button>
              <Button 
                 onClick={() => setIsPlaying(!isPlaying)} 
                 disabled={showFinalOutcome} 
                 className={cn(
-                   "font-bold transition-all disabled:opacity-50",
-                   !isPlaying && isDemo ? "bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-500/20" : "",
-                   isPlaying ? "bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-500/20" : ""
+                   "font-bold transition-all duration-300 disabled:opacity-50",
+                   !isPlaying && isDemo ? "animated-shine-button hover:scale-[1.02] active:scale-95 bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40" : "",
+                   isPlaying ? "animate-pulse hover:scale-[1.02] active:scale-95 bg-amber-600 hover:bg-amber-500 text-white shadow-[0_0_15px_rgba(217,119,6,0.6)]" : ""
                 )}
              >
                 {isPlaying ? "Pause Demo" : "Play Demo"}
              </Button>
-             <Button onClick={handleNextStep} disabled={showFinalOutcome} variant="outline">Next Step</Button>
+             <Button onClick={handleNextStep} disabled={showFinalOutcome} variant="outline" className="hover:scale-[1.02] active:scale-95 transition-all duration-300">Next Step</Button>
              {isDemo && !isPlaying && (
-                <Button onClick={() => { setQuickDemoIndex(i => (i + 1) % 20); handleReset(); }} variant="outline" className="text-emerald-600 border-emerald-600/20 hover:bg-emerald-600/10">Try Another Case</Button>
+                <Button onClick={() => { setQuickDemoIndex(i => (i + 1) % 20); handleReset(); }} variant="outline" className="text-emerald-600 border-emerald-600/20 hover:bg-emerald-600/10 hover:scale-[1.02] active:scale-95 transition-all duration-300">Try Another Case</Button>
              )}
-             <Button onClick={handleReset} variant="outline" className="text-red-500 hover:text-red-600 hover:bg-red-500/10 border-red-500/20">Reset</Button>
+             <Button onClick={handleReset} variant="outline" className="text-red-500 hover:text-red-600 hover:bg-red-500/10 border-red-500/20 hover:scale-[1.02] active:scale-95 transition-all duration-300">Reset</Button>
           </div>
 
           {isPlaying && (

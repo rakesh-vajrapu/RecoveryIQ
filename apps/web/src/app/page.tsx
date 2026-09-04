@@ -56,7 +56,7 @@ export default function CommandCenterPage() {
             </Link>
             <div className="flex flex-col items-center">
               <Link href="/demo">
-                <Button size="sm" className="gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-500/20 transition-all font-bold">
+                <Button size="sm" className="animated-shine-button gap-1.5 bg-emerald-600 hover:bg-emerald-500 hover:scale-[1.02] active:scale-95 text-white shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 transition-all duration-300 font-bold">
                   Try RecoveryIQ <ArrowRight className="size-3.5" />
                 </Button>
               </Link>
