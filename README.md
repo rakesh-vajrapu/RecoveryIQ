@@ -4,7 +4,7 @@
 
 ### Autonomous Revenue Recovery Control Plane for Razorpay-style payment workflows
 
-**🌐 Live Demo:** https://recoveryiq-ai.vercel.app/demo
+**🌐 Live Demo:** https://recoveryiq-ai.vercel.app
 
 Try RecoveryIQ — interactive replay of frozen Model V2 → ERV → Policy V2 decisions using sealed simulated evidence.
 
