@@ -227,7 +227,7 @@ export function BatchExplorerContent() {
                       <td className="px-6 py-4">
                         {cohort.top_sequence ? (
                           <div className="flex items-center gap-2">
-                            <span className="font-mono text-xs bg-muted/30 px-2 py-1 rounded break-all whitespace-normal">
+                            <span className="font-mono text-xs bg-muted/30 px-2 py-1 rounded whitespace-nowrap">
                               {cohort.top_sequence}
                             </span>
                             {cohort.top_sequence_share !== undefined && (
