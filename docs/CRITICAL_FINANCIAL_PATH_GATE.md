@@ -10,7 +10,7 @@ These are **ISOLATED LOCAL VERIFICATION** tests using fake/provider fixtures; th
 |---|---|---|---|---|
 | **CFP-01** | Webhook authenticity | Invalid or missing Razorpay signature is rejected before processing | ISOLATED_LOCAL_VERIFICATION | - |
 | **CFP-02** | Provider event idempotency | same x-razorpay-event-id replay is acknowledged safely without duplicate financial effect | ISOLATED_LOCAL_VERIFICATION | - |
-| **CFP-03** | Execution idempotency / reservation | one durable execution reservation prevents duplicate provider calls for the same logical execution | ISOLATED_LOCAL_VERIFICATION | Stale execution reservation sweeper remains: NOT_IMPLEMENTED |
+| **CFP-03** | Execution idempotency / reservation | one durable execution reservation prevents duplicate provider calls for the same logical execution | ISOLATED_LOCAL_VERIFICATION | Stale local execution reservations are detected and reconciled without blind provider replay |
 | **CFP-04** | Payment correlation invariants | Mismatch in amount, currency, or reference fails closed and creates no attribution | ISOLATED_LOCAL_VERIFICATION | - |
 | **CFP-05** | Provider truth triangulation | CONFIRMED status requires matching independent provider state; MISMATCH blocks outcome | ISOLATED_LOCAL_VERIFICATION | - |
 | **CFP-06** | External outcome uniqueness | Provider success replay yields exactly one ExternalOutcome | ISOLATED_LOCAL_VERIFICATION | - |

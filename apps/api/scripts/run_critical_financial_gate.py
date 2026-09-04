@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 
-def main():
+def main() -> None:
     api_dir = Path(__file__).parent.parent
     manifest_path = api_dir / "tests" / "critical_financial_paths.json"
 

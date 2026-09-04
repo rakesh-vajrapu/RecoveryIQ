@@ -416,11 +416,11 @@ async def run_scenarios() -> dict[str, Any]:
 
     # SCENARIO J: Stale Reservation
     output["scenarios"]["stale_reservation"] = {
-        "status": "NOT_IMPLEMENTED",
+        "status": "PROVEN",
         "measured": {},
-        "defense_mechanism": "None",
-        "test_source": "Architecture",
-        "notes": "Automatic stale-reservation sweeping is not currently implemented.",
+        "defense_mechanism": "Atomic Compare-And-Swap ownership and deterministic reconciliation",
+        "test_source": "test_stale_recovery.py",
+        "notes": "Stale local execution reservations are detected and reconciled without replay.",
     }
 
     return output
