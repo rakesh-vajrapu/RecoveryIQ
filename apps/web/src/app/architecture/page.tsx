@@ -6,7 +6,7 @@ import { ArchitectureScenario, ArchitectureStage, SCENARIOS } from "@/lib/archit
 import { PageHeader } from "@/components/page-header";
 import { ArchitectureCanvas } from "@/components/architecture/architecture-canvas";
 import { ScenarioControls } from "@/components/architecture/scenario-controls";
-import { DetailPanel } from "@/components/architecture/detail-panel";
+
 import { BrainCircuit, ShieldCheck, Database, Scale, Lock, FileWarning, Key, RefreshCw, MessageSquare, Maximize, Minimize } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -24,7 +24,10 @@ export default function ArchitecturePage() {
   // Full Screen State
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   const activeScenario = SCENARIOS.find(s => s.id === activeScenarioId) || null;
   

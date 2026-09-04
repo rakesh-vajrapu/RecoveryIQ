@@ -1,4 +1,4 @@
-import { LucideIcon, BrainCircuit, Activity, Database, Scale, ShieldCheck, Clock, CreditCard, UserCircle, StopCircle, CheckCircle2, Lock, MessageSquare, AlertCircle, RefreshCw, Zap, FlaskConical } from "lucide-react";
+import { LucideIcon, BrainCircuit, Activity, Database, Scale, ShieldCheck, Clock, CreditCard, UserCircle, StopCircle, CheckCircle2, MessageSquare, AlertCircle, RefreshCw, Zap } from "lucide-react";
 
 export type NodeShape = 'rounded' | 'diamond' | 'hexagon' | 'cloud' | 'cylinder' | 'octagon' | 'circle' | 'human';
 export type EvidenceLane = 'decision' | 'provider';
