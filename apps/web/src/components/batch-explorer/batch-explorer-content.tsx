@@ -158,7 +158,7 @@ export function BatchExplorerContent() {
 
       <div className="grid grid-cols-1 gap-8 xl:grid-cols-3">
         {/* Recovery Cohort Map (2 cols) */}
-        <div className="xl:col-span-2 space-y-4">
+        <div className="xl:col-span-2 space-y-4 min-w-0">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-semibold">Recovery Cohort Map</h2>
           </div>
@@ -249,7 +249,7 @@ export function BatchExplorerContent() {
         </div>
 
         {/* Sidebar: Action Mix & Burden */}
-        <div className="space-y-6">
+        <div className="space-y-6 min-w-0">
           <div className="surface-panel rounded-xl p-5 sm:p-6">
             <h2 className="text-lg font-semibold flex items-center gap-2">
               <PieChart className="size-4" />
