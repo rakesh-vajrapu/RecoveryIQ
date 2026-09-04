@@ -46,6 +46,7 @@ def sweep_stale_external_executions(
     pre_dispatch_swept = 0
     for execution in planned_executions:
         # Atomic CAS: Try to claim this specific execution from PLANNED -> FAILED
+        # pyrefly: ignore [missing-attribute]
         rowcount = session.execute(
             update(ExternalExecution)
             .where(ExternalExecution.id == execution.id)
@@ -93,6 +94,7 @@ def sweep_stale_external_executions(
     post_dispatch_swept = 0
     for execution in executing_executions:
         # Atomic CAS: Try to claim this specific execution from EXECUTING -> UNKNOWN
+        # pyrefly: ignore [missing-attribute]
         rowcount = session.execute(
             update(ExternalExecution)
             .where(ExternalExecution.id == execution.id)
