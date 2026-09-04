@@ -2,21 +2,28 @@
 
 import { ArrowLeft, ArrowRight, Ban, Bot, BrainCircuit, CheckCircle2, CircleDollarSign, ExternalLink, FileClock, Link2, LoaderCircle, LockKeyhole, RefreshCw, ShieldCheck, Sparkles, X, ShieldAlert, BarChart3, DatabaseZap, Activity, AlertTriangle } from "lucide-react";
 import Link from "next/link";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { EmptyPanel, ErrorPanel, LoadingPanel } from "@/components/ui/state-panel";
 import { useApiResource } from "@/hooks/use-api-resource";
-import { createTestPaymentLink, errorMessage, getCaseExplanation, getRecoveryCase, type DecisionExplanation, type ExternalExecution, type RecoveryCaseDetail } from "@/lib/api";
+import { createTestPaymentLink, errorMessage, getCaseExplanation, getRecoveryCase, getRecoveryCaseAudit, type DecisionExplanation, type ExternalExecution, type RecoveryCaseDetail, type AuditEvent } from "@/lib/api";
 import { formatDate, formatMoney, shortId, titleCase } from "@/lib/format";
 import { RecoveryProof } from "@/components/recovery-proof";
 
 export function RecoveryCaseDetailView({ id, simulatedCase }: { id?: string; simulatedCase?: RecoveryCaseDetail }) {
   const load = useCallback(async (signal: AbortSignal) => {
-    if (simulatedCase) return simulatedCase;
-    if (id) return getRecoveryCase(id, signal);
+    if (simulatedCase) return { recoveryCase: simulatedCase, auditEvents: [] as AuditEvent[] };
+    if (id) {
+      const [recoveryCase, auditEvents] = await Promise.all([
+        getRecoveryCase(id, signal),
+        getRecoveryCaseAudit(id, signal).catch(() => [])
+      ]);
+      return { recoveryCase, auditEvents };
+    }
     throw new Error("No ID or simulated case provided");
   }, [id, simulatedCase]);
   
@@ -26,25 +33,25 @@ export function RecoveryCaseDetailView({ id, simulatedCase }: { id?: string; sim
     <>
       <PageHeader 
         eyebrow="Decision Intelligence" 
-        title={resource.data ? `Case ${shortId(resource.data.id, 12)}` : "Recovery case detail"} 
+        title={resource.data ? `Case ${shortId(resource.data.recoveryCase.id, 12)}` : "Recovery case detail"} 
         description="Inspect the predicted recovery probability, action alternatives, economic value, and deterministic policy." 
         icon={BrainCircuit} 
         actions={
           <>
             {!simulatedCase && <Button variant="outline" nativeButton={false} render={<Link href="/recovery-cases" />}><ArrowLeft className="size-4" />Queue</Button>}
-            {resource.data && !simulatedCase && <Button variant="outline" nativeButton={false} render={<Link href={`/recovery-cases/${resource.data.id}/audit`} />}><FileClock className="size-4" />Audit timeline</Button>}
+            {resource.data && !simulatedCase && <Button variant="outline" nativeButton={false} render={<Link href={`/recovery-cases/${resource.data.recoveryCase.id}/audit`} />}><FileClock className="size-4" />Audit timeline</Button>}
             {!simulatedCase && <Button variant="ghost" onClick={resource.retry} disabled={resource.loading} aria-label="Refresh case"><RefreshCw className={resource.loading ? "animate-spin" : ""} /></Button>}
           </>
         } 
       />
       {resource.loading && <LoadingPanel label="Loading decision intelligence" />}
       {resource.error && <ErrorPanel message={resource.error} onRetry={resource.retry} />}
-      {resource.data && <CaseContent recoveryCase={resource.data} onRefresh={resource.retry} isSimulated={!!simulatedCase} />}
+      {resource.data && <CaseContent recoveryCase={resource.data.recoveryCase} auditEvents={resource.data.auditEvents} onRefresh={resource.retry} isSimulated={!!simulatedCase} />}
     </>
   );
 }
 
-function CaseContent({ recoveryCase, onRefresh, isSimulated }: { recoveryCase: RecoveryCaseDetail; onRefresh: () => void; isSimulated: boolean }) {
+function CaseContent({ recoveryCase, auditEvents, onRefresh, isSimulated }: { recoveryCase: RecoveryCaseDetail; auditEvents: AuditEvent[]; onRefresh: () => void; isSimulated: boolean }) {
   const latestDecision = recoveryCase.decisions.at(-1) ?? null;
   const latestOutcome = recoveryCase.outcomes.at(-1) ?? null;
   
@@ -55,17 +62,55 @@ function CaseContent({ recoveryCase, onRefresh, isSimulated }: { recoveryCase: R
   const policyChecks = (meta.policy_checks || {}) as Record<string, string>;
   const isHumanReview = latestDecision?.reason === "INSUFFICIENT_CONTEXT" || recoveryCase.status === "HUMAN_REVIEW";
   
+  const hasRetryableFailedAttempt = auditEvents.some(e => e.event_type === "RECOVERY_PAYMENT_ATTEMPT_FAILED") && 
+    recoveryCase.executions.some((e) => 
+      e.action === "CREATE_PAYMENT_LINK" && 
+      (e.payment_link_status === "issued" || e.payment_link_status === "active")
+    );
+  const isRetryableFailure = recoveryCase.status === "EXECUTING" && hasRetryableFailedAttempt;
+  
   return (
     <div className="space-y-8">
       {/* SECTION A: CASE SUMMARY */}
       <EvidenceBanner recoveryCase={recoveryCase} isSimulated={isSimulated} />
       
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <SummaryCard label="Recovery state" value={<StatusBadge status={recoveryCase.status} />} detail={titleCase(recoveryCase.status)} icon={ShieldCheck} />
+        <SummaryCard 
+          label="Recovery state" 
+          value={isRetryableFailure ? <div className="text-sm font-bold text-blue-600 dark:text-blue-400">RECOVERY IN PROGRESS</div> : <StatusBadge status={recoveryCase.status} />} 
+          detail={isRetryableFailure ? "LAST PAYMENT ATTEMPT FAILED" : titleCase(recoveryCase.status)} 
+          icon={ShieldCheck} 
+        />
         <SummaryCard label="Amount at risk" value={formatMoney(recoveryCase.amount_minor, recoveryCase.currency)} detail={`${recoveryCase.currency} · minor-unit safe`} icon={CircleDollarSign} />
         <SummaryCard label="Payment method" value={titleCase(recoveryCase.payment_method)} detail={recoveryCase.failure_type ? titleCase(recoveryCase.failure_type) : "Unknown failure"} icon={Activity} />
         <SummaryCard label="Reference" value={shortId(recoveryCase.correlation_id, 12)} detail="Anonymous correlation ID" icon={LockKeyhole} mono />
       </section>
+
+      {isRetryableFailure && (
+        <div className="rounded-xl border border-blue-500/20 bg-blue-500/10 p-5 shadow-sm">
+          <div className="flex gap-3">
+            <Activity className="size-5 text-blue-600 dark:text-blue-400 shrink-0" />
+            <div>
+              <h3 className="font-semibold text-blue-800 dark:text-blue-200">The Razorpay Test Payment Link remains active.</h3>
+              <p className="mt-1 text-sm text-blue-700/80 dark:text-blue-300/80">The customer may retry using the same link or another payment method.</p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-3 text-sm">
+                <div>
+                  <span className="block text-[10px] font-bold uppercase tracking-wider text-blue-600/70 dark:text-blue-400/70">Payment Link</span>
+                  <span className="font-medium text-blue-900 dark:text-blue-100">ACTIVE / ISSUED</span>
+                </div>
+                <div>
+                  <span className="block text-[10px] font-bold uppercase tracking-wider text-blue-600/70 dark:text-blue-400/70">Latest attempt</span>
+                  <span className="font-medium text-blue-900 dark:text-blue-100">FAILED</span>
+                </div>
+                <div>
+                  <span className="block text-[10px] font-bold uppercase tracking-wider text-blue-600/70 dark:text-blue-400/70">Recovery attribution</span>
+                  <span className="font-medium text-blue-900 dark:text-blue-100">NONE YET</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* AUTHORITY BOUNDARY PANEL */}
       <div className="mb-6 flex overflow-x-auto rounded-xl border border-violet-500/20 bg-violet-500/[0.05] px-5 py-4 text-[10px] font-bold tracking-widest text-muted-foreground uppercase shadow-sm">
@@ -329,5 +374,42 @@ function PaymentLinkCard({ recoveryCase, onCreated }: { recoveryCase: RecoveryCa
     setSubmitting(true); setError(null);
     try { const created = await createTestPaymentLink(recoveryCase.id); setExecution(created); setConfirmOpen(false); onCreated(); } catch (reason) { setError(errorMessage(reason)); } finally { setSubmitting(false); }
   };
-  return <article className="surface-panel rounded-2xl p-5 sm:p-6"><div className="flex items-start justify-between"><div><p className="eyebrow">Safe recovery action</p><h2 className="mt-2 text-lg font-semibold">Razorpay Payment Link</h2></div><span className="rounded-full border border-amber-500/25 bg-amber-500/10 px-3 py-1 text-[10px] font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">Test only</span></div>{execution ? <div className="mt-5 rounded-2xl border bg-card/55 p-4"><div className="flex flex-wrap items-center gap-2"><StatusBadge status={execution.payment_link_status ?? execution.state} /><span className="font-mono text-[10px] text-muted-foreground">{execution.execution_mode}</span></div><dl className="mt-4 grid gap-3 sm:grid-cols-2"><InfoDatum label="Reference" value={shortId(recoveryCase.correlation_id, 14)} mono /><InfoDatum label="Amount" value={formatMoney(execution.amount_minor, execution.currency)} /></dl>{execution.provider_url ? <Button className="mt-4 w-full" nativeButton={false} render={<a href={execution.provider_url} target="_blank" rel="noreferrer" />}><ExternalLink className="size-4" />Open Test Payment Link</Button> : <p className="mt-4 rounded-xl bg-amber-500/10 p-3 text-xs text-amber-800 dark:text-amber-200">The provider URL is not available. Current execution state: {titleCase(execution.state)}.</p>}</div> : <div className="mt-5"><p className="text-xs leading-5 text-muted-foreground">Create one non-partial INR Payment Link through the existing idempotent execution path. Repeated requests cannot create a second link for the same case.</p><Button className="mt-4 w-full" onClick={() => setConfirmOpen(true)}><Link2 className="size-4" />Create Test Payment Link</Button></div>}{error && <p className="mt-3 rounded-xl bg-destructive/10 p-3 text-xs text-destructive" role="alert">{error}</p>}{confirmOpen && <div className="fixed inset-0 z-[80] grid place-items-center bg-slate-950/55 p-4 backdrop-blur-sm" role="presentation"><div role="dialog" aria-modal="true" aria-labelledby="payment-link-title" className="surface-panel w-full max-w-lg rounded-3xl p-6 shadow-2xl sm:p-7"><div className="flex items-start justify-between"><div><p className="eyebrow text-amber-600 dark:text-amber-300">Test Mode confirmation</p><h2 id="payment-link-title" className="mt-2 text-xl font-bold">Create a Razorpay Test Payment Link?</h2></div><button type="button" aria-label="Close confirmation" onClick={() => setConfirmOpen(false)} disabled={submitting} className="focus-ring grid size-9 place-items-center rounded-xl text-muted-foreground hover:bg-muted"><X className="size-4" /></button></div><div className="mt-5 rounded-2xl border border-amber-500/20 bg-amber-500/[0.06] p-4 text-sm leading-6"><strong>No live money.</strong> This invokes the existing Razorpay Test Mode integration for {formatMoney(recoveryCase.amount_minor, recoveryCase.currency)} and reference {shortId(recoveryCase.correlation_id, 14)}.</div><ul className="mt-5 space-y-2 text-xs text-muted-foreground"><li>• Non-partial payment</li><li>• Backend idempotency prevents double creation</li><li>• Provider outcome still requires a signed webhook</li></ul>{error && <p className="mt-4 rounded-xl bg-destructive/10 p-3 text-xs text-destructive">{error}</p>}<div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end"><Button variant="outline" onClick={() => setConfirmOpen(false)} disabled={submitting}>Cancel</Button><Button onClick={() => void createLink()} disabled={submitting}>{submitting ? <LoaderCircle className="animate-spin" /> : <Link2 />}{submitting ? "Creating once…" : "Confirm Test Link"}</Button></div></div></div>}</article>;
+  useEffect(() => {
+    if (confirmOpen) {
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "unset";
+      };
+    }
+  }, [confirmOpen]);
+
+  return <article className="surface-panel rounded-2xl p-5 sm:p-6"><div className="flex items-start justify-between"><div><p className="eyebrow">Safe recovery action</p><h2 className="mt-2 text-lg font-semibold">Razorpay Payment Link</h2></div><span className="rounded-full border border-amber-500/25 bg-amber-500/10 px-3 py-1 text-[10px] font-bold tracking-wider text-amber-700 uppercase dark:text-amber-300">Test only</span></div>{execution ? <div className="mt-5 rounded-2xl border bg-card/55 p-4"><div className="flex flex-wrap items-center gap-2"><StatusBadge status={execution.payment_link_status ?? execution.state} /><span className="font-mono text-[10px] text-muted-foreground">{execution.execution_mode}</span></div><dl className="mt-4 grid gap-3 sm:grid-cols-2"><InfoDatum label="Reference" value={shortId(recoveryCase.correlation_id, 14)} mono /><InfoDatum label="Amount" value={formatMoney(execution.amount_minor, execution.currency)} /></dl>{execution.provider_url ? <Button className="mt-4 w-full" nativeButton={false} render={<a href={execution.provider_url} target="_blank" rel="noreferrer" />}><ExternalLink className="size-4" />Open Test Payment Link</Button> : <p className="mt-4 rounded-xl bg-amber-500/10 p-3 text-xs text-amber-800 dark:text-amber-200">The provider URL is not available. Current execution state: {titleCase(execution.state)}.</p>}</div> : <div className="mt-5"><p className="text-xs leading-5 text-muted-foreground">Create one non-partial INR Payment Link through the existing idempotent execution path. Repeated requests cannot create a second link for the same case.</p><Button className="mt-4 w-full" onClick={() => setConfirmOpen(true)}><Link2 className="size-4" />Create Test Payment Link</Button></div>}{error && <p className="mt-3 rounded-xl bg-destructive/10 p-3 text-xs text-destructive" role="alert">{error}</p>}
+  {confirmOpen && typeof document !== "undefined" && createPortal(
+    <div className="fixed inset-0 z-[9999] grid place-items-center bg-slate-950/55 p-4 backdrop-blur-sm" role="presentation">
+      <div role="dialog" aria-modal="true" aria-labelledby="payment-link-title" className="surface-panel w-full max-w-lg max-h-[calc(100vh-2rem)] overflow-y-auto rounded-3xl p-6 shadow-2xl sm:p-7">
+        <div className="flex items-start justify-between">
+          <div>
+            <p className="eyebrow text-amber-600 dark:text-amber-300">Test Mode confirmation</p>
+            <h2 id="payment-link-title" className="mt-2 text-xl font-bold">Create a Razorpay Test Payment Link?</h2>
+          </div>
+          <button type="button" aria-label="Close confirmation" onClick={() => setConfirmOpen(false)} disabled={submitting} className="focus-ring grid size-9 place-items-center rounded-xl text-muted-foreground hover:bg-muted"><X className="size-4" /></button>
+        </div>
+        <div className="mt-5 rounded-2xl border border-amber-500/20 bg-amber-500/[0.06] p-4 text-sm leading-6">
+          <strong>No live money.</strong> This invokes the existing Razorpay Test Mode integration for {formatMoney(recoveryCase.amount_minor, recoveryCase.currency)} and reference {shortId(recoveryCase.correlation_id, 14)}.
+        </div>
+        <ul className="mt-5 space-y-2 text-xs text-muted-foreground">
+          <li>• Non-partial payment</li>
+          <li>• Backend idempotency prevents double creation</li>
+          <li>• Provider outcome still requires a signed webhook</li>
+        </ul>
+        {error && <p className="mt-4 rounded-xl bg-destructive/10 p-3 text-xs text-destructive">{error}</p>}
+        <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+          <Button variant="outline" onClick={() => setConfirmOpen(false)} disabled={submitting}>Cancel</Button>
+          <Button onClick={() => void createLink()} disabled={submitting}>{submitting ? <LoaderCircle className="animate-spin" /> : <Link2 />}{submitting ? "Creating once…" : "Confirm Test Link"}</Button>
+        </div>
+      </div>
+    </div>,
+    document.body
+  )}
+  </article>;
 }

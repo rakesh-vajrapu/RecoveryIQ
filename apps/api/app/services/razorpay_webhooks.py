@@ -216,7 +216,7 @@ def process_webhook_event(
         if event.event_type not in _SUPPORTED_EVENTS:
             _mark_ignored(session, event, "UNKNOWN_EVENT")
         elif event.event_type in {"subscription.pending", "payment.failed"}:
-            _process_failure_event(session, event)
+            _process_failure_event(session, event, gateway=gateway)
         elif event.event_type == "subscription.charged":
             _process_subscription_charged(session, event)
         else:
@@ -238,7 +238,9 @@ def process_webhook_event(
         raise
 
 
-def _process_failure_event(session: Session, event: ExternalWebhookEvent) -> None:
+def _process_failure_event(
+    session: Session, event: ExternalWebhookEvent, gateway: RazorpayGateway | None = None
+) -> None:
     envelope = event.redacted_payload
     subscription_entity = _entity(envelope, "subscription")
     payment_entity = _entity(envelope, "payment")
@@ -246,7 +248,7 @@ def _process_failure_event(session: Session, event: ExternalWebhookEvent) -> Non
         subscription_entity.get("id") or payment_entity.get("subscription_id") or ""
     )
     if not subscription_external_id:
-        _process_payment_link_failure(session, event, payment_entity)
+        _process_payment_link_failure(session, event, payment_entity, gateway=gateway)
         return
 
     mapping = _mapping(session, "subscription", subscription_external_id)
@@ -373,12 +375,26 @@ def _process_payment_link_failure(
     session: Session,
     event: ExternalWebhookEvent,
     payment_entity: dict[str, Any],
+    gateway: RazorpayGateway | None = None,
 ) -> None:
     order_external_id = str(payment_entity.get("order_id") or "")
     if not order_external_id:
         _mark_ignored(session, event, "MISSING_SUBSCRIPTION_AND_ORDER_ID")
         return
     mapping = _mapping(session, "order", order_external_id)
+    if mapping is None and gateway is not None:
+        from app.services.razorpay_execution import reconcile_payment_link_order_mapping
+        execs = session.scalars(
+            select(ExternalExecution).where(
+                ExternalExecution.action == "CREATE_PAYMENT_LINK",
+                ExternalExecution.state == ExternalExecutionState.SUCCEEDED,
+                ExternalExecution.execution_mode == ExecutionMode.RAZORPAY_TEST,
+            )
+        ).all()
+        for ex in execs:
+            reconcile_payment_link_order_mapping(session, execution=ex, gateway=gateway)
+        mapping = _mapping(session, "order", order_external_id)
+        
     if mapping is None:
         _mark_ignored(session, event, "UNMATCHED_PAYMENT_ORDER")
         return

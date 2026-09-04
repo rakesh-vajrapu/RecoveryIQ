@@ -76,9 +76,11 @@ export function RecoveryImpact({ summary }: { summary: EvaluationSummary | null 
         const contactsPerRecovery = riq.recovered_count > 0 ? riq.contacts / riq.recovered_count : 0;
         
         return (
-          <div className="bg-card border rounded-xl overflow-hidden mt-8 p-5 shadow-sm glass-card hover-lift transition-all animate-slide-up-fade stagger-3">
-            <h3 className="text-sm font-bold tracking-widest text-muted-foreground uppercase mb-4">Decision Quality Audit</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="bg-card border rounded-xl overflow-hidden mt-8 p-5 shadow-sm transition-all duration-500 group/audit relative hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:border-primary/30 animate-slide-up-fade stagger-3">
+            <div className="absolute inset-0 -translate-x-[150%] skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/5 to-transparent group-hover/audit:translate-x-[150%] transition-transform duration-1000 ease-in-out" />
+            <div className="relative z-10">
+              <h3 className="text-sm font-bold tracking-widest text-muted-foreground uppercase mb-4 transition-colors group-hover/audit:text-foreground/80">Decision Quality Audit</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <MetricCard 
                 title="% of Oracle Net Value" 
                 value={`${efficiency.toFixed(1)}%`} 
@@ -94,6 +96,7 @@ export function RecoveryImpact({ summary }: { summary: EvaluationSummary | null 
                 value={riq.policy_violations.toString()} 
                 tooltip="Deterministic safety bounds broken" 
               />
+            </div>
             </div>
           </div>
         );
@@ -169,9 +172,24 @@ export function RecoveryImpact({ summary }: { summary: EvaluationSummary | null 
 
 function MetricCard({ title, value, tooltip, highlight = false }: { title: string; value: string; tooltip?: string; highlight?: boolean }) {
   return (
-    <div className={`p-6 rounded-2xl border flex flex-col justify-center h-full shadow-sm ${highlight ? "bg-emerald-500/10 border-emerald-500/20" : "bg-card"}`} title={tooltip}>
-      <p className={`text-sm font-medium mb-2 ${highlight ? "text-emerald-700 dark:text-emerald-400" : "text-muted-foreground"}`}>{title}</p>
-      <p className={`text-3xl font-semibold tracking-tight ${highlight ? "text-emerald-700 dark:text-emerald-400" : "text-foreground"}`}>{value}</p>
+    <div 
+      className={`p-6 rounded-2xl border flex flex-col justify-center h-full shadow-sm transition-all duration-500 relative overflow-hidden group hover:scale-[1.02] cursor-pointer hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] ${
+        highlight 
+          ? "bg-emerald-500/10 border-emerald-500/20 hover:border-emerald-500/50 hover:shadow-emerald-500/20" 
+          : "bg-card hover:border-primary/50 dark:hover:shadow-primary/10"
+      }`} 
+      title={tooltip}
+    >
+      {/* Shine effect */}
+      <div className="absolute inset-0 -translate-x-[150%] skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/5 to-transparent group-hover:translate-x-[150%] transition-transform duration-1000 ease-in-out" />
+      
+      {/* Pulsing glow for highlight */}
+      {highlight && <div className="absolute -inset-1 bg-emerald-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 group-hover:animate-pulse" />}
+      
+      <div className="relative z-10">
+        <p className={`text-sm font-medium mb-2 transition-colors duration-300 ${highlight ? "text-emerald-700 dark:text-emerald-400 group-hover:text-emerald-500" : "text-muted-foreground group-hover:text-foreground/80"}`}>{title}</p>
+        <p className={`text-3xl font-semibold tracking-tight transition-transform duration-300 group-hover:translate-x-1 ${highlight ? "text-emerald-700 dark:text-emerald-400 group-hover:text-emerald-300" : "text-foreground"}`}>{value}</p>
+      </div>
     </div>
   );
 }

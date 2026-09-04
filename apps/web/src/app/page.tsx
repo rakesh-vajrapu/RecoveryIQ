@@ -109,9 +109,7 @@ function DashboardContent({ data }: { data: DashboardData }) {
   return (
     <div className="space-y-5">
       {/* Evidence Provenance Strip */}
-      <section className="grid gap-3 sm:grid-cols-3">
-        <div className="flex items-center gap-3 rounded-xl border border-cyan-500/20 bg-cyan-500/[0.05] p-3"><span className="rounded bg-cyan-500/20 px-1.5 py-0.5 text-[9px] font-bold text-cyan-700 dark:text-cyan-300">DEMO</span><p className="text-[10px] font-medium text-muted-foreground">Synthetic operational scenario</p></div>
-        <div className="flex items-center gap-3 rounded-xl border border-violet-500/20 bg-violet-500/[0.05] p-3"><span className="rounded bg-violet-500/20 px-1.5 py-0.5 text-[9px] font-bold text-violet-700 dark:text-violet-300">SIMULATED</span><p className="text-[10px] font-medium text-muted-foreground">Frozen batch evaluation</p></div>
+      <section className="grid gap-3 sm:grid-cols-1">
         <div className="flex items-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.05] p-3"><span className="rounded bg-emerald-500/20 px-1.5 py-0.5 text-[9px] font-bold text-emerald-700 dark:text-emerald-300">RAZORPAY TEST</span><p className="text-[10px] font-medium text-muted-foreground">Provider-verified Test Mode</p></div>
       </section>
 

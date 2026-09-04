@@ -341,7 +341,7 @@ export default function ReplayLabPage() {
   };
 
   const renderPresetCards = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
       <Card 
         onClick={() => { setSelectedPreset("quick-recovery-demo"); setIsMicroscope(false); }}
         className={isDemo ? "border-emerald-500 bg-emerald-500/5 dark:bg-emerald-950/10" : ""}
@@ -423,7 +423,7 @@ export default function ReplayLabPage() {
   const showFinalOutcome = showOutcome && isFinalDecision;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <PageHeader
         eyebrow="TRY RECOVERYIQ"
         title={isDemo ? "RecoveryIQ Interactive Demo" : "RecoveryIQ Replay Lab"}
@@ -432,7 +432,7 @@ export default function ReplayLabPage() {
 
       {renderPresetCards()}
 
-      <div className="flex items-center justify-between p-4 bg-muted/50 border rounded-lg">
+      <div className="flex items-center justify-between p-3 bg-muted/50 border rounded-lg">
         <div className="flex items-center gap-4">
           <Badge variant="outline" className="text-[10px] tracking-widest uppercase border-emerald-500/20 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10">
             {isDemo ? 'DEMO · SYNTHETIC' : 'SEALED · SIMULATED REPLAY'}
@@ -444,7 +444,7 @@ export default function ReplayLabPage() {
       </div>
       
 
-      <div className="flex items-center gap-4 text-xs font-mono text-muted-foreground justify-center p-4 border bg-muted/30 rounded-xl my-8 overflow-x-auto text-center">
+      <div className="flex items-center gap-4 text-xs font-mono text-muted-foreground justify-center p-3 border bg-muted/30 rounded-xl my-4 overflow-x-auto text-center">
         <span>MODEL V2 <br/><span className="text-[10px] text-muted-foreground/70">(Recorded calibrated probabilities)</span></span>
         <span>→</span>
         <span>ERV <br/><span className="text-[10px] text-muted-foreground/70">(Economic ranking)</span></span>
@@ -523,8 +523,8 @@ export default function ReplayLabPage() {
           </Card>
         </div>
       ) : (
-        <div className="space-y-6 animate-in fade-in duration-500">
-          <div className="flex flex-wrap gap-4 mb-8 justify-center">
+        <div className="space-y-4 animate-in fade-in duration-500">
+          <div className="flex flex-wrap gap-4 mb-4 justify-center">
              {PHASES.map((phase, idx) => (
                 <div key={phase} className={`flex items-center gap-2 ${idx === currentPhaseIndex ? 'text-emerald-600 dark:text-emerald-500 font-bold' : idx < currentPhaseIndex ? 'text-emerald-600/70 dark:text-emerald-500/70' : 'text-muted-foreground'}`}>
                   <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border ${idx === currentPhaseIndex ? 'border-emerald-500 bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] text-white' : idx < currentPhaseIndex ? 'border-emerald-500 bg-transparent text-emerald-600' : 'border-border bg-transparent text-muted-foreground'}`}>
@@ -535,7 +535,7 @@ export default function ReplayLabPage() {
              ))}
           </div>
 
-          <div className="flex flex-wrap gap-4 justify-center mb-8">
+          <div className="flex flex-wrap gap-4 justify-center mb-4">
              <Button onClick={handlePrevStep} disabled={currentPhaseIndex === 0 && currentDecisionIndex === 0} variant="outline" className="hover:scale-[1.02] active:scale-95 transition-all duration-300">Previous Step</Button>
              <Button 
                 onClick={() => setIsPlaying(!isPlaying)} 
