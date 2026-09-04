@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { ChevronRight } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { getReplayTrace } from "@/lib/api";
 import { formatMoney } from "@/lib/format";
@@ -561,38 +562,36 @@ export default function ReplayLabPage() {
           </div>
 
           {isPlaying && (
-            <div className="relative overflow-hidden flex flex-col items-center justify-center p-10 border border-emerald-500/30 bg-emerald-950/40 rounded-xl mb-6 shadow-[0_0_40px_rgba(16,185,129,0.15)]">
+            <div className="relative overflow-hidden flex items-center p-3.5 border border-emerald-500/30 bg-emerald-950/40 rounded-xl mb-6 shadow-lg shadow-emerald-900/20">
               {/* Animated gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-emerald-900/20 animate-pulse"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 via-transparent to-emerald-900/20 animate-pulse"></div>
               
-              {/* Radar sweep / processing ring */}
-              <div className="relative mb-6 flex items-center justify-center">
-                <div className="absolute inset-0 rounded-full border border-emerald-500/40 animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite]"></div>
-                <div className="absolute inset-0 rounded-full border border-emerald-500/20 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite_0.5s]"></div>
-                <div className="relative h-14 w-14 rounded-full border-[3px] border-emerald-500 border-r-transparent animate-spin flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.5)]">
-                  <div className="h-6 w-6 rounded-full bg-emerald-500/30 animate-pulse"></div>
+              <div className="relative z-10 flex items-center w-full">
+                {/* Left Icon */}
+                <div className="bg-emerald-500 text-emerald-950 rounded-lg p-1.5 mr-4 shadow-[0_0_15px_rgba(16,185,129,0.5)] flex items-center justify-center">
+                  <ChevronRight className="size-4" strokeWidth={3} />
                 </div>
-              </div>
-              
-              <div className="relative z-10 flex flex-col items-center gap-2">
-                <div className="flex items-center gap-3 text-lg font-bold text-emerald-400 tracking-wide">
-                  <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,1)]"></span>
+                
+                {/* Text */}
+                <div className="flex items-center gap-2 text-[15px] font-bold text-white tracking-wide">
                   {currentPhaseIndex + 1}. {getActiveText(currentPhaseIndex, isDemo)}
-                  <span className="flex ml-[-4px]">
+                  <span className="flex text-emerald-500 ml-0.5">
                     <span className="animate-[bounce_1.4s_infinite] [animation-delay:-0.32s]">.</span>
                     <span className="animate-[bounce_1.4s_infinite] [animation-delay:-0.16s]">.</span>
                     <span className="animate-[bounce_1.4s_infinite]">.</span>
                   </span>
                 </div>
-                <div className="text-[11px] font-bold tracking-[0.3em] uppercase text-emerald-500/70">
-                  {isDemo ? "Running synthetic demo flow" : "Replaying frozen evidence"}
+                
+                {/* Right Spinner */}
+                <div className="ml-auto flex items-center mr-2">
+                   <div className="size-5 border-[2.5px] border-emerald-500 border-t-transparent rounded-full animate-spin shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
                 </div>
               </div>
 
               {/* Progress bar at bottom */}
-              <div className="absolute bottom-0 left-0 h-1.5 bg-emerald-950 w-full overflow-hidden">
+              <div className="absolute bottom-0 left-0 h-1 bg-emerald-950/50 w-full overflow-hidden">
                 <div 
-                  className="h-full bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,1)] transition-all duration-500 ease-out" 
+                  className="h-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,1)] transition-all duration-500 ease-out" 
                   style={{ width: `${Math.max(5, ((currentPhaseIndex + 1) / (PHASES.length || 1)) * 100)}%` }}
                 ></div>
               </div>
