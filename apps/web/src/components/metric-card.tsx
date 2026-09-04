@@ -14,7 +14,8 @@ const tones = {
 export function MetricCard({ label, value, detail, icon: Icon, tone = "emerald", progress, badge, subtext }: { label: string; value: string; detail: string; icon: LucideIcon; tone?: keyof typeof tones; progress?: number; badge?: string; subtext?: string }) {
   const boundedProgress = Math.max(0, Math.min(100, progress ?? 0));
   return (
-    <article className="surface-panel interactive-panel group flex min-h-[190px] flex-col rounded-2xl p-5">
+    <article className="surface-panel group flex min-h-[190px] flex-col rounded-2xl p-5 hover:-translate-y-1.5 transition-all duration-500 hover:shadow-xl hover:border-primary/40 dark:hover:shadow-[0_10px_40px_rgba(16,185,129,0.15)] relative overflow-hidden cursor-pointer">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="eyebrow">{label}</p>

@@ -116,7 +116,7 @@ function DashboardContent({ data }: { data: DashboardData }) {
       </section>
 
       {/* Safety Lab Teaser */}
-      <section className="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl border border-primary/20 bg-primary/5 p-4 sm:p-5">
+      <section className="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl border border-primary/20 bg-primary/5 p-4 sm:p-5 hover:bg-primary/10 hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
         <div>
           <div className="flex items-center gap-2 font-semibold text-primary">
             <ShieldCheck className="size-4" />
@@ -176,7 +176,7 @@ function DashboardContent({ data }: { data: DashboardData }) {
       {/* Payment Health Teaser (Simulated) */}
       {data.paymentHealth && (
         <section>
-          <div className="bg-card dark:bg-gradient-to-r dark:from-[#0c0e12] dark:to-[#12161f] border rounded-2xl p-5 flex flex-wrap items-center justify-between gap-6 shadow-sm">
+          <div className="bg-card dark:bg-gradient-to-r dark:from-[#0c0e12] dark:to-[#12161f] border rounded-2xl p-5 flex flex-wrap items-center justify-between gap-6 shadow-sm hover:shadow-lg hover:shadow-rose-500/5 hover:border-rose-500/30 hover:-translate-y-0.5 transition-all duration-300 group">
             <div>
               <div className="flex items-center gap-2">
                 <ShieldAlert className="w-4 h-4 text-rose-500" />
@@ -198,7 +198,7 @@ function DashboardContent({ data }: { data: DashboardData }) {
       {/* Batch Explorer Teaser (Simulated) */}
       {data.evalSummary && (
         <section>
-          <div className="bg-card dark:bg-gradient-to-r dark:from-emerald-950/20 dark:to-[#0c0e12] border border-emerald-500/20 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-6 shadow-sm">
+          <div className="bg-card dark:bg-gradient-to-r dark:from-emerald-950/20 dark:to-[#0c0e12] border border-emerald-500/20 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-6 shadow-sm hover:shadow-[0_8px_30px_rgba(16,185,129,0.1)] hover:border-emerald-500/40 hover:-translate-y-0.5 transition-all duration-300 group">
             <div>
               <div className="flex items-center gap-2">
                 <Target className="w-4 h-4 text-emerald-500" />

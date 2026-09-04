@@ -2,6 +2,7 @@
 
 import { ArrowUpDown, Eye, ListChecks, RefreshCw, Search } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 
 import { PageHeader } from "@/components/page-header";
@@ -15,6 +16,7 @@ import { formatDate, formatMoney, shortId, titleCase } from "@/lib/format";
 type SortMode = "newest" | "oldest" | "amount-high" | "amount-low";
 
 export default function RecoveryCasesPage() {
+  const router = useRouter();
   const load = useCallback((signal: AbortSignal) => getRecoveryCases(signal), []);
   const resource = useApiResource(load);
   const [query, setQuery] = useState("");
@@ -60,7 +62,7 @@ export default function RecoveryCasesPage() {
               <table className="w-full table-fixed text-left">
                 <colgroup><col className="w-[14%]" /><col className="w-[12%]" /><col className="w-[16%]" /><col className="w-[11%]" /><col className="w-[12%]" /><col className="w-[14%]" /><col className="w-[10.5%]" /><col className="w-[10.5%]" /></colgroup>
                 <thead className="bg-muted/45 text-[10px] font-bold tracking-[0.12em] text-muted-foreground uppercase"><tr><th className="px-5 py-3.5">Case</th><th className="px-3 py-3.5">Source</th><th className="px-3 py-3.5">Failure / method</th><th className="px-3 py-3.5">Amount</th><th className="px-3 py-3.5">Status</th><th className="px-3 py-3.5">Decision</th><th className="px-3 py-3.5">Created</th><th className="px-3 py-3.5">Last activity</th></tr></thead>
-                <tbody className="divide-y">{filtered.map((item) => <tr key={item.id} className="group transition-colors hover:bg-muted/35"><td className="px-5 py-4"><Link href={`/recovery-cases/${item.id}`} className="focus-ring rounded-md font-mono text-xs font-semibold hover:text-primary">{shortId(item.id, 10)}</Link><p className="mt-1 font-mono text-[10px] text-muted-foreground">{shortId(item.correlation_id, 10)}</p></td><td className="px-3 py-4"><SourceBadge source={item.source} /></td><td className="px-3 py-4"><p className="text-xs font-medium">{titleCase(item.failure_type)}</p><p className="mt-1 text-[10px] text-muted-foreground">{titleCase(item.payment_method)}</p></td><td className="px-3 py-4 text-sm font-semibold">{formatMoney(item.amount_minor, item.currency)}</td><td className="px-3 py-4"><StatusBadge status={item.status} /></td><td className="px-3 py-4"><p className="text-xs font-medium">{item.decision_kind ? titleCase(item.decision_kind) : "Not recorded"}</p><p className="mt-1 text-[10px] text-muted-foreground">{item.decision_reason ? titleCase(item.decision_reason) : "Provider evidence"}</p></td><td className="px-3 py-4 text-[11px] leading-5 text-muted-foreground">{formatDate(item.created_at)}</td><td className="px-3 py-4 text-[11px] leading-5 text-muted-foreground">{formatDate(item.last_activity_at)}</td></tr>)}</tbody>
+                <tbody className="divide-y">{filtered.map((item) => <tr key={item.id} onClick={() => router.push(`/recovery-cases/${item.id}`)} className="group transition-all duration-300 cursor-pointer hover:bg-emerald-500/10 hover:shadow-[inset_0_0_15px_rgba(16,185,129,0.1)]"><td className="px-5 py-4"><Link href={`/recovery-cases/${item.id}`} onClick={(e) => e.stopPropagation()} className="focus-ring rounded-md font-mono text-xs font-semibold group-hover:text-emerald-500">{shortId(item.id, 10)}</Link><p className="mt-1 font-mono text-[10px] text-muted-foreground">{shortId(item.correlation_id, 10)}</p></td><td className="px-3 py-4"><SourceBadge source={item.source} /></td><td className="px-3 py-4"><p className="text-xs font-medium">{titleCase(item.failure_type)}</p><p className="mt-1 text-[10px] text-muted-foreground">{titleCase(item.payment_method)}</p></td><td className="px-3 py-4 text-sm font-semibold group-hover:text-emerald-500 transition-colors">{formatMoney(item.amount_minor, item.currency)}</td><td className="px-3 py-4"><StatusBadge status={item.status} /></td><td className="px-3 py-4"><p className="text-xs font-medium">{item.decision_kind ? titleCase(item.decision_kind) : "Not recorded"}</p><p className="mt-1 text-[10px] text-muted-foreground">{item.decision_reason ? titleCase(item.decision_reason) : "Provider evidence"}</p></td><td className="px-3 py-4 text-[11px] leading-5 text-muted-foreground">{formatDate(item.created_at)}</td><td className="px-3 py-4 text-[11px] leading-5 text-muted-foreground flex items-center justify-between">{formatDate(item.last_activity_at)} <Eye className="size-3.5 text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" /></td></tr>)}</tbody>
               </table>
             </div>
             </>
