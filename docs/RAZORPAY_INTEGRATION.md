@@ -90,7 +90,7 @@ Razorpay's public endpoint requirement means `localhost` cannot receive provider
 
 `external_webhook_events.provider_event_id` is unique. Stored fields are provider, event type, receive/provider timestamps, payload checksum, processing status, correlation ID, safe external entity IDs, a redacted Test Mode payload, failure category, and completion time. Headers and secrets are never persisted. Email, phone/contact, card objects, and unrelated notes are discarded; only `recoveriq_*` notes survive.
 
-Alembic revision `4d7a0f3b21c8` adds portable SQLite/PostgreSQL tables for `ExternalWebhookEvent`, `ExternalEntityMapping`, `FailureEvent`, `RecoveryDecisionRecord`, `RecoveryExecutionPlan`, `ExternalExecution`, `ExternalOutcome`, and `RecoveryAttribution`. `ExternalOutcome` is the verified provider fact; `RecoveryAttribution` is the separate exactly-once business interpretation bound to that fact.
+Alembic revision `4d7a0f3b21c8` adds portable SQLite tables for `ExternalWebhookEvent`, `ExternalEntityMapping`, `FailureEvent`, `RecoveryDecisionRecord`, `RecoveryExecutionPlan`, `ExternalExecution`, `ExternalOutcome`, and `RecoveryAttribution`. `ExternalOutcome` is the verified provider fact; `RecoveryAttribution` is the separate exactly-once business interpretation bound to that fact.
 
 `external_entity_mappings.last_provider_event_at` provides per-subscription event ordering. An older/equal `subscription.pending` cannot override a newer `subscription.charged`; RECOVERED is terminal; duplicate paid outcomes see the existing unique attribution. Unknown events are retained as `IGNORED` rather than trusted or dropped invisibly.
 

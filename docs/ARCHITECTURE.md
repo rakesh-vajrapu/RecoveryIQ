@@ -99,7 +99,7 @@ The diagram is the intended high-level lifecycle. A later milestone will define 
 
 The backend uses synchronous SQLAlchemy 2 sessions throughout FastAPI routes, Alembic migrations, and Celery tasks. This avoids maintaining two persistence paths during the foundation phase and matches Celery's synchronous task model. FastAPI executes synchronous endpoints in its worker thread pool. If measured request concurrency later demands async database I/O, that change will be made behind repositories rather than mixing session types.
 
-Local development defaults to `sqlite:///./recoveriq.db`. Tests use isolated SQLite databases. Full environments configure `postgresql+psycopg://...`. Models use portable SQLAlchemy types and avoid SQLite-specific functions, conflict syntax, and schema assumptions. PostgreSQL remains the production target for row locking, concurrent workers, stronger operational controls, and JSON/index capabilities.
+RecoveryIQ uses SQLAlchemy 2 and Alembic. The current local and Azure reviewer deployments use SQLite. Tests use isolated SQLite databases. Models use portable SQLAlchemy types and avoid SQLite-specific functions, conflict syntax, and schema assumptions.
 
 Alembic is the only supported schema evolution path. Application startup checks connectivity but does not silently run migrations.
 

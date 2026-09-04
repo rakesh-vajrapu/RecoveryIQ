@@ -207,10 +207,6 @@ export function SafetyLabContent() {
                   <span className="text-muted-foreground">WAL Enabled</span>
                   <span className="font-mono">NOT ENABLED</span>
                 </div>
-                <div className="flex justify-between border-b pb-1">
-                  <span className="text-muted-foreground">PostgreSQL</span>
-                  <span className="font-medium">COMPATIBLE (UNTESTED IN DEMO)</span>
-                </div>
               </div>
             </div>
             <div>

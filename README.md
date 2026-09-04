@@ -469,7 +469,7 @@ npm run build
 - Demo Synthetic opportunities are not provider revenue.
 - Payment Health evidence is simulated and Detector V2 is advisory only.
 - Safety Lab concurrency verification uses a fake provider and isolated local database.
-- SQLite is the verified local/demo database; PostgreSQL concurrency is not tested in this demo.
+- Persistence: SQLite via SQLAlchemy 2 and Alembic.
 - Automatic stale execution-reservation cleanup is not implemented.
 - Some actions remain recommendation-only or internal scheduling.
 - The LLM is strictly explanation-only.
