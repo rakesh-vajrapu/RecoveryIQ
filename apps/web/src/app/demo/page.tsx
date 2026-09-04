@@ -75,6 +75,8 @@ const D1_ACTION_SETS = [
       { label: "RETRY_LATER_2H", probability: 0.88, incremental_erv_minor: 88000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
       { label: "CREATE_PAYMENT_LINK", probability: 0.45, incremental_erv_minor: 45000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
       { label: "SEND_NUDGE", probability: 0.20, incremental_erv_minor: 15000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
+      { label: "OFFER_ALTERNATE_METHOD", probability: 0.15, incremental_erv_minor: 10000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
+      { label: "CONTACT_SUPPORT", probability: 0.10, incremental_erv_minor: -2000, supported: false, action_stage_support: "No", calibration_bin_support: "No" },
       { label: "RETRY_NOW", probability: 0.05, incremental_erv_minor: -12000, supported: false, action_stage_support: "No", calibration_bin_support: "Yes" }
     ],
     selected_action: "RETRY_LATER_2H",
@@ -85,7 +87,9 @@ const D1_ACTION_SETS = [
       { label: "CREATE_PAYMENT_LINK", probability: 0.72, incremental_erv_minor: 72000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
       { label: "RETRY_LATER_24H", probability: 0.35, incremental_erv_minor: 35000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
       { label: "OFFER_ALTERNATE_METHOD", probability: 0.28, incremental_erv_minor: 28000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
+      { label: "SEND_NUDGE", probability: 0.22, incremental_erv_minor: 18000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
       { label: "RETRY_LATER_2H", probability: 0.15, incremental_erv_minor: -5000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
+      { label: "MANUAL_REVIEW", probability: 0.08, incremental_erv_minor: -15000, supported: false, action_stage_support: "No", calibration_bin_support: "No" },
       { label: "RETRY_NOW", probability: 0.02, incremental_erv_minor: -20000, supported: false, action_stage_support: "No", calibration_bin_support: "Yes" }
     ],
     selected_action: "CREATE_PAYMENT_LINK",
@@ -96,7 +100,9 @@ const D1_ACTION_SETS = [
       { label: "OFFER_ALTERNATE_METHOD", probability: 0.91, incremental_erv_minor: 91000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
       { label: "SEND_NUDGE", probability: 0.60, incremental_erv_minor: 60000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
       { label: "CREATE_PAYMENT_LINK", probability: 0.44, incremental_erv_minor: 44000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
-      { label: "RETRY_LATER_2H", probability: 0.10, incremental_erv_minor: -8000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" }
+      { label: "RETRY_LATER_2H", probability: 0.10, incremental_erv_minor: -8000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
+      { label: "RETRY_LATER_24H", probability: 0.08, incremental_erv_minor: -12000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
+      { label: "RETRY_NOW", probability: 0.04, incremental_erv_minor: -18000, supported: false, action_stage_support: "No", calibration_bin_support: "No" }
     ],
     selected_action: "OFFER_ALTERNATE_METHOD",
     policy_checks: { reason: "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV" }
@@ -106,7 +112,10 @@ const D1_ACTION_SETS = [
       { label: "REQUEST_PAYMENT_METHOD_UPDATE", probability: 0.85, incremental_erv_minor: 85000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
       { label: "CREATE_PAYMENT_LINK", probability: 0.50, incremental_erv_minor: 50000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
       { label: "RETRY_LATER_24H", probability: 0.40, incremental_erv_minor: 40000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
-      { label: "RETRY_NOW", probability: 0.08, incremental_erv_minor: -15000, supported: false, action_stage_support: "No", calibration_bin_support: "Yes" }
+      { label: "OFFER_ALTERNATE_METHOD", probability: 0.32, incremental_erv_minor: 25000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
+      { label: "SEND_NUDGE", probability: 0.25, incremental_erv_minor: 18000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
+      { label: "RETRY_NOW", probability: 0.08, incremental_erv_minor: -15000, supported: false, action_stage_support: "No", calibration_bin_support: "Yes" },
+      { label: "CONTACT_SUPPORT", probability: 0.03, incremental_erv_minor: -25000, supported: false, action_stage_support: "No", calibration_bin_support: "No" }
     ],
     selected_action: "REQUEST_PAYMENT_METHOD_UPDATE",
     policy_checks: { reason: "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV" }
