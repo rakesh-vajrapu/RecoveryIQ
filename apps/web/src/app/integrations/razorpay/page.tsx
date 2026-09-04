@@ -65,14 +65,37 @@ export default function RazorpayIntegrationPage() {
             <div className="grid gap-px bg-border sm:grid-cols-2 xl:grid-cols-3">
               {Object.entries(resource.data.status.capabilities).map(([action, capability]) => {
                 const canExecute = resource.data!.status.api_configured && resource.data!.status.webhook_configured && resource.data!.status.execution_environment === 'RAZORPAY_TEST';
+                
                 return (
                   <div key={action} className="bg-card/85 p-4">
                     <p className="font-mono text-[11px] font-semibold">{action}</p>
-                    <p className="mt-2 text-xs text-muted-foreground">{action === "STOP" ? "Policy Decision Only" : titleCase(capability)}</p>
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      {action === "STOP" ? "Policy Decision Only" : capability === "SIMULATION_ONLY" ? "Simulation Only" : titleCase(capability)}
+                    </p>
                     {action !== "STOP" && (
                       <div className="mt-3 text-[10px] space-y-1">
                         <div className="flex justify-between"><span className="text-muted-foreground">Implemented:</span> <span className="font-bold">YES</span></div>
-                        <div className="flex justify-between"><span className="text-muted-foreground">Currently executable:</span> <span className={canExecute ? "font-bold text-amber-500" : "font-bold text-destructive"}>{canExecute ? "YES \u2014 TEST MODE ONLY" : "NO"}</span></div>
+                        
+                        {capability === "SIMULATION_ONLY" && (
+                          <div className="flex justify-between"><span className="text-muted-foreground">Provider executable:</span> <span className="font-bold text-destructive">NO</span></div>
+                        )}
+                        
+                        {capability === "RECOMMENDATION_ONLY" && (
+                          <div className="flex justify-between"><span className="text-muted-foreground">Execution scope:</span> <span className="font-bold text-muted-foreground">RECOMMENDATION ONLY</span></div>
+                        )}
+                        
+                        {capability === "INTERNAL_SCHEDULE_ONLY" && (
+                          <div className="flex justify-between"><span className="text-muted-foreground">Execution scope:</span> <span className="font-bold text-muted-foreground">INTERNAL ONLY</span></div>
+                        )}
+                        
+                        {capability === "REAL_TEST_EXECUTION" && (
+                          <div className="flex justify-between"><span className="text-muted-foreground">Currently executable:</span> <span className={canExecute ? "font-bold text-amber-500" : "font-bold text-destructive"}>{canExecute ? "YES \u2014 TEST MODE ONLY" : "NO"}</span></div>
+                        )}
+                        
+                        {/* Fallback for any other capability just in case */}
+                        {capability !== "SIMULATION_ONLY" && capability !== "RECOMMENDATION_ONLY" && capability !== "INTERNAL_SCHEDULE_ONLY" && capability !== "REAL_TEST_EXECUTION" && (
+                           <div className="flex justify-between"><span className="text-muted-foreground">Currently executable:</span> <span className={canExecute ? "font-bold text-amber-500" : "font-bold text-destructive"}>{canExecute ? "YES \u2014 TEST MODE ONLY" : "NO"}</span></div>
+                        )}
                       </div>
                     )}
                   </div>
