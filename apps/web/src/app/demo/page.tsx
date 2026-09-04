@@ -69,6 +69,41 @@ const D1_CONTEXTS = [
   "TEMPORARY_NETWORK_ERROR", "ISSUER_UNAVAILABLE", "CUSTOMER_ACTION_REQUIRED", "AUTHENTICATION_FAILURE", 
   "INSUFFICIENT_FUNDS", "INSTRUMENT_EXPIRED", "UNKNOWN_TRANSIENT_ERROR", "MANDATE_INACTIVE"
 ];
+const D1_ACTION_SETS = [
+  {
+    candidates: [
+      { label: "RETRY_LATER_2H", probability: 0.88, incremental_erv_minor: 88000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
+      { label: "CREATE_PAYMENT_LINK", probability: 0.45, incremental_erv_minor: 45000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" }
+    ],
+    selected_action: "RETRY_LATER_2H",
+    policy_checks: { reason: "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV" }
+  },
+  {
+    candidates: [
+      { label: "CREATE_PAYMENT_LINK", probability: 0.72, incremental_erv_minor: 72000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
+      { label: "RETRY_LATER_24H", probability: 0.35, incremental_erv_minor: 35000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" }
+    ],
+    selected_action: "CREATE_PAYMENT_LINK",
+    policy_checks: { reason: "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV" }
+  },
+  {
+    candidates: [
+      { label: "OFFER_ALTERNATE_METHOD", probability: 0.91, incremental_erv_minor: 91000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
+      { label: "SEND_NUDGE", probability: 0.60, incremental_erv_minor: 60000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" }
+    ],
+    selected_action: "OFFER_ALTERNATE_METHOD",
+    policy_checks: { reason: "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV" }
+  },
+  {
+    candidates: [
+      { label: "REQUEST_PAYMENT_METHOD_UPDATE", probability: 0.85, incremental_erv_minor: 85000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
+      { label: "CREATE_PAYMENT_LINK", probability: 0.50, incremental_erv_minor: 50000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" }
+    ],
+    selected_action: "REQUEST_PAYMENT_METHOD_UPDATE",
+    policy_checks: { reason: "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV" }
+  }
+];
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const D1_SCENARIOS: any[] = Array.from({ length: 16 }).map((_, i) => ({
   id: `demo-d1-${i + 1}`,
@@ -78,12 +113,7 @@ const D1_SCENARIOS: any[] = Array.from({ length: 16 }).map((_, i) => ({
     {
       decision_index: 1,
       observable_context: { elapsed_hours: 0, last_action: "NONE", previous_result: "NONE" },
-      candidates: [
-        { label: "RETRY_LATER_2H", probability: 0.88, incremental_erv_minor: 88000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" },
-        { label: "CREATE_PAYMENT_LINK", probability: 0.45, incremental_erv_minor: 45000, supported: true, action_stage_support: "Yes", calibration_bin_support: "Yes" }
-      ],
-      selected_action: "RETRY_LATER_2H",
-      policy_checks: { reason: "MAX_POSITIVE_SUPPORTED_INCREMENTAL_ERV" }
+      ...D1_ACTION_SETS[i % 4]
     }
   ],
   final: { recovered: true, termination: "RECOVERED", recovered_amount_minor: 100000, action_count: 1 }
@@ -495,8 +525,8 @@ export default function ReplayLabPage() {
                 disabled={showFinalOutcome} 
                 className={cn(
                    "font-bold transition-all disabled:opacity-50",
-                   !isPlaying && isDemo ? "animated-border-button bg-emerald-600 hover:bg-emerald-700 text-white" : "",
-                   isPlaying ? "bg-amber-600 hover:bg-amber-700 text-white" : ""
+                   !isPlaying && isDemo ? "bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-500/20" : "",
+                   isPlaying ? "bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-500/20" : ""
                 )}
              >
                 {isPlaying ? "Pause Demo" : "Play Demo"}
