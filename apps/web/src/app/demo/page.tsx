@@ -490,7 +490,7 @@ export default function ReplayLabPage() {
                     {decision.candidates.map((cand: any, i: number) => {
                       const isSelected = cand.label === decision.selected_action;
                       return (
-                        <tr key={i} className={`group transition-colors ${isSelected ? "bg-emerald-500/10 border-l-2 border-emerald-500" : "hover:bg-muted/40"}`}>
+                        <tr key={i} className={`group transition-all duration-500 relative ${isSelected ? "bg-gradient-to-r from-emerald-500/20 via-emerald-500/5 to-transparent border-l-[3px] border-emerald-500 shadow-[inset_6px_0_20px_rgba(16,185,129,0.15)]" : "hover:bg-muted/40"}`}>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex flex-col">
                               <span className={`text-sm ${isSelected ? "text-emerald-700 dark:text-emerald-400 font-bold" : "text-foreground"}`}>
@@ -498,7 +498,7 @@ export default function ReplayLabPage() {
                               </span>
                               <span className="text-[10px] font-mono text-muted-foreground">{cand.label}</span>
                               {isSelected && (
-                                <span className="mt-1 inline-flex w-fit items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500 text-emerald-950 uppercase tracking-widest shadow-sm">
+                                <span className="mt-1.5 inline-flex w-fit items-center px-2.5 py-0.5 rounded text-[10px] font-extrabold bg-emerald-500 text-emerald-950 uppercase tracking-[0.2em] shadow-[0_0_15px_rgba(16,185,129,0.5)] animate-pulse-subtle border border-emerald-400/50">
                                   Selected
                                 </span>
                               )}
@@ -647,7 +647,7 @@ export default function ReplayLabPage() {
                     {decision.candidates.map((cand: any, i: number) => {
                         const isSelected = cand.label === decision.selected_action;
                         return (
-                          <tr key={i} className={`group transition-colors ${(isSelected && currentPhaseIndex >= 3) ? "bg-emerald-500/10 border-l-2 border-emerald-500" : "hover:bg-muted/40"}`}>
+                          <tr key={i} className={`group transition-all duration-500 relative ${(isSelected && currentPhaseIndex >= 3) ? "bg-gradient-to-r from-emerald-500/20 via-emerald-500/5 to-transparent border-l-[3px] border-emerald-500 shadow-[inset_6px_0_20px_rgba(16,185,129,0.15)]" : "hover:bg-muted/40"}`}>
                             <td className="px-6 py-4 whitespace-nowrap">
                               <div className="flex flex-col">
                                 <span className={`text-sm ${(isSelected && currentPhaseIndex >= 3) ? "text-emerald-700 dark:text-emerald-400 font-bold" : "text-foreground"}`}>
@@ -655,7 +655,7 @@ export default function ReplayLabPage() {
                                 </span>
                                 <span className="text-[10px] font-mono text-muted-foreground">{cand.label}</span>
                                 {(isSelected && currentPhaseIndex >= 3) && (
-                                  <span className="mt-1 inline-flex w-fit items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500 text-emerald-950 uppercase tracking-widest shadow-sm">
+                                  <span className="mt-1.5 inline-flex w-fit items-center px-2.5 py-0.5 rounded text-[10px] font-extrabold bg-emerald-500 text-emerald-950 uppercase tracking-[0.2em] shadow-[0_0_15px_rgba(16,185,129,0.5)] animate-pulse-subtle border border-emerald-400/50">
                                     Selected
                                   </span>
                                 )}
