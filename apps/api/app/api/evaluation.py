@@ -9,13 +9,13 @@ from app.api.razorpay import DecisionResponse, RecoveryCaseResponse
 
 router = APIRouter(prefix="/api/evaluation", tags=["Evaluation"])
 
-ARTIFACT_PATH = (
+ARTIFACTS_DIR = (
     Path(__file__).parent.parent.parent.parent.parent
     / "artifacts"
     / "policy"
     / "recoveriq-sequential-v2"
-    / "validation-evaluation-v2.json"
 )
+ARTIFACT_PATH = ARTIFACTS_DIR / "validation-evaluation-v2.json"
 
 
 @router.get("/summary")
@@ -98,12 +98,41 @@ def format_strategy_name(name: str) -> str:
         "best_global_sequential": "Best Global Sequential",
         "fixed_retry_workflow": "Fixed Retry",
         "greedy_hidden_oracle": "Hidden Oracle",
+        "random_sequential": "Random Search",
         "recoveriq_sequential_erv_v2": "RecoveryIQ V2",
         "reminder_retry_workflow": "Reminder + Retry",
         "sequential_probability_policy": "Probability Policy",
         "simple_sequential_observable_rule": "Simple Observable Rule",
     }
     return mapping.get(name, name.replace("_", " ").title())
+
+
+@router.get("/replay/presets")
+async def get_replay_presets() -> list[dict[str, str]]:
+    return [
+        {"id": "successful-adaptive-trace-v2", "name": "Successful Adaptive Recovery"},
+        {"id": "bounded-failure-trace-v2", "name": "Bounded Safe Failure"},
+    ]
+
+
+@router.get("/replay/{preset_id}")
+async def get_replay_trace(preset_id: str) -> dict[str, Any]:
+    allowed_presets = {
+        "successful-adaptive-trace-v2",
+        "bounded-failure-trace-v2",
+    }
+    if preset_id not in allowed_presets:
+        raise HTTPException(status_code=404, detail="Preset not found")
+
+    trace_path = ARTIFACTS_DIR / f"{preset_id}.json"
+    if not trace_path.exists():
+        raise HTTPException(status_code=404, detail="Trace artifact unavailable")
+
+    try:
+        with open(trace_path, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Invalid trace artifact") from e
 
 
 @router.get("/simulated-decision-example", response_model=RecoveryCaseResponse)

@@ -55,10 +55,9 @@ export default function CommandCenterPage() {
               <Button variant="outline" size="sm">Explore Sealed Batch</Button>
             </Link>
             <div className="flex flex-col items-center">
-              <Link href="/recovery-cases">
-                <Button size="sm" className="gap-1.5">Try RecoveryIQ <ArrowRight className="size-3.5" /></Button>
+              <Link href="/demo">
+                <Button size="sm" className="gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white">Try Replay Lab <ArrowRight className="size-3.5" /></Button>
               </Link>
-              <span className="mt-1 text-[8px] font-bold tracking-[0.15em] text-muted-foreground uppercase">DEMO · SYNTHETIC</span>
             </div>
           </div>
         } 

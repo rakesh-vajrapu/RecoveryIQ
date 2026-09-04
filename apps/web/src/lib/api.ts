@@ -121,6 +121,14 @@ export async function getEvaluationSummary(signal?: AbortSignal): Promise<Evalua
   if (!isEvaluationSummary(payload)) throw invalidData("evaluation summary");
   return payload;
 }
+export async function getReplayPresets(signal?: AbortSignal): Promise<{ id: string; name: string }[]> {
+  const payload = await request("/api/evaluation/replay/presets", { signal });
+  return payload as { id: string; name: string }[];
+}
+export async function getReplayTrace(presetId: string, signal?: AbortSignal): Promise<any> {
+  const payload = await request(`/api/evaluation/replay/${encodeURIComponent(presetId)}`, { signal });
+  return payload;
+}
 export async function getBatchExplorerData(signal?: AbortSignal): Promise<BatchExplorerData> {
   const payload = await request(`/api/evaluation/batch-explorer`, { signal });
   return payload;
