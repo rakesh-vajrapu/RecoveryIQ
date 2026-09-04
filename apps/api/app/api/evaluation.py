@@ -95,7 +95,7 @@ async def get_evaluation_summary() -> dict[str, Any]:
 
 def format_strategy_name(name: str) -> str:
     mapping = {
-        "best_global_sequential": "Best Global Action",
+        "best_global_sequential": "Best Global Sequential",
         "fixed_retry_workflow": "Fixed Retry",
         "greedy_hidden_oracle": "Hidden Oracle",
         "recoveriq_sequential_erv_v2": "RecoveryIQ V2",

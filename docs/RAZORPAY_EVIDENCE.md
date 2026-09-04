@@ -106,7 +106,7 @@ Stage 1 produced one persisted webhook row for this event ID, one failed Payment
 
 ### Additional event observed during Stage 1
 
-A separate late provider event, `TVwv713Ioqvspw`, for payment `pay_TVu7pnXqmHGySR` was received at 10:32:31 UTC. Its payment had been created earlier at 07:48:28 UTC. It was also safely correlated through the same order, processed once, and recorded as a failed Netbanking recovery attempt. It was not a new RecoveryCase. This explains why the immutable audit timeline contains two failed-attempt records before the successful retry.
+A separate late provider event, `TVwv713Ioqvspw`, for payment `pay_TVu7pnXqmHGySR` was received at 10:32:31 UTC. Its payment had been created earlier at 07:48:28 UTC. It was also safely correlated through the same order, processed once, and recorded as a failed Netbanking recovery attempt. It was not a new RecoveryCase. This explains why the persisted audit timeline contains two failed-attempt records before the successful retry.
 
 ## Stage 2 — successful recovery
 
@@ -199,7 +199,7 @@ The original Human Review decision remains unchanged. The UI continues to identi
 - Total cases: **2**
 - No Aug 30 RecoveryCase was created.
 - The displayed dates remain the original case creation dates, as expected.
-- A separate **Last Activity** column now derives from the latest immutable case audit event. The target case preserves its 23 Aug creation date and shows 30 Aug 2026, 4:11 pm as its latest activity.
+- A separate **Last Activity** column now derives from the latest persisted case audit event. The target case preserves its 23 Aug creation date and shows 30 Aug 2026, 4:11 pm as its latest activity.
 
 ### Target case
 
@@ -214,7 +214,7 @@ The original Human Review decision remains unchanged. The UI continues to identi
 
 ### Audit Timeline and Decision Trace
 
-- Both failed-attempt audit entries remain immutable.
+- Both failed-attempt audit entries remain persisted.
 - The Aug 30 successful receipt, outcome, attribution, and recovered transition are visible.
 - Recorded objects show one decision, two plans, one execution, one outcome, and one attribution.
 - The deterministic decision remains `Human Review` with reason `Insufficient Context`.
@@ -242,7 +242,7 @@ The future write path now resolves paid-link completion from the provider Paymen
 - **Payment completed** from the resolved provider payment/link completion time.
 - **Outcome verified** from `ExternalOutcome.created_at`.
 - **Recovered revenue recorded** from `RecoveryAttribution.created_at`.
-- **Webhook received** from immutable audit receipt time.
+- **Webhook received** from persisted audit receipt time.
 
 Naive SQLite UTC timestamps are explicitly interpreted as UTC before browser localization, so the IST UI now shows 4:11 pm rather than the raw 10:41 UTC clock value.
 

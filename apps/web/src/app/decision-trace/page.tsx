@@ -24,7 +24,7 @@ export default function DecisionTracePage() {
 
   return (
     <>
-      <PageHeader eyebrow="Decision intelligence" title="See why policy allowed, stopped, or escalated." description="Decision records are immutable evidence. Models estimate probabilities, while the deterministic policy remains the only action-selection authority." icon={BrainCircuit} actions={<Button variant="outline" onClick={resource.retry} disabled={resource.loading}><RefreshCw className={resource.loading ? "animate-spin" : ""} />Refresh traces</Button>} />
+      <PageHeader eyebrow="Decision intelligence" title="See why policy allowed, stopped, or escalated." description="Decision records are persisted audit evidence. Models estimate probabilities, while the deterministic policy remains the only action-selection authority." icon={BrainCircuit} actions={<Button variant="outline" onClick={resource.retry} disabled={resource.loading}><RefreshCw className={resource.loading ? "animate-spin" : ""} />Refresh traces</Button>} />
       <GovernanceProfilePanel />
       <div className="mt-5">
         {resource.loading && <LoadingPanel />}
