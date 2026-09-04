@@ -203,7 +203,12 @@ async def test_14_15_webhook_signature(judge_demo_harness: JudgeDemoHarness) -> 
 
 @pytest.mark.asyncio
 async def test_16_duplicate_webhook_deduplication(judge_demo_harness: JudgeDemoHarness) -> None:
-    payload = b'{"entity": "event", "event": "payment_link.paid", "contains": [], "payload": {"payment_link": {"entity": {"id": "plink_test", "status": "paid", "amount": 100000, "currency": "INR", "reference_id": "test_ref"}}}}'
+    payload = (
+        b'{"entity": "event", "event": "payment_link.paid", "contains": [], '
+        b'"payload": {"payment_link": {"entity": {"id": "plink_test", '
+        b'"status": "paid", "amount": 100000, "currency": "INR", '
+        b'"reference_id": "test_ref"}}}}'
+    )
     sig = hmac.new(WEBHOOK_SECRET.encode("utf-8"), payload, hashlib.sha256).hexdigest()
     headers = {"x-razorpay-signature": sig, "x-razorpay-event-id": "evt_test123"}
     res1 = await judge_demo_harness.client.post(

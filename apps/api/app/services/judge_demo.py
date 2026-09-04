@@ -108,7 +108,11 @@ def prepare_judge_demo_case(
         "payment_method": "CARD",
         "failure_type": "LOCAL_UNVERIFIED",
         "failure_source": "LOCAL",
-        "description": "This case was prepared locally for a controlled Razorpay Test Mode provider demonstration. Provider evidence begins when the Test Mode Payment Link is created and Razorpay events are received.",
+        "description": (
+            "This case was prepared locally for a controlled Razorpay Test Mode provider "
+            "demonstration. Provider evidence begins when the Test Mode Payment Link is "
+            "created and Razorpay events are received."
+        ),
     }
 
     add_audit_event(
