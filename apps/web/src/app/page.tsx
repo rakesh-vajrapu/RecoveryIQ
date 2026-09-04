@@ -108,29 +108,6 @@ function DashboardContent({ data }: { data: DashboardData }) {
 
   return (
     <div className="space-y-5">
-      {/* Evidence Provenance Strip */}
-      <section className="grid gap-3 sm:grid-cols-1">
-        <div className="flex items-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.05] p-3"><span className="rounded bg-emerald-500/20 px-1.5 py-0.5 text-[9px] font-bold text-emerald-700 dark:text-emerald-300">RAZORPAY TEST</span><p className="text-[10px] font-medium text-muted-foreground">Provider-verified Test Mode</p></div>
-      </section>
-
-      {/* Safety Lab Teaser */}
-      <section className="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl border border-primary/20 bg-primary/5 p-4 sm:p-5 hover:bg-primary/10 hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
-        <div>
-          <div className="flex items-center gap-2 font-semibold text-primary">
-            <ShieldCheck className="size-4" />
-            SAFETY VERIFIED
-          </div>
-          <p className="mt-1 text-sm text-muted-foreground">
-            10-way concurrency tested · 0 duplicate financial effects
-          </p>
-        </div>
-        <Link href="/safety-lab">
-          <Button variant="default" size="sm" className="gap-2">
-            Open Safety Lab <ArrowRight className="size-3.5" />
-          </Button>
-        </Link>
-      </section>
-
       {/* Row 1 Metrics */}
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <MetricCard label="Revenue at risk" value={formatMoney(revenueAtRisk)} detail="Featured recovery opportunities" icon={Target} tone="cyan" progress={100} badge="DEMO · SYNTHETIC" />
